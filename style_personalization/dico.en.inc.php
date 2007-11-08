@@ -3,7 +3,7 @@
 # BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE
 # SOFTWARE NAME: Confort de lecture
 # SOFTWARE RELEASE: 2.0.0
-# COPYRIGHT NOTICE: Copyright (C) 2000-2007 GIE Confort de lecture (SQLI & HandicapZÃ©ro)
+# COPYRIGHT NOTICE: Copyright (C) 2000-2007 GIE Confort de lecture (SQLI & HandicapZéro)
 # SOFTWARE LICENSE: GNU General Public License v3
 # NOTICE:
 # This file is part of Confort de lecture.
@@ -18,7 +18,7 @@
 	$dico = array();
 
 	/////////////////////////////////////
-	// page : Modifier les prÃ©fÃ©rences //
+	// page&nbsp;: Modifier les préférences //
 	/////////////////////////////////////
 	$dico['_DICO_TITLE_MODIFIER_PREFERENCES'] = "Change preferences";
 	$dico['_DICO_ERREUR_IDENT'] = "Please fill out the following fields:";
@@ -37,11 +37,19 @@
 	$dico['_DICO_EXPLICATION_CONFIG'] = "Choose the size and color of the characters and screen that best suit your vision and your printed pages.";
 
 	$dico['_DICO_LEGEND_COULEUR_FOND'] = "Choose background color:";
-	$dico['_DICO_LABEL_NOIR'] = "Black";
-	$dico['_DICO_LABEL_BLANC'] = "White";
-	$dico['_DICO_LABEL_VERT'] = "Green";
-	$dico['_DICO_LABEL_JAUNE'] = "Yellow";
-	$dico['_DICO_LABEL_BLEU'] = "Blue";
+
+	$dico['_DICO_LABEL_FOND_NOIR'] = "Black background";
+	$dico['_DICO_LABEL_FOND_BLANC'] = "White background";
+	$dico['_DICO_LABEL_FOND_VERT'] = "Green background";
+	$dico['_DICO_LABEL_FOND_JAUNE'] = "Yellow background";
+	$dico['_DICO_LABEL_FOND_BLEU'] = "Blue background";
+
+	$dico['_DICO_LABEL_TEXTE_NOIR'] = "Black text";
+	$dico['_DICO_LABEL_TEXTE_BLANC'] = "White text";
+	$dico['_DICO_LABEL_TEXTE_VERT'] = "Green text";
+	$dico['_DICO_LABEL_TEXTE_JAUNE'] = "Yellow text";
+	$dico['_DICO_LABEL_TEXTE_BLEU'] = "Blue text";
+
 	$dico['_DICO_BOUTON_PLUS_DE_COULEURS'] = "More colors";
 	$dico['_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_FOND'] = "Choose other background colors";
 
@@ -83,7 +91,7 @@
 
 
 	////////////////////
-	// page : palette //
+	// page&nbsp;: palette //
 	////////////////////
 	$dico['_DICO_TITLE_PALETTE'] = "Palette de couleurs";
 	$dico['_DICO_INTRO_PALETTE'] = "You may choose from a palette of 216 colors";
