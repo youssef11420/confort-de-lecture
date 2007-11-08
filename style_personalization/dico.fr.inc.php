@@ -18,7 +18,7 @@
 	$dico = array();
 
 	/////////////////////////////////////
-	// page&nbsp;: Modifier les préférences //
+	// page : Modifier les préférences //
 	/////////////////////////////////////
 	$dico['_DICO_TITLE_MODIFIER_PREFERENCES'] = "Modifier vos préférences";
 	$dico['_DICO_ERREUR_IDENT'] = "Veuillez renseigner les champs suivants svp&nbsp;:";
@@ -111,7 +111,7 @@
 
 
 	////////////////////
-	// page&nbsp;: palette //
+	// page : palette //
 	////////////////////
 	$dico['_DICO_TITLE_PALETTE'] = "Palette de couleurs";
 	$dico['_DICO_INTRO_PALETTE'] = "Vous disposez d'une palette de 216 couleurs";
