@@ -2,7 +2,7 @@
 	$dico = array();
 
 	/////////////////////////////////////
-	// page : Modifier les prÃ©fÃ©rences //
+	// page&nbsp;: Modifier les préférences //
 	/////////////////////////////////////
 	$dico['_DICO_TITLE_MODIFIER_PREFERENCES'] = "Wijzig je voorkeuren";
 	$dico['_DICO_ERREUR_IDENT'] = "Gelieve de volgende velden in te vullen:";
@@ -21,11 +21,19 @@
 	$dico['_DICO_EXPLICATION_CONFIG'] = "Kies de grootte en het kleur van de lettertekens en het scherm, aangepast aan je gezichtsvermogen en de af te drukken pagina's.";
 
 	$dico['_DICO_LEGEND_COULEUR_FOND'] = "Kies het kleur van de achtergrond:";
-	$dico['_DICO_LABEL_NOIR'] = "Zwart";
-	$dico['_DICO_LABEL_BLANC'] = "Wit";
-	$dico['_DICO_LABEL_VERT'] = "Groen";
-	$dico['_DICO_LABEL_JAUNE'] = "Geel";
-	$dico['_DICO_LABEL_BLEU'] = "Blauw";
+
+	$dico['_DICO_LABEL_FOND_NOIR'] = "Zwart achtergrond";
+	$dico['_DICO_LABEL_FOND_BLANC'] = "Wit achtergrond";
+	$dico['_DICO_LABEL_FOND_VERT'] = "Groen achtergrond";
+	$dico['_DICO_LABEL_FOND_JAUNE'] = "Geel achtergrond";
+	$dico['_DICO_LABEL_FOND_BLEU'] = "Blauw achtergrond";
+
+	$dico['_DICO_LABEL_TEXTE_NOIR'] = "Zwart tekst";
+	$dico['_DICO_LABEL_TEXTE_BLANC'] = "Wit tekst";
+	$dico['_DICO_LABEL_TEXTE_VERT'] = "Groen tekst";
+	$dico['_DICO_LABEL_TEXTE_JAUNE'] = "Geel tekst";
+	$dico['_DICO_LABEL_TEXTE_BLEU'] = "Blauw tekst";
+
 	$dico['_DICO_BOUTON_PLUS_DE_COULEURS'] = "Meer kleuren";
 	$dico['_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_FOND'] = "Andere kleur kiezen voor de achtergrond";
 
@@ -77,7 +85,7 @@
 
 	$dico['_DICO_VALEUR_LOGIN_ENREGISTRER'] = "Gebruikersnaam";
 	$dico['_DICO_ENREGISTRER_PROFIL'] = "Vul je persoonlijke profiel in en ga naar de site";
-	$dico['_DICO_LABEL_LOGIN_ENREGISTRER'] = "CreÃ«er je gebruikersnaam";
+	$dico['_DICO_LABEL_LOGIN_ENREGISTRER'] = "Creëer je gebruikersnaam";
 	$dico['_DICO_LABEL_PASSWORD_ENREGISTRER'] = "Kies je wachtwoord";
 	$dico['_DICO_LABEL_CONFIRM_PASSWORD_ENREGISTRER'] = "Bevestig je wachtwoord";
 	$dico['_DICO_BOUTON_VALIDER_ENREGISTRER'] = "Aanmelden en ga naar de site";
@@ -87,7 +95,7 @@
 
 
 	////////////////////
-	// page : palette //
+	// page&nbsp;: palette //
 	////////////////////
 	$dico['_DICO_TITLE_PALETTE'] = "Kleurenpalet";
 	$dico['_DICO_INTRO_PALETTE'] = "Je kunt kiezen uit een palet van 216 kleuren";

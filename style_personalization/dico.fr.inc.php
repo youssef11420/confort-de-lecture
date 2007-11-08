@@ -18,17 +18,17 @@
 	$dico = array();
 
 	/////////////////////////////////////
-	// page : Modifier les préférences //
+	// page&nbsp;: Modifier les préférences //
 	/////////////////////////////////////
 	$dico['_DICO_TITLE_MODIFIER_PREFERENCES'] = "Modifier vos préférences";
-	$dico['_DICO_ERREUR_IDENT'] = "Veuillez renseigner les champs suivants svp :";
+	$dico['_DICO_ERREUR_IDENT'] = "Veuillez renseigner les champs suivants svp&nbsp;:";
 	$dico['_DICO_ERREUR_LOGIN_IDENT'] = "- L'identifiant";
 	$dico['_DICO_ERREUR_PASSWORD_IDENT'] = "- Le mot de passe";
 	$dico['_DICO_ERREUR_BAD_PASSWORD'] = "L'identifiant et/ou le mot de passe ne sont pas corrects";
 
 	$dico['_DICO_VALEUR_LOGIN_IDENT'] = "Identifiant";
 	$dico['_DICO_INTRO_IDENT'] = "Vous disposez déjà d&rsquo;un profil confort de lecture";
-	$dico['_DICO_LABEL_LOGIN_IDENT'] = "Identifiant :";
+	$dico['_DICO_LABEL_LOGIN_IDENT'] = "Identifiant&nbsp;:";
 	$dico['_DICO_LABEL_PASSWORD_IDENT'] = "Mot&nbsp;de&nbsp;passe&nbsp;:";
 	$dico['_DICO_BOUTON_VALIDER_IDENT'] = "Valider";
 
@@ -36,23 +36,31 @@
 	$dico['_DICO_INTRO_CONFIG'] = "Vous utilisez confort de lecture pour la première fois";
 	$dico['_DICO_EXPLICATION_CONFIG'] = "Choisissez la taille, et la couleur des caractères et de l'écran, adaptées à votre vision et à vos pages imprimées.";
 
-	$dico['_DICO_LEGEND_COULEUR_FOND'] = "Choix de la couleur du fond :";
-	$dico['_DICO_LABEL_NOIR'] = "Noir";
-	$dico['_DICO_LABEL_BLANC'] = "Blanc";
-	$dico['_DICO_LABEL_VERT'] = "Vert";
-	$dico['_DICO_LABEL_JAUNE'] = "Jaune";
-	$dico['_DICO_LABEL_BLEU'] = "Bleu";
+	$dico['_DICO_LEGEND_COULEUR_FOND'] = "Choix de la couleur du fond&nbsp;:";
+
+	$dico['_DICO_LABEL_FOND_NOIR'] = "Fond noir";
+	$dico['_DICO_LABEL_FOND_BLANC'] = "Fond blanc";
+	$dico['_DICO_LABEL_FOND_VERT'] = "Fond vert";
+	$dico['_DICO_LABEL_FOND_JAUNE'] = "Fond jaune";
+	$dico['_DICO_LABEL_FOND_BLEU'] = "Fond bleu";
+
+	$dico['_DICO_LABEL_TEXTE_NOIR'] = "Texte noir";
+	$dico['_DICO_LABEL_TEXTE_BLANC'] = "Texte blanc";
+	$dico['_DICO_LABEL_TEXTE_VERT'] = "Texte vert";
+	$dico['_DICO_LABEL_TEXTE_JAUNE'] = "Texte jaune";
+	$dico['_DICO_LABEL_TEXTE_BLEU'] = "Texte bleu";
+
 	$dico['_DICO_BOUTON_PLUS_DE_COULEURS'] = "Plus de couleurs";
 	$dico['_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_FOND'] = "Choisir d'autres couleurs pour le fond";
 
-	$dico['_DICO_LEGEND_TAILLE_TEXTE'] = "Choix de la taille du texte :";
-	$dico['_DICO_LABEL_TRES_PETITE'] = "Très petite";
-	$dico['_DICO_LABEL_PETITE'] = "Petite";
-	$dico['_DICO_LABEL_MOYENNE'] = "Moyenne";
-	$dico['_DICO_LABEL_GRANDE'] = "Grande";
-	$dico['_DICO_LABEL_TRES_GRANDE'] = "Très grande";
+	$dico['_DICO_LEGEND_TAILLE_TEXTE'] = "Choix de la taille du texte&nbsp;:";
+	$dico['_DICO_LABEL_TRES_PETITE'] = "Taille très petite";
+	$dico['_DICO_LABEL_PETITE'] = "Taille petite";
+	$dico['_DICO_LABEL_MOYENNE'] = "Taille moyenne";
+	$dico['_DICO_LABEL_GRANDE'] = "Taille grande";
+	$dico['_DICO_LABEL_TRES_GRANDE'] = "Taille très grande";
 
-	$dico['_DICO_LEGEND_COULEUR_TEXTE'] = "Choix de la couleur du texte :";
+	$dico['_DICO_LEGEND_COULEUR_TEXTE'] = "Choix de la couleur du texte&nbsp;:";
 	$dico['_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_TEXTE'] = "Choisir d'autres couleurs pour le texte";
 	$dico['_DICO_TITLE_BOUTON_APERCU'] = "aperçu de la configuration";
 
@@ -84,7 +92,7 @@
 	$dico['_DICO_LIEN_ENREGISTRER'] = "Enregistrer";
 
 
-	$dico['_DICO_ERREUR_ENREGISTRER'] = "Veuillez renseigner les champs suivants svp :";
+	$dico['_DICO_ERREUR_ENREGISTRER'] = "Veuillez renseigner les champs suivants svp&nbsp;:";
 	$dico['_DICO_ERREUR_LOGIN_ENREGISTRER'] = "- L'identifiant";
 	$dico['_DICO_ERREUR_PASSWORD_ENREGISTRER'] = "- Le mot de passe";
 	$dico['_DICO_ERREUR_CONFIRM_PASSWORD_ENREGISTRER'] = "- La confirmation du mot de passe";
@@ -103,11 +111,11 @@
 
 
 	////////////////////
-	// page : palette //
+	// page&nbsp;: palette //
 	////////////////////
 	$dico['_DICO_TITLE_PALETTE'] = "Palette de couleurs";
 	$dico['_DICO_INTRO_PALETTE'] = "Vous disposez d'une palette de 216 couleurs";
-	$dico['_DICO_EXPLICATION_PALETTE'] = "Sélectionnez une couleur puis validez en bas :";
+	$dico['_DICO_EXPLICATION_PALETTE'] = "Sélectionnez une couleur puis validez en bas&nbsp;:";
 	$dico['_DICO_LABEL_COULEUR'] = "Couleur";
 	$dico['_DICO_BOUTON_VALIDER'] = "Valider";
 	$dico['_DICO_TITLE_BOUTON_VALIDER'] = "Valider la couleur choisie";
