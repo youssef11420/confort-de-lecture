@@ -1,0 +1,4 @@
+AuthUserFile {REPERTOIRE__SOURCES_APPLICATION}/configuration/.htpasswd
+AuthName "'Administration des sites'"
+Require user {LOGIN_UTILISATEUR_ADMIN}
+AuthType Basic
