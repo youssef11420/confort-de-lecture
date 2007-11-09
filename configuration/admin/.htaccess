@@ -1,4 +1,0 @@
-AuthUserFile /usr/local/apache2/htdocs/dev.cdl.lnet.fr/integration/configuration/admin/.htpasswd
-AuthName "'Administration des sites'"
-Require user admin
-AuthType Basic
