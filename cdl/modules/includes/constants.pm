@@ -194,7 +194,7 @@ $cdlSitesConfigPath = '/configuration/sites/';
 
 # String: $agentNameToSend
 # Le nom de l'agent HTTP à envoyer dans les requêtes vers les sites distants parsés
-$agentNameToSend = 'Confort de lecture / 1.0 [Lnet - SQLi]';
+$agentNameToSend = 'Confort de lecture [Lnet - SQLi]';
 
 # String: $fontFamily
 # La famille de polices de caractères à utiliser pour afficher les pages filtrées ainsi que la page de paramétrage
