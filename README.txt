@@ -3,7 +3,7 @@ Solution d'accessibilité Confort De Lecture.
 -----------------------------------------------------------------------------
 
 - Pré-requis matériels et logiciels
-	• Une machine (1,5Go de RAM minimum, 10Mo minimum d’espace de disque dur)
+	• Une machine (1,5Go de RAM minimum, 100Mo minimum d’espace de disque dur)
 	• Une distribution Linux installée sur la machine (CentOS par exemple) 
 	• Commande file versions supérieures ou égales à 4.21 
 	• Apache 2.0.*
@@ -12,36 +12,36 @@ Solution d'accessibilité Confort De Lecture.
 	• Perl 5.8.*
 
 - Procédure d’installation
-	• Insérer les lignes suivantes à la fin du fichier de configuration d’Apache (httpd.conf dans le répertoire conf) :
+	• Insérer les lignes suivantes à la fin du fichier de configuration d’Apache (httpd.conf dans le répertoire conf), et remplir les paramètres qui sont entre accolades { } :
 		<VirtualHost *:80>
 			ServerAdmin {ADRESSE_MAIL_WEBMASTER}
-			DocumentRoot {REPERTOIRE__SOURCES_APPLICATION}
+			DocumentRoot {REPERTOIRE_SOURCES_APPLICATION}
 			ServerName {NOM_DE_DOMAINE}
 			ErrorLog logs/{NOM_DE_DOMAINE}-error_log
 			CustomLog logs/{NOM_DE_DOMAINE}-access_log common
 			RewriteLog logs/{NOM_DE_DOMAINE}-urlrewrite.log
 			RewriteLogLevel 9
-			ScriptAlias /filtre "{REPERTOIRE__SOURCES_APPLICATION}/cdl/scripts"
+			ScriptAlias /filtre "{REPERTOIRE_SOURCES_APPLICATION}/cdl/scripts"
 			AddHandler cgi-script .pl
 		</VirtualHost>
-		<Directory "{REPERTOIRE__SOURCES_APPLICATION}">
+		<Directory "{REPERTOIRE_SOURCES_APPLICATION}">
 			Options ExecCGI FollowSymLinks Includes
 			AllowOverride all
 			Order allow,deny
 			Allow from all
 		</Directory>
+		<Directory "{REPERTOIRE_SOURCES_APPLICATION}/cdl/scripts/admin">
+			AuthUserFile {REPERTOIRE_SOURCES_APPLICATION}/configuration/.htpasswd
+			AuthName "'Administration des sites'"
+			Require user {LOGIN_UTILISATEUR_ADMIN}
+			AuthType Basic
+		</Directory>
 
 	• Décompresser l’archive du projet dans le répertoire du site spécifié dans la configuration Apache ({REPERTOIRE__SOURCES_APPLICATION}).
 
-	• Mettre les droits en lecture et écriture pour l'utilisateur internet sur /includes/cache et /configuration/sites + droits d’exécution pour tous sur tous les fichiers *.pl et *.pm.
+	• Mettre les droits en lecture et écriture pour l'utilisateur internet sur /cache et /configuration/sites + droits d’exécution pour tous sur tous les fichiers *.pl et *.pm qui se trouvent dans le répertoire /cdl.
 
-	• Dans le fichier /configuration/admin/.htaccess, remplacer le chemin vers le fichier .htpasswd pour pointer vers le bon, et choisissez le nom d’utilisateur de votre choix :
-		AuthUserFile {REPERTOIRE__SOURCES_APPLICATION}/configuration/admin/.htpasswd
-		AuthName "'Administration des sites'"
-		Require user {LOGIN_UTILISATEUR_ADMIN}
-		AuthType Basic
-
-	• Dans le fichier /configuration/admin/.htpasswd, mettre un mot de passe de votre choix encrypté. Vous pouvez utiliser l’outil suivant pour encrypter un mot de passe : http://www.4webhelp.net/us/password.php (mettre le login spécifié dans /configuration/admin/.htaccess. voir point précédent)
+	• Dans le fichier /configuration/.htpasswd, mettre un mot de passe de votre choix encrypté. Vous pouvez utiliser l’outil suivant pour encrypter un mot de passe : http://www.4webhelp.net/us/password.php (mettre le login {LOGIN_UTILISATEUR_ADMIN} spécifié dans la configuration Apache. cf. 1er point concernant la configuration Apache, 2e balise Directory)
 
 	• Editer chacune des constantes suivantes dans le fichier /includes/contants.pm (si la valeur vous convient, vous la laissez inchangée) : $sessionExpireIn, $cdlAccept, $cdlRootPath, $databaseHost, $databaseName, $databaseLogin, $databasePassword, $agentNameToSend, $fontFamily, %fontSizes, $defaultLanguage, $defaultButtonText).
 
@@ -66,12 +66,12 @@ Solution d'accessibilité Confort De Lecture.
 		  `FONT_SIZE` varchar(255) NOT NULL default '',
 		  `BACKGROUND_COLOR` varchar(255) NOT NULL default '',
 		  `FONT_COLOR` varchar(255) NOT NULL default '',
-		  `ACTIVATE_JS` tinyint(1) NOT NULL default '0',
-		  `ACTIVATE_FRAMES` tinyint(1) NOT NULL default '1',
-		  `DISPLAY_IMAGES` tinyint(1) NOT NULL default '0',
-		  `DISPLAY_OBJECTS` tinyint(1) NOT NULL default '0',
-		  `DISPLAY_APPLETS` tinyint(1) NOT NULL default '0',
-		  `PARSE_TABLES` tinyint(1) NOT NULL default '1',
+		  `ACTIVATE_JS` tinyint(1) default NULL,
+		  `ACTIVATE_FRAMES` tinyint(1) default NULL,
+		  `DISPLAY_IMAGES` tinyint(1) default NULL,
+		  `DISPLAY_OBJECTS` tinyint(1) default NULL,
+		  `DISPLAY_APPLETS` tinyint(1) default NULL,
+		  `PARSE_TABLES` tinyint(1) default NULL,
 		  `CREATE_TIME` datetime NOT NULL default '0000-00-00 00:00:00',
 		  `UPDATE_TIME` datetime default '0000-00-00 00:00:00',
 		  PRIMARY KEY  (`ID_USER`),
@@ -80,10 +80,7 @@ Solution d'accessibilité Confort De Lecture.
 
 		COMMIT;
 
-	• Dans le fichier /style_personalization/inc/constantes_fonctions.php, Modifier les paramètres de base de données et de base d’URL qui se trouvent aux lignes suivantes :
-		$UrlSiteCdl			= "http://{NOM_DE_DOMAINE}";
-		$parserUrl			= "http://{NOM_DE_DOMAINE}/filtre/index.pl";
-
+	• Dans le fichier /configuration/constantes_fonctions.php, Modifier les paramètres de base de données qui se trouvent aux lignes suivantes :
 		$dbHost				= "{ADRESSE_SERVEUR_BASE_DE_DONNEES}";
 		$dbName				= "{NOM_BASE_DE_DONNEES}";
 		$dbLogin			= "{LOGIN_UTILISATEUR_BASE_DE_DONNEES}";
