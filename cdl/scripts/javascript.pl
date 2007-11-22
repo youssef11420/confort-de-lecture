@@ -33,6 +33,7 @@ use session;
 use config_manager;
 
 use lib '../modules/general';
+use general_html_utils;
 use javascript;
 
 # Détection d'erreurs au niveau de l'identifiant du site
