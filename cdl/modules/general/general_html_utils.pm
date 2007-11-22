@@ -101,7 +101,9 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl)
 	if ($url =~ m/^$siteRootUrl\/?/si) {
 		$url =~ s/^$siteRootUrl\/?//sgi;
 	} else {
-		$url = "../".$url;
+		if ($url !~ m/^\/le-filtre(-https)?\/$siteId/si) {
+			$url = "../".$url;
+		}
 	}
 
 	# Retourner l'URI à partir de la racine

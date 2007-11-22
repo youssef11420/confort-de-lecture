@@ -382,8 +382,10 @@ if (param('cdlfirst')) {
 
 			# Transformation de l'URL pour rester dans CDL
 			$redirectUrl = parseLinkHrefAttribute($redirectUrl, $pagePath, $siteId, $siteRootUrl);
+			$siteRootUrl =~ s/^https?:\/\///sgi;
+
 			if ($redirectUrl !~ m/^\/le\-filtre(\-https)?\/$siteId\//si) {
-				$redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$redirectUrl;
+				$redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteRootUrl."/".$redirectUrl;
 			}
 
 			my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
@@ -427,7 +429,7 @@ if (param('cdlfirst')) {
 	} else {
 		# On teste si le site est pris en compte par CDL
 		my $siteDomain = "";
-		$urlToParse =~ s/(https?:\/\/([^\/]*)(\/(.*)|$))/$siteDomain = $2; $pageUri = $4; $1/segi;
+		$urlToParse =~ s/^(https?:\/\/([^\/]*)(\/(.*)|$))/$siteDomain = $2; $pageUri = $4; $1/segi;
 
 		$siteId = "";
 		if ($siteDomain) {
@@ -436,7 +438,9 @@ if (param('cdlfirst')) {
 
 		# Si le site existe, on redirige vers ce script mais avec le bon siteId et la bonne uri
 		if ($siteId) {
-			my $redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".urlDecode($pageUri);
+			$urlToParse =~ s/^https?:\/\///sgi;
+
+			my $redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$urlToParse;
 
 			$redirectUrl = putParametersInUrl($redirectUrl, %requestParameters);
 
