@@ -98,7 +98,11 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl)
 
 	# Suppression du nom de domaine de la page (qui se trouve déjà dans la balise base
 	$siteRootUrl =~ s/^https?:\/\///sgi;
-	$url =~ s/^$siteRootUrl\/?//sgi;
+	if ($url =~ m/^$siteRootUrl\/?/si) {
+		$url =~ s/^$siteRootUrl\/?//sgi;
+	} else {
+		$url = "../".$url;
+	}
 
 	# Retourner l'URI à partir de la racine
 	return $url;
