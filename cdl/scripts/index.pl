@@ -298,8 +298,10 @@ if (param('cdlfirst')) {
 					$baseHref =~ s/^($siteRootUrl\/(.*))/$pagePath = $2; $1/segi;
 				}
 
-				# Mise à jour de l'attribut href de la balise base en mettant l'entête de base de tous les liens http://{SERVER_NAME}/le-filtre/{ID_SITE}/
-				$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BASE_HREF', "http://".$ENV{'SERVER_NAME'}."/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/");
+				# Mise à jour de l'attribut href de la balise base en mettant l'entête de base de tous les liens http://{SERVER_NAME}/le-filtre/{ID_SITE}/nom de domaine de la page
+				my $siteServerName = $siteRootUrl;
+				$siteServerName =~ s/^https?:\/\///sgi;
+				$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BASE_HREF', "http://".$ENV{'SERVER_NAME'}."/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteServerName."/");
 
 				$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'LANGUAGE', $pageLanguage);
 
