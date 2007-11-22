@@ -157,7 +157,7 @@ sub parseJavascriptCodeLine #($jsCode, $siteId)
 	my ($jsCode, $siteId, $pagePath, $siteRootUrl) = @_;
 
 	# Suppression des instructions qui mettent à jour des styles
-	$jsCode =~ s/([^;]*?)\.style\.(\S*?)\s*=\s*(\"|\')(.*?)\3//sgi;
+	$jsCode =~ s/([^;\{\}]*?)\.style\.(\w+)\s*=\s*([^;\{\}]+)//sgi;
 
 	# Transformer l'URL dans l'instruction de redirection pour passer par le script principal
 	$jsCode =~ s/(([^;]*?)(\.location)(\.href)?)\s*=\s*(\"|\')(.*?)\5/$1."=".$5.getUriFromUrl($6, $pagePath, $siteId, $siteRootUrl).$5/segi;
