@@ -770,6 +770,11 @@ sub getDocumentContentType #($documentContent, $session, $siteId, $needTypeMime)
 		$contentType = $_;
 	}
 
+	# Nettoyage du type mime
+	# Cas des fichiers compressés
+	$contentType =~ s/(.*)\((.*?)\)/$2/sgi;
+	$contentType =~ s/x-zip/zip/sgi;
+
 	# Fermeture du handler
 	close(FH);
 

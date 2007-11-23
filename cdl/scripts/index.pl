@@ -363,7 +363,12 @@ if (param('cdlfirst')) {
 				# pour éviter les informations incomplètes du Content-type du site distant.
 				$contentType = getDocumentContentType($response->content, $session, $siteId, 1);
 
-				$contentType =~ s/(.*?)\/(.*?)(;|$)(.*)/$1\-$2/sgi;
+				$contentType =~ s/(.*?)(;|$)(.*)/$1/sgi;
+
+				# Nettoyage du type mime
+				# Cas des fichiers compressés
+				$contentType =~ s/(.*)\((.*?)\)/$2/sgi;
+				$contentType =~ s/\//\-/sgi;
 				$urlToParse =~ s/^https?:\/\///segi;
 
 				# On redirige vers la page proposition de téléchargement du document
