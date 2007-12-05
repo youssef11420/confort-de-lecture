@@ -83,7 +83,17 @@ sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $pa
 
 	# Remplir la première partie par défaut
 	if (@cdlTagsInfos > 0) {
-		$positionContent .= parseAllHtml($cdlTagsInfos[$0]->{'content'}, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId);
+		# Récupération du contenu HTML nettoyé de la balise exclure
+		my $content = parseAllHtml($cdlTagsInfos[$0]->{'content'}, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId);
+
+		# Gestion des balises CDL exclure
+		$content = parseExclure($content);
+
+		# Gestion des balises CDL change/replace
+		$content = parseChanges($content);
+
+		# Gestion des balises CDL replace seules (raccourcis pour éviter les balises CDL change vides)
+		$positionContent .= parseAloneReplaces($content);
 
 		# Remplir le reste des parties de cdlPosition
 		for (my $j = 1; $j < @cdlTagsInfos; $j++) {
