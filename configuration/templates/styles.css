@@ -1,0 +1,65 @@
+body,input,select,button,textarea{font-family:###FONT_FAMILY###}
+*{margin:0;background-color:####BACKGROUND_COLOR###;color:####FONT_COLOR###}
+body,h1,h2,h3,h4,h5,h6,form,p,input,fieldset,hr{padding:0;border:none}
+body{padding:15px 15px 5px 15px;font-size:###FONT_SIZE###%}
+abbr,acronym{cursor:help}
+a{text-decoration:underline}
+a *{text-decoration:underline}
+form{margin:.15em 0}
+label{position:relative}
+fieldset{padding:10px;margin:10px 0}
+legend{padding:0 5px;margin-left:5px}
+img{display:block;padding:.5em 0}
+.cdlButtons{margin:3px 0}
+.cdlLoginForm .cdlButtons{text-align:center}
+fieldset,button,.cdlButtons input{border:1px solid ####FONT_COLOR###}
+.cdlButtons input{cursor:pointer}
+button{cursor:pointer;background:none}
+button,.cdlButtons input{padding:0 5px;font-weight:bold}
+textarea{overflow:auto;width:99.5%;margin-bottom:5px;border:1px solid ####FONT_COLOR###}
+input,select,button,textarea{font-size:100%}
+input{margin:3px}
+input.cdlInputText,.cdlInputText input,textarea{padding:1px 1px}
+select{border:1px solid ####FONT_COLOR###;margin-bottom:5px;vertical-align:-3px}
+input.cdlInputText,.cdlInputText input{border:1px solid ####FONT_COLOR###;margin-bottom:5px;width:50%;vertical-align:middle}
+option{padding-bottom:1px}
+ol,ul{padding:10px 0 10px 2em}
+li{padding-bottom:.15em}
+ul li{list-style-type:disc}
+ul ul li{list-style-type:circle}
+ul ul ul li{list-style-type:square}
+ul ul ul ul li{list-style-type:disc}
+ul ul ul ul ul li{list-style-type:circle}
+ul ul ul ul ul ul li{list-style-type:square}
+h1,h2,h3,h4,h5,h6{margin:5px 0}
+h1{font-size:260%}
+h2{font-size:200%}
+h3{font-size:150%}
+h4{font-size:130%}
+h5{font-size:115%}
+h6{font-size:100%}
+img{border:none !important}
+hr{display:none}
+table{border-top:1px solid ####FONT_COLOR###;border-left:1px solid ####FONT_COLOR###;border-bottom:none;border-right:none}
+th,td{border-top:none;border-left:none;border-bottom:1px solid ####FONT_COLOR###;border-right:1px solid ####FONT_COLOR###;padding:10px}
+.cdlCadreContainer{padding-bottom:15px}
+/* Si le bloc fais plus de 32000px graphiquement,il bugge sous Firefox à cause du overflow:auto. On règle ça avec un max-height de 32000px. */
+.cdlCadre{border:2px solid ####FONT_COLOR###;padding:8px;overflow:auto;max-height:32000px}
+.cdlCadre hr{background-color:####FONT_COLOR###;color:inherit;border:none;margin:10px 0;display:block;height:2px !important;overflow:hidden}
+.cdlClearBoth{clear:both;font-size:0%;height:0px;overflow:hidden}
+p{padding-bottom:.3em}
+.cdlCache{display:none}
+.cdlFoot{float:right;padding-left:10px;margin:-5px 0 7px 0}
+.cdlLabelDiv,.cdlFieldDiv{float:left;width:50%}
+.cdlLabelDiv{text-align:right;padding-top:.25em}
+.cdlFieldDiv input{min-width:200px;width:50%}
+.cdlBoldLink{font-weight:bold}
+.cdlExitFromCdlLinks{display:block;padding-top:5px}
+.cdlModifyStyleParametersLinks{float:left;margin:-5px 0 7px 0;padding-right:10px}
+.cdlTable{margin:1.6em 0}
+.cdlTable ul{list-style:none;padding:0;margin:0}
+.cdlTable ul li{list-style:none;padding-bottom:0}
+.cdlTable ul li .cdlTableRowContent{border:1px solid ####FONT_COLOR###;padding:10px}
+.cdlTable ul li .cdlTableRowSep{height:.2em;overflow:hidden;background-color:####FONT_COLOR###;color:inherit;margin:0 10px}
+.cdlTableCaption{text-align:center}
+.lienInvisible{position:absolute;top:1px;right:1px;width:15px;height:15px;display:block;background:transparent}
