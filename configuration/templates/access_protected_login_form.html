@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="###LANGUAGE###" lang="###LANGUAGE###">
+	<head>
+		<title>Acc&egrave;s &agrave; une page prot&eacute;g&eacute;e</title>
+		<link href="/favicon.png" rel="shortcut icon" />
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link href="/le-filtre/styles.css" rel="stylesheet" type="text/css" />
+		<!--[if IE]>
+		<link href="/le-filtre/styles_ie.css" rel="stylesheet" type="text/css" />
+		<![endif]-->
+	</head>
+	<body>
+		<div class="cdlGlobalPage">
+			<div class="errorContent">
+				<div class="cdlCadreContainer">
+					<div class="cdlCadre">
+						<p>Vous allez acc&eacute;der &agrave; une page qui est prot&eacute;g&eacute;e. Veuillez saisir votre identifiant et votre mot de passe.</p>
+						<br />
+						<div class="">###ERROR_LOGIN_MESSAGE###</div>
+						<form class="cdlLoginForm" method="get" action="">
+							<div>
+###HIDDEN_PARAMETERS###
+								<input type="hidden" name="cdlact" value="c" />
+
+								<div class="cdlLabelDiv"><label for="cdllogin">Nom d'utilisateur :&nbsp;</label></div>
+								<div class="cdlFieldDiv"><input class="cdlInputText" type="text" id="cdllogin" name="cdllogin" value="Nom d'utilisateur" onfocus="if (this.value==this.defaultValue) this.value=''" onblur="if (this.value=='') this.value=this.defaultValue" /></div>
+								<div class="cdlClearBoth"></div>
+								<div class="cdlLabelDiv"><label for="cdlpasswd">Mot de passe :&nbsp;</label></div>
+								<div class="cdlFieldDiv"><input class="cdlInputText" type="password" id="cdlpasswd" name="cdlpasswd" /></div>
+								<div class="cdlClearBoth"></div>
+								<br />
+								<div class="cdlButtons">
+									<input type="submit" name="cdlvalider" value="Valider" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cdlFoot">
+			<p>&copy; 2007 - Confort de lecture</p>
+		</div>
+	</body>
+</html>
