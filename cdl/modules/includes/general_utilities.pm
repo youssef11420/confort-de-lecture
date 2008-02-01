@@ -344,7 +344,7 @@ sub putParametersInUrl #($url, %requestParameters)
 		my $refParamterValues = $requestParameters{$paramterKey};
 		my @parameterValues = @$refParamterValues;
 		foreach my $parameterValue (@parameterValues) {
-			$requestParametersString .= $paramterKey."=".urlEncode($parameterValue)."&";
+			$url .= $paramterKey."=".urlEncode($parameterValue)."&";
 		}
 	}
 
@@ -376,7 +376,6 @@ sub buildMultipartRequest #($request, %requestParameters)
 	my $requestContent = "";
 
 	# Génération de la chaîne de paramètres
-	my $requestParametersString = "";
 	foreach my $paramKey (keys(%requestParameters)) {
 		my $refParamValues = $requestParameters{$paramKey};
 		my @paramValues = @$refParamValues;
