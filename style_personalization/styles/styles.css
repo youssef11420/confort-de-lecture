@@ -6,25 +6,26 @@ a{color:white}
 .body a{color:black !important}
 input{font-family:"Lucida Sans","Lucida Sans Unicode",arial,sans-serif;font-size:1em;background:transparent;border:1px solid white;padding:0.1em 0.2em;margin:0;color:white;display:block;float:left}
 .body input{border-color:black !important;color:black !important}
-.group label{display:block;float:left;width:8em;padding:0;margin:0;text-align:left;line-height:1.5em}
+.group label{display:block;float:left;/*width:8em;*/padding:0;margin:0;text-align:left;line-height:1.5em;width:40%;}
 #formIdent label,#formEnregistrerProfil label{margin:0 !important;margin:0 0 0 -10px}
 .divLigneForm{padding-bottom:15px;padding-left:0px}
-.submit input{width:6em;float:none;color:black;cursor:pointer}
+.divLigneForm input{width:45%}
+.submit input{/*width:6em;*/float:none;color:black;cursor:pointer}
 h1{margin:0 0 15px 0;float:left}
 .header img{float:right}
 .clearBoth{clear:both;height:0;overflow:hidden;font-size:0%}
 h2{margin:0 0 20px 0;padding:0 0 0 10px;font-size:1.9em}
 .group{border:1px solid white;background:black;padding:10px 1% 15px 1%;float:left;width:97.7% !important;width:99.7%;margin-bottom:10px}
 .body .group{border-color:black !important;background:white !important}
-input.submit{background-color:white;font-weight:bold;height:1.6em;line-height:1em}
+input.submit{background-color:white;font-weight:bold;height:1.6em;line-height:1em;float:left}
 .body input.submit{background-color:black !important}
 a.submit,a.submit2{background-color:white;font-weight:bold;height:1.6em;line-height:1em;font-size:1.5em}
 .body a.submit,.body a.submit2{background-color:black !important}
-a.submit{display:block;color:black;line-height:1.7em;height:1.7em;text-align:center;width:6em;margin-left:40px;padding:0 10px;text-decoration:none}
+a.submit{display:block;color:black;line-height:1.7em;height:1.7em;text-align:center;/*width:6em;*/margin-left:40px;padding:0 10px;text-decoration:none}
 .body a.submit{color:white !important}
-a.submit2{display:block;color:black;line-height:1.7em;height:1.6em;text-align:center;width:6em;margin-left:0px;padding:0 10px;text-decoration:none}
+a.submit2{display:block;color:black;line-height:1.7em;height:1.6em;text-align:center;/*width:6em;*/margin-left:0px;padding:0 10px;text-decoration:none;float:left}
 .body a.submit2{color:white !important}
-#accedezAuSite{width:9em}
+#accedezAuSite{/*width:9em*/}
 div.submit{padding-left:200px !important;padding-left:200px}
 .encadrementImage{background:url("../images/arrow.png") no-repeat;position:relative;left:-20px;padding-left:20px}
 .body .encadrementImage{background-image:url("../images/arrow_black.png") !important}
@@ -44,12 +45,12 @@ ul li{list-style:none;padding:4px;width:66px;height:66px;font-size:80%;float:lef
 .body .palette li.selected{border-color:black !important}
 div.inputSubmit{padding:7px;border:4px solid white;float:left;margin-top:7px;background:black}
 .body div.inputSubmit{border-color:black !important;background:white !important}
-div.inputSubmit2{padding:7px;border:4px solid white;margin:7px auto 0 auto;background:black;width:9.6em}
+div.inputSubmit2{padding:7px;border:4px solid white;margin:7px auto 0 auto;background:black;/*width:9.6em*/}
 .body div.inputSubmit2{border-color:black !important;background:white !important}
 div.inputSubmit2 input{float:none}
 input.submit{color:black;cursor:pointer}
 .body input.submit{color:white !important}
-#plusDeCouleurs,#plusDeCouleursTexte{width:9.5em}
+#plusDeCouleurs,#plusDeCouleursTexte{/*width:9.5em*/}
 .palette{float:left;margin:0;padding:0 20px 0 0;background-color:black}
 .body .palette{background-color:white !important}
 fieldset.encadrementImage{border:none;padding:0 0 0 100px;background-position:0% 50%;margin:0}
@@ -76,9 +77,9 @@ fieldset.encadrementImage legend{display:none}
 #boutonIdent{padding-top:5px}
 #divEnegistrer{border:none !important;padding:11px}
 #divEnregistrer2{padding:11px}
-#formEnregistrerProfil label{width:16.3em}
-#enregistrerAccederAuSite{width:16em}
-#enregistrerAccederAuSite2{width:6.4em}
+#formEnregistrerProfil label{width:40%}
+#enregistrerAccederAuSite{/*width:16em*/}
+#enregistrerAccederAuSite2{/*width:6.4em*/}
 #submitEnregistrer{padding:0 !important;text-align:center}
 #submitEnregistrer input{margin:0 auto !important}
 label,input,a,p{font-size:1.5em}
@@ -95,7 +96,7 @@ label,input,a,p{font-size:1.5em}
 .body .txtErr{color:black !important}
 input#identify,#password,#newIdentify,#newPassword,#cNewPassword{cursor:url(text.cur),text}
 input[type=text],input[type=password]{cursor:url(../images/text.cur),text}
-#divBoutonEnregistrer{float:none;width:24em}
+#divBoutonEnregistrer{float:left;/*width:24em*/}
 #divBoutonEnregistrer *{float:none}
 #formPalette{width:97.9%;margin-top:10px}
 .leftForm{float:left;width:68%;padding:.2em 2% 0 0;font-size:1.5em}
