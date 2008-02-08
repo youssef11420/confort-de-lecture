@@ -24,7 +24,7 @@ switch ($_REQUEST['l']) {
 	case "de" : $_SESSION['langue'] = "de"; break;
 	case "es" : $_SESSION['langue'] = "es"; break;
 	case "it" : $_SESSION['langue'] = "it"; break;
-	case "nl" : $_SESSION['langue'] = "en"; break;
+	case "nl" : $_SESSION['langue'] = "nl"; break;
 	case "pt" : $_SESSION['langue'] = "pt"; break;
 	default : $_SESSION['langue'] = "fr";
 }
