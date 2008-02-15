@@ -59,10 +59,10 @@ sub parseAllFramesSrc #($htmlCode, $pagePath, $siteId)
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl) = @_;
 
 	# Transformation de l'attribut src dans la balise farme 
-	$htmlCode =~ s/(<frame)(\s[^<]*?)?(\s\/>)/$1.parseFrameSrc($2, $pagePath, $siteId, $siteRootUrl).$3/segi;
+	$htmlCode =~ s/(<frame)(\s[^>]*?)?(\s\/>)/$1.parseFrameSrc($2, $pagePath, $siteId, $siteRootUrl).$3/segi;
 	
 	# Transformation de l'attribut src dans la balise ifrmae
-	$htmlCode =~ s/(<iframe)(\s[^<]*?)?(>)/$1.parseFrameSrc($2, $pagePath, $siteId, $siteRootUrl).$3/segi;
+	$htmlCode =~ s/(<iframe)(\s[^>]*?)?(>)/$1.parseFrameSrc($2, $pagePath, $siteId, $siteRootUrl).$3/segi;
 	
 	# Retourner le code html après modification des URL de destinations des frames/iframes
 	return $htmlCode;
@@ -80,19 +80,19 @@ sub replaceFramesWithAlternativeHtml #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression des balises frame
-	$htmlCode =~ s/<frame(\s[^<]*?)?\/>//sgi;
+	$htmlCode =~ s/<frame(\s[^>]*?)?\/>//sgi;
 
 	# Suppression des balises ouvrantes frameset
-	$htmlCode =~ s/<frameset(\s[^<]*?)?>//sgi;
+	$htmlCode =~ s/<frameset(\s[^>]*?)?>//sgi;
 
 	# Suppression des balises fermantes frameset
 	$htmlCode =~ s/<\/frameset>//sgi;
 
 	# Suppression des balises noframe et récupération de leurs contenus
-	$htmlCode =~ s/<noframe(\s[^<]*?)?>(.*?)<\/noframe>/$2/sgi;
+	$htmlCode =~ s/<noframe(\s[^>]*?)?>(.*?)<\/noframe>/$2/sgi;
 	
 	# Suppression des balises iframe et récupération de leurs contenus
-	$htmlCode =~ s/<iframe(\s[^<]*?)?>(.*?)<\/iframe>/$2/sgi;
+	$htmlCode =~ s/<iframe(\s[^>]*?)?>(.*?)<\/iframe>/$2/sgi;
 	
 	# Retourner le résultat après suppression des frames/iframes
 	return $htmlCode;

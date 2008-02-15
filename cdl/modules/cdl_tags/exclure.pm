@@ -29,7 +29,7 @@ sub parseExclure #
 	my ($htmlCode) = @_;
 
 	# Suppression des balises cdlExclure et leurs contenus
-	$htmlCode =~ s/<!--cdlExclure(\s[^<]*?)?-->(.*?)<!--\/cdlExclure-->//sg;
+	$htmlCode =~ s/<!--cdlExclure(\s[^>]*?)?-->(.*?)<!--\/cdlExclure-->//sg;
 
 	# Retourner le code HTML nettoyé
 	return $htmlCode;

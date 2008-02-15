@@ -61,10 +61,10 @@ sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript
 	# Si on a choisit de parser le javascript dans la configuration, on passe par le script <javascript.pl>
 	# Sinon on traite l'URL pour la transformer en absolue
 	if ($parseJavascript) {
-		$htmlCode =~ s/(<script(\s[^<]*?)?\s)src\s*=\s*(\"|\')(.*?)\3(.*?>)/
+		$htmlCode =~ s/(<script(\s[^>]*?)?\s)src\s*=\s*(\"|\')(.*?)\3(.*?>)/
 			$1."src=".$3."\/filtre\/javascript.pl?cdlid=".$siteId."&amp;cdlurl=".urlEncode(makeUrlAbsolute($4, $siteRootUrl, $pagePath)).$3.$5/segi;
 	} else {
-		$htmlCode =~ s/(<script(\s[^<]*?)?\s)src\s*=\s*(\"|\')(.*?)\3(.*?>)/
+		$htmlCode =~ s/(<script(\s[^>]*?)?\s)src\s*=\s*(\"|\')(.*?)\3(.*?>)/
 			$1."src=".$3.makeUrlAbsolute($4, $siteRootUrl, $pagePath).$3.$5/segi;
 	}
 
@@ -73,12 +73,12 @@ sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript
 
 	if ($parseJavascript) {
 		# Transformation du javascript dans les balises script
-		$htmlCode =~ s/((<(script)(\s[^<]*?)?>)(.*?)(<\/\3>))/$allScripts .= "\t\t".$2.parseJavascriptCode($5, $siteId, $pagePath, $siteRootUrl).$6."\n"; $1/segi;
+		$htmlCode =~ s/((<(script)(\s[^>]*?)?>)(.*?)(<\/\3>))/$allScripts .= "\t\t".$2.parseJavascriptCode($5, $siteId, $pagePath, $siteRootUrl).$6."\n"; $1/segi;
 		# Transformation du javascript dans les attributs 
 		$htmlCode =~ s/(<(\w|\d)+)(\s.*?)>/$1.parseEventListenersAttributes($3, $siteId, $pagePath, $siteRootUrl).">"/segi;
 	} else {
 		# Récupération de tous les scripts du code HTML
-		$htmlCode =~ s/(<(script)(\s[^<]*?)?>(.*?)<\/\2>)/$allScripts .= "\t\t".$1."\n"; $1/segi;
+		$htmlCode =~ s/(<(script)(\s[^>]*?)?>(.*?)<\/\2>)/$allScripts .= "\t\t".$1."\n"; $1/segi;
 	}
 
 	# Retourner le code HTML avec les src des scripts traités
@@ -119,7 +119,7 @@ sub cleanEventListeners #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Détection des balises et traitement de la chaîne correspondant aux attributs
-	$htmlCode =~ s/(<(\w|\d)+)(\s[^<]*?)>/$1.cleanEventListenersAttributes($3).">"/segi;
+	$htmlCode =~ s/(<(\w|\d)+)(\s[^>]*?)>/$1.cleanEventListenersAttributes($3).">"/segi;
 
 	# Retourner le code HTML nettoyé d'attributs javascript
 	return $htmlCode;
@@ -137,8 +137,8 @@ sub cleanScripts #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression des balises script
-	$htmlCode =~ s/<(script)(\s[^<]*?)?>(.*?)<\/\1>//sgi;
-	$htmlCode =~ s/<(noscript)(\s[^<]*?)?>(.*?)<\/\1>/<div class=\"noscriptContent\">$1<\/div>/sgi;
+	$htmlCode =~ s/<(script)(\s[^>]*?)?>(.*?)<\/\1>//sgi;
+	$htmlCode =~ s/<(noscript)(\s[^>]*?)?>(.*?)<\/\1>/<div class=\"noscriptContent\">$1<\/div>/sgi;
 
 	return $htmlCode;
 }

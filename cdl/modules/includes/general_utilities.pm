@@ -92,7 +92,7 @@ sub linearizeHtmlCode #($htmlCode)
 	$htmlCode =~ s/\s+/ /sgi;
 
 	# On supprime les retours à la ligne html (balise br) en trop
-	$htmlCode =~ s/<(p|div)(\s[^<]*?)?>\s*<br[^<]*?>\s*<\/\1>/<p$2><\/p>/sgi;
+	$htmlCode =~ s/<(p|div)(\s[^>]*?)?>\s*<br[^>]*?>\s*<\/\1>/<p$2><\/p>/sgi;
 
 	# On retourne le résultat final après le traitement
 	return $htmlCode;
@@ -142,11 +142,11 @@ sub cleanDeprecatedHtmlTags #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Mettre toujours un espace avant la fin d'une balise auto-fermante
-	$htmlCode =~ s/<([^<]*?\S)\/>/<$1 \/>/sgi;
+	$htmlCode =~ s/<([^>]*?\S)\/>/<$1 \/>/sgi;
 
 	# On supprime les balises dépréciées
 	foreach my $tag (%deprecatedHTMLTags) {
-		$htmlCode =~ s/<\/?$tag(\s[^<]*?)?>//sgi;
+		$htmlCode =~ s/<\/?$tag(\s[^>]*?)?>//sgi;
 	}
 
 	# On met en miniscule tous les noms de balises
@@ -160,24 +160,39 @@ sub cleanDeprecatedHtmlTags #($htmlCode)
 }
 
 # Function: cleanAttributesValues
-#	Encoder les caractères '<' et '>' dans le contenu des attributs
+#	Nettoyage des attibuts HTML et leurs valeurs : encodage des caractères '<' et '>' dans les valeurs, suppression des attributs dépréciés et mise en miniscule des noms des attributs
 #
 # Paramètres:
 #	$tagAttributes - code html correspondant aux attributs d'une balise quelconque
-sub cleanAttributesValues #($tagAttributes)
+#	$removeDeprecatedAttributes - booléen pour indiquer si on procède à la suppression des attibuts dépréciés ou non. Utile pour faire 2 appels dans <cleanDeprecatedHtmlAttributes>)
+sub cleanAttributesValues #($tagAttributes, $removeDeprecatedAttributes)
 {
 	# Extraction des arguments dans une variable locale :
 	# - code html correspondant aux attributs d'une balise quelconque
-	my ($tagAttributes) = @_;
+	# - booléen pour indiquer si on procède à la suppression des attibuts dépréciés ou non. Utile pour faire 2 appels dans la fontion cleanDeprecatedHtmlAttributes)
+	my ($tagAttributes, $removeDeprecatedAttributes) = @_;
 
-	$tagAttributes =~ s/\s(\S+)\s*=\s*(\"|\')(.*?)\2/" ".$1."=".$2.htmlSpecialChars($3).$2/segi;
+	# On met en miniscule tous les noms d'attributs et on encode les caractères '<' et '>' dans le contenu des attributs
+	if (not $removeDeprecatedAttributes) {
+		$tagAttributes =~ s/\s(\S+)\s*=\s*(\"|\')(.*?)\2/" ".$1."=".$2.htmlSpecialChars($3).$2/segi;
+		$tagAttributes =~ s/(\s\S*?)\s*=\s*(\"|\')(.*?)\2/lc($1)."=".$2.$3.$2/segi;
+	}
+
+	# On supprime tous les attributs dépréciés
+	if ($removeDeprecatedAttributes) {
+		foreach my $attribute (%deprecatedHTMLAttributes) {
+			$tagAttributes =~ s/\s$attribute\s*=\s*(\"|\')(.*?)\1(\s|>)/$3/sgi;
+			# Si l'attribut est déclaré sans valeur (par exemple : nowrap)
+			$tagAttributes =~ s/\s$attribute(\s|>)/$1/sgi;
+		}
+	}
 
 	# On retourne le résultat final après le traitement
 	return $tagAttributes;
 }
 
 # Function: cleanDeprecatedHtmlAttributes
-#	Supprimer les attributs non valide XHTML + fermeture des balises autofermantes qui ne sont pas bien fermées
+#	Supprimer les attributs non valides XHTML + fermeture des balises autofermantes qui ne sont pas bien fermées
 #
 # Paramètres:
 #	$htmlCode - chaîne correspondant au code HTML à traiter
@@ -188,8 +203,7 @@ sub cleanDeprecatedHtmlAttributes #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# On met en miniscule tous les noms d'attributs et on encode les caractères '<' et '>' dans le contenu des attributs
-	$htmlCode =~ s/(<(\w|\d)+)(\s.*?(<|>).*?)>/$1.cleanAttributesValues($3).">"/segi;
-	$htmlCode =~ s/(\s\S*?)\s*=\s*(\"|\')(.*?)\2/lc($1)."=".$2.$3.$2/segi;
+	$htmlCode =~ s/(<(\w|\d)+)(\s.*?(<|>).*?)>/$1.cleanAttributesValues($3, 0).">"/segi;
 
 	# On ferme les balises autofermantes qui ne sont pas fermées pour les rendre XHTML
 	# Ce traitement est fait ici pour bénéficier du nettoyage des attributs avant
@@ -201,17 +215,13 @@ sub cleanDeprecatedHtmlAttributes #($htmlCode)
 
 	# On étudie le cas des balises où certains attributs présents dans %deprecatedHTMLAttributes sont valides.
 	# Dans ce cas on remplace l'attribut XXXX par un code temporaire sous la form _cdl_XXXX
-	$htmlCode =~ s/(<(script|input|link|style|a|object|param|button)\s)(([^<]*?\s)?(type)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
-	$htmlCode =~ s/(<(input|param|button|option)\s)(([^<]*?\s)?(value)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
-	$htmlCode =~ s/(<(img|object)\s)(([^<]*?\s)?(height)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
-	$htmlCode =~ s/(<(img|object|table|colgroup|col)\s)(([^<]*?\s)?(width)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
+	$htmlCode =~ s/(<(script|input|link|style|a|object|param|button)\s)(([^>]*?\s)?(type)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
+	$htmlCode =~ s/(<(input|param|button|option)\s)(([^>]*?\s)?(value)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
+	$htmlCode =~ s/(<(img|object)\s)(([^>]*?\s)?(height)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
+	$htmlCode =~ s/(<(img|object|table|colgroup|col)\s)(([^>]*?\s)?(width)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
 
-	# On supprime tous les attributs dépréciés
-	foreach my $attribute (%deprecatedHTMLAttributes) {
-		$htmlCode =~ s/\s$attribute\s*=\s*(\"|\')(.*?)\1(\s|>)/$3/sgi;
-		# Si l'attribut est déclaré sans valeur (par exemple : nowrap)
-		$htmlCode =~ s/\s$attribute(\s|>)/$1/sgi;
-	}
+	# Suppression des
+	$htmlCode =~ s/(<(\w|\d)+)(\s[^>]*?(<|>).*?)>/$1.cleanAttributesValues($3, 1).">"/segi;
 
 	# On supprime le code temporaire _cdl_ (_cdl_XXXX ==> XXXX)
 	$htmlCode =~ s/_cdl_(type|value|height|width)\s*=\s*(.*?)(\s|>)/$1=$2$3/sgi;
@@ -233,7 +243,7 @@ sub cleanUselessHTML #($htmlCode)
 
 	# On remplie le contenu des balises vides à ne pas supprimer avec un contenu temporaire __CDL_EMPTY_TAG_NOT_TO_DELETE___
 	foreach my $emptyTag (%emptyTagsToKeep) {
-		$htmlCode =~ s/(<$emptyTag(\s[^<]*?)?>)\s*(<\/$emptyTag>)/$1."_CDL_EMPTY_TAG_NOT_TO_DELETE_".$3/segi;
+		$htmlCode =~ s/(<$emptyTag(\s[^>]*?)?>)\s*(<\/$emptyTag>)/$1."_CDL_EMPTY_TAG_NOT_TO_DELETE_".$3/segi;
 	}
 
 	# On supprime les balises vides inutiles
@@ -247,7 +257,7 @@ sub cleanUselessHTML #($htmlCode)
 	}
 
 	# Supprimer les spans, ils servent plus à rien
-	$htmlCode =~ s/<\/?span(\s[^<]*?)?>//sgi;
+	$htmlCode =~ s/<\/?span(\s[^>]*?)?>//sgi;
 
 	# Supprimer les retours à la ligne (balise br) en trop.
 	$htmlCode =~ s/<br(\s[^>]*?)?><br(\s[^>]*?)?>(<br(\s[^>]*?)?>)*/<br$1><br$2>/sgi;
@@ -258,7 +268,7 @@ sub cleanUselessHTML #($htmlCode)
 	# On supprime des commentaires (hors CDL et commentaires conditionnels IE)
 
 	# On mets des codes temporaires pour protéger les commentaires utiles
-	$htmlCode =~ s/<!--cdlReplace(\s[^<]*?)?-->\s*<!--(.*?)-->\s*<!--\/cdlReplace-->/
+	$htmlCode =~ s/<!--cdlReplace(\s[^>]*?)?-->\s*<!--(.*?)-->\s*<!--\/cdlReplace-->/
 		<!--cdlReplace$1-->_CDL_COMMENT_FOR_REPLACE_$2_CDL_COMMENT_FOR_REPLACE_<!--\/cdlReplace-->/sg;
 	$htmlCode =~ s/<!--(\/?cdl.*?)-->/_CDL_COMMENT_$1_/sg;
 	$htmlCode =~ s/<!--(\[if\s*.*?\]>(.*?)<!\[endif\])-->/_CDL_IE_COMMENT_$1_CDL_IE_COMMENT_/sgi;
@@ -289,7 +299,7 @@ sub cleanAllHtml #($htmlCode)
 	# Pour ne pas traiter les chaînes spéciales (qui sont dans les balises script). On les stocke pour les remettre après les traitements qui suivent après
 	my $i = 0;
 	my @scriptsContents;
-	$htmlCode =~ s/(<script(\s[^<]*?)?>)(.*?)(<\/script>)/
+	$htmlCode =~ s/(<script(\s[^>]*?)?>)(.*?)(<\/script>)/
 		$scriptsContents[$i] = $3;
 		$1."___CDL_SCRIPT".$i++."___".$4/segi;
 

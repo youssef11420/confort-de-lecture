@@ -29,12 +29,12 @@ sub getHeadContent #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# S'il y a pas de head on retourne la chaîne vide
-	if ($htmlCode !~ m/<head(\s[^<]*?)?>(.*?)<\/head>/si) {
+	if ($htmlCode !~ m/<head(\s[^>]*?)?>(.*?)<\/head>/si) {
 		return "";
 	}
 
 	# Récupération du contenu de head
-	$htmlCode =~ s/(.*)<head(\s[^<]*?)?>(.*?)<\/head>(.*)/$3/sgi;
+	$htmlCode =~ s/(.*)<head(\s[^>]*?)?>(.*?)<\/head>(.*)/$3/sgi;
 
 	# Retourner le contenu du head
 	return $htmlCode;
@@ -52,12 +52,12 @@ sub getPageTitle #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# S'il y a pas de title on retourne la chaîne vide
-	if ($htmlCode !~ m/<title(\s[^<]*?)?>(.*?)<\/title>/si) {
+	if ($htmlCode !~ m/<title(\s[^>]*?)?>(.*?)<\/title>/si) {
 		return "";
 	}
 
 	# Récupération du contenu de head
-	$htmlCode =~ s/(.*)<title(\s[^<]*?)?>(.*?)<\/title>(.*)/$3/segi;
+	$htmlCode =~ s/(.*)<title(\s[^>]*?)?>(.*?)<\/title>(.*)/$3/segi;
 
 	# Retourner le contenu de la balise title
 	return $htmlCode;
@@ -77,7 +77,7 @@ sub getBaseHref #($htmlCode)
 	my $baseHref = "";
 
 	# Récupération de l'URL absolue dans le href de la balise base
-	$htmlCode =~ s/<base(\s[^<]*?)?\s(href)\s*=\s*(\"|\')(.*?)\3(.*?)\s\/>/$baseHref = $4;/segi;
+	$htmlCode =~ s/<base(\s[^>]*?)?\s(href)\s*=\s*(\"|\')(.*?)\3(.*?)\s\/>/$baseHref = $4;/segi;
 
 	# Si l'URL dans le href de la balise base n'est pas absolue, on retourne la chaîne vide
 	if ($baseHref !~ m/^(\d|\w)*?:\/\//si) {
@@ -118,9 +118,9 @@ sub cleanStyles #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression des balises style
-	$htmlCode =~ s/<style(\s[^<]*?)?>(.*?)<\/style>//sgi;
+	$htmlCode =~ s/<style(\s[^>]*?)?>(.*?)<\/style>//sgi;
 	# Suppression des balises link permettant d'inclure un feuille de style : rel="stylesheet"
-	$htmlCode =~ s/<link(\s[^<]*?)?\s(rel\s*=\s*((\"|\')?)stylesheet\3.*?)\s\/>//sgi;
+	$htmlCode =~ s/<link(\s[^>]*?)?\s(rel\s*=\s*((\"|\')?)stylesheet\3.*?)\s\/>//sgi;
 
 	# Suppression des attributs HTML style
 	$htmlCode =~ s/(<(\w|\d)+)(\s.*?)>/$1.cleanStyleAttributes($3).">"/segi;
@@ -248,11 +248,11 @@ sub parseMetas #($htmlCode, $pagePath, $siteId, $siteRootUrl)
 	my $allMetas = "";
 
 	# Transformation des URL de redirection de toutes les balises meta dont l'attribut http-equiv="Refresh"
-	$htmlCode =~ s/((<meta)(\s[^<]*?)?(\s(http-equiv)\s*=\s*(\"|\')?Refresh\5)(\s[^<]*?)?(\s\/>))/
+	$htmlCode =~ s/((<meta)(\s[^>]*?)?(\s(http-equiv)\s*=\s*(\"|\')?Refresh\5)(\s[^>]*?)?(\s\/>))/
 		$2.parseMetaAttributes($3, $pagePath, $siteId, $siteRootUrl).$4.parseMetaAttributes($7, $pagePath, $siteId, $siteRootUrl).$8/segi;
 
 	# Récupération de tous les métas
-	$htmlCode =~ s/((<meta)(\s[^<]*?)?(\s\/>))/$allMetas .= "\t\t".$1."\n"; ""/segi;
+	$htmlCode =~ s/((<meta)(\s[^>]*?)?(\s\/>))/$allMetas .= "\t\t".$1."\n"; ""/segi;
 
 	# Retourner le code html
 	return ($htmlCode, $allMetas);

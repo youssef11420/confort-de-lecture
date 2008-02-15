@@ -29,7 +29,7 @@ sub parseAloneReplaces #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Supprimer les commentaires à l'intérieur de la balise cdlReplace pour afficher son contenu dans la verion filtrée
-	$htmlCode =~ s/<!--cdlReplace(\s[^<]*?)?-->\s*<!--(.*?)-->\s*<!--\/cdlReplace-->/$2/sg;
+	$htmlCode =~ s/<!--cdlReplace(\s[^>]*?)?-->\s*<!--(.*?)-->\s*<!--\/cdlReplace-->/$2/sg;
 
 	# Retourne le contenu HTML avec les balises CDL replace seules traitées
 	return $htmlCode;
@@ -47,12 +47,12 @@ sub parseReplaces #($cdlTagContent)
 	my ($cdlTagContent) = @_;
 
 	# S'il n'y a pas de balise CDL replace, le remplacement est la chaîne vide
-	if ($cdlTagContent !~ m/<!--cdlReplace(\s[^<]*?)?-->\s*<!--(.*)-->\s*<!--\/cdlReplace-->/sg) {
+	if ($cdlTagContent !~ m/<!--cdlReplace(\s[^>]*?)?-->\s*<!--(.*)-->\s*<!--\/cdlReplace-->/sg) {
 		$cdlTagContent = "";
 	}
 
 	# Supprimer les commentaires à l'intérieur de la balise cdlReplace
-	$cdlTagContent =~ s/(.*)<!--cdlReplace(\s[^<]*?)?-->\s*<!--(.*)-->\s*<!--\/cdlReplace-->(.*)/$3/sg;
+	$cdlTagContent =~ s/(.*)<!--cdlReplace(\s[^>]*?)?-->\s*<!--(.*)-->\s*<!--\/cdlReplace-->(.*)/$3/sg;
 
 	# Retourne le contenu de la balise CDL replace décommenté
 	return $cdlTagContent;
@@ -70,7 +70,7 @@ sub parseChanges #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Détection de la balise cdlChange et récupération de son contenu
-	$htmlCode =~ s/<!--cdlChange(\s[^<]*?)?-->(.*?)<!--\/cdlChange-->/parseReplaces($2)/seg;
+	$htmlCode =~ s/<!--cdlChange(\s[^>]*?)?-->(.*?)<!--\/cdlChange-->/parseReplaces($2)/seg;
 
 	# Retourne le code html sans les balise change/replace et avec le contenu du replace décommenté
 	return $htmlCode;

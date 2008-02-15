@@ -60,7 +60,7 @@ sub parseAppletsSrc #($htmlCode, $siteRootUrl, $pagePath)
 	my ($htmlCode, $siteRootUrl, $pagePath) = @_;
 
 	# Identification des balises applet
-	$htmlCode =~ s/(<applet)(\s[^<]*?)?(>)/$1.parseAppletAttributes($2, $siteRootUrl, $pagePath).$3/segi;
+	$htmlCode =~ s/(<applet)(\s[^>]*?)?(>)/$1.parseAppletAttributes($2, $siteRootUrl, $pagePath).$3/segi;
 
 	# Retourner le code HTML avec les balises applet modifiées
 	return $htmlCode;
@@ -78,7 +78,7 @@ sub cleanAppletParams #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression des balises param
-	$htmlCode =~ s/<param(\s[^<]*?)?\s\/>//segi;
+	$htmlCode =~ s/<param(\s[^>]*?)?\s\/>//segi;
 
 	# Retourner le code HTML sans les éléments param
 	return $htmlCode;
@@ -96,7 +96,7 @@ sub replaceAppletsWithAlternativeHtml #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Supprimer les applet ainsi que les balises param se trauvant à l'intérieur et garder le contenu alternatif
-	$htmlCode =~ s/<applet(\s[^<]*?)?>(.*?)<\/applet>/cleanAppletParams($2)/sgi;
+	$htmlCode =~ s/<applet(\s[^>]*?)?>(.*?)<\/applet>/cleanAppletParams($2)/sgi;
 
 	# Retourner le code html nettoyé de toutes les balises applet
 	return $htmlCode;

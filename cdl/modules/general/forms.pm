@@ -109,13 +109,13 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl)
 	# Traitement du code des formulaires :
 
 	# Modification de la valeur de l'attribut action et rajout du champ caché pour passer l'action en paramétre au script CDL
-	$htmlCode =~ s/<form(\s[^<]*?)?\s(action)\s*=\s*(\"|\')(.*?)\3((\s[^<]*?)?>)/"<form".$1." ".$2."=\"".getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl)."\"".$5/segi;
+	$htmlCode =~ s/<form(\s[^>]*?)?\s(action)\s*=\s*(\"|\')(.*?)\3((\s[^>]*?)?>)/"<form".$1." ".$2."=\"".getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl)."\"".$5/segi;
 
 	# rajout d'un div autour du contenu de la balise form pour être sur que la page est valide XHTML strict
-	$htmlCode =~ s/(<(form)(\s[^<]*?)?>)(.*?)(<\/\2>)/$1<div>$4<\/div>$5/sgi;
+	$htmlCode =~ s/(<(form)(\s[^>]*?)?>)(.*?)(<\/\2>)/$1<div>$4<\/div>$5/sgi;
 
 	# Supprimer l'attribut name de la balise form
-	$htmlCode =~ s/(<form(\s[^<]*?)?\s)(name\s*=\s*(\"|\')(.*?)\4)/$tutu=1;$1;/segi;
+	$htmlCode =~ s/(<form(\s[^>]*?)?\s)(name\s*=\s*(\"|\')(.*?)\4)/$tutu=1;$1;/segi;
 
 	# Correction des attributs booléens concernant les champs de formulaire (selected, disabled, readonly, checked, multiple, ...
 	# et d'autres on sait jamais) non conformes à la norme
@@ -124,18 +124,18 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl)
 	$htmlCode =~ s/(<(\w|\d)+)(\s.*?)>/$1.parseFormBooleanAttributes($3).">"/segi;
 
 	# Mettre la classe cdlInputText aux champs textuels
-	$htmlCode =~ s/(<input(\s[^<]*?)?\s(type)\s*=\s*(\"|\')(text|password|file)\4.*?)(\/>)/<span class=\"cdlInputText\">$1$6<\/span>/sgi;
+	$htmlCode =~ s/(<input(\s[^>]*?)?\s(type)\s*=\s*(\"|\')(text|password|file)\4.*?)(\/>)/<span class=\"cdlInputText\">$1$6<\/span>/sgi;
 	# Gestion des balises input sans attribut type (donc par défaut de type texte)
-	$htmlCode =~ s/(<input(\s[^<]*?)?>)/addBorderForTextInputWithoutTypeAttribute($1)/segi;
+	$htmlCode =~ s/(<input(\s[^>]*?)?>)/addBorderForTextInputWithoutTypeAttribute($1)/segi;
 
 	# Remplacer les boutons image (input type="image") par leur contenu alternatif. S'ils en ont pas, on met un texte par défaut ("Valider" par exemple)
-	$htmlCode =~ s/<input(\s[^<]*?)?\s(type)\s*=\s*(\"|\')(image)\3(.*?)(\s\/>)/
+	$htmlCode =~ s/<input(\s[^>]*?)?\s(type)\s*=\s*(\"|\')(image)\3(.*?)(\s\/>)/
 		my %inputAttributes = getInputImageAttributes($1." ".$5);
 		"<input type=\"submit\" name=\"".$inputAttributes{'name'}."\" value=\"".$inputAttributes{'alt'}."\" \/>"/segi;
 
 	# Entourer les boutons de formulaire par un div
-	$htmlCode =~ s/(<input(\s[^<]*?)?\s(type)\s*=\s*(\"|\')(submit|button|reset)\4.*?\/>)/<div class=\"cdlButtons\">$1<\/div>/sgi;
-	$htmlCode =~ s/(<(button)(\s[^<]*?)?>.*?<\/\2>)/<div class=\"cdlButtons\">$1<\/div>/sgi;
+	$htmlCode =~ s/(<input(\s[^>]*?)?\s(type)\s*=\s*(\"|\')(submit|button|reset)\4.*?\/>)/<div class=\"cdlButtons\">$1<\/div>/sgi;
+	$htmlCode =~ s/(<(button)(\s[^>]*?)?>.*?<\/\2>)/<div class=\"cdlButtons\">$1<\/div>/sgi;
 
 	# Retourner le code html aprés le traitement
 	return $htmlCode;

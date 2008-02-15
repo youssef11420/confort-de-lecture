@@ -29,7 +29,7 @@ sub positionTagExists #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Si la balise CDL position existe, on retourne vrai
-	if ($htmlCode =~ m/<!--(cdlPosition)(\s[^<]*?)?-->(.*?)<!--\/\1-->/s) {
+	if ($htmlCode =~ m/<!--(cdlPosition)(\s[^>]*?)?-->(.*?)<!--\/\1-->/s) {
 		return 1;
 	}
 
