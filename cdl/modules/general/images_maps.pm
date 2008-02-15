@@ -37,7 +37,7 @@ sub replaceImageWithAlt #($htmlCode)
 }
 
 # Function: parseImageAttributes
-#	Traitement des attributs de la balise img : transformer la valeur de l'attribut src pour que ça soit toujours une url absolue
+#	Traitement des attributs de la balise img : transformer la valeur de l'attribut src pour que ça soit toujours une url absolue + suppression des hauteurs et largeurs des images + ajout d'un attribut alt s'il y en a pas
 #
 # Paramètres:
 #	$tagAttributes - code HTML des attributs à traiter
@@ -54,18 +54,27 @@ sub parseImageAttributes #($tagAttributes, $siteRootUrl, $pagePath)
 	# Mettre en absolue l'URL dans l'attribut src
 	$tagAttributes =~ s/(\s(src))\s*=\s*(\"|\')(.*?)\3/$1."=".$3.makeUrlAbsolute($4, $siteRootUrl, $pagePath).$3/segi;
 
+	# Supprimer les attributs de tailles (hauteur, largeur) pour afficher l'image en pleines dimensions (sans dégradation)
+	$tagAttributes =~ s/(\s(width))\s*=\s*(\"|\')(.*?)\3//sgi;
+	$tagAttributes =~ s/(\s(height))\s*=\s*(\"|\')(.*?)\3//sgi;
+
+	# Ajout d'un attribut alt s'il y en a pas
+	if ($tagAttributes !~ m/(\s(alt))\s*=\s*(\"|\')(.*?)\3/si) {
+		$tagAttributes .= " alt=\"\"";
+	}
+
 	# Retourner le code HTML des attributs parsés
 	return $tagAttributes;
 }
 
-# Function: parseImagesSrc
-#	Transformer la valeur de l'attribut src pour que ça soit toujours une url absolue pour les balises img
+# Function: parseImages
+#	Traitement des attributs des balises img pour s'afficher dans la version filtrée correctement et sans erreur XHTML
 #
 # Paramètres:
 #	$htmlCode - code HTML à traiter
 #	$siteRootUrl - url racine du site
 #	$pagePath - chemin vers la page
-sub parseImagesSrc #($htmlCode, $siteRootUrl, $pagePath)
+sub parseImages #($htmlCode, $siteRootUrl, $pagePath)
 {
 	# Extraction des arguments dans une variable locale :
 	# - code HTML à traiter
@@ -73,7 +82,7 @@ sub parseImagesSrc #($htmlCode, $siteRootUrl, $pagePath)
 	# - chemin vers la page
 	my ($htmlCode, $siteRootUrl, $pagePath) = @_;
 
-	# Transformation des URL de toutes les balises img
+	# Traitement des attributs dans les balises img
 	$htmlCode =~ s/(<img)(\s.*?)(\s\/>)/$1.parseImageAttributes($2, $siteRootUrl, $pagePath).$3/segi;
 
 	# Retourner le code HTML avec les balise img parsées (url mises en absolues)
