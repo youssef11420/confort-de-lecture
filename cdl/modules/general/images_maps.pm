@@ -29,8 +29,8 @@ sub replaceImageWithAlt #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Traitement du code et remplacement des images par leurs textes alternatifs
-	$htmlCode =~ s/<img(\s[^<]*?)?\s(alt)\s*=\s*(\"|\')(.*?)\3.*?\s\/>/($4 eq "") ? "" : "<span class=\"cdlImage\">".$4."<\/span>"/segi;
-	$htmlCode =~ s/<img(\s[^<]*?)?\s\/>//sgi;
+	$htmlCode =~ s/<img(\s[^>]*?)?\s(alt)\s*=\s*(\"|\')(.*?)\3.*?\s\/>/($4 eq "") ? "" : "<span class=\"cdlImage\">".$4."<\/span>"/segi;
+	$htmlCode =~ s/<img(\s[^>]*?)?\s\/>//sgi;
 
 	# Retourner le code html après le traitement
 	return $htmlCode;
@@ -137,14 +137,14 @@ sub parseMapAreas #($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl)
 		$htmlCode =~ s/(<area)(\s.*?)(\s\/>)/$1.parseMapAreaAttributes($2, $pagePath, $siteId).$3/segi;
 	} else {
 		# Remplacer les balises map par des balises ul
-		$htmlCode =~ s/(<map(\s[^<]*?)?>)/<ul>/sgi;
+		$htmlCode =~ s/(<map(\s[^>]*?)?>)/<ul>/sgi;
 		$htmlCode =~ s/(<\/map>)/<\/ul>/sgi;
 
 		# Remplacer la balise area par la balise li contenant un lien vers la destination du area
 		# Traitement des 2 cas, où l'attribut href est avant alt, et inversement
-		$htmlCode =~ s/<area(\s[^<]*?)?\s(href)\s*=\s*(\"|\')(.*?)\3(\s[^<]*?)?\s(alt)\s*=\s*(\"|\')(.*?)\7.*?\s\/>/
+		$htmlCode =~ s/<area(\s[^>]*?)?\s(href)\s*=\s*(\"|\')(.*?)\3(\s[^>]*?)?\s(alt)\s*=\s*(\"|\')(.*?)\7.*?\s\/>/
 			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl).$3.">".$8."<\/a><\/li>"/segi;
-		$htmlCode =~ s/<area(\s[^<]*?)?\s(alt)\s*=\s*(\"|\')(.*?)\3(\s[^<]*?)?\s(href)\s*=\s*(\"|\')(.*?)\7.*?\s\/>/
+		$htmlCode =~ s/<area(\s[^>]*?)?\s(alt)\s*=\s*(\"|\')(.*?)\3(\s[^>]*?)?\s(href)\s*=\s*(\"|\')(.*?)\7.*?\s\/>/
 			"<li><a href=".$7.getUriFromUrl($8, $pagePath, $siteId, $siteRootUrl).$7.">".$4."<\/a><\/li>"/segi;
 	}
 

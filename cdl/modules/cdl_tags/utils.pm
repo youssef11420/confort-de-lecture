@@ -77,7 +77,7 @@ sub getCdlTagInnerHtmlAndInfos #($htmlCode, $cdlTag, @orderedSortAttributes)
 	my @cdlTagsInfos;
 
 	# Détection de toutes les occurrences de la balise CDL, et création de l'objet correspondant à insérer dans le tableau des occurrences
-	$htmlCode =~ s/<!--$cdlTag(\s[^<]*?)?-->(.*?)(<!--\/$cdlTag-->)/
+	$htmlCode =~ s/<!--$cdlTag(\s[^>]*?)?-->(.*?)(<!--\/$cdlTag-->)/
 		my $cdlTagInfosHash;
 		my ($innerHtmlCode, @innerCdlTagsInfos);
 		# Cet appel récursif permet de prendre la balise ouvrante la plus éloignée pour ne garder que les informations de celle là en ignorant celles des parentes.

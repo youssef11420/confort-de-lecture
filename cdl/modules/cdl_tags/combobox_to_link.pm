@@ -40,7 +40,7 @@ sub parseComboItemsToLinks #($selectInnerHtmlCode, $pagePath, $comboItemToLinkTe
 	my $allItems = "";
 
 	# Transformation de tous les items de combobox et génération de la chaîne contenants tous les items en liste à puce
-	$selectInnerHtmlCode =~ s/<(option)(\s[^<]*?)?\s(value)\s*=\s*(\"|\')(.*?)\4(.*?)>(.*?)<\/\1>/
+	$selectInnerHtmlCode =~ s/<(option)(\s[^>]*?)?\s(value)\s*=\s*(\"|\')(.*?)\4(.*?)>(.*?)<\/\1>/
 		$allItems .= setValueInTemplateString(setValueInTemplateString($comboItemToLinkTemplateString, 'ITEM_URL', getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)), 'ITEM_NAME', $7);/segi;
 
 	# Retourner le code HTML transformé
@@ -67,7 +67,7 @@ sub parseAllCombosToLinks #($htmlCode, $pagePath, $comboToLinkTemplateString, $s
 	my ($htmlCode, $pagePath, $comboToLinkTemplateString, $siteId, $siteRootUrl) = @_;
 
 	# Remplacement des combobox au sein de la balise CDL par des liste à puce
-	$htmlCode =~ s/<!--cdlComboToLink(\s[^<]*?)?-->(.*?)(<select(\s[^<]*?)?>)(.*?)(<\/select>)(.*?)<!--\/cdlComboToLink-->/
+	$htmlCode =~ s/<!--cdlComboToLink(\s[^>]*?)?-->(.*?)(<select(\s[^>]*?)?>)(.*?)(<\/select>)(.*?)<!--\/cdlComboToLink-->/
 		$2.setValueInTemplateString($comboToLinkTemplateString, 'LIST_ITEM', parseComboItemsToLinks($5, $pagePath, getPartOfTemplateString($comboToLinkTemplateString, 'LIST_ITEM'), $siteId, $siteRootUrl)).$7/seg;
 
 	# Retourner le code HTML transformé

@@ -71,7 +71,7 @@ sub parseLinkHref #($htmlCode, $pagePath, $siteId, $siteRootUrl)
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl) = @_;
 
 	# Transformation du href en mettant le script CDL principal en intermédiaire
-	$htmlCode =~ s/(<a(\s[^<]*?)?\s(href))\s*=\s*(\"|\')(.*?)\4/$1."=\"".parseLinkHrefAttribute($5, $pagePath, $siteId, $siteRootUrl)."\""/segi;
+	$htmlCode =~ s/(<a(\s[^>]*?)?\s(href))\s*=\s*(\"|\')(.*?)\4/$1."=\"".parseLinkHrefAttribute($5, $pagePath, $siteId, $siteRootUrl)."\""/segi;
 
 	# Retourner de code HTML parsé
 	return $htmlCode;
@@ -89,8 +89,8 @@ sub cleanLink #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Sortir les espaces à l'intérieur des liens (dans l'intitulé) pour les mettre à coté
-	$htmlCode =~ s/(<(a)(\s[^<]*?)?>)(.*?)(\s|&nbsp;)*(<\/\2>)/$1.$4.$6.($5 ? " " : "")/segi;
-	$htmlCode =~ s/(<(a)(\s[^<]*?)?>)(\s|&nbsp;)*(.*?)(<\/\2>)/($4 ? " " : "").$1.$5.$6/segi;
+	$htmlCode =~ s/(<(a)(\s[^>]*?)?>)(.*?)(\s|&nbsp;)*(<\/\2>)/$1.$4.$6.($5 ? " " : "")/segi;
+	$htmlCode =~ s/(<(a)(\s[^>]*?)?>)(\s|&nbsp;)*(.*?)(<\/\2>)/($4 ? " " : "").$1.$5.$6/segi;
 
 	# Retourner le code HTML traité
 	return $htmlCode;

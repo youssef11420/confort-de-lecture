@@ -88,7 +88,7 @@ sub parseTableCellsToSubItems #($trHtmlCode, %theadersHash)
 
 	# Détection des balises td et traitement pour afficher les entêtes correspondantes et le contenu
 	my ($tdHeadersContent, $tdNumber) = ("", 0);
-	$trHtmlCode =~ s/<td(\s[^<]*?)?>(.*?)<\/td>/
+	$trHtmlCode =~ s/<td(\s[^>]*?)?>(.*?)<\/td>/
 		($tdHeadersContent, $tdNumber) = getTableCellHeaders($1, $numCell++, %theadersHash);
 		"<div class=\"cdlTableCell\">".($tdHeadersContent ? $tdHeadersContent." : " : "").parseTablesToLists($2)."<\/div><hr \/>";/segi;
 
@@ -148,21 +148,21 @@ sub parseTableRowsToItems #($tableHtmlCode)
 	my ($tableHtmlCode) = @_;
 
 	# Nettoyage des autres balises (thead, tbody, ..)
-	$tableHtmlCode =~ s/<\/?thead(\s[^<]*?)?>//sgi;
-	$tableHtmlCode =~ s/<\/?tbody(\s[^<]*?)?>//sgi;
-	$tableHtmlCode =~ s/<\/?tfoot(\s[^<]*?)?>//sgi;
-	$tableHtmlCode =~ s/<\/?colgroup(\s[^<]*?)?>//sgi;
-	$tableHtmlCode =~ s/<\/?col(\s[^<]*?)?>//sgi;
+	$tableHtmlCode =~ s/<\/?thead(\s[^>]*?)?>//sgi;
+	$tableHtmlCode =~ s/<\/?tbody(\s[^>]*?)?>//sgi;
+	$tableHtmlCode =~ s/<\/?tfoot(\s[^>]*?)?>//sgi;
+	$tableHtmlCode =~ s/<\/?colgroup(\s[^>]*?)?>//sgi;
+	$tableHtmlCode =~ s/<\/?col(\s[^>]*?)?>//sgi;
 
 	my $tableCaption = "";
-	$tableHtmlCode =~ s/<caption(\s[^<]*?)?>(.*?)<\/caption>/$tableCaption = $2;""/segi;
+	$tableHtmlCode =~ s/<caption(\s[^>]*?)?>(.*?)<\/caption>/$tableCaption = $2;""/segi;
 
 	# Récupération de la table de hachage des entêtes
 	my %theadersHash;
 	my $thNumber = 0;
 	my $theaderId = "";
 	# On construit la table de hachage des entêtes, eton les supprime du code HTML de la table
-	$tableHtmlCode =~ s/<th(\s[^<]*?)?>(.*?)<\/th>/
+	$tableHtmlCode =~ s/<th(\s[^>]*?)?>(.*?)<\/th>/
 		($theaderId, $thNumber) = getThisThIdAndNextThNumber($1, $thNumber); $theadersHash{$theaderId} = $2; ""/segi;
 
 	
@@ -170,8 +170,8 @@ sub parseTableRowsToItems #($tableHtmlCode)
 	# Transformation du contenu de chaque ligne du tableau
 	my $nbRows = 0;
 	# Suppression de la première ligne qui concerne les entêtes
-	$tableHtmlCode =~ s/<tr(\s[^<]*?)?>\s*<\/tr>//sgi;
-	$tableHtmlCode =~ s/<tr(\s[^<]*?)?>(.*?)<\/tr>/$nbRows++; "<li><div class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/div><div class=\"cdlTableRowSep\"><\/div><br class=\"cdlCache\" \/><\/li>";/segi;
+	$tableHtmlCode =~ s/<tr(\s[^>]*?)?>\s*<\/tr>//sgi;
+	$tableHtmlCode =~ s/<tr(\s[^>]*?)?>(.*?)<\/tr>/$nbRows++; "<li><div class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/div><div class=\"cdlTableRowSep\"><\/div><br class=\"cdlCache\" \/><\/li>";/segi;
 
 	# Suppression du dernier séparateur
 	$tableHtmlCode =~ s/(.*)<div class=\"cdlTableRowSep\"><\/div>(.*?)/$1$2/sgi;
@@ -204,7 +204,7 @@ sub parseTablesToLists #($htmlCode)
 	# - code HTML où transformer les tableaux en liste à puce
 	my ($htmlCode) = @_;
 
-	$htmlCode =~ s/<table(\s[^<]*?)?>(.*?)<\/table>/parseTableRowsToItems($2)/segi;
+	$htmlCode =~ s/<table(\s[^>]*?)?>(.*?)<\/table>/parseTableRowsToItems($2)/segi;
 
 	# Retourner le code HTML avec des listes à puce à la place des tableaux
 	return $htmlCode;
@@ -222,14 +222,14 @@ sub cleanTables #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression des 3 attributs de base de la balise table (pour les réinitialiser après
-	$htmlCode =~ s/(<table(\s[^<]*?)?)(\scellspacing\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
-	$htmlCode =~ s/(<table(\s[^<]*?)?)(\scellpadding\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
-	$htmlCode =~ s/(<table(\s[^<]*?)?)(\sborder\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
-	$htmlCode =~ s/(<table(\s[^<]*?)?)(\swidth\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
-	$htmlCode =~ s/(<table(\s[^<]*?)?)(\sheight\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
+	$htmlCode =~ s/(<table(\s[^>]*?)?)(\scellspacing\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
+	$htmlCode =~ s/(<table(\s[^>]*?)?)(\scellpadding\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
+	$htmlCode =~ s/(<table(\s[^>]*?)?)(\sborder\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
+	$htmlCode =~ s/(<table(\s[^>]*?)?)(\swidth\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
+	$htmlCode =~ s/(<table(\s[^>]*?)?)(\sheight\s*=\s*(\"|\')(.*?)\4)(.*?>)/$1$6/sgi;
 
 	# Ajout des 3 attributs avec des valeurs assez génériques et qui rendent le tableau clair à lire en version sans style
-	$htmlCode =~ s/(<table(\s[^<]*?)?)>/$1 cellspacing=\"0\" cellpadding=\"3\" border=\"1\" width=\"100%\">/sgi;
+	$htmlCode =~ s/(<table(\s[^>]*?)?)>/$1 cellspacing=\"0\" cellpadding=\"3\" border=\"1\" width=\"100%\">/sgi;
 
 	# Retourner le code HTML avec les tables nettoyées
 	return $htmlCode;

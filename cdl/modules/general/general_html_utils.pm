@@ -266,7 +266,7 @@ sub getDocumentLanguage #($htmlCode, $defaultLanguage)
 	my $pageLanguage = "";
 
 	# Récupération de la langue dans la balise html
-	$htmlCode =~ s/<html(\s[^<]*?)?\s(lang)\s*=\s*(\"|\')(.*?)\3/$pageLanguage = $4;/segi;
+	$htmlCode =~ s/<html(\s[^>]*?)?\s(lang)\s*=\s*(\"|\')(.*?)\3/$pageLanguage = $4;/segi;
 
 	# Si la langue n'a pas été spécifiée dans le document d'origine, on met celle par défaut du site, sinon celle par défaut de l'application
 	if (!$pageLanguage) {
@@ -319,7 +319,7 @@ sub getBodyAttributes {
 	my $attributesString = "";
 
 	# Rechercher la balise body et appeler la fonction <getBodyAttributesInHash> qui récupère les bons attributs
-	$htmlCode =~ s/<body(\s[^<]*?)>/$attributesString = getBodyAttributesInHash($1);/segi;
+	$htmlCode =~ s/<body(\s[^>]*?)>/$attributesString = getBodyAttributesInHash($1);/segi;
 
 	# Retourner la chaîne des attributs à intégrer à la balise body finale
 	return $attributesString;

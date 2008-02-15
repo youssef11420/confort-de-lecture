@@ -55,10 +55,10 @@ sub parseObjects #($htmlCode, $siteRootUrl, $pagePath)
 	my ($htmlCode, $siteRootUrl, $pagePath) = @_;
 
 	# Traiter l'URL dans l'attribut data pour la rendre absolue
-	$htmlCode =~ s/(<object(\s[^<]*?)?\s(data))\s*=\s*(\"|\')(.*?)\4/$1."=".$4.makeUrlAbsolute($5, $siteRootUrl, $pagePath).$4/segi;
+	$htmlCode =~ s/(<object(\s[^>]*?)?\s(data))\s*=\s*(\"|\')(.*?)\4/$1."=".$4.makeUrlAbsolute($5, $siteRootUrl, $pagePath).$4/segi;
 
 	# Traiter l'URL dans l'attribut value de la balise param (name="movie") pour la rendre absolue
-	$htmlCode =~ s/(<param)(\s[^<]*?)?(\s(name))\s*=\s*((\"|\')?movie\6)(\s[^<]*?)?(\s\/>)/$1.parseParamMovieValue($2, $siteRootUrl, $pagePath).$3."=".$5.parseParamMovieValue($7, $siteRootUrl, $pagePath).$8/segi;
+	$htmlCode =~ s/(<param)(\s[^>]*?)?(\s(name))\s*=\s*((\"|\')?movie\6)(\s[^>]*?)?(\s\/>)/$1.parseParamMovieValue($2, $siteRootUrl, $pagePath).$3."=".$5.parseParamMovieValue($7, $siteRootUrl, $pagePath).$8/segi;
 
 	# Retourner le code HTML avec les éléments object parsées
 	return $htmlCode;
@@ -76,7 +76,7 @@ sub cleanObjectParams #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression des balises param
-	$htmlCode =~ s/<param(\s[^<]*?)?\s\/>//segi;
+	$htmlCode =~ s/<param(\s[^>]*?)?\s\/>//segi;
 
 	# Retourner le code HTML sans les éléments param
 	return $htmlCode;
@@ -94,7 +94,7 @@ sub replaceObjectsWithAlternativeHtml #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Suppression de la balise object et remplacement par le contenu alternatif
-	$htmlCode =~ s/<object(\s[^<]*?)?>(.*?)<\/object>/cleanObjectParams($2)/segi;
+	$htmlCode =~ s/<object(\s[^>]*?)?>(.*?)<\/object>/cleanObjectParams($2)/segi;
 
 	# Retourner le code HTML sans les éléments object
 	return $htmlCode;
