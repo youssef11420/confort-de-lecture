@@ -18,10 +18,10 @@ button{cursor:pointer;background:none}
 button,.cdlButtons input{padding:0 5px;font-weight:bold}
 textarea{overflow:auto;width:99.5%;margin-bottom:5px;border:1px solid ####FONT_COLOR###}
 input,select,button,textarea{font-size:100%}
-input{margin:3px}
-input.cdlInputText,.cdlInputText input,textarea{padding:1px 1px}
+input{vertical-align:middle;margin:-2px 3px 0 3px}
+input.cdlInputText,.cdlInputText input,textarea{padding:1px}
 select{border:1px solid ####FONT_COLOR###;margin-bottom:5px;vertical-align:-3px}
-input.cdlInputText,.cdlInputText input{border:1px solid ####FONT_COLOR###;margin-bottom:5px;width:50%;vertical-align:middle}
+input.cdlInputText,.cdlInputText input{border:1px solid ####FONT_COLOR###;margin:0 3px 5px 3px;width:50%;vertical-align:middle}
 option{padding-bottom:1px}
 ol,ul{padding:10px 0 10px 2em}
 li{padding-bottom:.15em}

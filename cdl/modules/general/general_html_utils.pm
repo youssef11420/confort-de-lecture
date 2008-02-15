@@ -214,7 +214,7 @@ sub parseAllHtml #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $par
 	$htmlCode = parseForms($htmlCode, $pagePath, $siteId, $siteRootUrl);
 
 	if ($displayImages) {
-		$htmlCode = parseImagesSrc($htmlCode, $siteRootUrl, $pagePath);
+		$htmlCode = parseImages($htmlCode, $siteRootUrl, $pagePath);
 	} else {
 		$htmlCode = replaceImageWithAlt($htmlCode);
 	}
