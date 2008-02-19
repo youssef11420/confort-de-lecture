@@ -159,11 +159,15 @@ sub parseJavascriptCodeLine #($jsCode, $siteId)
 	# Suppression des instructions qui mettent à jour des styles
 	$jsCode =~ s/([^;\{\}]*?)\.style\.(\w+)\s*=\s*([^;\{\}]+)//sgi;
 
+	# Le nom de domaine en cours
+	my $currentServerName;
+	$siteRootUrl =~ s/^https?:\/\/(.*)$/$currentServerName = $1/segi;
+
 	# Transformer l'URL dans l'instruction de redirection pour passer par le script principal
-	$jsCode =~ s/(([^;]*?)(\.location)(\.href)?)\s*=\s*(\"|\')(.*?)\5/$1."=".$5.getUriFromUrl($6, $pagePath, $siteId, $siteRootUrl).$5/segi;
+	$jsCode =~ s/(([^;]*?)(\.location)(\.href)?)\s*=\s*(\"|\')(.*?)\5/$1."=".$5."\/le\-filtre\/".$siteId."\/".$currentServerName."\/".getUriFromUrl($6, $pagePath, $siteId, $siteRootUrl).$5/segi;
 
 	# Transformer l'URL dans l'instruction d'ouverture dans une nouvelle fenêtre pour passer par le script principal
-	$jsCode =~ s/(window\.open\()(\"|\')(.*?)\2((\s*,.*?)?\))/$1.$2.getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl).$2.$4/segi;
+	$jsCode =~ s/(window\.open\()(\"|\')(.*?)\2((\s*,.*?)?\))/$1.$2."\/le\-filtre\/".$siteId."\/".$currentServerName."\/".getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl).$2.$4/segi;
 
 	# Retourner le code javascript sans les instructions de styles et avec les URLs de redirection parsées
 	return $jsCode;
