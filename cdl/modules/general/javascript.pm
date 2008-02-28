@@ -161,7 +161,7 @@ sub parseJavascriptCodeLine #($jsCode, $siteId)
 
 	# Le nom de domaine en cours
 	my $currentServerName;
-	$siteRootUrl =~ s/^https?:\/\/(.*)$/$currentServerName = $1/segi;
+	$siteRootUrl =~ s/^(https?:\/\/(.*))$/$currentServerName = $2;$1/segi;
 
 	# Transformer l'URL dans l'instruction de redirection pour passer par le script principal
 	$jsCode =~ s/(([^;]*?)(\.location)(\.href)?)\s*=\s*(\"|\')(.*?)\5/$1."=".$5."\/le\-filtre\/".$siteId."\/".$currentServerName."\/".getUriFromUrl($6, $pagePath, $siteId, $siteRootUrl).$5/segi;
