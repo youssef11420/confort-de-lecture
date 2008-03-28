@@ -181,9 +181,9 @@ sub cleanAttributesValues #($tagAttributes, $removeDeprecatedAttributes)
 	# On supprime tous les attributs dépréciés
 	if ($removeDeprecatedAttributes) {
 		foreach my $attribute (%deprecatedHTMLAttributes) {
-			$tagAttributes =~ s/\s$attribute\s*=\s*(\"|\')(.*?)\1(\s|>)/$3/sgi;
+			$tagAttributes =~ s/\s$attribute\s*=\s*(\"|\')(.*?)\1//sgi;
 			# Si l'attribut est déclaré sans valeur (par exemple : nowrap)
-			$tagAttributes =~ s/\s$attribute(\s|>)/$1/sgi;
+			$tagAttributes =~ s/\s$attribute//sgi;
 		}
 	}
 
@@ -220,8 +220,8 @@ sub cleanDeprecatedHtmlAttributes #($htmlCode)
 	$htmlCode =~ s/(<(img|object)\s)(([^>]*?\s)?(height)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
 	$htmlCode =~ s/(<(img|object|table|colgroup|col)\s)(([^>]*?\s)?(width)\s*=\s*(.*?(\s|>)))/$1$4_cdl_$5=$6/sgi;
 
-	# Suppression des
-	$htmlCode =~ s/(<(\w|\d)+)(\s[^>]*?(<|>).*?)>/$1.cleanAttributesValues($3, 1).">"/segi;
+	# Suppression des attributs dépréciés
+	$htmlCode =~ s/(<(\w|\d)+)(\s[^>]*?)>/$1.cleanAttributesValues($3, 1).">"/segi;
 
 	# On supprime le code temporaire _cdl_ (_cdl_XXXX ==> XXXX)
 	$htmlCode =~ s/_cdl_(type|value|height|width)\s*=\s*(.*?)(\s|>)/$1=$2$3/sgi;
