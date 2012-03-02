@@ -1,0 +1,5 @@
+.cdlCadre,.cdlAudioObjectContent,.cdlCadre hr,.cdlTable ul li .cdlTableRowSep{overflow:visible}
+.cdlModifyStyleParametersLinks,.cdlUtilLinksContainer{display:none}
+html,body{height:auto;overflow:visible}
+.cdlAllPageContainer{height:auto;overflow:visible}
+img{page-break-inside:avoid}

@@ -1,0 +1,9 @@
+legend{margin-left:0}
+button,.cdlButtons input{overflow:visible}
+.cdlCadre hr{margin:4px 0}
+select{margin-bottom:2px;vertical-align:-2px}
+input.cdlInputText,.cdlInputText input{vertical-align:-.1em}
+.cdlCadre{border-width:2px !important;border-width:2px .2%;min-height:1%;height:auto !important;height:1%}
+.cdlUtilLinksContainer{min-height:1%;height:auto !important;height:1%}
+.cdlColors li{margin-bottom:6px}
+.cdlUtilLinks input,.cdlUtilLinks span{filter:alpha(opacity=0)}

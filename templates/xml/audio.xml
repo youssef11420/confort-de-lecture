@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd" xml:lang="###LANGUAGE###">
+	<voice name="###VOICE###" xml:lang="###LANGUAGE###">
+		<prosody rate="###RATE###" volume="75"><!--###PAGE_TOP_CONTAINER###--><p>###PAGE_TOP###</p><break time="700ms" /><!--/###PAGE_TOP_CONTAINER###--><!--###BLOCS_CONTAINER###--><p>###BLOCS###</p><break time="700ms" /><!--/###BLOCS_CONTAINER###--><!--###NAVS_CONTAINER###--><p>###NAVS###</p><break time="700ms" /><!--/###NAVS_CONTAINER###--><!--###PAGE_BOTTOM_CONTAINER###--><p>###PAGE_BOTTOM###</p><break time="700ms" /><!--/###PAGE_BOTTOM_CONTAINER###--><!--###BACK_HOME_LINK_CONTAINER###--><p>###BACK_HOME_LINK###</p><break time="700ms" /><!--/###BACK_HOME_LINK_CONTAINER###-->###TEXT_CONTENT###</prosody>
+	</voice>
+</speak>

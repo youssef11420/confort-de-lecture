@@ -1,0 +1,27 @@
+RewriteEngine On
+
+RewriteRule ^le\-filtre\/styles\.css /filtre/styles.pl [L]
+RewriteRule ^le\-filtre\/styles_ie\.css /filtre/styles.pl?n=ie [L]
+
+RewriteRule ^le\-filtre$ /filtre/index.pl [L]
+RewriteRule ^le\-filtre\/.* /filtre/index.pl [L]
+RewriteRule ^le\-filtre\-https$ /filtre/index.pl [L]
+RewriteRule ^le\-filtre\-https\/.* /filtre/index.pl [L]
+
+RewriteRule ^document\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
+RewriteRule ^document\/(ouvrir|telecharger)\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
+RewriteRule ^document\-https\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
+RewriteRule ^document\-https\/(ouvrir|telecharger)\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
+
+
+RewriteRule ^acces-protege\/.*$ /filtre/access_protected_site.pl [L]
+RewriteRule ^acces-protege-https\/.*$ /filtre/access_protected_site.pl [L]
+
+
+RewriteRule ^sortie\/.*?\/.*$ /filtre/exit_from_cdl.pl [L]
+
+
+RewriteRule ^admin\/config_styles\.css /cdl/scripts/admin/sites/config_styles.pl [L]
+RewriteRule ^admin\/images\/(.*) /cdl/scripts/admin/sites/images/$1 [L]
+
+RewriteRule ^admin\/.* /cdl/scripts/admin/sites/config.pl [L]

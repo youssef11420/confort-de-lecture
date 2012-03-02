@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="###LANGUAGE###">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Ouverture / T&eacute;l&eacute;chargement d'un document &bull; Confort de lecture</title>
+<link href="/favicon.png" rel="shortcut icon">
+
+<link href="/styles/default.css" rel="stylesheet">
+<link href="/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###F_SIZE###.css" rel="stylesheet">
+<link href="/styles/print.css" rel="stylesheet" media="print">
+<!--[if IE]>
+<link href="/styles/ie.css" rel="stylesheet">
+<![endif]-->
+<script>
+function _closeWindow() {
+window.open('','_parent','');
+window.close();
+}
+</script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>(function(){var all=jQuery.event.props,len=all.length,res=[];while(len--){var el=all[len];if(el!='layerX'&&el!='layerY')res.push(el);}jQuery.event.props=res;}());</script>
+<script>
+jQuery.noConflict();
+</script>
+<body><!--###AUDIO###-->
+<div class="cdlUtilLinksContainer">
+<div class="cdlUtilLinks">
+<!-- <a href="/audio-document/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3" title="T&eacute;l&eacute;charger la page en MP3"></a> -->
+</div>
+<div class="cdlAudioContent">
+<div class="cdlAudioObject">
+<div class="cdlAudioObjectContent" style="height:###DIV_MP3_PLAYER_HEIGHT###px">
+<object type="application/x-shockwave-flash" data="/design/player/cdl_player_###F_SIZE###.swf" width="###MP3_PLAYER_WIDTH###" height="###MP3_PLAYER_HEIGHT###" id="lecteurCDL" style="width:###MP3_PLAYER_WIDTH###px !important">
+<param name="movie" value="/design/player/cdl_player_###F_SIZE###.swf">
+<param name="wmode" value="transparent">
+<param name="allowscriptaccess" value="always">
+<param name="FlashVars" value="racineAudio=http://###SERVER_NAME###/audio-text/###SITE_ID###&amp;fgcolor=###F_COLOR###&amp;cursorSize=###F_SIZE_BROWSER_DEPENDS###&amp;mp3=http://###SERVER_NAME###/audio-document/###CONTENT_TO_READ_WITH_ACAPELA###">
+</object>
+</div>
+</div>
+</div>
+<div class="cdlClearBoth"></div>
+</div><!--/###AUDIO###-->
+<div class="cdlGlobalPage">
+<div class="documentContent">
+<div class="cdlCadreContainer">
+<div class="cdlCadre">
+<p>Vous allez acc&eacute;der &agrave; un document de type : <strong>###DOCUMENT_TYPE###</strong>.
+<br>
+<p>Que souhaitez-vous faire ?
+<ul>
+<li><a href="###DOCUMENT_OPEN_URL###">Ouvrir le document</a>
+<li><a href="###DOCUMENT_DOWNLOAD_URL###">T&eacute;l&eacute;charger le document</a>
+<!--###PREVIOUS_PAGE_BLOCK###--><li><a href="###PREVIOUS_PAGE###" onclick="if (history.length &gt; 1) {history.back();} else {_closeWindow();} return false;">Annuler et retourner &agrave; la page pr&eacute;c&eacute;dente</a><!--/###PREVIOUS_PAGE_BLOCK###-->
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cdlFoot">
+<p class="cdlCopyright">&copy; 2012 &ndash; Confort de lecture
+<div class="cdlClearBoth"></div>
+</div>
+<!--###JS_AUDIO_FILE_INCLUDE###--><script src="/design/js/cdl/highlight.js"></script>
+<script>
+jQuery(window).bind('load', function() {
+if (parentMovie("lecteurCDL")) {
+parentMovie("lecteurCDL").pauseIt();
+}
+if (thisMovie("lecteurCDL")) {
+setTimeout("initLecture();lectureMorceau(currentIndice,'down','auto')",1000);
+}
+});
+</script>
+<!--/###JS_AUDIO_FILE_INCLUDE###--><script src="/javascript/title_###SITE_ID###_###F_SIZE###.js"></script>

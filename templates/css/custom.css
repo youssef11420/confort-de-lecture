@@ -1,0 +1,21 @@
+*{background-color:####BACKGROUND_COLOR###;color:####FONT_COLOR###;border-color:####FONT_COLOR###;cursor:url(/design/cursors/arrow_cursor_###FONT_SIZE_INDEX###.cur), default}
+body{font-size:###FONT_SIZE###%}
+abbr,acronym{border-bottom-color:####FONT_COLOR###}
+fieldset,button,.cdlButtons input{border-color:####FONT_COLOR###}
+select{border-color:####FONT_COLOR###}
+input.cdlInputText,.cdlInputText input{border-color:####FONT_COLOR###}
+textarea{border-color:####FONT_COLOR###}
+table{border-color:####FONT_COLOR###}
+th,td{border-color:####FONT_COLOR###}
+a{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+a *{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+.cdlButtons input{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+button{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+.cdlUtilLinks input{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+.cdlAudioObject{border-color:####FONT_COLOR###}
+.cdlCadre{border-color:####FONT_COLOR###}
+.cdlCadre hr{background-color:####FONT_COLOR###}
+.cdlInversedColor{background-color:####FONT_COLOR### !important;color:####BACKGROUND_COLOR### !important}
+.cdlInversedColor *{background-color:####FONT_COLOR### !important;color:####BACKGROUND_COLOR### !important;border-color:####BACKGROUND_COLOR### !important}
+.cdlAllPageContainer{margin-top:-###PAGE_MARGIN_TOP###px !important}
+.cdlAllPage{padding-top:###PAGE_PADDING_TOP###px !important}
