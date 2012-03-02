@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fr">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>###PAGE_TITLE### &bull; Interface d'administration &bull; Confort de lecture</title>
+<link href="/favicon.png" rel="shortcut icon">
+<link href="/design/css/config.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+jQuery.noConflict();
+</script>
+<body>
+<div>
+###SITES_LIST###<!--###IDENT_FORM###-->
+<h1>Identification</h1>
+<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
+<form action="/admin/login/action" method="get">
+<div class="center">###MESSAGE###</div>
+<div class="clearBoth"></div><br>
+<div class="formLine">
+<div class="leftForm"><label for="loginAdmin">Identifiant :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="loginAdmin" name="loginAdmin"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="passwdAdmin">Mot de passe :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="password" id="passwdAdmin" name="passwdAdmin"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="center">
+<input type="submit" name="valider" value="Valider" class="submit">
+</div>
+</form>
+<!--/###IDENT_FORM###--><!--###EDIT_FORM###-->
+<h1>Gestion des sites</h1>
+<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
+<!--cdlNav--><a href="/admin/sites/list">Retour &agrave; la liste des sites</a><!--/cdlNav--><br>
+<!--cdlBloc-->
+<form action="/admin/sites/###EDIT_ACTION###-action###SITE_ID###" method="get">
+<div class="center">###MESSAGE###</div>
+<div class="clearBoth"></div><br>
+<!--###SITE_ID_FIELD###-->
+<div class="formLine">
+<div class="leftForm"><label for="siteId">Identifiant du site :&nbsp;<br><span class="info">caract&egrave;res autoris&eacute;s : alphanum&eacute;riques, le point '.', le tiret '-' et le soulign&eacute; '_'&nbsp;&nbsp;</span></label></div>
+<div class="rightForm"><input class="text" type="text" id="siteId" name="siteId" value="###SITE_ID_VALUE###"></div>
+<div class="clearBoth"></div>
+</div>
+<!--/###SITE_ID_FIELD###--><!--###SITE_ID_TITLE###-->
+<div class="formLine">
+<div class="leftForm"><span class="blueText">Identifiant du site :&nbsp;</span></div>
+<div class="rightForm"><h1 class="noMargin">###SITE_ID_VALUE###</h1></div>
+<div class="clearBoth"></div>
+</div>
+<!--/###SITE_ID_TITLE###-->
+<fieldset>
+<legend>Adresses et URIs du site</legend>
+<div class="formLine">
+<div class="leftForm"><label for="siteDomainName">Noms de domaine :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="siteDomainName" name="siteDomainName" value="###SITE_DOMAIN_NAME###">&nbsp;<input type="submit" name="ajouterSiteDomainNames" class="add" value="ajouter" title="ajouter le nom de domaine">
+###SITE_DOMAINE_NAMES_LIST###</div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="homePageUri">URIs de page d'accueil :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="homePageUri" name="homePageUri" value="###HOME_PAGE_URI###">&nbsp;<input type="submit" name="ajouterHomePageUris" class="add" value="ajouter" title="ajouter le nom de domaine">
+###HOME_PAGE_URIS_LIST###</div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>Fil d'Ariane</legend>
+<div class="formLine">
+<div class="leftForm">Position du fil d'ariane :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="positionLocation1" name="positionLocation" value="1"###POSITION_LOCATION_TOP###><label for="positionLocation1">haut</label>&nbsp;&nbsp;<input type="radio" id="positionLocation2" name="positionLocation" value="2"###POSITION_LOCATION_BOTTOM###><label for="positionLocation2">bas</label></span></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>Javascript</legend>
+<div class="formLine">
+<div class="leftForm">Activer le javascript :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le fonctionnement alternatif est activ&eacute;)&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="activateJavascript1" name="activateJavascript" value="1"###ACTIVATE_JS_YES###><label for="activateJavascript1">oui</label>&nbsp;&nbsp;<input type="radio" id="activateJavascript0" name="activateJavascript" value="0"###ACTIVATE_JS_NO###><label for="activateJavascript0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Transformer le javascript :&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="parseJavascript1" name="parseJavascript" value="1"###PARSE_JS_YES###><label for="parseJavascript1">oui</label>&nbsp;&nbsp;<input type="radio" id="parseJavascript0" name="parseJavascript" value="0"###PARSE_JS_NO###><label for="parseJavascript0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>Frames/IFrames</legend>
+<div class="formLine">
+<div class="leftForm">Activer les frames/iframes :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="activateFrames1" name="activateFrames" value="1"###ACTIVATE_FRAMES_YES###><label for="activateFrames1">oui</label>&nbsp;&nbsp;<input type="radio" id="activateFrames0" name="activateFrames" value="0"###ACTIVATE_FRAMES_NO###><label for="activateFrames0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>M&eacute;dias</legend>
+<div class="formLine">
+<div class="leftForm">Afficher les images :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="displayImages1" name="displayImages" value="1"###DISPLAY_IMAGES_YES###><label for="displayImages1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayImages0" name="displayImages" value="0"###DISPLAY_IMAGES_NO###><label for="displayImages0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Afficher les objects :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="displayObjects1" name="displayObjects" value="1"###DISPLAY_OBJECTS_YES###><label for="displayObjects1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayObjects0" name="displayObjects" value="0"###DISPLAY_OBJECTS_NO###><label for="displayObjects0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Afficher les applets :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="displayApplets1" name="displayApplets" value="1"###DISPLAY_APPLETS_YES###><label for="displayApplets1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayApplets0" name="displayApplets" value="0"###DISPLAY_APPLETS_NO###><label for="displayApplets0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>Tables</legend>
+<div class="formLine">
+<div class="leftForm">Lin&eacute;ariser les tableaux :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(transformer en listes &agrave; puce)&nbsp;&nbsp;</span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="parseTablesToList1" name="parseTablesToList" value="1"###PARSE_TABLES_YES###><label for="parseTablesToList1">oui</label>&nbsp;&nbsp;<input type="radio" id="parseTablesToList0" name="parseTablesToList" value="0"###PARSE_TABLES_NO###><label for="parseTablesToList0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>Titre, langue et logo du site</legend>
+<div class="formLine">
+<div class="leftForm"><label for="siteLabel">Titre du site :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="siteLabel" name="siteLabel" value="###SITE_LABEL###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="defaultLanguage">Langue par d&eacute;faut du site :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="defaultLanguage" name="defaultLanguage" value="###DEFAULT_LANGUAGE###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="logo">Logo du site :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="logo" name="logo" value="###SITE_LOGO###"><br><!--###LOGO_IMG###--><img src="###SITE_LOGO###" alt="logo du site : ###SITE_LABEL###" class="siteLogo"><!--/###LOGO_IMG###--></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<div class="center">
+<input type="submit" name="valider" value="Valider" class="submit">
+</div>
+</form>
+<!--/cdlBloc-->
+<!--/###EDIT_FORM###--><!--###GLOSSARY_FORM###--><form action="/admin/glossary/edit-action" method="post" class="glossaryForm">
+<h1>Gestion du glossaire</h1>
+<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
+<div>###MESSAGE_GLOSSARY###</div>
+<table cellspacing="0">
+<tr>
+<th><input type="checkbox" name="deleteAllNewRows" class="deleteAllNewRows">
+<th>Chaîne
+<th>Remplacement
+<th>Insensible à la casse
+<th>Caractère à gauche
+<th>Caractère à droite
+<th>&nbsp;
+
+<tr>
+<td colspan="300"><a href="#" class="deleteLines">Supprimer les lignes</a> | <a href="#" class="addLineLink">Ajouter des lignes :</a> <input type="text" name="rowstoadd" id="rowsToAdd" value="1" size="1" maxlength="2">
+
+<tr>
+<th style="width:1%"><input type="checkbox" name="deleteAllRows" class="deleteAllRows">
+<th>Chaîne
+<th>Remplacement
+<th style="width:1%">Insensible<br>à la casse
+<th style="width:1%">Caractère à gauche
+<th style="width:1%">Caractère à droite
+<th style="width:1%">&nbsp;
+
+<!--###GLOSSARY_ROWS###--><tr>
+<td><input type="checkbox" name="delete" class="deleteRow">
+<td class="inputTextCell"><input type="text" name="pattern" value="###PATTERN###" class="text">
+<td class="inputTextCell"><input type="text" name="replacement" value="###REPLACEMENT###" class="text">
+<td><select name="icase"><option value="1"###ICASE_YES###>Oui<option value="0"###ICASE_NO###>Non</select>
+<td><select name="sepl"><option value="0"###SEPL_0###>Indifférent<option value="1"###SEPL_1###>Non alphanumérique<option value="2"###SEPL_2###>Non alphabétique</select>
+<td><select name="sepr"><option value="0"###SEPR_0###>Indifférent<option value="1"###SEPR_1###>Non alphanumérique<option value="2"###SEPR_2###>Non alphabétique</select>
+<td><a href="#" class="deleteLineLink"><img src="/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>
+
+<!--/###GLOSSARY_ROWS###--></table>
+<div>
+<br><input type="submit" name="save" value="Sauvegarder" class="submit">
+</div>
+</form><!--/###GLOSSARY_FORM###-->
+<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
+</div>
+<div>
+<br><p>&copy; 2012 &ndash; Confort de lecture
+</div>
+<script>
+//<![CDATA[
+jQuery('.deleteLines').bind('click', function () {
+jQuery('.deleteRow:checked').parent().parent().remove();
+jQuery('.deleteNewRow:checked').parent().parent().remove();
+jQuery('.deleteAllRows').attr('checked', false);
+jQuery('.deleteAllNewRows').attr('checked', false);
+return false;
+});
+jQuery('.deleteAllRows').bind('change', function () {
+if (jQuery(this).attr('checked')) {
+jQuery('.deleteRow').attr('checked', true);
+} else {
+jQuery('.deleteRow').attr('checked', false);
+}
+});
+jQuery('.deleteAllNewRows').bind('change', function () {
+if (jQuery(this).attr('checked')) {
+jQuery('.deleteNewRow').attr('checked', true);
+} else {
+jQuery('.deleteNewRow').attr('checked', false);
+}
+});
+jQuery('.addLineLink').bind('click', function () {
+var count = jQuery('#rowsToAdd').val();
+for (i = 0; i < count; i++) {
+jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
+}
+return false;
+});
+jQuery('.deleteLineLink').live('click', function () {
+jQuery(this).parent().parent().remove();
+return false;
+});
+//]]>
+</script>

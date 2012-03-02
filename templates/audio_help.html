@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="###LANGUAGE###">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>###_DICO_TITLE_AIDE_AUDIO### &bull; Confort de lecture</title>
+<link href="/favicon.png" rel="shortcut icon">
+<link href="/styles/default.css" rel="stylesheet">
+<link href="/styles/###SITE_ID###/personalization.css" rel="stylesheet">
+<link href="/styles/print.css" rel="stylesheet" media="print">
+<!--[if IE]>
+<link href="/styles/ie.css" rel="stylesheet">
+<![endif]--><!--###CONTRAST_CSS###-->
+<style>*{background-color:#FFFFFF;color:#000000;border-color:#000000}</style><!--/###CONTRAST_CSS###-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>(function(){var all=jQuery.event.props,len=all.length,res=[];while(len--){var el=all[len];if(el!='layerX'&&el!='layerY')res.push(el);}jQuery.event.props=res;}());</script>
+<script>
+jQuery.noConflict();
+</script>
+<body###CONTRAST_BODY_STYLE###>
+<form action="/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden">
+<div class="cdlUtilLinksContainer">
+<div class="cdlUtilLinks">
+<div class="cdlChangeDisplayButton"><input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###" accesskey="d"></div><!--###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioButton"><input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="###_DICO_TITLE_PERSONNALISER_AUDIO###" title="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="d"></div>
+<div class="cdlChangeAudioHelpButton"><span title="###_DICO_TITLE_AIDE_AUDIO###">###_DICO_TITLE_AIDE_AUDIO###</span></div><!--/###AUDIO_ACTIONS###-->
+</div><!--###AUDIO###-->
+<div class="cdlAudioContent">
+<div class="cdlAudioObject">
+<div class="cdlAudioObjectContent" style="height:68px">
+<object type="application/x-shockwave-flash" data="/design/player/cdl_player_3.swf" width="386" height="78" id="lecteurCDL" style="width:386px !important">
+<param name="movie" value="/design/player/cdl_player_3.swf">
+<param name="wmode" value="transparent">
+<param name="allowscriptaccess" value="always">
+<param name="FlashVars" value="racineAudio=http://###SERVER_NAME###/audio-text/###SITE_ID###&amp;fgcolor=###FLASH_FONT_COLOR###&amp;cursorSize=###FONT_SIZE_BROWSER_DEPENDS###">
+</object>
+</div>
+</div>
+</div><!--/###AUDIO###-->
+<div class="cdlClearBoth"></div>
+</div>
+<div class="cdlAllPageContainer"><div class="cdlAllPage">
+<div class="cdlGlobalPage">
+<div class="cdlPageContent">
+<div class="cdlPersonalizationHeader">
+<h1 class="cdlSiteLogo"><a href="###SITE_URL###" title="###SITE_TITLE###" target="_blank"><img src="###SITE_LOGO###" alt="###SITE_TITLE###"></a></h1>
+<div class="cdlLogoCdl"><img src="/design/images/logo_cdl.png" alt=""></div>
+<div class="cdlClearBoth"></div>
+</div>
+<div class="cdlCadreContainer">
+<div class="cdlCadre">
+<div class="cdlLittleArrow audioIntro audioHelpIntro">###_DICO_AIDE_AUDIO###</div>
+<br>
+<span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_RETOUR###"></span>
+</div>
+</div>
+<hr><br class="cdlHidden">
+</div>
+</div>
+<div class="cdlFoot">
+<p class="cdlCopyright">&copy; 2012 &ndash; Confort de lecture
+<div class="cdlClearBoth"></div>
+</div>
+</div></div>
+</form><!--###JS_AUDIO_FILE_INCLUDE###-->
+<script src="/design/js/cdl/highlight.js"></script><!--/###JS_AUDIO_FILE_INCLUDE###-->
+<script src="/javascript/title_###SITE_ID###_3.js"></script>

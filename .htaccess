@@ -1,27 +1,43 @@
-RewriteEngine On
+Options ExecCGI FollowSymLinks Includes
+AddHandler cgi-script .pl
 
-RewriteRule ^le\-filtre\/styles\.css /filtre/styles.pl [L]
-RewriteRule ^le\-filtre\/styles_ie\.css /filtre/styles.pl?n=ie [L]
+<IfModule mod_rewrite.c>
+	RewriteEngine On
 
-RewriteRule ^le\-filtre$ /filtre/index.pl [L]
-RewriteRule ^le\-filtre\/.* /filtre/index.pl [L]
-RewriteRule ^le\-filtre\-https$ /filtre/index.pl [L]
-RewriteRule ^le\-filtre\-https\/.* /filtre/index.pl [L]
+	#RewriteCond %{REMOTE_ADDR} !(195\.25\.252\.226|192\.168\..*|10\.33\.86\..*)
+	#RewriteRule ^(le\-filtre|styles|javascript|document|acces\-protege|sortie|admin|audio(\-[^\/]*)?|personnalisation(\-[^\/]*)?)/.*$ /maintenance.html [L]
 
-RewriteRule ^document\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
-RewriteRule ^document\/(ouvrir|telecharger)\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
-RewriteRule ^document\-https\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
-RewriteRule ^document\-https\/(ouvrir|telecharger)\/[^\/]*?\/[^\/]*?\/[^\/]*?\/[^\/]*?\/cdl\-url\/.*$ /filtre/document.pl [L]
+	RewriteRule ^install$ /install.pl [L]
 
+	RewriteRule ^styles\/([^\/]*)\/personalization\.css$ /core/scripts/styles.pl?cdlid=$1&cdln=personalization [L]
+	RewriteRule ^styles\/([^\/]*)\/custom_([^_]*)_([^_]*)_([^\.]*)\.css$ /core/scripts/styles.pl?cdln=custom&cdlid=$1&cdlbc=$2&cdlfc=$3&cdlfs=$4 [L]
+	RewriteRule ^styles\/default\.css$ /design/css/default.css [L]
+	RewriteRule ^styles\/ie\.css$ /design/css/ie.css [L]
+	RewriteRule ^styles\/print\.css$ /design/css/print.css [L]
+	RewriteRule ^admin\/config\.css$ /design/css/config.css [L]
 
-RewriteRule ^acces-protege\/.*$ /filtre/access_protected_site.pl [L]
-RewriteRule ^acces-protege-https\/.*$ /filtre/access_protected_site.pl [L]
+	RewriteRule ^javascript\/title_(.*)_([1-5])\.js$ /core/scripts/title.pl?cdlid=$1&cdls=$2 [L]
 
+	RewriteRule ^javascript(\-https)?\/.*$ /core/scripts/javascript.pl [L]
 
-RewriteRule ^sortie\/.*?\/.*$ /filtre/exit_from_cdl.pl [L]
+	RewriteRule ^le\-filtre(\-https)?(\/.*)?$ /core/scripts/index.pl [L]
 
+	RewriteRule ^le\-filtre\-pour\-ajax\/.*$ /core/scripts/index_for_ajax.pl [L]
 
-RewriteRule ^admin\/config_styles\.css /cdl/scripts/admin/sites/config_styles.pl [L]
-RewriteRule ^admin\/images\/(.*) /cdl/scripts/admin/sites/images/$1 [L]
+	RewriteRule ^document(\-https)?(\/(ouvrir|telecharger))?\/[^\/]*\/[^\/]*\/[^\/]*\/[^\/]*\/.*$ /core/scripts/document.pl [L]
 
-RewriteRule ^admin\/.* /cdl/scripts/admin/sites/config.pl [L]
+	RewriteRule ^acces\-protege(\-https)?\/.*$ /core/scripts/access_protected_site.pl [L]
+
+	RewriteRule ^sortie(\-https)?\/.*$ /core/scripts/exit_from_cdl.pl [L]
+
+	RewriteRule ^audio\/([^\/]*)\/(.*)$ /core/scripts/audio.pl?cdlid=$1&cdlcontent=$2 [L]
+	RewriteRule ^audio\-download\/([^\/]*)\/(.*)$ /core/scripts/audio.pl?cdlid=$2&cdldownload=1&cdlcontent=$2 [L]
+	RewriteRule ^audio\-(document|exit|protected)\/([^\/]*)\/(.*)$ /core/scripts/audio.pl?cdlid=$2&cdlcontent=$3&cdlpagetype=$1 [L]
+	RewriteRule ^audio\-(voice|speed|help\-[a-z]{2})\-demo\/([^\/]*)\/([^\/]*)\/([^\/]*)$ /core/scripts/audio.pl?cdlid=$2&cdldemo=1&cdltype=$1&cdlvoice=$3&cdlspeed=$4 [L]
+	RewriteRule ^audio\-text\/([^\/]*)\/?$ /core/scripts/audio.pl [L]
+
+	RewriteRule ^admin(\/.*)?$ /core/scripts/admin/config.pl [L]
+
+	RewriteRule ^personnalisation\-(affichage|avancee|audio|aide\-audio|palette\-couleurs-(b|f)|audio\-acces\-direct|acces\-direct)\/.*$ /core/scripts/personalization.pl [L]
+	RewriteRule ^personnalisation$ /core/scripts/personalization.pl [L]
+</IfModule>
