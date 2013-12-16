@@ -24,8 +24,6 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
-use Template;
-
 use lib '../modules/utils';
 use constants;
 use misc_utils;
@@ -234,7 +232,7 @@ if ($action =~ m/^affichage$/si) {
 	my $speedChoices = "";
 	my $i = 1;
 	foreach my $speedItem (@speeds) {
-		$speedChoices .= "<option class=\"cdlDemoSpeed-".$speedItem."\" title=\"Vitesse de lecture ".$speedTitles{$i}."\" value=\"".$speedItem."\"".($speedItem eq $speed ? " selected" : "").">".$speedTitles{$i};
+		$speedChoices .= "<option class=\"cdlDemoSpeed-".$speedItem."\" title=\"###_DICO_VITESSE_DE_LECTURE### ".$speedTitles{$i}."\" value=\"".$speedItem."\"".($speedItem eq $speed ? " selected" : "").">".$speedTitles{$i};
 		$i++;
 	}
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_SPEED_CHOICES', $speedChoices);
@@ -411,6 +409,9 @@ if (isBigCursorNotAllowed()) {
 	$fontSize = 1;
 }
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
+
+my @now = localtime(time);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
 
 
 $personalizationTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;

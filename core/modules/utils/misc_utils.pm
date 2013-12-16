@@ -283,12 +283,13 @@ sub buildUrlToParse #($cgi, $session, $pageUri, $secure, $siteDomainNames, $home
 #	$session - objet session utile pour la gestion des cookies
 #	$siteId - Identifiant du site parsé
 #	$siteDefaultLanguage - Langue par défaut du site
+#	$requestMethod - méthode HTTP pour sortir
 #	$urlToParse - URL du nouveau site
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
 #	%requestParameters - paramètres à coller à l'URL
-sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $urlToParse, $secure, %requestParameters)
+sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters)
 {
-	my ($cgi, $session, $siteId, $siteDefaultLanguage, $urlToParse, $secure, %requestParameters) = @_;
+	my ($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters) = @_;
 
 	# On teste si le site est pris en compte par CDL
 	my $siteDomain = "";
@@ -316,10 +317,10 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $urlToPar
 	}
 
 	# On redirige vers la page de sortie de CDL vers un autre site
-	my $redirectUrl = "/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteDefaultLanguage."/".$urlToParse;
+	my $redirectUrl = "/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteDefaultLanguage."/".$requestMethod."/".$urlToParse;
 
 	if ($requestMethod =~ m/post/si) {
-		$redirectUrl = putParametersInUrl($redirectUrl ,%requestParameters);
+		editInSession($session, 'cdl_post_parameters_to_exit', encode_json(\%requestParameters));
 	}
 
 	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
@@ -770,8 +771,6 @@ sub getResponse #($userAgent, $request)
 	# Envoi de la requête par l'agent HTTP et récupération de l'object réponse
 	$response = $userAgent->request($request);
 
-	#print "Content-type:text/html\n\n";print $request->as_string;
-
 	# Retourner la réponse
 	return $response;
 }
@@ -967,16 +966,32 @@ sub putCookieInSession #($response, $session, $siteId)
 	my ($response, $session, $siteId) = @_;
 
 	# Le cookie à sauvegarder en session
-	my $cookieToSave = $response->header("Set-cookie")."; ".loadFromSession($session, 'cookie_'.$siteId);
+	my @cookieToSave = $response->header("Set-cookie");
+	my $cookiesSaved = loadFromSession($session, 'cookie_'.$siteId);
 
-	# Suppression des doublons de valeurs dans le cookie (par exemple : 2 fois "path=/") dans le cas où on recois plusieurs cookies à la fois
-	$cookieToSave =~ s/([^;,=]+?)=([^;,=]+?)(;|,)(.*?)\1=([^;,=]+?)(;|,|$)/$1=$2$3$4/sgi;
-	$cookieToSave =~ s/^\s*(;|,)\s*//sgi;
-	$cookieToSave =~ s/\s*(;|,)\s*$//sgi;
+	if ($cookiesSaved =~ m/\|\#cdl\#\|/si) {
+		$cookiesSaved = "";
+	}
+
+	foreach my $cookie (@cookieToSave) {
+		my $cookieName = $cookie;
+		$cookieName =~ s/^([^=]+)\s*=.*$/$1/sgi;
+		$cookiesSaved =~ s/(^|;\s*)$cookieName\s*=[^;]*(;\s*|$)/$1.$2/segi;
+		
+		$cookiesSaved =~ s/;\s*;\s*/; /sgi;
+		$cookiesSaved =~ s/(^;\s*|;\s*$)//sgi;
+
+		$cookie =~ s/(;(.*))?$//sgi;
+		$cookiesSaved .= "; " . $cookie;
+	}
+
+	$cookiesSaved =~ s/(^;\s*|;\s*$)//sgi;
 
 	# Sauvegarder la veleur du cookie en session pour l'envoyer à chaque requête
-	if ($cookieToSave) {
-		editInSession($session, 'cookie_'.$siteId, $cookieToSave);
+	if ($cookiesSaved) {
+		editInSession($session, 'cookie_'.$siteId, $cookiesSaved);
+	} else {
+		editInSession($session, 'cookie_'.$siteId, "");
 	}
 }
 
@@ -994,6 +1009,16 @@ sub sendCookie #($request, $session, $siteId)
 	my $cookieToSend = loadFromSession($session, 'cookie_'.$siteId);
 
 	if ($cookieToSend) {
+		if ($cookieToSend =~ m/\|\#cdl\#\|/si) {
+			my @cookiesToSend = split(/\|\#cdl\#\|/, $cookieToSend);
+			foreach my $cookie (@cookiesToSend) {
+				$cookie =~ s/(;(.*))?$//sgi;
+				$cookiesString .= $cookie . "; ";
+			}
+			$cookiesString =~ s/; $//sgi;
+			$cookieToSend = $cookiesString;
+		}
+
 		$request->header('Cookie' => $cookieToSend);
 	}
 
@@ -1115,8 +1140,6 @@ sub getPageContentFromCache #($requestMethod, $pageUrl, $displayParameters, $cac
 			close(FH);
 		}
 	}
-
-	system("find ".$cdlContentCachePath." -mtime +5 -exec rm {} \\; &");
 
 	return ($cryptedPartOfFileName, $pageContent);
 }

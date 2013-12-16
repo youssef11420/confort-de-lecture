@@ -66,6 +66,8 @@ sub getTableCellHeaders #($tdAttributes, $tdNumber, %theadersHash)
 	}
 
 	$tdHeadersContent =~ s/ \| $//sgi;
+	$tdHeadersContent =~ s/&nbsp;//sgi;
+	$tdHeadersContent =~ s/(<\/?([\w\d]+))( [^>]*?)?>//sgi;
 
 	# Récupérer le colspan du td
 	$tdAttributes =~ s/ (colspan)=(\"|\')(.*?)\2/$nextTdNumber = $3;/segi;
@@ -78,7 +80,7 @@ sub getTableCellHeaders #($tdAttributes, $tdNumber, %theadersHash)
 		$nextTdNumber = $tdNumber + $nextTdNumber;
 	}
 
-	# Retourner le contevu des entêtes correspondantes à la cellule
+	# Retourner le contenu des entêtes correspondantes à la cellule
 	return $tdHeadersContent;
 }
 
@@ -96,8 +98,8 @@ sub parseTableCellsToSubItems #($trHtmlCode, %theadersHash)
 
 	# Détection des balises td et traitement pour afficher les entêtes correspondantes et le contenu
 	my ($tdHeadersContent, $tdNumber) = ("", 0);
-	$trHtmlCode =~ s/<td( [^>]*?)?>(.*?)(?=(<t(r|h|d)>|$))/
-		($tdHeadersContent, $tdNumber) = getTableCellHeaders($1, $numCell++, %theadersHash);
+	$trHtmlCode =~ s/<td( [^>]*?)?>(.*?)(?=(<t(r|h|d)( [^>]*?)?>|$))/
+		$tdHeadersContent = getTableCellHeaders($1, $numCell++, %theadersHash);
 		"<div class=\"cdlTableCell\"".getTableTagId($1).">".($tdHeadersContent ? $tdHeadersContent." : " : "").$2."<\/div>";/segi;
 
 	$trHtmlCode =~ s/(.*)<hr>(.*?)$/$1$2/sgi;
@@ -166,13 +168,13 @@ sub parseTableRowsToItems #($tableHtmlCode, $tableAttributes)
 	my $thNumber = 0;
 	my $theaderId = "";
 	# On construit la table de hachage des entêtes, eton les supprime du code HTML de la table
-	$tableHtmlCode =~ s/<th( [^>]*?)?>(.*?)(?=(<t(r|h|d)>|$))/
+	$tableHtmlCode =~ s/<th( [^>]*?)?>(.*?)(?=(<t(r|h|d|body)( [^>]*?)?>|$))/
 		($theaderId, $thNumber) = getThisThIdAndNextThNumber($1, $thNumber); $theadersHash{$theaderId} = $2; ""/segi;
 
 	# Transformation du contenu de chaque ligne du tableau
 	my $nbRows = 0;
 	# Suppression de la première ligne qui concerne les entêtes
-	$tableHtmlCode =~ s/<tr( [^>]*?)?>(.*?)(?=(<tr>|$))/$nbRows++; "<li".getTableTagId($1)."><div class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/div><hr><br class=\"cdlHidden\">";/segi;
+	$tableHtmlCode =~ s/<tr( [^>]*?)?>(.*?)(?=(<tr( [^>]*?)?>|$))/$nbRows++; "<li".getTableTagId($1)."><div class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/div><hr><br class=\"cdlHidden\">";/segi;
 
 	# Gestion des cas limite :
 	# - s'il n'y a qu'un seul li, on enlève le séparateur hr
@@ -239,7 +241,7 @@ sub cleanTables #($htmlCode)
 	$htmlCode =~ s/(<table( [^>]*?)?)>/$1 cellspacing=\"0\" cellpadding=\"3\" border=\"1\" width=\"100%\">/sgi;
 
 	# Remplir chaque cellule (balise td) vide avec un espace inseccable
-	$htmlCode =~ s/<td( [^>]*?)?>\s*(?=(<(t(head|body|r|h|d)|\/table)>|$))/<td$1>&nbsp;/sgi;
+	$htmlCode =~ s/<td( [^>]*?)?>\s*(?=(<(t(head|body|r|h|d)( [^>]*?)?|\/table)>|$))/<td$1>&nbsp;/sgi;
 
 	# Retourner le code HTML avec les tables nettoyées
 	return $htmlCode;

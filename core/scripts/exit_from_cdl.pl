@@ -24,6 +24,9 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use JSON;
+use Encode;
+
 use HTML::Entities;
 use Template;
 
@@ -54,11 +57,12 @@ $thisCdlUrl =~ s/%20/+/sgi;
 
 # Extraction des différents paramètres dans l'URL réécrite
 my ($secure, $siteId, $defaultLanguage, $urlToParse);
-$thisCdlUrl =~ s/^(\/sortie(\-https)?\/([^\/]*)\/([^\/]*)\/([^\?]*))/
+$thisCdlUrl =~ s/^(\/sortie(\-https)?\/([^\/]*)\/([^\/]*)\/([^\/]*)\/([^\?]*))/
 	$secure = $2 ? "s" : "";
 	$siteId = $3;
 	$defaultLanguage = $4;
-	$urlToParse = $5;
+	$requestMethod = $5;
+	$urlToParse = $6;
 	$1/segi;
 
 # Détection d'erreurs au niveau de l'identifiant du site
@@ -103,7 +107,28 @@ foreach my $paramKey (@paramKeys) {
 	$requestParameters{$paramKey} = \@paramValuesArray;
 }
 
+my $hiddenPostParameters = '';
+if ($requestMethod =~ m/post/si) {
+	my $postRequestParametersString = loadFromSession($session, 'cdl_post_parameters_to_exit');
+	if ($postRequestParametersString) {
+		my %postRequestParameters = %{decode_json($postRequestParametersString)};
+
+		foreach my $postRequestParameterName (keys(%postRequestParameters)) {
+			my $refPostRequestParameterValues = $postRequestParameters{$postRequestParameterName};
+			my @postRequestParameterValues = @$refPostRequestParameterValues;
+			foreach my $postRequestParameterValue (@postRequestParameterValues) {
+				$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
+				$postRequestParameterValue =~ s/\"/&quot;/sgi;
+				$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.encode("utf8", $postRequestParameterValue).'">';
+			}
+		}
+	}
+	deleteFromSession($session, 'cdl_post_parameters_to_exit');
+}
+
 # L'URL externe vers laquelle on sort
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'REQUEST_METHOD', lc($requestMethod));
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'HIDDEN_POST_PARAMS', $hiddenPostParameters);
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EXTERNAL_URL', "http".$secure."://".urlDecode(putParametersInUrl($urlToParse, %requestParameters)));
 
 # L'URL de la page précédente pour annuler et retourner
@@ -111,7 +136,7 @@ $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'PRE
 
 # Gestion du cache :
 # Sauvegarder du contenu de la page dans un fichier temporaire
-my $pageContentFile = savePageContentInCache('get', putParametersInUrl($urlToParse, %requestParameters), $exitPageTemplateString, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'));
+my $pageContentFile = savePageContentInCache($requestMethod, putParametersInUrl($urlToParse, %requestParameters), $exitPageTemplateString, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'));
 
 # Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
@@ -152,5 +177,8 @@ if (isBigCursorNotAllowed()) {
 	$fontSize = 1;
 }
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
+
+my @now = localtime(time);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
 
 print $exitPageTemplateString;

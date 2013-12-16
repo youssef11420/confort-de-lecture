@@ -18,7 +18,7 @@
 #	Module central d'exécution du script principal
 
 # Function: processIndexMain
-#	Exécution du script index principal
+#	Exécution du script index principal (partie initialisation de base)
 #
 # Paramètres:
 #	
@@ -50,6 +50,24 @@ sub processIndexPage
 		require($cdlSitesConfigPath.$siteId."/override/main.pm");
 	}
 
+	processIndexPageFinal($cgi, $session, $requestMethod, $siteId, $pageUri, $secure, %requestParameters);
+}
+
+# Function: processIndexPageFinal
+#	Exécution du script index principal (partie exécution de la requête HTTP et traitement du retour)
+#
+# Paramètres:
+#	$cgi - objet CGI pour les session et le traitement/rendu de la page
+#	$session - objet session utile pour la gestion des cookies
+#	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
+#	$siteId - Identifiant du site parsé
+#	$pageUri - URI de la page en cours
+#	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
+#	%requestParameters - paramètres à coller à l'URL
+sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $secure, %requestParameters)
+{
+	my ($cgi, $session, $requestMethod, $siteId, $pageUri, $secure, %requestParameters) = @_;
+
 	# Chargement de la configuration
 	my ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry) = getAllConfigs($session, $siteId);
 
@@ -78,7 +96,7 @@ sub processIndexPage
 			$pageContent =~ s/(<meta( [^>]*)? http-equiv=(\"|\')Content-Type\3[^>]* content=(\"|\')([^>]*?)\4[^>]*>)/$contentType = $5; $1/segi;
 		}
 		$pageContent = $pageContent."\n<div class=\"cdlPageCached\"></div>";
-		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $pageUri, $contentType, $enableAudio, $activateAudio, %requestParameters);
+		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters);
 	}
 
 	if ($siteDomainNames and $urlToParse =~ m/^https?:\/\/($siteDomainNames)/si) {
@@ -109,7 +127,7 @@ sub processIndexPage
 			renderErrorPage($session, $siteId, $siteDefaultLanguage, $activateAudio, $requestMethod, $response, $urlToParse, %requestParameters);
 		}
 	} else {
-		accessAnotherSite($cgi, $session, $siteId, $siteDefaultLanguage, $urlToParse, $secure, %requestParameters);
+		accessAnotherSite($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters);
 	}
 }
 
@@ -227,7 +245,7 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 #	$enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
 #	%requestParameters - paramètres passés à la page
-sub renderIndexPage #($htmlCode, $session, $siteId, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, %requestParameters)
+sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, %requestParameters)
 {
 	my ($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, %requestParameters) = @_;
 
@@ -303,7 +321,26 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteDefaultLanguage, $homeP
 	}
 	my $pageContentFile = savePageContentInCache($requestMethod, $urlToParse, $entirePageTemplateString, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'));
 
-	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $pageUri, $contentType, $enableAudio, $activateAudio, %requestParameters);
+	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters);
+}
+
+# Function: printPage
+#	Affichage du contenu de la page finale avec les paramètres utilisateurs
+#
+# Paramètres:
+#	$session - objet session utile pour la gestion des cookies
+#	$pageContent - code HTML de la page finale
+#	$contentType - type de contenu et encodage de la page
+#	$siteId - Identifiant du site parsé
+#	$siteRootUrl - URL racine du site
+#	$pagePath - chemin vers la page en cours de traitement
+#	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
+sub printPage #($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $secure)
+{
+	my ($session, $contentType, $pageContent, $siteId, $siteRootUrl, $pagePath, $secure) = @_;
+
+	print $session->header('Content-type' => $contentType);
+	print $pageContent;
 }
 
 # Function: renderCachedPage
@@ -314,14 +351,17 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteDefaultLanguage, $homeP
 #	$pageContentFile - Nom du fichier de cache où le contenu de la page est stocké
 #	$session - objet session utile pour la gestion des cookies
 #	$siteId - Identifiant du site parsé
+#	$siteRootUrl - URL racine du site
+#	$pagePath - chemin vers la page en cours de traitement
 #	$pageUri - URI de la page en cours
+#	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
 #	$contentType - type de contenu et encodage de la page
 #	$enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
 #	%requestParameters - paramètres passés à la page
-sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageUri, $contentType, $enableAudio, $activateAudio, %requestParameters)
+sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters)
 {
-	my ($pageContent, $pageContentFile, $session, $siteId, $pageUri, $contentType, $enableAudio, $activateAudio, %requestParameters) = @_;
+	my ($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters) = @_;
 
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
@@ -372,9 +412,11 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	}
 	$pageContent = setValueInTemplateString($pageContent, 'F_SIZE_BROWSER_DEPENDS', $fontSize);
 
+	my @now = localtime(time);
+	$pageContent = setValueInTemplateString($pageContent, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	# Initialisation de l'entête et affichage de la page finale
-	print $session->header('Content-type' => $contentType);
-	print $pageContent;
+	printPage($session, $contentType, $pageContent, $siteId, $siteRootUrl, $pagePath, $secure);
 	exit;
 }
 

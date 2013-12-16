@@ -182,5 +182,8 @@ if ($action) {
 	}
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
+	my @now = localtime(time);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	print $documentPageTemplateString;
 }

@@ -194,41 +194,42 @@ jQuery.noConflict();
 <!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
 </div>
 <div>
-<br><p>&copy; 2012 &ndash; Confort de lecture
+<br><p>&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
 </div>
 <script>
 //<![CDATA[
 jQuery('.deleteLines').bind('click', function () {
-jQuery('.deleteRow:checked').parent().parent().remove();
-jQuery('.deleteNewRow:checked').parent().parent().remove();
-jQuery('.deleteAllRows').attr('checked', false);
-jQuery('.deleteAllNewRows').attr('checked', false);
-return false;
+	jQuery('.deleteRow:checked').parent().parent().remove();
+	jQuery('.deleteNewRow:checked').parent().parent().remove();
+	jQuery('.deleteAllRows').attr('checked', false);
+	jQuery('.deleteAllNewRows').attr('checked', false);
+	return false;
 });
 jQuery('.deleteAllRows').bind('change', function () {
-if (jQuery(this).attr('checked')) {
-jQuery('.deleteRow').attr('checked', true);
-} else {
-jQuery('.deleteRow').attr('checked', false);
-}
+	if (jQuery(this).attr('checked')) {
+		jQuery('.deleteRow').attr('checked', true);
+	} else {
+		jQuery('.deleteRow').attr('checked', false);
+	}
 });
 jQuery('.deleteAllNewRows').bind('change', function () {
-if (jQuery(this).attr('checked')) {
-jQuery('.deleteNewRow').attr('checked', true);
-} else {
-jQuery('.deleteNewRow').attr('checked', false);
-}
+	if (jQuery(this).attr('checked')) {
+		jQuery('.deleteNewRow').attr('checked', true);
+	} else {
+		jQuery('.deleteNewRow').attr('checked', false);
+	}
 });
 jQuery('.addLineLink').bind('click', function () {
-var count = jQuery('#rowsToAdd').val();
-for (i = 0; i < count; i++) {
-jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
-}
-return false;
+	var count = jQuery('#rowsToAdd').val();
+
+	for (i = 0; i < count; i++) {
+		jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
+	}
+	return false;
 });
 jQuery('.deleteLineLink').live('click', function () {
-jQuery(this).parent().parent().remove();
-return false;
+	jQuery(this).parent().parent().remove();
+	return false;
 });
 //]]>
 </script>
