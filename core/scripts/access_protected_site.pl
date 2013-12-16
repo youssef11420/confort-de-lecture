@@ -182,5 +182,8 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	}
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
+	my @now = localtime(time);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	print $protectedPageTemplateString;
 }

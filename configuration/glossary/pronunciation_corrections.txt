@@ -1,3 +1,20 @@
+fr	l'Equipe.fr	"L'Équipe poin F R"	1	1	1
+fr	Suez	"Suèse"	1	1	1
+fr	4G chez Orange	"4 gé chez Orange"	1	1	1
+fr	quechoisir.org	"que choisir poin org"	1	1	1
+fr	livres-acces.fr	"livre tiré accès poin fr"	1	1	1
+fr	l'Emploi	"lemploi"	1	1	1
+fr	L'Occitane	"loccitane"	1	1	1
+fr	L'ADEME	"ladème"	1	1	1
+fr	ADEME	"Adème"	1	1	1
+fr	Virgin mobile	"Virgine mobile"	1	1	1
+fr	iPhone 4S.	"aïe-phone 4 s"	1	1	1
+fr	iPhone	"aïe-phone"	1	1	1
+fr	VF	"v f"	1	1	1
+fr	V.O.	"v o"	1	1	1
+fr	Bbox	"Bi Box"	1	1	1
+fr	T.V.	"T v"	1	1	1
+fr	F.A.I.	"F A i"	1	1	1
 fr	MAIF	"Maïfe"	1	1	1
 fr	rénaux \[	"rénaux, ["	1	0	0
 fr	re-consulter	"reu consulter"	1	0	0

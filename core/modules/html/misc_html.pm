@@ -188,19 +188,19 @@ sub cleanAttributesValues #($tagAttributes)
 
 	$tagAttributes =~ s/( (xml:space|shape|dir|frameborder|scrolling|compact|noshade|declare|valuetype|ismap|method|_cdl_type|checked|disabled|readonly|multiple|selected|frame|rules|scope|nowrap)=(\"|\'))(.*?)\3/$1.lc($4).$3/segi;
 
-	$tagAttributes =~ s/( (compact|checked|disabled|readonly|multiple|selected|nowrap)=(\"|\'))\3/$1.lc($2).$3/segi;
-
 	# On supprime les attributs ID vides
 	$tagAttributes =~ s/ id=(\"|\')\1//sgi;
-
+=begin
 	my %tagAttributesHash;
-	$tagAttributes =~ s/ ((_cdl_)?[a-z0-9\-]+)=\"([^\"]*)\"/$tagAttributesHash{$1} = $3/segi;
+	$tagAttributes =~ s/ ((_cdl_)?[a-z0-9\-]+)(=\"([^\"]*)\")?/$tagAttributesHash{$1} = $4;/segi;
 
 	$tagAttributes = "";
 	foreach my $tagAttribute (keys(%tagAttributesHash)) {
 		$tagAttributes .= " ".$tagAttribute."=\"".$tagAttributesHash{$tagAttribute}."\"";
 	}
 
+	$tagAttributes =~ s/ (compact|checked|disabled|readonly|multiple|selected|nowrap)=(\"|\')[^\"\']*\2/" ".lc($1)." "/segi;
+=cut
 	# On retourne le résultat final après le traitement
 	return $tagAttributes;
 }
@@ -220,13 +220,14 @@ sub cleanHtml #($htmlCode)
 	$htmlCode =~ s/(<(input|param|button|option) )(([^>]*? )?(value)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
 	$htmlCode =~ s/(<(object|embed|iframe) )(([^>]*? )?(height)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
 	$htmlCode =~ s/(<(object|embed|iframe) )(([^>]*? )?(width)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
+	$htmlCode =~ s/(<(select) )(([^>]*? )?(size)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
 
 	# Suppression des attributs dépréciés
 	$htmlCode =~ s/(<([\w\d]+))( [^>]*?)>/$1.cleanAttributesValues($3).">"/segi;
 
 	# On supprime le code temporaire _cdl_ (_cdl_XXXX ==> XXXX)
 	$htmlCode =~ s/_cdl_width=((\"|\')(.*?)\2)( |>)/"width=".$1." style=\"width:".$3.($3 =~ m\/\%\/si ? "" : "px")." !important\"".$4/segi;
-	$htmlCode =~ s/_cdl_(type|value|height)=(.*?)( |>)/$1=$2$3/sgi;
+	$htmlCode =~ s/_cdl_(type|value|height|size)=(.*?)( |>)/$1=$2$3/sgi;
 
 	# Ajout du commentaire javascript avant le code HTML au début des scripts
 	$htmlCode =~ s/(<script( [^>]*?)?>\s*)(<!\-\-)/$1\/\/$2/sgi;
@@ -472,7 +473,7 @@ sub prepareForHighlighting #($htmlCode)
 
 	$htmlCode =~ s/(<span class=\"(cdlInputText|cdlOtherInput|cdlButtons)\">(.*?)<\/span>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
 
-	$htmlCode =~ s/(<\/?(div|p|h[1-6]|blockquote|ins|del|form|fieldset|noscript|a|address)( [^>]*?)?>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
+	$htmlCode =~ s/(<\/?(div|p|h[1-6]|blockquote|ins|del|form|fieldset|noscript|a|address|b|strong)( [^>]*?)?>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
 
 	$htmlCode =~ s/(<(li|dt|dd|caption|th|td|button)( [^>]*?)?>)/$1<span class=cdlPartOfText>/sgi;
 	$htmlCode =~ s/(<\/(ul|ol|menu|dl|table)>)/<\/span>$1/sgi;

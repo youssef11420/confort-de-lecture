@@ -92,6 +92,9 @@ if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
 	# On vide la partie de la template réservée au glossaire
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'GLOSSARY_FORM', "");
 
+	my @now = localtime(time);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	# Affichage du code HTML
 	print "Content-type: text/html\n\n";
 	print $configPageTemplateString;
@@ -251,6 +254,9 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'GLOSSARY_FORM', "");
 	# On vide la partie de la template réservée à l'identification
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
+
+	my @now = localtime(time);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
 
 	# Affichage du code HTML
 	print "Content-type: text/html\n\n";
@@ -503,6 +509,9 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	# On vide la partie de la template réservée à l'identification
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
 
+	my @now = localtime(time);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	# Affichage du code HTML
 	print "Content-type: text/html\n\n";
 	print $configPageTemplateString;
@@ -697,6 +706,9 @@ if ($thisCdlUrl =~ m/^\/admin\/sites(\/list)?(\?.*?)?$/si) {
 	# On vide la partie de la template réservée à l'identification
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
 
+	my @now = localtime(time);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	# Affichage de la template finale
 	print "Content-type: text/html\n\n";
 	print $configPageTemplateString;
@@ -753,6 +765,9 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary(\/index)?(\?.*)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'EDIT_FORM', "");
 	# On vide la partie de la template réservée à l'identification
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
+
+	my @now = localtime(time);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
 
 	# Affichage de la template finale
 	print "Content-type: text/html\n\n";

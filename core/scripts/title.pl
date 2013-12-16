@@ -65,5 +65,5 @@ my $fontSize = param('cdls');
 
 $titleString = setValueInTemplateString($titleString, 'CURSOR_SIZE', isBigCursorNotAllowed() ? "32" : $cursorSizes{$fontSize});
 
-print $session->header('Content-type' => "text/css; charset=UTF-8", 'Last-Modified' => "Fri, 06 Jan 1984 17:15:30 GMT");
+print $session->header('Content-type' => "text/javascript; charset=UTF-8", 'Last-Modified' => "Fri, 06 Jan 1984 17:15:30 GMT");
 print $titleString;

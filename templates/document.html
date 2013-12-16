@@ -57,18 +57,18 @@ jQuery.noConflict();
 </div>
 </div>
 <div class="cdlFoot">
-<p class="cdlCopyright">&copy; 2012 &ndash; Confort de lecture
+<p class="cdlCopyright">&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
 <div class="cdlClearBoth"></div>
 </div>
 <!--###JS_AUDIO_FILE_INCLUDE###--><script src="/design/js/cdl/highlight.js"></script>
 <script>
 jQuery(window).bind('load', function() {
-if (parentMovie("lecteurCDL")) {
-parentMovie("lecteurCDL").pauseIt();
-}
-if (thisMovie("lecteurCDL")) {
-setTimeout("initLecture();lectureMorceau(currentIndice,'down','auto')",1000);
-}
+	if (parentMovie("lecteurCDL")) {
+		parentMovie("lecteurCDL").pauseIt();
+	}
+	if (thisMovie("lecteurCDL")) {
+		setTimeout("initLecture();lectureMorceau(currentIndice,'down','auto')",1000);
+	}
 });
 </script>
 <!--/###JS_AUDIO_FILE_INCLUDE###--><script src="/javascript/title_###SITE_ID###_###F_SIZE###.js"></script>

@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use JSON;
+
 use LWP::UserAgent;
 use HTML::TreeBuilder;
 %HTML::Tagset::optionalEndTag = map {; $_ => 1}
@@ -62,7 +64,6 @@ keys %HTML::Tagset::isPhraseMarkup,
 keys %HTML::Tagset::isTableElement;
 %HTML::Tagset::isHeadOrBodyElement = map {; $_ => 1}
 	qw(script noscript isindex style object map area param);
-use Template;
 
 use lib '../modules/utils';
 use config_manager;
@@ -93,4 +94,4 @@ use position;
 use lib '../modules/pages';
 use index_page;
 
-processIndexPage();
+processIndexPage;

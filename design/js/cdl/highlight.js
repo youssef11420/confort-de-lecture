@@ -167,10 +167,10 @@ function lectureMorceau(index) {
 							content = content.replace(/<input/,"<input value=\""+jQuery(this).val()+"\"");
 						}
 					}
-					if (jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i"))) {
+					if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i"))) {
 						content = jQuery('label[for="'+jQuery(this).attr('id')+'"]').outer() + content;
 					}
-					if (jQuery(this).attr('type').match(new RegExp('text|password', "i"))) {
+					if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password', "i"))) {
 						if (playMode != "manual") {
 							isInProtectedField = true;
 						}
@@ -344,10 +344,11 @@ function detectKeyUp(Event) {
 				break;
 			default:
 				if (kc != 9) {
-					if (focusedSelect != null && (focusedSelectedIndex == null || focusedSelectedIndex != focusedSelect.attr('selectedIndex'))) {
+					if (focusedSelect != null && (focusedSelectedIndex == null || focusedSelectedIndex != focusedSelect.prop('selectedIndex'))) {
 						if (!isStopped) {
-							focusedSelectedIndex = focusedSelect.attr('selectedIndex');
+							focusedSelectedIndex = focusedSelect.prop('selectedIndex');
 							initLecture();
+							console.log(focusedSelect);
 							timer = setTimeout("lectureMorceau('<select id=\"cdlGhostSelect\">'+jQuery('option',focusedSelect).eq(focusedSelectedIndex).outer()+'</select>',playDirection,playMode)",0);
 						}
 					}
@@ -460,12 +461,12 @@ function highlighterMain(index) {
 		if (pageParts[index]) {
 			myScrollTop = ds_gettop(pageParts[index].get(0));
 			jQuery("input", pageParts[index]).each(function() {
-				if (jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i")) && jQuery('label[for="'+jQuery(this).attr('id')+'"]').size() > 0) {
+				if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i")) && jQuery('label[for="'+jQuery(this).attr('id')+'"]').size() > 0) {
 					myScrollTop = Math.min(myScrollTop, ds_gettop(jQuery('label[for="'+jQuery(this).attr('id')+'"]').get(0)));
 				}
 			});
 			jQuery("select, textarea", pageParts[index]).each(function() {
-				if (jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i")) && jQuery('label[for="'+jQuery(this).attr('id')+'"]').size() > 0) {
+				if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i")) && jQuery('label[for="'+jQuery(this).attr('id')+'"]').size() > 0) {
 					myScrollTop = Math.min(myScrollTop, ds_gettop(jQuery('label[for="'+jQuery(this).attr('id')+'"]').get(0)));
 				}
 			});
@@ -476,7 +477,7 @@ function highlighterMain(index) {
 			pageParts[index].focus();
 
 			jQuery("input", pageParts[index]).each(function() {
-				if (jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i"))) {
+				if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i"))) {
 					jQuery('label[for="'+jQuery(this).attr('id')+'"]').addClass('cdlInversedColor');
 				}
 				jQuery(this).focus();
@@ -530,12 +531,11 @@ if (jQuery('p.cdlCopyright').size()) {
 	++i;
 }
 
-
 jQuery('input[type="text"], input[type="password"], textarea, select').bind('focus', function() {
 	focusOnAField = true;
 	if (jQuery(this).is('select')) {
 		focusedSelect = jQuery(this);
-		focusedSelectedIndex = focusedSelect.attr('selectedIndex');
+		focusedSelectedIndex = focusedSelect.prop('selectedIndex');
 	}
 });
 jQuery('input[type="text"], input[type="password"], textarea, select').bind('blur', function() {
@@ -560,8 +560,8 @@ jQuery('input, select, textarea, button, a').bind('keydown', detectKeyDownForFoc
 jQuery('select').bind('click', function() {
 	if (!isStopped) {
 		if (jQuery(this).is('.cdlInversedColor select')) {
-			if (focusedSelect != null && (focusedSelectedIndex == null || focusedSelectedIndex != focusedSelect.attr('selectedIndex'))) {
-				focusedSelectedIndex = focusedSelect.attr('selectedIndex');
+			if (focusedSelect != null && (focusedSelectedIndex == null || focusedSelectedIndex != focusedSelect.prop('selectedIndex'))) {
+				focusedSelectedIndex = focusedSelect.prop('selectedIndex');
 				initLecture();
 				timer = setTimeout("lectureMorceau('<select id=\"cdlGhostSelect\">'+jQuery('option',focusedSelect).eq(focusedSelectedIndex).outer()+'</select>',playDirection,playMode)",duree);
 			}

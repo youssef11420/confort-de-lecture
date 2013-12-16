@@ -47,7 +47,7 @@ jQuery.noConflict();
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">
 <h1 class="cdlSiteLogo"><a href="###SITE_URL###" title="###SITE_TITLE###" target="_blank"><img src="###SITE_LOGO###" alt="###SITE_TITLE###"></a></h1>
-<div class="cdlLogoCdl"><img src="/design/images/logo_cdl.png" alt=""></div>
+<div class="cdlLogoCdl"><img src="/design/images/logo_confortdelecture.png" alt=""></div>
 <div class="cdlClearBoth"></div>
 </div>
 <div class="cdlCadreContainer">
@@ -89,32 +89,33 @@ var backgroundColor = "###B_COLOR###";
 var fontColor = "###F_COLOR###";
 var fontSize = "###F_SIZE_INDEX###";
 jQuery('.cdlConfigChoice li a').bind('click',function () {
-jQuery('.choiceSelected', jQuery(this).parent().parent()).removeClass('choiceSelected');
-jQuery('.linkChoiceSelected', jQuery(this).parent().parent()).removeClass('linkChoiceSelected');
-jQuery(this).parent().addClass('choiceSelected');
-jQuery(this).addClass('linkChoiceSelected');
-switch (jQuery(this).parent().attr('id')) {
-case "cdlBackgroundConfigBlack":jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#000000");backgroundColor="000000";break;
-case "cdlBackgroundConfigWhite": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#FFFFFF");backgroundColor="FFFFFF";break;
-case "cdlBackgroundConfigGreen": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#009900");backgroundColor="009900";break;
-case "cdlBackgroundConfigYellow": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#FFFF00");backgroundColor="FFFF00";break;
-case "cdlBackgroundConfigBlue": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#0000FF");backgroundColor="0000FF";break;
-case "cdlFontColorConfigBlack": jQuery('.cdlPreview, .cdlPreview *').css('color',"#000000");jQuery('.cdlPreview td').css('border-color',"#000000");fontColor="000000";break;
-case "cdlFontColorConfigWhite": jQuery('.cdlPreview, .cdlPreview *').css('color',"#FFFFFF");jQuery('.cdlPreview td').css('border-color',"#FFFFFF");fontColor="FFFFFF";break;
-case "cdlFontColorConfigGreen": jQuery('.cdlPreview, .cdlPreview *').css('color',"#009900");jQuery('.cdlPreview td').css('border-color',"#009900");fontColor="009900";break;
-case "cdlFontColorConfigYellow": jQuery('.cdlPreview, .cdlPreview *').css('color',"#FFFF00");jQuery('.cdlPreview td').css('border-color',"#FFFF00");fontColor="FFFF00";break;
-case "cdlFontColorConfigBlue": jQuery('.cdlPreview, .cdlPreview *').css('color',"#0000FF");jQuery('.cdlPreview td').css('border-color',"#0000FF");fontColor="0000FF";break;
-case "cdlTextSizeConfig1": jQuery('.cdlPreview td div').css('font-size',"80%");fontSize="1";break;
-case "cdlTextSizeConfig2": jQuery('.cdlPreview td div').css('font-size',"115%");fontSize="2";break;
-case "cdlTextSizeConfig3": jQuery('.cdlPreview td div').css('font-size',"170%");fontSize="3";break;
-case "cdlTextSizeConfig4": jQuery('.cdlPreview td div').css('font-size',"220%");fontSize="4";break;
-case "cdlTextSizeConfig5": jQuery('.cdlPreview td div').css('font-size',"300%");fontSize="5";break;
-default: break;
-}
-jQuery('input[name="cdlbc"]').attr('value', backgroundColor);
-jQuery('input[name="cdlfc"]').attr('value', fontColor);
-jQuery('input[name="cdlfs"]').attr('value', fontSize);
-return false;
+	jQuery('.choiceSelected', jQuery(this).parent().parent()).removeClass('choiceSelected');
+	jQuery('.linkChoiceSelected', jQuery(this).parent().parent()).removeClass('linkChoiceSelected');
+	jQuery(this).parent().addClass('choiceSelected');
+	jQuery(this).addClass('linkChoiceSelected');
+	switch (jQuery(this).parent().attr('id')) {
+	case "cdlBackgroundConfigBlack":jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#000000");backgroundColor="000000";break;
+	case "cdlBackgroundConfigWhite": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#FFFFFF");backgroundColor="FFFFFF";break;
+	case "cdlBackgroundConfigGreen": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#009900");backgroundColor="009900";break;
+	case "cdlBackgroundConfigYellow": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#FFFF00");backgroundColor="FFFF00";break;
+	case "cdlBackgroundConfigBlue": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#0000FF");backgroundColor="0000FF";break;
+	case "cdlFontColorConfigBlack": jQuery('.cdlPreview, .cdlPreview *').css('color',"#000000");jQuery('.cdlPreview td').css('border-color',"#000000");fontColor="000000";break;
+	case "cdlFontColorConfigWhite": jQuery('.cdlPreview, .cdlPreview *').css('color',"#FFFFFF");jQuery('.cdlPreview td').css('border-color',"#FFFFFF");fontColor="FFFFFF";break;
+	case "cdlFontColorConfigGreen": jQuery('.cdlPreview, .cdlPreview *').css('color',"#009900");jQuery('.cdlPreview td').css('border-color',"#009900");fontColor="009900";break;
+	case "cdlFontColorConfigYellow": jQuery('.cdlPreview, .cdlPreview *').css('color',"#FFFF00");jQuery('.cdlPreview td').css('border-color',"#FFFF00");fontColor="FFFF00";break;
+	case "cdlFontColorConfigBlue": jQuery('.cdlPreview, .cdlPreview *').css('color',"#0000FF");jQuery('.cdlPreview td').css('border-color',"#0000FF");fontColor="0000FF";break;
+	case "cdlTextSizeConfig1": jQuery('.cdlPreview td div').css('font-size',"80%");fontSize="1";break;
+	case "cdlTextSizeConfig2": jQuery('.cdlPreview td div').css('font-size',"115%");fontSize="2";break;
+	case "cdlTextSizeConfig3": jQuery('.cdlPreview td div').css('font-size',"170%");fontSize="3";break;
+	case "cdlTextSizeConfig4": jQuery('.cdlPreview td div').css('font-size',"220%");fontSize="4";break;
+	case "cdlTextSizeConfig5": jQuery('.cdlPreview td div').css('font-size',"300%");fontSize="5";break;
+	default: break;
+	}
+	jQuery('input[name="cdlbc"]').attr('value', backgroundColor);
+	jQuery('input[name="cdlfc"]').attr('value', fontColor);
+	jQuery('input[name="cdlfs"]').attr('value', fontSize);
+
+	return false;
 });
 </script>
 </div>
@@ -123,7 +124,7 @@ return false;
 </div>
 </div>
 <div class="cdlFoot">
-<p class="cdlCopyright">&copy; 2012 &ndash; Confort de lecture
+<p class="cdlCopyright">&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
 <div class="cdlClearBoth"></div>
 </div>
 </div></div>

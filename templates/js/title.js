@@ -66,4 +66,10 @@ jQuery(document).ready(function() {
 			jQuery(this).removeAttr('title');
 		}
 	});
+
+	if ($('body').width() < 680) {
+		jQuery('.cdlFormPersonalization, .cdlAllPageContainer').css('overflow', "visible").css('margin-top', "0");
+		jQuery('html, body').css('overflow', "auto").css('height', "auto");
+		jQuery('.cdlUtilLinksContainer').css('margin', "0 0 10px 0").css('padding', "2px 0 2px 0").css('border-width', "2px").css('left', "0").appendTo('.cdlGlobalPage');
+	}
 });

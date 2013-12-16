@@ -46,24 +46,24 @@ jQuery.noConflict();
 <div class="cdlCadre">
 <p>Vous allez acc&eacute;der &agrave; une page qui ne prend pas en compte Confort de lecture.
 <br>
-<p><span class="cdlPartOfText">Voulez vous vraiment acc&eacute;der &agrave; la page suivante ?</span><br><span class="cdlPartOfText">###EXTERNAL_URL###</span><br><br><span class="cdlExitFromCdlLinks"><a href="###EXTERNAL_URL###" class="cdlBoldLink">Oui</a>&nbsp;|&nbsp;<a href="###PREVIOUS_PAGE###" onclick="if (history.length &gt; 1) {history.back();} else {_closeWindow();} return false;" class="cdlBoldLink" title="Non, retourner &agrave; la page pr&eacute;c&eacute;dente">Non</a></span>
+<p><span class="cdlPartOfText">Voulez vous vraiment acc&eacute;der &agrave; la page suivante ?</span><br><span class="cdlPartOfText">###EXTERNAL_URL###</span><br><br><span class="cdlExitFromCdlLinks"><form action="###EXTERNAL_URL###" method="###REQUEST_METHOD###" class="cdlFormExitFromCdl">###HIDDEN_POST_PARAMS###<input type="submit" value="Oui"></form>&nbsp;|&nbsp;<a href="###PREVIOUS_PAGE###" onclick="if (history.length &gt; 1) {history.back();} else {_closeWindow();} return false;" class="cdlBoldLink" title="Non, retourner &agrave; la page pr&eacute;c&eacute;dente">Non</a></span>
 </div>
 </div>
 </div>
 </div>
 <div class="cdlFoot">
-<p class="cdlCopyright">&copy; 2012 &ndash; Confort de lecture
+<p class="cdlCopyright">&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
 <div class="cdlClearBoth"></div>
 </div>
 <!--###JS_AUDIO_FILE_INCLUDE###--><script src="/design/js/cdl/highlight.js"></script>
 <script>
 jQuery(window).bind('load', function() {
-if (parentMovie("lecteurCDL")) {
-parentMovie("lecteurCDL").pauseIt();
-}
-if (thisMovie("lecteurCDL")) {
-setTimeout("initLecture();lectureMorceau(currentIndice,'down','auto')",1000);
-}
+	if (parentMovie("lecteurCDL")) {
+		parentMovie("lecteurCDL").pauseIt();
+	}
+	if (thisMovie("lecteurCDL")) {
+		setTimeout("initLecture();lectureMorceau(currentIndice,'down','auto')",1000);
+	}
 });
 </script>
 <!--/###JS_AUDIO_FILE_INCLUDE###--><script src="/javascript/title_###SITE_ID###_###F_SIZE###.js"></script>
