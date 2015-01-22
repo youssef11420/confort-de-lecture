@@ -29,7 +29,7 @@ sub parseAloneReplaces #($htmlCode)
 	my ($htmlCode) = @_;
 
 	# Supprimer les commentaires à l'intérieur de la balise cdlReplace pour afficher son contenu dans la verion filtrée
-	$htmlCode =~ s/<!--cdlReplace(\s[^>]*)?-->\s*(<\/~comment>)?\s*<!--(.*?)-->\s*(<\/~comment>)?\s*<!--\/cdlReplace-->/$3/sg;
+	$htmlCode =~ s/<!--cdlReplace(\s[^>]*)?-->\s*(<\/~comment>)?\s*<!--(.*?)-->\s*(<\/~comment>)?\s*<!--\/cdlReplace-->(<\/~comment>)?/$3/sg;
 
 	# Retourne le contenu HTML avec les balises CDL replace seules traitées
 	return $htmlCode;

@@ -29,10 +29,6 @@ function getStatut() {
 	return isStopped;
 }
 
-function debug(texte,valeur) {
-	console.log(texte + " : " + valeur);
-}
-
 // Positionne le flag de lecture à faux mais le flag de pause à vrai
 function estPretEnPause() {
 	isReading = false;
@@ -406,7 +402,7 @@ function highlightedElements(theElement) {
 	theElement.children(":not(script,noscript)").each(function() {
 		if (jQuery("div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,address,blockquote,ins,del,form,fieldset,legend,span.cdlInputText,span.cdlOtherInput,span.cdlButtons,table,caption,thead,tbody,th,td,span.cdlPartOfText,a,select,textarea,br,hr,img,label,noscript", jQuery(this)).size() == 0 || jQuery(this).is("a") || jQuery(this).is("span.cdlButtons")) {
 			var elementContent = trim(jQuery(this).text());
-			if ((elementContent && elementContent.match(new RegExp('[^\-\!\"\'\(\)\*\,\.\/\:\;\<\>\?\[\\\]\^\_\`\{\|\}\~\‘\’\¡\¤\¦\§\¨\ª\«\¬\­\¯\´\¶\·\¸\¹\»\¿\• '+String.fromCharCode(160)+'\t\n]', "i")) != null) || jQuery(this).is('span.cdlInputText, span.cdlOtherInput, span.cdlButtons, select, textarea') || (jQuery(this).is('img') && (jQuery(this).attr('alt') != "" || jQuery(this).attr('title') != "")) || (jQuery(this).is("a") && jQuery('img',jQuery(this)).size() > 0)) {
+			if ((elementContent && elementContent.match(new RegExp('[^\-\!\"\'\(\)\,\.\/\:\;\<\>\?\[\\\]\^\_\`\{\|\}\~\‘\’\¡\¤\¦\§\¨\ª\«\¬\­\¯\´\¶\·\¸\¹\»\¿\• '+String.fromCharCode(160)+'\t\n]', "i")) != null) || jQuery(this).is('span.cdlInputText, span.cdlOtherInput, span.cdlButtons, select, textarea') || (jQuery(this).is('img') && (jQuery(this).attr('alt') != "" || jQuery(this).attr('title') != "")) || (jQuery(this).is("a") && jQuery('img',jQuery(this)).size() > 0)) {
 				if (!jQuery(this).is('label')) {
 					if (isFirstElementInCadre) {
 						firstCadreElementsIndexes.push(i);

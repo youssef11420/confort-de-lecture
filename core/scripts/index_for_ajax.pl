@@ -128,15 +128,14 @@ print $session->header('Content-type' => $contentType);
 if ($response->is_success) {
 	# Récupération du contenu de la réponse
 	if ($contentType =~ m/charset=utf\-?\d+/si) {
-		$htmlCode = $response->decoded_content;
-	} else {
 		$htmlCode = $response->content;
+	} else {
+		$htmlCode = $response->decoded_content;
 	}
 
 	# Affichage de la page finale;
 	print $htmlCode;
-	exit;
 } else {
 	print "";
-	exit;
 }
+exit;

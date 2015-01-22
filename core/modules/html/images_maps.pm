@@ -41,21 +41,26 @@ sub replaceImageWithAlt #($htmlCode)
 #	$tagAttributes - code HTML des attributs à traiter
 #	$siteRootUrl - URL racine du site
 #	$pagePath - chemin vers la page
-sub parseImageAttributes #($tagAttributes, $siteRootUrl, $pagePath)
+#	$displayImages - option indiquant si on garde les images du site parsé en version CDL ou si on ne garde que celle avec une alternative
+sub parseImageAttributes #($tagAttributes, $siteRootUrl, $pagePath, $displayImages)
 {
-	my ($tagAttributes, $siteRootUrl, $pagePath) = @_;
+	my ($tagAttributes, $siteRootUrl, $pagePath, $displayImages) = @_;
+
+	# Ajout d'un attribut alt s'il y en a pas
+	if ($tagAttributes !~ m/ alt=(\"|\')(.*?)\1/si) {
+		$tagAttributes .= " alt=\"\"";
+	}
+
+	if ($displayImages eq "2" and $tagAttributes =~ m/ alt=(\"|\')\s*\1/si and $tagAttributes !~ m/ longdesc=(\"|\')(.+?)\1/si) {
+		return "";
+	}
 
 	# Mettre en absolue l'URL dans l'attribut src
-	$tagAttributes =~ s/( (src))=(\"|\')(.*?)\3/$1."=".$3.makeUrlAbsolute($4, $siteRootUrl, $pagePath).$3/segi;
+	$tagAttributes =~ s/( src)=(\"|\')(.*?)\2/$1."=".$2.makeUrlAbsolute($3, $siteRootUrl, $pagePath).$2/segi;
 
 	# Supprimer les attributs de tailles (hauteur, largeur) pour afficher l'image en pleines dimensions (sans dégradation)
 	$tagAttributes =~ s/( (width))=(\"|\')(.*?)\3//sgi;
 	$tagAttributes =~ s/( (height))=(\"|\')(.*?)\3//sgi;
-
-	# Ajout d'un attribut alt s'il y en a pas
-	if ($tagAttributes !~ m/( (alt))=(\"|\')(.*?)\3/si) {
-		$tagAttributes .= " alt=\"\"";
-	}
 
 	# Retourner le code HTML des attributs parsés
 	return $tagAttributes;
@@ -68,12 +73,15 @@ sub parseImageAttributes #($tagAttributes, $siteRootUrl, $pagePath)
 #	$htmlCode - code HTML à traiter
 #	$siteRootUrl - URL racine du site
 #	$pagePath - chemin vers la page
-sub parseImages #($htmlCode, $siteRootUrl, $pagePath)
+#	$displayImages - option indiquant si on garde les images du site parsé en version CDL ou si on ne garde que celle avec une alternative
+sub parseImages #($htmlCode, $siteRootUrl, $pagePath, $displayImages)
 {
-	my ($htmlCode, $siteRootUrl, $pagePath) = @_;
+	my ($htmlCode, $siteRootUrl, $pagePath, $displayImages) = @_;
 
 	# Traitement des attributs dans les balises img
-	$htmlCode =~ s/(<img)( [^>]*?)(>)/$1.parseImageAttributes($2, $siteRootUrl, $pagePath).$3/segi;
+	$htmlCode =~ s/(<img)( [^>]*?)(>)/$1.parseImageAttributes($2, $siteRootUrl, $pagePath, $displayImages).$3/segi;
+	$htmlCode =~ s/<img>//sgi;
+	$htmlCode =~ s/<a( [^>]*?)?>\s*<\/a>//sgi;
 
 	# Retourner le code HTML avec les balise img parsées (url mises en absolues)
 	return $htmlCode;

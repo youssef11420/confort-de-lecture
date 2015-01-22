@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="###LANGUAGE###">
-###METAS###<title>###DOCUMENT_TITLE### &bull; Confort de lecture</title>
+###METAS###<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>###DOCUMENT_TITLE### &bull; Confort de lecture</title>
 <base href="###BASE_HREF###">
 ###LINKS###
 <link href="/styles/default.css" rel="stylesheet">
@@ -10,18 +11,17 @@
 <link href="/styles/ie.css" rel="stylesheet">
 <![endif]-->
 ###SCRIPTS###<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-<script>(function(){var all=jQuery.event.props,len=all.length,res=[];while(len--){var el=all[len];if(el!='layerX'&&el!='layerY')res.push(el);}jQuery.event.props=res;}());</script>
 <script>
 jQuery.noConflict();
 </script>
-<script src="/design/js/jquery/jquery.address-1.5.min.js"></script>
+<script src="/design/js/jquery/jquery.address-1.6.min.js"></script>
 <body###BODY_ATTRIBUTES###>
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<a href="/personnalisation-affichage/###PERSONALIZATION_URL###" accesskey="l"><img src="/design/images/util_links_pictos/display_picto_###F_SIZE###.png" alt="Personnaliser vos param&egrave;tres d'affichage" title="Personnaliser vos param&egrave;tres d'affichage"></a><!--###AUDIO_ACTIONS###-->
-<a href="/personnalisation-audio/###PERSONALIZATION_URL###" accesskey="m"><img src="/design/images/util_links_pictos/audio_picto_###F_SIZE###.png" alt="Personnaliser vos param&egrave;tres audio" title="Personnaliser vos param&egrave;tres audio"></a>
-<a href="/personnalisation-aide-audio/###PERSONALIZATION_URL###" accesskey="m"><img src="/design/images/util_links_pictos/help_picto_###F_SIZE###.png" alt="Aide audio" title="Aide audio"></a>
-<!-- <a href="/audio-download/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3" title="T&eacute;l&eacute;charger la page en MP3"></a> --><!--/###AUDIO_ACTIONS###-->
+<a href="/personnalisation-affichage/###PERSONALIZATION_URL###" accesskey="l" title="Personnaliser vos param&egrave;tres d'affichage"><img src="/design/images/util_links_pictos/display_picto_###F_SIZE###.png" alt="Personnaliser vos param&egrave;tres d'affichage">###DISPLAY_ICON###</a><!--###AUDIO_ACTIONS###-->
+<a href="/personnalisation-audio/###PERSONALIZATION_URL###" accesskey="m" title="Personnaliser vos param&egrave;tres audio"><img src="/design/images/util_links_pictos/audio_picto_###F_SIZE###.png" alt="Personnaliser vos param&egrave;tres audio">###AUDIO_ICON###</a>
+<a href="/personnalisation-aide-audio/###PERSONALIZATION_URL###" accesskey="m" title="Aide audio"><img src="/design/images/util_links_pictos/help_picto_###F_SIZE###.png" alt="Aide audio">###AUDIO_HELP_ICON###</a>
+<!-- <a href="/audio-download/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t" title="T&eacute;l&eacute;charger la page en MP3"><img src="/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3"></a> --><!--/###AUDIO_ACTIONS###-->
 </div>
 <!--###AUDIO###--><div class="cdlAudioContent">
 <div class="cdlAudioObject">

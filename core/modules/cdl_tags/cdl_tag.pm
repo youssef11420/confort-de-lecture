@@ -240,6 +240,7 @@ sub parseAllNavsBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript,
 				$existEqualAttributes = 0;
 			}
 		}
+
 		$content = parseAllHtml($content, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri);
 		if ($content and $content !~ m/^\s*$/sgi) {
 			$contents .= setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', $content)."\n";

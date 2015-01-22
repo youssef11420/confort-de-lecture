@@ -1258,5 +1258,20 @@ sub getGlossaryItems
 	return split(/\n+/, $glossaryContent);
 }
 
+# Function: addSpaceToAcronym
+#	Ajout des espaces séparateurs dans les acronymes
+#
+# Paramètres:
+#	$acronym - texte de l'acronyme
+sub addSpaceToAcronym #($acronym)
+{
+	my ($acronym) = @_;
+
+	$acronym =~ s/([A-Z])\./$1 /sg;
+
+	# On retourne le résultat final après le traitement
+	return $acronym;
+}
+
 # Pour dire au pl que le pm s'est bien exécuté, il faut lui renvoyer une valeur vraie (donc 1 par ex)
 1;

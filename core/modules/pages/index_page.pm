@@ -213,6 +213,9 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 	}
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'F_SIZE_BROWSER_DEPENDS', $fontSize);
 
+	my @now = localtime(time);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+
 	print $session->header('Content-type' => "text/html; charset=utf-8");
 	print $errorPageTemplateString;
 }
@@ -374,6 +377,19 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteR
 	$pageUriForHtml =~ s/&/&amp;/sgi;
 	$pageContent = setValueInTemplateString($pageContent, 'PERSONALIZATION_URL', $language."/".$contrast."/".$siteId."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
 
+	my $iconContent;
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'DISPLAY_ICON', $iconContent);
+
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ICON', $iconContent);
+
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'AUDIO_HELP_ICON', $iconContent);
+
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$pageContent = setValueInTemplateString($pageContent, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
@@ -407,6 +423,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteR
 	$pageContent = setValueInTemplateString($pageContent, 'B_COLOR', $backgroundColor);
 	$pageContent = setValueInTemplateString($pageContent, 'F_COLOR', $fontColor);
 	$pageContent = setValueInTemplateString($pageContent, 'F_SIZE', $fontSize);
+	$pageContent = setValueInTemplateString($pageContent, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 	if (isBigCursorNotAllowed()) {
 		$fontSize = 1;
 	}

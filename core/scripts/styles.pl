@@ -67,6 +67,8 @@ my ($backgroundColor, $fontColor, $fontSize) = (param("cdlbc"), param("cdlfc"), 
 
 my $pagePaddingTop = $fontSize eq "" ? "94" : "".66+0.7*(($fontSize - 1)*20);
 my $pageMarginTop = $fontSize eq "" ? "86" : "".58+0.7*(($fontSize - 1)*20);
+my $inputSize = $fontSize eq "" ? "58" : "".30+0.7*(($fontSize - 1)*20);
+my $inputBorder = $fontSize eq "" ? "9" : "".5+0.1*(($fontSize - 1)*20);
 
 $fontSize = $fontSize ? $fontSize : '3';
 $styleString = setValueInTemplateString($styleString, 'FONT_SIZE_INDEX', isBigCursorNotAllowed() ? 1 : $fontSize);
@@ -84,6 +86,8 @@ $styleString = setValueInTemplateString($styleString, 'BACKGROUND_COLOR', $backg
 $styleString = setValueInTemplateString($styleString, 'FONT_SIZE', $fontSize);
 $styleString = setValueInTemplateString($styleString, 'PAGE_PADDING_TOP', $pagePaddingTop);
 $styleString = setValueInTemplateString($styleString, 'PAGE_MARGIN_TOP', $pageMarginTop);
+$styleString = setValueInTemplateString($styleString, 'INPUT_SIZE', $inputSize);
+$styleString = setValueInTemplateString($styleString, 'INPUT_BORDER', $inputBorder);
 
-print $session->header('Content-type' => "text/css; charset=UTF-8", 'Last-Modified' => "Fri, 06 Jan 1984 17:15:30 GMT");
+print $session->header('Content-type' => "text/css; charset=UTF-8");
 print $styleString;

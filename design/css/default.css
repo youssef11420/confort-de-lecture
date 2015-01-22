@@ -1,12 +1,11 @@
-*{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border-width:0;border-style:solid;width:auto !important;word-wrap:break-word}
-html,body{height:100%;overflow:hidden}
+*{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border-width:0;border-style:solid;word-wrap:break-word}
 abbr,acronym{border-bottom-width:1px;border-bottom-style:dotted;display:inline-block}
 a{text-decoration:underline;cursor:pointer}
 a *{text-decoration:underline;cursor:pointer}
 fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
-img{display:block;padding-bottom:2px}
-.cdlButtons{padding-top:5px;display:block}
+img{display:block;padding-bottom:2px;max-width:100%}
+.cdlButtons{padding:5px 0;display:block}
 fieldset,button,.cdlButtons input{border-width:1px}
 .cdlButtons input{cursor:pointer}
 button{cursor:pointer;background:none}
@@ -15,7 +14,7 @@ input,select,button,textarea{font-size:100%}
 input{vertical-align:middle;margin:0 3px}
 input.cdlInputText,.cdlInputText input,textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 select{border-width:1px;margin-bottom:5px;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
-input.cdlInputText,.cdlInputText input{border-width:1px;margin:2px 0 3px 0;width:50% !important;vertical-align:middle}
+input.cdlInputText,.cdlInputText input{border-width:1px;margin:2px 0 3px;width:50% !important;vertical-align:middle}
 textarea{overflow:auto;width:98.95% !important;margin:3px 0;border-width:1px}
 option{padding-bottom:1px}
 optgroup option{padding-left:2em}
@@ -26,7 +25,7 @@ ul ul ul li{list-style-type:square}
 ul ul ul ul li{list-style-type:disc}
 ul ul ul ul ul li{list-style-type:circle}
 ul ul ul ul ul ul li{list-style-type:square}
-h1,h2,h3,h4,h5,h6{padding:1px 0 4px 0}
+h1,h2,h3,h4,h5,h6{padding:1px 0 4px}
 h1{font-size:260%}
 h2{font-size:200%}
 h3{font-size:150%}
@@ -38,10 +37,10 @@ table{border-width:1px 0 0 1px;width:100% !important}
 th,td{border-width:0 1px 1px 0;padding:5px}
 p{padding-bottom:.3em}
 .cdlLoginForm .cdlButtons{text-align:center}
-.cdlAudioContent{padding:6px 0 5px 0;float:right}
+.cdlAudioContent{padding:6px 0 5px;float:right}
 .cdlAudioObject{float:left;padding:0 2px;margin-right:7px;border-width:1px;position:relative;z-index:86000;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 .cdlAudioObjectContent{float:left;overflow:hidden}
-.cdlAudioObjectContent object{float:left;margin-top:-5px}
+.cdlAudioObjectContent object{float:left;margin-top:-5px;background-color:transparent !important}
 .cdlAudioLinks{float:left}
 .cdlDownloadAudioLink{display:block;white-space:nowrap;margin-right:7px}
 .cdlModifyAudioParametersLinks{white-space:nowrap}
@@ -51,7 +50,7 @@ p{padding-bottom:.3em}
 .cdlCadre hr{color:inherit;border:none;margin:5px 0;display:block;height:2px !important;overflow:hidden}
 .cdlClearBoth{display:block;clear:both;font-size:0%;height:0px;overflow:hidden}
 .cdlHidden{display:none}
-.cdlFoot{margin:-2px 0 5px 0;padding:0 5px}
+.cdlFoot{margin:-2px 0 5px;padding:0 5px}
 .cdlCopyright{float:right;padding-left:10px}
 .cdlLabelDiv,.cdlFieldDiv{float:left;width:50% !important}
 .cdlLabelDiv{text-align:right;padding-top:.15em}
@@ -70,13 +69,26 @@ p{padding-bottom:.3em}
 .cdlUtilLinks img{padding-bottom:0}
 .cdlUtilLinks a,.cdlUtilLinks input{display:block;float:left;margin-right:5px}
 .cdlUtilLinks input{cursor:pointer}
-.cdlUtilLinksContainer{position:relative;top:0;left:7px;z-index:11420;padding:5px 0 2px 0;margin:-5px 54px 0 0;border-width:0 2px 2px 2px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlUtilLinksContainer{position:fixed;width:97% !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 54px 0 0;border-width:0 2px 2px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlUtilLinksContainer *{position:relative;z-index:86000}
-.cdlAllPageContainer{height:100%;overflow:auto;float:left;width:100% !important;position:relative}
-.cdlAllPage{padding:0 7px 1px 7px}
-.protectedPageLoginContent,.documentContent,.exitContent{padding:7px 7px 1px 7px}
-.errorContent{padding:10px}
+.cdlAllPage{padding:0 7px 1px}
+.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
 .cdlFormExitFromCdl{display:inline;margin:0;padding:0;border:none}
 .cdlFormExitFromCdl input{font-weight:bold;text-decoration:underline;vertical-align:0;cursor:pointer}
 div#cdlToolTipDiv{position:absolute;z-index:95200;border:2px solid #000000;display:none;padding:3px 5px;background-color:#FFFFCC;color:#000000}
 div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
+.gm-style,.gm-style-iw{font-size:100% !important}
+.gm-style,.gm-style *{background-color:transparent;color:initial;border-top-width:0 !important}
+.gm-style img{max-width:none}
+:root .cdlUtilLinks,:root .cdlUtilLinks *{background-color:transparent}
+:root .cdlUtilLinks img{display:none}
+:root .cdlUtilLinks a{padding:1px}
+:root .cdlUtilLinks a svg{display:block}
+:root input[type="radio"],:root input[type="checkbox"]{opacity:0;margin:0}
+.cdlInput_radio,.cdlInput_checkbox{margin:5px .3em 5px 0}
+:root .cdlInput_radio,:root .cdlInput_checkbox{display:inline-block;border:solid;box-sizing:border-box;vertical-align:middle}
+:root .cdlInput_radio strong,:root .cdlInput_checkbox strong{display:inline-block;box-sizing:border-box;width:60% !important;height:60%;margin:20%}
+.cdlSelectInput{position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align: middle}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;right:-20px;margin-left:-20px;padding-right:20px}
+.cdlSelectInput span{display:inline-block;width:40px !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box;border-width:1px 1px 1px 0}
+.cdlSelectInput span:after{content:"";position:absolute;left:75%;top:50%;margin:-2px 0 0 -5px;bottom:0;width:0 !important;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid}
