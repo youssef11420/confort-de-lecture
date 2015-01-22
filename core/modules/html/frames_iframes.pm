@@ -58,6 +58,42 @@ sub parseAllFramesSrc #($htmlCode, $pagePath, $siteId)
 	return $htmlCode;
 }
 
+# Function: getFrameSrc
+#	Récupérer l'attribut src d'une balise frame ou iframe
+#
+# Paramètres:
+#	$htmlCode - code html où chercher l'attribut src
+sub getFrameSrc #($htmlCode)
+{
+	my ($htmlCode) = @_;
+
+	my $src = "";
+	
+	# Transformation de l'attribut src pour rester sur CDL
+	$htmlCode =~ s/( (src))=(\"|\')(.*?)\3/$src = $4/segi;
+	
+	# Retourner la valeur de l'attrinut src
+	return $src;
+}
+
+# Function: getFrameTitle
+#	Récupérer l'attribut title d'une balise frame ou iframe
+#
+# Paramètres:
+#	$htmlCode - code html où chercher l'attribut src
+sub getFrameTitle #($htmlCode)
+{
+	my ($htmlCode) = @_;
+
+	my $title = "";
+	
+	# Transformation de l'attribut src pour rester sur CDL
+	$htmlCode =~ s/( (title))=(\"|\')(.*?)\3/$title = $4/segi;
+	
+	# Retourner la valeur de l'attrinut title
+	return $title;
+}
+
 # Function: replaceFramesWithAlternativeHtml
 #	Supprimer les balises frame, frameset, iframe, et afficher le contenu alternatif à la place
 #
@@ -80,7 +116,7 @@ sub replaceFramesWithAlternativeHtml #($htmlCode)
 	$htmlCode =~ s/<noframe( [^>]*?)?>(.*?)<\/noframe>/$2/sgi;
 	
 	# Suppression des balises iframe et récupération de leurs contenus
-	$htmlCode =~ s/<iframe( [^>]*?)?>(.*?)<\/iframe>/$2/sgi;
+	$htmlCode =~ s/<iframe( [^>]*?)?>\s*(.*?)\s*<\/iframe>/my ($frameSrc, $frameTitle) = (getFrameSrc($1), getFrameTitle($1));$2 == "" ? ("<a href=\"" . $frameSrc . "\" target=\"_blank\">" . ($frameTitle == "" ? $frameSrc : $frameTitle) . "<\/a>") : $2/segi;
 	
 	# Retourner le résultat après suppression des frames/iframes
 	return $htmlCode;

@@ -75,9 +75,9 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
 	$htmlCode =~ s/(<form( [^>]*)? action=(\"|\'))(.*?)(\3([^>]*)>)/$1.parseLinkHrefAttribute($4, $pagePath, $siteId, $siteRootUrl, $pageUri).$5/segi;
 
 	# Entourer les champs textuels de formulaire par un span de classe cdlInputText
-	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(text|password|file)\3[^>]*>)/<span class=cdlInputText>$1<\/span>/sgi;
+	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(text|email|search|date|number|password|file)\3[^>]*>)/<span class=cdlInputText>$1<\/span>/sgi;
 	# Entourer les autres textuels de formulaire par un span de classe cdlOtherInput
-	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(radio|checkbox)\3[^>]*>)/<span class=cdlOtherInput>$1<\/span>/sgi;
+	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(radio|checkbox)\3[^>]*>)/<span class=cdlOtherInput>$1<strong class=cdlInput_$4><strong><\/strong><\/strong><\/span>/sgi;
 	# Gestion des balises input sans attribut type (donc par défaut de type texte)
 	$htmlCode =~ s/(<input( [^>]*)?>)/addBorderForTextInputWithoutTypeAttribute($1)/segi;
 	
@@ -87,6 +87,8 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
 
 	# Ajouter les attributs cols et rows pour la balise textarea
 	$htmlCode =~ s/(<textarea( [^>]*)?)>/$1 cols=\"100\" rows=\"10\">/sgi;
+
+	$htmlCode =~ s/(<select( [^>]*)?>.*?<\/select>)/<strong class=cdlSelectInput>$1<span><\/span><\/strong>/sgi;
 
 	# Remplacer les boutons image (input type="image") par leur contenu alternatif. S'ils en ont pas, on met un texte par défaut ("Valider" par exemple)
 	$htmlCode =~ s/<input( [^>]*)? type=(\"|\')image\2([^>]*)>/

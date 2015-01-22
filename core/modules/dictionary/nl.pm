@@ -74,6 +74,7 @@ $dictionary{'PARAMETRES_AVANCES_APPLET_INFO'} = "(si 'non' est coché, le conten
 $dictionary{'PARAMETRES_AVANCES_TABLE_INFO'} = "(les transformer en listes à puces)";
 $dictionary{'OUI'} = "oui";
 $dictionary{'NON'} = "non";
+$dictionary{'ONLY_WITH_ALT'} = "avec alternative";
 $dictionary{'PARAMETRES_AVANCES_HAUT_PAGE'} = "en haut de page";
 $dictionary{'PARAMETRES_AVANCES_BAS_PAGE'} = "en bas de page";
 

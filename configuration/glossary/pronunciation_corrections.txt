@@ -1,3 +1,35 @@
+fr	50Plus\)	"50Plusse"	1	1	1
+fr	Plus	"Plussee"	1	1	1
+fr	Akérat	"Akéra"	1	1	1
+fr	Cleanance	"Clinance"	1	1	1
+fr	Cleanance.	"Clinance"	1	1	1
+fr	: 	" "	1	1	1
+fr	TrixéraPlus	"TrixéraPlusse"	1	1	1
+fr	Cold Cream	"Cold Crime"	1	1	1
+fr	YsthéalPlus	"YsthéalPlusse"	1	1	1
+fr	\*	" astérix "	1	1	1
+fr	de l'âge \(rides et ridules	"de l'âge, (rides et ridules"	1	1	1
+fr	YsthéalPlus 	"YsthéalPlusse" 	1	1	1
+fr	DEFI 	"D E F I "	1	1	1
+fr	 : 	" "	1	1	1
+fr	Paraben	"Parabaine"	1	1	1
+fr	Hydrance Optimale U.V. Riche 	"Hydrance Optimale, Uvé Riche "	1	1	1
+fr	Hydrance Optimale U.V. Légère	"Hydrance Optimale, uvé Légère"	1	1	1
+fr	afin d'en approfondir	"afin d'en napprofondir"	1	1	1
+fr	premier établissement thermal édifié	"premier établissement thermal édifié,"	1	1	1
+fr	Comment installer Mobile Speak sur votre mobile \?	"Comment installer Mobile Speak sur votre mobile,"	1	1	1
+fr	Pour plus d'information :	"Pour plus d'information,"	1	1	1
+fr	Mobile Speak	"Mobile Spique"	1	1	1
+fr	S.F.R.	"SFR,"	1	1	1
+fr	B and You	"Bi and You"	1	1	1
+fr	toutes en commun	"toutes, en commun"	1	1	1
+fr	Au format 8,3	"Au format 8,3 pouce," 	1	1	1
+fr	lesmobiles.com	"les mobiles poin com"	1	1	1
+fr	d'Uzès	"d'Uzèce"	1	1	1
+fr	0800.39.39.51 	"0 800 39 39 51," 	1	1	1
+fr	L'Eau	"lo"	1	1	1
+fr	mot de passe oublié ?	"mot de passe oublié"	1	1	1
+fr	bulletin d'aujourd'hui	"bulletin dojourdui"	1	1	1
 fr	l'Equipe.fr	"L'Équipe poin F R"	1	1	1
 fr	Suez	"Suèse"	1	1	1
 fr	4G chez Orange	"4 gé chez Orange"	1	1	1

@@ -54,9 +54,12 @@ jQuery(document).ready(function() {
 				elementCourantTitre = null;
 			});
 			jQuery(this).mousemove(function(e) {
-				var tipX = e.pageX + ###CURSOR_SIZE###;
-				var tipY = e.pageY;
-				jQuery("#cdlToolTipDiv").css({'top': tipY, 'left': tipX});
+				jQuery("#cdlToolTipDiv").css({'top': e.pageY, 'left': e.pageX + ###CURSOR_SIZE###});
+				if (e.pageX + ###CURSOR_SIZE### + jQuery("#cdlToolTipDiv").width() + 14 > jQuery('html').width()) {
+					jQuery("#cdlToolTipDiv").css({'top': e.pageY + ###CURSOR_SIZE###, 'left': jQuery('html').width() - jQuery("#cdlToolTipDiv").width() - 14 - ###CURSOR_SIZE###});
+				} else {
+					jQuery("#cdlToolTipDiv").css({'top': e.pageY, 'left': e.pageX + ###CURSOR_SIZE###});
+				}
 				if (elementCourantTitre == null) {
 					jQuery(this).mouseenter();
 				}
@@ -67,7 +70,7 @@ jQuery(document).ready(function() {
 		}
 	});
 
-	if ($('body').width() < 680) {
+	if (jQuery('body').width() < 680) {
 		jQuery('.cdlFormPersonalization, .cdlAllPageContainer').css('overflow', "visible").css('margin-top', "0");
 		jQuery('html, body').css('overflow', "auto").css('height', "auto");
 		jQuery('.cdlUtilLinksContainer').css('margin', "0 0 10px 0").css('padding', "2px 0 2px 0").css('border-width', "2px").css('left', "0").appendTo('.cdlGlobalPage');

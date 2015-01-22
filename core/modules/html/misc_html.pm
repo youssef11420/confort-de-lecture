@@ -190,19 +190,24 @@ sub cleanAttributesValues #($tagAttributes)
 
 	# On supprime les attributs ID vides
 	$tagAttributes =~ s/ id=(\"|\')\1//sgi;
-=begin
-	my %tagAttributesHash;
-	$tagAttributes =~ s/ ((_cdl_)?[a-z0-9\-]+)(=\"([^\"]*)\")?/$tagAttributesHash{$1} = $4;/segi;
 
-	$tagAttributes = "";
-	foreach my $tagAttribute (keys(%tagAttributesHash)) {
-		$tagAttributes .= " ".$tagAttribute."=\"".$tagAttributesHash{$tagAttribute}."\"";
-	}
-
-	$tagAttributes =~ s/ (compact|checked|disabled|readonly|multiple|selected|nowrap)=(\"|\')[^\"\']*\2/" ".lc($1)." "/segi;
-=cut
 	# On retourne le résultat final après le traitement
 	return $tagAttributes;
+}
+
+# Function: addDotToAcronym
+#	Ajout des points séparateurs dans les acronymes
+#
+# Paramètres:
+#	$acronym - texte de l'acronyme
+sub addDotToAcronym #($acronym)
+{
+	my ($acronym) = @_;
+
+	$acronym =~ s/([A-Z])/$1./sg;
+
+	# On retourne le résultat final après le traitement
+	return $acronym;
 }
 
 # Function: cleanHtml
@@ -226,7 +231,7 @@ sub cleanHtml #($htmlCode)
 	$htmlCode =~ s/(<([\w\d]+))( [^>]*?)>/$1.cleanAttributesValues($3).">"/segi;
 
 	# On supprime le code temporaire _cdl_ (_cdl_XXXX ==> XXXX)
-	$htmlCode =~ s/_cdl_width=((\"|\')(.*?)\2)( |>)/"width=".$1." style=\"width:".$3.($3 =~ m\/\%\/si ? "" : "px")." !important\"".$4/segi;
+	$htmlCode =~ s/_cdl_width=((\"|\')(.*?)\2)( |>)/my $endTag = $4;"width=".$1." style=\"width:".$3.($3 =~ m\/\%\/si ? "" : "px")." !important\"".$endTag/segi;
 	$htmlCode =~ s/_cdl_(type|value|height|size)=(.*?)( |>)/$1=$2$3/sgi;
 
 	# Ajout du commentaire javascript avant le code HTML au début des scripts
@@ -235,10 +240,16 @@ sub cleanHtml #($htmlCode)
 	# Suppression des éléments obsolètes
 	$htmlCode =~ s/<(\/?)acronym( [^>]*?)?>/<$1abbr$2>/sgi;
 
+	# Ajout des points séparateurs dans les acronymes
+	$htmlCode =~ s/(<abbr( [^>]*?)?>)([A-Z]+)(<\/abbr>)/$1.addDotToAcronym($3).$4/seg;
+
 	# Nettoyage des problèmes de guillemets en trop dans les attributs d'une balise et suppression des espaces au début et à la fin des liens
 	$htmlCode =~ s/(<a[^>]*>)(\s*)(.*?)(\s*)(<\/a>)/$2$1$3$5$4/sgi;
 	$htmlCode =~ s/<p( [^>]*)?><span class=\"cdlPartOfText\">(\s|&nbsp;)*<\/span><\/p>//sgi;
 	$htmlCode =~ s/<p( [^>]*)?>(\s|&nbsp;)*<\/p>//sgi;
+
+	$htmlCode =~ s/<span( [^>]*?)>\s*<\/span>//sgi;
+	$htmlCode =~ s/<span( [^>]*?)>\s*<\/span>//sgi;
 
 	# On retourne le résultat final après le traitement
 	return $htmlCode;
@@ -302,7 +313,7 @@ sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath
 #	$pagePath - chemin vers la page en cours de traitement
 #	$activateJavascript - option indiquant si on garde le javascript du site parsé en version CDL
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
-#	$displayImages - option indiquant si on garde les images du site parsé en version CDL
+#	$displayImages - option indiquant si on garde les images du site parsé en version CDL ou si on ne garde que celle avec une alternative
 #	$displayObjects - option indiquant si on garde les objects du site parsé en version CDL
 #	$displayApplets - option indiquant si on garde les applets du site parsé en version CDL
 #	$parseTablesToList - option indiquant si on transforme les tableaux en liste à puce en version CDL
@@ -330,7 +341,7 @@ sub parseAllHtml #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $par
 	}
 
 	if ($displayImages) {
-		$htmlCode = parseImages($htmlCode, $siteRootUrl, $pagePath);
+		$htmlCode = parseImages($htmlCode, $siteRootUrl, $pagePath, $displayImages);
 	} else {
 		$htmlCode = replaceImageWithAlt($htmlCode);
 	}
@@ -471,9 +482,9 @@ sub prepareForHighlighting #($htmlCode)
 
 	$htmlCode = "<html><head></head><body><span class=cdlPartOfText>".$htmlCode."</span></body></html>";
 
-	$htmlCode =~ s/(<span class=\"(cdlInputText|cdlOtherInput|cdlButtons)\">(.*?)<\/span>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
+	$htmlCode =~ s/(<span class=\"(cdlInputText|cdlOtherInput|cdlButtons|cdlSelectInput)\">(.*?)<\/span>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
 
-	$htmlCode =~ s/(<\/?(div|p|h[1-6]|blockquote|ins|del|form|fieldset|noscript|a|address|b|strong)( [^>]*?)?>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
+	$htmlCode =~ s/(<\/?(div|p|h[1-6]|blockquote|ins|del|form|fieldset|noscript|a|address|b)( [^>]*?)?>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
 
 	$htmlCode =~ s/(<(li|dt|dd|caption|th|td|button)( [^>]*?)?>)/$1<span class=cdlPartOfText>/sgi;
 	$htmlCode =~ s/(<\/(ul|ol|menu|dl|table)>)/<\/span>$1/sgi;

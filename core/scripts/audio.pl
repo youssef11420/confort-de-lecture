@@ -132,6 +132,9 @@ my $ttsVoiceParamName = getConfig($siteConfiguration, 'ttsVoiceParamName');
 my $ttsTextParamName = getConfig($siteConfiguration, 'ttsTextParamName');
 my $ttsRateParamName = getConfig($siteConfiguration, 'ttsRateParamName');
 
+my $enableGlossary = getConfig($siteConfiguration, 'enableGlossary');
+my $utf8DecodeContent = getConfig($siteConfiguration, 'utf8DecodeContent');
+
 if ($ttsMode eq "") {
 	$ttsMode = getConfig($defaultConfiguration, 'ttsMode');
 }
@@ -155,6 +158,12 @@ if ($ttsTextParamName eq "") {
 }
 if ($ttsRateParamName eq "") {
 	$ttsRateParamName = getConfig($defaultConfiguration, 'ttsRateParamName');
+}
+if ($enableGlossary eq "") {
+	$enableGlossary = getConfig($defaultConfiguration, 'enableGlossary');
+}
+if ($utf8DecodeContent eq "") {
+	$utf8DecodeContent = getConfig($defaultConfiguration, 'utf8DecodeContent');
 }
 
 my $fileName;
@@ -182,7 +191,9 @@ if (param('cdltext')) {
 	use Digest::SHA1  qw(sha1_hex);
 	$fileName = Digest::SHA1::sha1_hex($siteId."\n".$pageContent);
 
-	$pageContent = decode("utf8", $pageContent);
+	if ($utf8DecodeContent ne "0") {
+		$pageContent = decode("utf8", $pageContent);
+	}
 
 	my $root = HTML::TreeBuilder->new_from_content($pageContent);
 	$pageContent = $root->as_HTML;
@@ -230,6 +241,9 @@ if (param('cdltext')) {
 my %labelsTexts = getLabelsForId($pageContent);
 # Suppression de tous les labels puisqu'ils sont déjé récupérés ci-dessus, et seront donc utilisés directement lors de la lecture des différents champs qui leur sont associés
 $pageContent =~ s/<label( [^>]*)?>.*?<\/label>//sgi;
+
+# Espacement des lettres dans un acronyme
+$pageContent =~ s/(<abbr( [^>]*)?>)(([A-Z]\.)+)(<\/abbr>)/$1.addSpaceToAcronym($3).$5/segi;
 
 # Transformation des liens images par le texte "Lien : {alt de l'image ou alt du lien ou title de l'image ou title du lien}". C'est le plus long de ces 4 attributs qui est mis
 $pageContent =~ s/<a( [^>]*)?>\s*<img( [^>]*)?>\s*<\/a>/
@@ -347,7 +361,9 @@ $audioTextTemplateString = setValueInTemplateString($audioTextTemplateString, 'R
 if (param('cdlpagetype') =~ m/document|exit|protected/si) {
 	my $pageContentBloc = $root->content->[1]->content->[1]->content->[0]->as_text;
 
-	$pageContentBloc = glossaryMain($pageContentBloc);
+	if ($enableGlossary ne "0") {
+		$pageContentBloc = glossaryMain($pageContentBloc);
+	}
 
 	if ($pageContentBloc =~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si) {
 		$audioTemplateString = setValueInTemplateString($audioTemplateString, 'BLOCS_CONTAINER', setValueInTemplateString(getPartOfTemplateString($audioTemplateString, 'BLOCS_CONTAINER'), 'BLOCS', $pageContentBloc));
@@ -372,7 +388,9 @@ if (param('cdlpagetype') =~ m/document|exit|protected/si) {
 		}
 		$textContent =~ s/>|</,/sgi;
 
-		$textContent = glossaryMain($textContent);
+		if ($enableGlossary ne "0") {
+			$textContent = glossaryMain($textContent);
+		}
 
 		$audioTemplateString = setValueInTemplateString($audioTemplateString, 'PAGE_TOP_CONTAINER', "");
 		$audioTemplateString = setValueInTemplateString($audioTemplateString, 'BLOCS_CONTAINER', "");
@@ -404,11 +422,13 @@ if (param('cdlpagetype') =~ m/document|exit|protected/si) {
 
 		$pageHeader =~ s/>|</,/sgi;
 
-		$pageHeader = glossaryMain($pageHeader);
-		$pageContentBloc = glossaryMain($pageContentBloc);
-		$pageNav = glossaryMain($pageNav);
-		$pageFooter = glossaryMain($pageFooter);
-		$backToHomeLink = glossaryMain($backToHomeLink);
+		if ($enableGlossary ne "0") {
+			$pageHeader = glossaryMain($pageHeader);
+			$pageContentBloc = glossaryMain($pageContentBloc);
+			$pageNav = glossaryMain($pageNav);
+			$pageFooter = glossaryMain($pageFooter);
+			$backToHomeLink = glossaryMain($backToHomeLink);
+		}
 
 		if ($pageHeader =~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si and param('cdldownload') ne "1") {
 			$audioTemplateString = setValueInTemplateString($audioTemplateString, 'PAGE_TOP_CONTAINER', setValueInTemplateString(getPartOfTemplateString($audioTemplateString, 'PAGE_TOP_CONTAINER'), "PAGE_TOP", $pageHeader));
@@ -454,7 +474,6 @@ if (param('cdlpagetype') =~ m/document|exit|protected/si) {
 # Transformation des codes temporaires pour les temporisations
 $audioTemplateString =~ s/__cdl_brk(\d+)__//sgi;
 $audioTextTemplateString =~ s/__cdl_brk(\d+)__//sgi;
-
 # Alléger les pauses
 
 # Appel du service audio, qui retourne le texte transformé en mp3
@@ -482,6 +501,7 @@ if ($ttsMode eq "vaas") {
 	my $header = <SOCK>;
 
 	if ($header !~ m/200|OK/) {
+=begin
 		if (length($audioTextTemplateString) <= 100) {
 			system("wget \"http://".$ttsServerName.$ttsUri."?".$audioParametersTextString."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O -");
 		} else {
@@ -509,6 +529,8 @@ if ($ttsMode eq "vaas") {
 				system("rm -f ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ".$cdlAudioCachePath.$fileName.$parametersString."_mp3");
 			}
 		}
+=cut
+		system("wget \"http://".$ttsServerName.$ttsUri."?".$audioParametersTextString."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O -");
 	} else {
 		while($header = <SOCK>) {
 			chomp;

@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="fr">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>###PAGE_TITLE### &bull; Interface d'administration &bull; Confort de lecture</title>
 <link href="/favicon.png" rel="shortcut icon">
 <link href="/design/css/config.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script>
 jQuery.noConflict();
 </script>
@@ -103,7 +104,7 @@ jQuery.noConflict();
 <legend>M&eacute;dias</legend>
 <div class="formLine">
 <div class="leftForm">Afficher les images :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
-<div class="rightForm"><span class="radio"><input type="radio" id="displayImages1" name="displayImages" value="1"###DISPLAY_IMAGES_YES###><label for="displayImages1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayImages0" name="displayImages" value="0"###DISPLAY_IMAGES_NO###><label for="displayImages0">non</label></span></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="displayImages1" name="displayImages" value="1"###DISPLAY_IMAGES_YES###><label for="displayImages1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayImages0" name="displayImages" value="0"###DISPLAY_IMAGES_NO###><label for="displayImages0">non</label>&nbsp;&nbsp;<input type="radio" id="displayImages2" name="displayImages" value="2"###DISPLAY_IMAGES_ONLY_WITH_ALT###><label for="displayImages2">avec alternative</label></span></div>
 <div class="clearBoth"></div>
 </div>
 <div class="formLine">
@@ -198,28 +199,28 @@ jQuery.noConflict();
 </div>
 <script>
 //<![CDATA[
-jQuery('.deleteLines').bind('click', function () {
+jQuery(document).on('click', '.deleteLines', function () {
 	jQuery('.deleteRow:checked').parent().parent().remove();
 	jQuery('.deleteNewRow:checked').parent().parent().remove();
 	jQuery('.deleteAllRows').attr('checked', false);
 	jQuery('.deleteAllNewRows').attr('checked', false);
 	return false;
 });
-jQuery('.deleteAllRows').bind('change', function () {
+jQuery(document).on('change', '.deleteAllRows', function () {
 	if (jQuery(this).attr('checked')) {
 		jQuery('.deleteRow').attr('checked', true);
 	} else {
 		jQuery('.deleteRow').attr('checked', false);
 	}
 });
-jQuery('.deleteAllNewRows').bind('change', function () {
+jQuery(document).on('change', '.deleteAllNewRows', function () {
 	if (jQuery(this).attr('checked')) {
 		jQuery('.deleteNewRow').attr('checked', true);
 	} else {
 		jQuery('.deleteNewRow').attr('checked', false);
 	}
 });
-jQuery('.addLineLink').bind('click', function () {
+jQuery(document).on('click', '.addLineLink', function () {
 	var count = jQuery('#rowsToAdd').val();
 
 	for (i = 0; i < count; i++) {
@@ -227,9 +228,39 @@ jQuery('.addLineLink').bind('click', function () {
 	}
 	return false;
 });
-jQuery('.deleteLineLink').live('click', function () {
+jQuery(document).on('click', '.deleteLineLink', function () {
 	jQuery(this).parent().parent().remove();
 	return false;
+});
+nbChampsErreur = 0;
+jQuery(document).on('click', 'input:submit', function () {
+	var leBoutonValidation = jQuery(this), erreurs = false, premierChampEnErreur = null;
+	jQuery('input[name="pattern"]').each(function (item) {
+		try {
+			var myRe = new RegExp(jQuery(this).val());
+			jQuery(this).css('background-color', 'white').css('border-color', 'black');
+		} catch (e) {
+			jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');
+			if (premierChampEnErreur === null) {
+				premierChampEnErreur = jQuery(this);
+			}
+			erreurs = true;
+		}
+	});
+
+	if (erreurs) {
+		premierChampEnErreur.focus();
+	}
+	return !erreurs;
+});
+
+jQuery('input[name="pattern"]').each(function (item) {
+	try {
+		var myRe = new RegExp(jQuery(this).val());
+		jQuery(this).css('background-color', 'white').css('border-color', 'black');
+	} catch (e) {
+		jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');
+	}
 });
 //]]>
 </script>

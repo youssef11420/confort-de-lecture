@@ -4,6 +4,14 @@ abbr,acronym{border-bottom-color:####FONT_COLOR###}
 fieldset,button,.cdlButtons input{border-color:####FONT_COLOR###}
 select{border-color:####FONT_COLOR###}
 input.cdlInputText,.cdlInputText input{border-color:####FONT_COLOR###}
+input.cdlInputText::-webkit-input-placeholder,.cdlInputText input::-webkit-input-placeholder{color:####FONT_COLOR###;opacity:.8}
+input.cdlInputText:-moz-placeholder,.cdlInputText input:-moz-placeholder{color:####FONT_COLOR###;opacity:.8}
+input.cdlInputText::-moz-placeholder,.cdlInputText input::-moz-placeholder{color:####FONT_COLOR###;opacity:.8}
+input.cdlInputText:-ms-input-placeholder,.cdlInputText input:-ms-input-placeholder{color:####FONT_COLOR###;opacity:.8}
+input.cdlInputText:focus::-webkit-input-placeholder,.cdlInputText input:focus::-webkit-input-placeholder{opacity:1}
+input.cdlInputText:focus:-moz-placeholder,.cdlInputText input:focus:-moz-placeholder{opacity:1}
+input.cdlInputText:focus::-moz-placeholder,.cdlInputText input:focus::-moz-placeholder{opacity:1}
+input.cdlInputText:focus:-ms-input-placeholder,.cdlInputText input:focus:-ms-input-placeholder{opacity:1}
 textarea{border-color:####FONT_COLOR###}
 table{border-color:####FONT_COLOR###}
 th,td{border-color:####FONT_COLOR###}
@@ -17,5 +25,13 @@ button{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), poi
 .cdlCadre hr{background-color:####FONT_COLOR###}
 .cdlInversedColor{background-color:####FONT_COLOR### !important;color:####BACKGROUND_COLOR### !important}
 .cdlInversedColor *{background-color:####FONT_COLOR### !important;color:####BACKGROUND_COLOR### !important;border-color:####BACKGROUND_COLOR### !important}
-.cdlAllPageContainer{margin-top:-###PAGE_MARGIN_TOP###px !important}
-.cdlAllPage{padding-top:###PAGE_PADDING_TOP###px !important}
+.cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{margin-top:10px;padding-top:###PAGE_MARGIN_TOP###px !important}
+:root .cdlInput_radio,:root .cdlInput_checkbox{border-color:####FONT_COLOR###;border-width:###INPUT_BORDER###px;width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px;margin-left:-###INPUT_SIZE###px}
+:root .cdlInput_radio,:root .cdlInput_checkbox,:root .cdlInput_radio strong,:root .cdlInput_checkbox strong{border-radius:###INPUT_SIZE###px;-moz-border-radius:###INPUT_SIZE###px;-WebKit-border-radius:###INPUT_SIZE###px;-khtml-border-radius:###INPUT_SIZE###px}
+:root .cdlInput_radio strong,:root .cdlInput_checkbox strong{border-color:####BACKGROUND_COLOR###}
+:root .cdlInput_checkbox{border-radius:###INPUT_BORDER###px;-moz-border-radius:###INPUT_BORDER###px;-WebKit-border-radius:###INPUT_BORDER###px;-khtml-border-radius:###INPUT_BORDER###px}
+:root .cdlInput_checkbox strong{border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
+:root input[type="radio"]:checked + .cdlInput_radio strong,:root input[type="checkbox"]:checked + .cdlInput_checkbox strong{background-color:####FONT_COLOR###}
+:root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px}
+.cdlSelectInput span{background-color:####BACKGROUND_COLOR###}
+.cdlSelectInput span:after{border-top-color:####FONT_COLOR###}

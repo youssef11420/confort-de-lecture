@@ -213,6 +213,8 @@ sub parseMetas #($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType)
 	# Chaîne qui contiendra tous les métas
 	my $allMetas = "";
 
+	$htmlCode =~ s/<meta( [^>]*?)? name="viewport"([^>]*)>//sgi;
+
 	# Transformation des URL de redirection de toutes les balises meta dont l'attribut http-equiv="Refresh"
 	$htmlCode =~ s/<meta( [^>]*?)?( http-equiv=(\"|\')Refresh\3)([^>]*)>/
 		"<meta".parseMetaAttributes($1, $pagePath, $siteId, $siteRootUrl).$2.parseMetaAttributes($4, $pagePath, $siteId, $siteRootUrl).">"/segi;

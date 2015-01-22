@@ -1,5 +1,5 @@
 .cdlCadre,.cdlAudioObjectContent,.cdlCadre hr,.cdlTable ul li .cdlTableRowSep{overflow:visible}
 .cdlModifyStyleParametersLinks,.cdlUtilLinksContainer{display:none}
-html,body{height:auto;overflow:visible}
-.cdlAllPageContainer{height:auto;overflow:visible}
+.cdlAllPageContainer, .protectedPageLoginContent, .documentContent, .exitContent, .errorContent{padding-top:0 !important}
 img{page-break-inside:avoid}
+.cdlCadre{page-break-inside:avoid}

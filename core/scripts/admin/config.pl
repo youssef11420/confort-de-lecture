@@ -189,9 +189,15 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	if ($requestParameters{'displayImages'}[0] eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', "");
+	} elsif ($requestParameters{'displayImages'}[0] eq "2") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', "");
 	} else {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', "");
 	}
 
 	if (!$requestParameters{'displayObjects'}[0] or $requestParameters{'displayObjects'}[0] eq "0") {
@@ -310,7 +316,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 		}
 		if ($requestParameters{'displayImages'}[0] ne "") {
 			$siteConfig = setConfig($siteConfig, 'displayImages', $requestParameters{'displayImages'}[0]);
-			}
+		}
 		if ($requestParameters{'displayObjects'}[0] ne "") {
 			$siteConfig = setConfig($siteConfig, 'displayObjects', $requestParameters{'displayObjects'}[0]);
 		}
@@ -446,9 +452,15 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	if (!$displayImages or $displayImages eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', "");
+	} elsif ($displayImages eq "2") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', "");
 	} else {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', "");
 	}
 
 	$displayObjects = getConfig($siteConfig, 'displayObjects');
