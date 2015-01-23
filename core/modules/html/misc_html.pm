@@ -482,7 +482,7 @@ sub prepareForHighlighting #($htmlCode)
 
 	$htmlCode = "<html><head></head><body><span class=cdlPartOfText>".$htmlCode."</span></body></html>";
 
-	$htmlCode =~ s/(<span class=\"(cdlInputText|cdlOtherInput|cdlButtons|cdlSelectInput)\">(.*?)<\/span>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
+	$htmlCode =~ s/(<(span|strong) class=\"(cdlInputText|cdlOtherInput|cdlButtons|cdlSelectInput)\">(.*?)<\/\2>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
 
 	$htmlCode =~ s/(<\/?(div|p|h[1-6]|blockquote|ins|del|form|fieldset|noscript|a|address|b)( [^>]*?)?>)/<\/span><\/span>$1<span class=cdlPartOfText>/sgi;
 
