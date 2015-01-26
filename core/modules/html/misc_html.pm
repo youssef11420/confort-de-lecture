@@ -33,7 +33,7 @@ sub makeUrlAbsolute #($url, $siteRootUrl, $pagePath)
 	}
 
 	# Si l'URL commence par un protocole (http:// , ftp:// , etc ...), on ne fait rien : l'url est déjà absolue
-	if($url =~ m/^[\w\d]+:\/\//si) {
+	if($url =~ m/^([\w\d]+:)?\/\//si) {
 		return $url;
 	}
 
