@@ -159,12 +159,6 @@ if ($ttsTextParamName eq "") {
 if ($ttsRateParamName eq "") {
 	$ttsRateParamName = getConfig($defaultConfiguration, 'ttsRateParamName');
 }
-if ($enableGlossary eq "") {
-	$enableGlossary = getConfig($defaultConfiguration, 'enableGlossary');
-}
-if ($utf8DecodeContent eq "") {
-	$utf8DecodeContent = getConfig($defaultConfiguration, 'utf8DecodeContent');
-}
 
 my $fileName;
 my $pageContent = "";
@@ -383,6 +377,11 @@ if (param('cdlpagetype') =~ m/document|exit|protected/si) {
 } else {
 	if (param('cdltext')) {
 		my $textContent = $root->as_text;
+
+		if ($utf8DecodeContent eq "1") {
+			$textContent = encode("utf8", $root->as_text);
+		}
+
 		if ($textContent !~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si) {
 			$textContent = "";
 		}
