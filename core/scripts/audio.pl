@@ -284,10 +284,10 @@ $pageContent =~ s/<input( [^>]*)?>/
 	elsif ($inputAttributes{'type'} eq "radio") {" ".decode("utf8", "Bouton radio")." : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? decode("utf8", "coché") : "").".__cdl_brk500__"}
 	# Transformation des champs d'upload de fichiers par le texte "Champ fichier : {intitulé récupéré dans le label}"
 	elsif ($inputAttributes{'type'} eq "file") {" ".decode("utf8", "Champ fichier")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
-	# Transformation des champs texte par le texte "Champ texte : {intitulé récupéré dans le label}, {en indiquant la valeur du champ s'il est prérempli}"
-	elsif ($inputAttributes{'type'} eq "text" or !$inputAttributes{'type'}) {" ".decode("utf8", "Champ d'édition")." : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
 	# Transformation des champs cryptés (masqués avec des *) par le texte "Champ crypté : {intitulé récupéré dans le label}"
 	elsif ($inputAttributes{'type'} eq "password") {" ".decode("utf8", "Champ crypté")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	# Transformation des champs texte par le texte "Champ texte : {intitulé récupéré dans le label}, {en indiquant la valeur du champ s'il est prérempli}"
+	elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" ".decode("utf8", "Champ d'édition")." : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
 	/segi;
 
 # Transformation des listes déroulantes par le texte "Liste déroulante : {intitulé récupéré dans le label}"

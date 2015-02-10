@@ -157,20 +157,20 @@ function lectureMorceau(index) {
 			} else {
 				content = pageParts[index].outer();
 				jQuery("input", pageParts[index]).each(function() {
-					if (jQuery(this).attr('type') == "text") {
-						content = content.replace(/value=\"([^\"]*)\"/,"");
-						if (jQuery(this).val() != "") {
-							content = content.replace(/<input/,"<input value=\""+jQuery(this).val()+"\"");
+					if (!jQuery(this).attr('type') || !jQuery(this).attr('type').match(new RegExp('^(submit|button|reset|hidden|image)$', "i"))) {
+						if (!jQuery(this).attr('type') || !jQuery(this).attr('type').match(new RegExp('^(password|radio|checkbox|file)$', "i"))) {
+							content = content.replace(/value=\"([^\"]*)\"/,"");
+							if (jQuery(this).val() != "") {
+								content = content.replace(/<input/,"<input value=\""+jQuery(this).val()+"\"");
+							}
 						}
-					}
-					if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file', "i"))) {
 						content = jQuery('label[for="'+jQuery(this).attr('id')+'"]').outer() + content;
-					}
-					if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password', "i"))) {
-						if (playMode != "manual") {
-							isInProtectedField = true;
+						if (!jQuery(this).attr('type') || !jQuery(this).attr('type').match(new RegExp('^(radio|checkbox)$', "i"))) {
+							if (playMode != "manual") {
+								isInProtectedField = true;
+							}
+							playModeTmp = 'manual';
 						}
-						playModeTmp = 'manual';
 					}
 				});
 				jQuery("select, textarea", pageParts[index]).each(function() {
