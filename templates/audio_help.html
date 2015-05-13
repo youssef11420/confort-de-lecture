@@ -11,11 +11,6 @@
 <link href="/styles/ie.css" rel="stylesheet">
 <![endif]--><!--###CONTRAST_CSS###-->
 <style>*{background-color:#FFFFFF;color:#000000;border-color:#000000}</style><!--/###CONTRAST_CSS###-->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>(function(){var all=jQuery.event.props,len=all.length,res=[];while(len--){var el=all[len];if(el!='layerX'&&el!='layerY')res.push(el);}jQuery.event.props=res;}());</script>
-<script>
-jQuery.noConflict();
-</script>
 <body###CONTRAST_BODY_STYLE###>
 <form action="/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden">
 <div class="cdlUtilLinksContainer">
@@ -61,6 +56,13 @@ jQuery.noConflict();
 <div class="cdlClearBoth"></div>
 </div>
 </div></div>
-</form><!--###JS_AUDIO_FILE_INCLUDE###-->
+</form>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script>
+jQuery.noConflict();
+cdlBackgroundColor = '#' + (jQuery('body').hasClass('cdlContrasted') ? 'FFFFFF' : '000000');
+cdlFontColor = '#' + (jQuery('body').hasClass('cdlContrasted') ? '000000' : 'FFFFFF');
+</script>
+<script src="/design/js/jquery/jquery.nicescroll.min.js"></script><!--###JS_AUDIO_FILE_INCLUDE###-->
 <script src="/design/js/cdl/highlight.js"></script><!--/###JS_AUDIO_FILE_INCLUDE###-->
 <script src="/javascript/title_###SITE_ID###_3.js"></script>

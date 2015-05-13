@@ -10,11 +10,7 @@
 <!--[if IE]>
 <link href="/styles/ie.css" rel="stylesheet">
 <![endif]-->
-###SCRIPTS###<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-<script>
-jQuery.noConflict();
-</script>
-<script src="/design/js/jquery/jquery.address-1.6.min.js"></script>
+###SCRIPTS###
 <body###BODY_ATTRIBUTES###>
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
@@ -56,6 +52,14 @@ jQuery.noConflict();
 <div class="cdlClearBoth"></div>
 </div>
 </div></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script>
+jQuery.noConflict();
+cdlBackgroundColor = '####B_COLOR###';
+cdlFontColor = '####F_COLOR###';
+</script>
+<script src="/design/js/jquery/jquery.nicescroll.min.js"></script>
+<script src="/design/js/jquery/jquery.address-1.6.min.js"></script>
 <!--###JS_AUDIO_FILE_INCLUDE###--><script src="/design/js/cdl/highlight.js"></script>
 <script>
 jQuery(window).bind('load', function() {

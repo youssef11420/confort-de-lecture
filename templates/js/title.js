@@ -75,4 +75,13 @@ jQuery(document).ready(function() {
 		jQuery('html, body').css('overflow', "auto").css('height', "auto");
 		jQuery('.cdlUtilLinksContainer').css('margin', "0 0 10px 0").css('padding', "2px 0 2px 0").css('border-width', "2px").css('left', "0").appendTo('.cdlGlobalPage');
 	}
+
+	jQuery('html').niceScroll({
+		cursorwidth: 25,
+		background: "transparent",
+		cursorborder: "2px solid " + (cdlBackgroundColor || ""),
+		cursorcolor: cdlFontColor || "",
+		autohidemode: false,
+		zindex: 114200
+	});
 });

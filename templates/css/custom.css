@@ -18,7 +18,7 @@ th,td{border-color:####FONT_COLOR###}
 a{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
 a *{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
 .cdlButtons input{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
-button{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+button,button *{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
 .cdlUtilLinks input{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
 .cdlAudioObject{border-color:####FONT_COLOR###}
 .cdlCadre{border-color:####FONT_COLOR###}
