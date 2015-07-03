@@ -723,6 +723,8 @@ sub sendRequest #($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, 
 {
 	my ($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, %requestParameters) = @_;
 
+	push(@LWP::Protocol::http::EXTRA_SOCK_OPTS, MaxLineLength => 16*1024);
+
 	# Création de l'agent HTTP
 	my $userAgent = initHTTPAgent;
 
