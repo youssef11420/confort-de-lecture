@@ -24,8 +24,6 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
-use Template;
-
 use lib '../modules/utils';
 use constants;
 use misc_utils;

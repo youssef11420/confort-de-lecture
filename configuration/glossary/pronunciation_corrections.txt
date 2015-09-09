@@ -1,3 +1,30 @@
+fr	sfr.fr	"sfr, poin fr,"	1	1	1
+fr	forum.sfr.fr	"forum, poin sfr, poin fr,"	1	1	1
+fr	Suivi conso internet international	"Suivi conso internette international"	1	1	1
+fr	formule Carrée 2 h plus 50 Mo	"formule Carrée 2 h pluce, 50 Mo,"	1	1	1
+fr	Tarif jour internet Reste du monde	"Tarif jour internette, Reste du monde,"	1	1	1
+fr	facturé H.T	"facturé Hors Taxes"	1	1	1
+fr	I.M.E.I.	"i, m, E, i,"	1	1	1
+fr	cic-mobile.fr	"cic, tiré, mobile, poin fr"	1	1	1
+fr	cic.fr	"cic, poin fr,"	1	1	1
+fr	Internet 4G Pocket	"Internète, 4 gé Pocket"	1	1	1
+fr	Siren	"Sirène"	1	1	1
+fr	l'opérateur E.I. Télécom	"l'opérateur, E, i, Télécom"	1	1	1
+fr	E.I. Telecom	"E, i, Télécom"	1	1	1
+fr	carte S.I.M.	"carte Sime,"	1	1	1
+fr	675.950	"675,950,"	1	1	1
+fr	53098	"53098,"	1	1	1
+fr	0969.360.200	"0969.360.200,"	1	1	1
+fr	675.200	"675, 200,"	1	1	1
+fr	paiement : -4	"paiement : moin 4"	1	1	1
+fr	option double	"opssion double"	1	1	1
+fr	Web	"Web,"	1	1	1
+fr	D.O.M.	"DOME"	1	1	1
+fr	www.cic-mobile.fr	"www, poin, cic, tiré, mobile poin fr"	1	1	1
+fr	www.cic-mobile.com	"www, poin, cic, tiré, mobile poin com"	1	1	1
+fr	facture H.T.	"facture hors taxes"	1	1	1
+fr	www.sfr.fr	"www poin sfr, poin fr"	1	1	1
+fr	Internet Mobile 3G	"Internette Mobile 3 gé"	1	1	1
 fr	50Plus\)	"50Plusse"	1	1	1
 fr	Plus	"Plussee"	1	1	1
 fr	Akérat	"Akéra"	1	1	1

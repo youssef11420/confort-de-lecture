@@ -25,7 +25,6 @@ use CGI qw(:standard);
 use CGI::Session;
 
 use LWP::UserAgent;
-use Template;
 
 use lib '../modules/utils';
 use constants;

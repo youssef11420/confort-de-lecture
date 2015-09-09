@@ -63,7 +63,6 @@ keys %HTML::Tagset::isTableElement;
 %HTML::Tagset::isHeadOrBodyElement = map {; $_ => 1}
 	qw(script noscript isindex style object map area param);
 use HTML::Entities;
-use Template;
 
 use lib '../modules/utils';
 use constants;

@@ -28,7 +28,6 @@ use JSON;
 use Encode;
 
 use HTML::Entities;
-use Template;
 
 use lib '../modules/utils';
 use constants;
