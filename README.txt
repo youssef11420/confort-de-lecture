@@ -2,19 +2,17 @@ Solution d'accessibilité Confort De Lecture.
 
 -----------------------------------------------------------------------------
 
-Cf. https://sourceforge.net/projects/webaccess/files/Documentation/User_s%20Guide%20-%20Manuel%20de%20l_utilisateur%20-%20V2.0.0%20-%20FR/
+Cf. https://github.com/youssef11420/confort-de-lecture/blob/master/user_guide.pdf
 
 ----------------------------------------------------------------------------------
 
 Pour plus d'informations, vous pouvez contacter le responsable de la solution :
 
 	Youssef IMZOURH - aYaline
-	Concord Business Center
-	34, boulevard Chasseigne
-	86000 Poitiers
+	4 Allée des Frères Montgolfier
+	86360 Chasseneuil-du-Poitou
 
 	Tél :
 		(+33)549414600
-		(+33)622380727
 	Email :
 		yimzourh@ayaline.com
