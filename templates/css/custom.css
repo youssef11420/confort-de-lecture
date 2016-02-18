@@ -8,10 +8,10 @@ input.cdlInputText::-webkit-input-placeholder,.cdlInputText input::-webkit-input
 input.cdlInputText:-moz-placeholder,.cdlInputText input:-moz-placeholder{color:####FONT_COLOR###;opacity:.8}
 input.cdlInputText::-moz-placeholder,.cdlInputText input::-moz-placeholder{color:####FONT_COLOR###;opacity:.8}
 input.cdlInputText:-ms-input-placeholder,.cdlInputText input:-ms-input-placeholder{color:####FONT_COLOR###;opacity:.8}
-input.cdlInputText:focus::-webkit-input-placeholder,.cdlInputText input:focus::-webkit-input-placeholder{opacity:1}
-input.cdlInputText:focus:-moz-placeholder,.cdlInputText input:focus:-moz-placeholder{opacity:1}
-input.cdlInputText:focus::-moz-placeholder,.cdlInputText input:focus::-moz-placeholder{opacity:1}
-input.cdlInputText:focus:-ms-input-placeholder,.cdlInputText input:focus:-ms-input-placeholder{opacity:1}
+input.cdlInputText:focus::-webkit-input-placeholder,.cdlInputText input:focus::-webkit-input-placeholder{opacity:0}
+input.cdlInputText:focus:-moz-placeholder,.cdlInputText input:focus:-moz-placeholder{opacity:0}
+input.cdlInputText:focus::-moz-placeholder,.cdlInputText input:focus::-moz-placeholder{opacity:0}
+input.cdlInputText:focus:-ms-input-placeholder,.cdlInputText input:focus:-ms-input-placeholder{opacity:0}
 textarea{border-color:####FONT_COLOR###}
 table{border-color:####FONT_COLOR###}
 th,td{border-color:####FONT_COLOR###}

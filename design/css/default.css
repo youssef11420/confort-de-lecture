@@ -1,6 +1,6 @@
 *{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border-width:0;border-style:solid;word-wrap:break-word}
 abbr,acronym{border-bottom-width:1px;border-bottom-style:dotted;display:inline-block}
-a{text-decoration:underline;cursor:pointer}
+a{text-decoration:underline;cursor:pointer;display:inline-block}
 a *{text-decoration:underline;cursor:pointer}
 fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
@@ -59,9 +59,11 @@ p{padding-bottom:.3em}
 .cdlModifyStyleParametersLinks{float:left;padding-right:10px}
 .cdlTable{margin:1em 0}
 .cdlTable ul{list-style:none;padding:0;margin:0}
+.cdlTable ul.cdlTableRowContent > li{list-style:disc;margin-left:2em}
 .cdlTable ul li{list-style:none}
 .cdlTable ul li .cdlTableRow{padding-bottom:.6em}
 .cdlTableCaption{padding-bottom:1em}
+.cdlTableCell{margin-bottom:1em}
 .cdlInvisibleLink{position:absolute;bottom:0;left:0;width:20px !important;height:20px;display:block;background:transparent}
 .cdlAudioPlayerLinks a,a.cdlAudioPlayerLinks{border-width:1px;text-decoration:none;padding:0 3px}
 .cdlUtilLinks{float:left;margin:6px 0 6px 7px;padding:0 7px;background-color:black;overflow:hidden;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}

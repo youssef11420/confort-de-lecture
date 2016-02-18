@@ -100,7 +100,7 @@ sub parseTableCellsToSubItems #($trHtmlCode, %theadersHash)
 	my ($tdHeadersContent, $tdNumber) = ("", 0);
 	$trHtmlCode =~ s/<td( [^>]*?)?>(.*?)(?=(<t(r|h|d)( [^>]*?)?>|$))/
 		$tdHeadersContent = getTableCellHeaders($1, $numCell++, %theadersHash);
-		"<div class=\"cdlTableCell\"".getTableTagId($1).">".($tdHeadersContent ? $tdHeadersContent." : " : "").$2."<\/div>";/segi;
+		"<li class=\"cdlTableCell\"".getTableTagId($1).">".($tdHeadersContent ? "<div><strong>".$tdHeadersContent."&nbsp;:<\/strong><\/div> " : "").$2."<\/li>";/segi;
 
 	$trHtmlCode =~ s/(.*)<hr>(.*?)$/$1$2/sgi;
 
@@ -174,7 +174,7 @@ sub parseTableRowsToItems #($tableHtmlCode, $tableAttributes)
 	# Transformation du contenu de chaque ligne du tableau
 	my $nbRows = 0;
 	# Suppression de la première ligne qui concerne les entêtes
-	$tableHtmlCode =~ s/<tr( [^>]*?)?>(.*?)(?=(<tr( [^>]*?)?>|$))/$nbRows++; "<li".getTableTagId($1)."><div class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/div><hr><br class=\"cdlHidden\">";/segi;
+	$tableHtmlCode =~ s/<tr( [^>]*?)?>(.*?)(?=(<tr( [^>]*?)?>|$))/$nbRows++; "<li".getTableTagId($1)."><ul class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/ul><hr><br class=\"cdlHidden\">";/segi;
 
 	# Gestion des cas limite :
 	# - s'il n'y a qu'un seul li, on enlève le séparateur hr
