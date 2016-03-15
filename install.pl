@@ -58,6 +58,11 @@ if (not -e $cdlRootPath."/install_ok") {
 
 		my $encryptedIdentLine = param('loginAdmin').":".crypt(param('passwdAdmin'), param('passwdAdmin'));
 
+		unless(-e $cdlRootPath."/configuration/.htpasswd") {
+			open(FC, ">", $cdlRootPath."/configuration/.htpasswd");
+			close(FC);
+		}
+
 		open(WRITER, '>', $cdlRootPath."/configuration/.htpasswd");
 		print WRITER $encryptedIdentLine."\n";
 		close(WRITER);

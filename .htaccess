@@ -33,7 +33,7 @@ AddHandler cgi-script .pl
 	RewriteRule ^audio\-(voice|speed|help\-[a-z]{2})\-demo/([^/]*)/([^/]*)/([^/]*)$ core/scripts/audio.pl?cdlid=$2&cdldemo=1&cdltype=$1&cdlvoice=$3&cdlspeed=$4 [L]
 	RewriteRule ^audio\-text/([^/]*)/?$ core/scripts/audio.pl [L]
 
-	RewriteRule ^admin(/.*)?$ core/scripts/admin/config.pl [L]
+	RewriteRule ^admin(/.*)?$ core/scripts/config.pl [L]
 
 	RewriteRule ^personnalisation\-(affichage|avancee|audio|aide\-audio|palette\-couleurs-(b|f|l)|audio\-acces\-direct|acces\-direct)/.*$ core/scripts/personalization.pl [L]
 	RewriteRule ^personnalisation$ core/scripts/personalization.pl [L]
