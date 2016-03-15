@@ -26,6 +26,9 @@ use CGI::Session;
 
 use Cwd;
 
+if (-e "./JSON") {
+	use lib 'JSON';
+}
 use JSON;
 use Encode;
 
