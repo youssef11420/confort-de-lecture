@@ -34,6 +34,8 @@ use Encode;
 
 use HTML::Entities;
 
+use Digest::SHA1  qw(sha1_hex);
+
 use lib '../modules/utils';
 use constants;
 use misc_utils;

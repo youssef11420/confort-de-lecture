@@ -1121,7 +1121,6 @@ sub savePageContentInCache #($requestMethod, $pageUrl, $pageContent, $displayPar
 
 	# Générer en md5 une clé à partir des informations de la page
 
-		use Digest::SHA1  qw(sha1_hex);
 	my $cryptedPartOfFileName = Digest::SHA1::sha1_hex($requestMethod."==>".$pageUrl);
 
 	# Sauvegarde du contenu de la page

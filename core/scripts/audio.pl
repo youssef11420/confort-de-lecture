@@ -26,6 +26,8 @@ use CGI::Session;
 
 use Cwd;
 
+use Digest::SHA1  qw(sha1_hex);
+
 use Encode;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
@@ -196,7 +198,6 @@ my $deleteOptionTitle = 0;
 
 if (param('cdltext')) {
 	$pageContent = param('cdltext');
-	use Digest::SHA1  qw(sha1_hex);
 	$fileName = Digest::SHA1::sha1_hex(($siteId ne "" ? $siteId."\n" : "").$pageContent);
 
 	if ($utf8DecodeContent ne "0") {
