@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use JSON;
 use Encode;
 
@@ -43,7 +45,7 @@ use misc_html;
 my $siteId = param('cdlid');
 
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -54,15 +56,23 @@ print $session->header('Content-type' => "text/html; charset=UTF-8");
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
 
+$embeddedMode = "";
+
 # Extraction des différents paramètres dans l'URL réécrite
-my ($secure, $siteId, $defaultLanguage, $urlToParse);
-$thisCdlUrl =~ s/^(\/sortie(\-https)?\/([^\/]*)\/([^\/]*)\/([^\/]*)\/([^\?]*))/
-	$secure = $2 ? "s" : "";
-	$siteId = $3;
-	$defaultLanguage = $4;
-	$requestMethod = $5;
-	$urlToParse = $6;
+my ($secure, $defaultLanguage, $requestMethod, $urlToParse);
+$thisCdlUrl =~ s/^((\/cdl)?\/sortie(\-http(s))?\/([^\/]*)\/([^\/]*)\/([^\/]*)\/([^\?]*))/
+	$embeddedMode = $2;
+	$secure = $4;
+	$siteId = $5;
+	$defaultLanguage = $6;
+	$requestMethod = $7;
+	$urlToParse = $8;
 	$1/segi;
+
+if (!$siteId and $embeddedMode ne "") {
+	my $siteDomain = $ENV{'SERVER_NAME'};
+	$siteId = getSiteFromDomain($siteDomain);
+}
 
 # Détection d'erreurs au niveau de l'identifiant du site
 if (!$siteId) {
@@ -90,7 +100,9 @@ if ($enableAudio eq "") {
 }
 
 # Chargement de la template principale de la page de sortie vers un site externe
-$exitPageTemplateString = loadConfig($cdlTemplatesPath."exit_from_cdl.html");
+my $exitPageTemplateString = loadConfig($cdlTemplatesPath."exit_from_cdl.html");
+
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 # La langue du site
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'SITE_ID', $siteId);
@@ -140,6 +152,7 @@ my $pageContentFile = savePageContentInCache($requestMethod, putParametersInUrl(
 # Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
+my $activateAudio = "";
 if ($enableAudio) {
 	# Récupération de la session de la variable indiquant si l'audio est activé
 	$activateAudio = loadFromSession($session, 'activateAudio');
@@ -166,18 +179,30 @@ if ($activateAudio eq "1") {
 
 my $backgroundColor = loadFromSession($session, 'backgroundColor');
 my $fontColor = loadFromSession($session, 'fontColor');
+my $linkColor = loadFromSession($session, 'linkColor');
 $backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 $fontColor = $fontColor ? $fontColor : 'FFFFFF';
+$linkColor = $linkColor ? $linkColor : $fontColor;
+my $letterSpacing = loadFromSession($session, 'letterSpacing');
+my $wordSpacing = loadFromSession($session, 'wordSpacing');
+my $lineHeight = loadFromSession($session, 'lineHeight');
+$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+$lineHeight = $lineHeight ? $lineHeight : '1';
 
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'B_COLOR', $backgroundColor);
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'F_COLOR', $fontColor);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'L_COLOR', $linkColor);
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'F_SIZE', $fontSize);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'L_SPACING', $letterSpacing);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'W_SPACING', $wordSpacing);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'L_HEIGHT', $lineHeight);
 if (isBigCursorNotAllowed()) {
 	$fontSize = 1;
 }
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
 my @now = localtime(time);
-$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 print $exitPageTemplateString;

@@ -1,10 +1,11 @@
-*{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border-width:0;border-style:solid;word-wrap:break-word}
-abbr,acronym{border-bottom-width:1px;border-bottom-style:dotted;display:inline-block}
+*{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border:0 solid;word-wrap:break-word}
+abbr,acronym{border-bottom:1px dotted;display:inline-block}
 a{text-decoration:underline;cursor:pointer;display:inline-block}
 a *{text-decoration:underline;cursor:pointer}
 fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
 img{display:block;padding-bottom:2px;max-width:100%}
+.cdlCadre img{min-width:800px}
 .cdlButtons{padding:5px 0;display:block}
 fieldset,button,.cdlButtons input{border-width:1px}
 .cdlButtons input{cursor:pointer}
@@ -37,18 +38,15 @@ table{border-width:1px 0 0 1px;width:100% !important}
 th,td{border-width:0 1px 1px 0;padding:5px}
 p{padding-bottom:.3em}
 .cdlLoginForm .cdlButtons{text-align:center}
-.cdlAudioContent{padding:6px 0 5px;float:right}
+.cdlAudioContent{padding:6px 9px 5px 0;float:right}
 .cdlAudioObject{float:left;padding:0 2px;margin-right:7px;border-width:1px;position:relative;z-index:86000;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 .cdlAudioObjectContent{float:left;overflow:hidden}
 .cdlAudioObjectContent object{float:left;margin-top:-5px;background-color:transparent !important}
-.cdlAudioLinks{float:left}
 .cdlDownloadAudioLink{display:block;white-space:nowrap;margin-right:7px}
-.cdlModifyAudioParametersLinks{white-space:nowrap}
-.cdlModifyAudioParametersLinks a{display:block;padding:0 10px}
 .cdlCadreContainer{padding-bottom:7px}
 .cdlCadre{border-width:2px;padding:5px 20px 5px 5px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlCadre hr{color:inherit;border:none;margin:5px 0;display:block;height:2px !important;overflow:hidden}
-.cdlClearBoth{display:block;clear:both;font-size:0%;height:0px;overflow:hidden}
+.cdlClearBoth{display:block;clear:both;font-size:0;height:0;overflow:hidden}
 .cdlHidden{display:none}
 .cdlFoot{margin:-2px 0 5px;padding:0 5px}
 .cdlCopyright{float:right;padding:0 20px 0 10px}
@@ -56,7 +54,6 @@ p{padding-bottom:.3em}
 .cdlLabelDiv{text-align:right;padding-top:.15em}
 .cdlBoldLink{font-weight:bold}
 .cdlExitFromCdlLinks{display:block;padding-top:5px}
-.cdlModifyStyleParametersLinks{float:left;padding-right:10px}
 .cdlTable{margin:1em 0}
 .cdlTable ul{list-style:none;padding:0;margin:0}
 .cdlTable ul.cdlTableRowContent > li{list-style:disc;margin-left:2em}
@@ -65,7 +62,6 @@ p{padding-bottom:.3em}
 .cdlTableCaption{padding-bottom:1em}
 .cdlTableCell{margin-bottom:1em}
 .cdlInvisibleLink{position:absolute;bottom:0;left:0;width:20px !important;height:20px;display:block;background:transparent}
-.cdlAudioPlayerLinks a,a.cdlAudioPlayerLinks{border-width:1px;text-decoration:none;padding:0 3px}
 .cdlUtilLinks{float:left;margin:6px 0 6px 7px;padding:0 7px;background-color:black;overflow:hidden;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlUtilLinks *{background-color:black}
 .cdlUtilLinks img{padding-bottom:0}
@@ -84,13 +80,32 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .gm-style img{max-width:none}
 :root .cdlUtilLinks,:root .cdlUtilLinks *{background-color:transparent}
 :root .cdlUtilLinks img{display:none}
+:root .cdlUtilLinks input[type="image"]{position:absolute;opacity:0;top:0;left:0}
 :root .cdlUtilLinks a{padding:1px}
 :root .cdlUtilLinks a svg{display:block}
 :root input[type="radio"],:root input[type="checkbox"]{opacity:0;margin:0}
-.cdlInput_radio,.cdlInput_checkbox{margin:5px .3em 5px 0}
+.cdlInput_radio,.cdlInput_checkbox{margin:5px .3em 5px 0;line-height:normal !important}
 :root .cdlInput_radio,:root .cdlInput_checkbox{display:inline-block;border:solid;box-sizing:border-box;vertical-align:middle}
-:root .cdlInput_radio strong,:root .cdlInput_checkbox strong{display:inline-block;box-sizing:border-box;width:60% !important;height:60%;margin:20%}
-.cdlSelectInput{position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align: middle}
-.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;right:-20px;margin-left:-20px;padding-right:20px}
-.cdlSelectInput span{display:inline-block;width:40px !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box;border-width:1px 1px 1px 0}
-.cdlSelectInput span:after{content:"";position:absolute;left:75%;top:50%;margin:-2px 0 0 -5px;bottom:0;width:0 !important;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid}
+:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{content:"";display:inline-block;box-sizing:border-box;width:60% !important;height:60%;margin:20%}
+:root .cdlInput_checkbox:after{width:76% !important;height:76%;margin:12%}
+:root input[type="checkbox"]:checked + .cdlInput_checkbox:after{content:"✔";line-height:.7;font-size:130%}
+.cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding-right:1.8em;width:100%;box-sizing:content-box}
+.cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box;border-width:1px 1px 1px 0}
+.cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
+.cdlAudioControls{overflow:hidden;padding:5px}
+.cdlAudioControls li{list-style:none;float:left;padding-right:16px}
+.cdlAudioControls li:after{content:"";display:block;width:6px;height:6px;position:absolute;right:5px;top:50%;margin-top:-3px;z-index:11420;border-radius:100px;-moz-border-radius:100px;-WebKit-border-radius:100px;-khtml-border-radius:100px}
+.cdlAudioControls li:last-child{padding-right:0}
+.cdlAudioControls li a{display:block;position:relative}
+.cdlAudioControls li a.cdlDisabled{opacity:.5}
+.cdlAudioControls li a span{display:none}
+.cdlAudioPrevBloc:before,.cdlAudioPrevBloc:after,.cdlAudioNextBloc:before,.cdlAudioNextBloc:after{content:"";display:block;width:0;height:0;border:solid transparent;position:absolute;top:0}
+.cdlAudioPrevBloc:before,.cdlAudioNextBloc:before{left:0}
+.cdlAudioPrevBloc:after,.cdlAudioNextBloc:after{right:0}
+.cdlAudioPrevLine{border-left:solid}
+.cdlAudioPause:before,.cdlAudioPause:after{content:"";display:block;width:40%;height:100%;position:absolute;top:0}
+.cdlAudioPause:before{left:0}
+.cdlAudioPause:after{right:0}
+.cdlAudioPrevLine:after,.cdlAudioPlay:after,.cdlAudioNextLine:after{content:"";display:block;width:0;height:0;border:solid transparent;position:absolute;top:0;right:0}
+.cdlAudioNextLine{border-right:solid}

@@ -24,12 +24,21 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use lib '../modules/utils';
 use constants;
 use misc_utils;
 use session;
 use config_manager;
 
+
+# Récupération de l'URL réécrite pour en extraire les informations nécessaires
+my $thisCdlUrl = $ENV{'REQUEST_URI'};
+$thisCdlUrl =~ s/%20/+/sgi;
+
+$embeddedMode = "";
+$thisCdlUrl =~ s/^(\/cdl)?.*/$embeddedMode = $1/segi;
 
 # Récupération de l'id du site courant
 my $siteId = param('cdlid');
@@ -51,7 +60,7 @@ if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
 }
 
 # Création de l'objet CGI utile pour la session
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -63,7 +72,9 @@ if ($styleToLoad eq "") {
 }
 my $styleString = loadConfig($cdlTemplatesPath."css/".$styleToLoad.".css");
 
-my ($backgroundColor, $fontColor, $fontSize) = (param("cdlbc"), param("cdlfc"), param("cdlfs"));
+$styleString = setValueInTemplateString($styleString, 'EMBEDDED_URL', $embeddedMode);
+
+my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
 
 my $pagePaddingTop = $fontSize eq "" ? "94" : "".66+0.7*(($fontSize - 1)*20);
 my $pageMarginTop = $fontSize eq "" ? "86" : "".58+0.7*(($fontSize - 1)*20);
@@ -76,18 +87,33 @@ $styleString = setValueInTemplateString($styleString, 'FONT_SIZE_BROWSER_DEPENDS
 
 $backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 $fontColor = $fontColor ? $fontColor : 'FFFFFF';
+$linkColor = $linkColor ? $linkColor : $linkColor;
 
 $fontSize = $fontSizes{$fontSize};
+
+$letterSpacing = $letterSpacings{$letterSpacing};
+$wordSpacing = $wordSpacings{$wordSpacing};
+$lineHeight = $lineHeights{$lineHeight};
+
+my $selectArrowSize = $fontSize eq "" ? "9" : "".int($fontSize/18);
 
 # Remplissage des markers dans la template de style par les valeurs récupérés en session
 
 $styleString = setValueInTemplateString($styleString, 'FONT_COLOR', $fontColor);
+$styleString = setValueInTemplateString($styleString, 'LINK_COLOR', $linkColor);
 $styleString = setValueInTemplateString($styleString, 'BACKGROUND_COLOR', $backgroundColor);
 $styleString = setValueInTemplateString($styleString, 'FONT_SIZE', $fontSize);
+$styleString = setValueInTemplateString($styleString, 'LETTER_SPACING', $letterSpacing);
+$styleString = setValueInTemplateString($styleString, 'WORD_SPACING', $wordSpacing);
+$styleString = setValueInTemplateString($styleString, 'LINE_HEIGHT', $lineHeight);
 $styleString = setValueInTemplateString($styleString, 'PAGE_PADDING_TOP', $pagePaddingTop);
 $styleString = setValueInTemplateString($styleString, 'PAGE_MARGIN_TOP', $pageMarginTop);
 $styleString = setValueInTemplateString($styleString, 'INPUT_SIZE', $inputSize);
+$styleString = setValueInTemplateString($styleString, 'INPUT_HALF_SIZE', $inputSize / 2);
 $styleString = setValueInTemplateString($styleString, 'INPUT_BORDER', $inputBorder);
+$styleString = setValueInTemplateString($styleString, 'SELECT_ARROW_SIZE', $selectArrowSize);
+$styleString = setValueInTemplateString($styleString, 'SELECT_DOUBLE_ARROW_SIZE', $selectArrowSize * 4);
+$styleString = setValueInTemplateString($styleString, 'SELECT_HALF_ARROW_SIZE', $selectArrowSize / 2);
 
 print $session->header('Content-type' => "text/css; charset=UTF-8");
 print $styleString;

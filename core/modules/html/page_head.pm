@@ -169,8 +169,8 @@ sub cleanRedirectUrl #($url, $pagePath, $siteId, $siteRootUrl)
 	my ($url, $pagePath, $siteId, $siteRootUrl) = @_;
 
 	my $parsedUrl = getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl);
-	if ($parsedUrl !~ m/^\/le\-filtre/si) {
-		$parsedUrl = "/le-filtre".($siteRootUrl =~ m/^https:\/\//si ? "-https/" : "")."/".$siteId."/".$parsedUrl;
+	if ($parsedUrl !~ m/^\/(cdl\/f|le\-filtre)/si) {
+		$parsedUrl = ($embeddedMode ne "" ? $embeddedMode."/f".($siteRootUrl =~ m/^https:\/\//si ? "s" : "") : "/le-filtre".($siteRootUrl =~ m/^https:\/\//si ? "-https" : "")."/".$siteId)."/".$parsedUrl;
 	}
 
 	# Retourner l'URL bien transformée dans tous les cas

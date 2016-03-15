@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use LWP::UserAgent;
 
 use lib '../modules/utils';
@@ -37,7 +39,7 @@ use misc_html;
 
 
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -46,25 +48,25 @@ my $session = createOrGetSession($cgi);
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
 
+$embeddedMode = "";
+
 # Extraction des différents paramètres dans l'URL réécrite
 my ($action, $siteId, $contentType, $requestMethod, $defaultLanguage, $urlToParse, $secure);
-$thisCdlUrl =~ s/^(\/document\-https(\/(ouvrir|telecharger))?\/(.*?)\/(.*?)\/(.*?)\/(.*?)\/cdl\-url\/(.*?)(\?|$))/
-	$action = $3;
-	$siteId = $4;
-	$contentType = $5;
-	$requestMethod = $6;
-	$defaultLanguage = $7;
-	$urlToParse = $8;
-	$secure = "s";
+$thisCdlUrl =~ s/^((\/cdl)?\/document(\-http(s))?(\/(ouvrir|telecharger))?\/(.*?)\/(.*?)\/(.*?)\/(.*?)\/cdl\-url\/(.*?)(\?|$))/
+	$embeddedMode = $2;
+	$action = $6;
+	$siteId = $7;
+	$contentType = $8;
+	$requestMethod = $9;
+	$defaultLanguage = $10;
+	$urlToParse = $11;
+	$secure = $4;
 	$1/segi;
-$thisCdlUrl =~ s/^(\/document(\/(ouvrir|telecharger))?\/(.*?)\/(.*?)\/(.*?)\/(.*?)\/cdl\-url\/(.*?)(\?|$))/
-	$action = $3;
-	$siteId = $4;
-	$contentType = $5;
-	$requestMethod = $6;
-	$defaultLanguage = $7;
-	$urlToParse = $8;
-	$1/segi;
+
+if (!$siteId and $embeddedMode ne "") {
+	my $siteDomain = $ENV{'SERVER_NAME'};
+	$siteId = getSiteFromDomain($siteDomain);
+}
 
 # Détection d'erreurs au niveau de l'identifiant du site
 if (!$siteId) {
@@ -91,16 +93,16 @@ if ($enableAudio eq "") {
 	$enableAudio = getConfig($defaultConfiguration, 'enableAudio');
 }
 
-if ($action) {
-	# Génération de la table des hachage des paramètres
-	my @paramKeys = param;
-	my %requestParameters;
-	foreach my $paramKey (@paramKeys) {
-		my @paramValuesArray = param($paramKey);
-		$requestParameters{$paramKey} = \@paramValuesArray;
-	}
-	delete($requestParameters{'cdlreferer'});
+# Génération de la table des hachage des paramètres
+my @paramKeys = param;
+my %requestParameters;
+foreach my $paramKey (@paramKeys) {
+	my @paramValuesArray = param($paramKey);
+	$requestParameters{$paramKey} = \@paramValuesArray;
+}
+delete($requestParameters{'cdlreferer'});
 
+if ($action) {
 	# Téléchargement du fichier
 	redirectDownload($action, uc($requestMethod), "http".$secure."://".$urlToParse, $session, $siteId, %requestParameters);
 } else {
@@ -108,9 +110,11 @@ if ($action) {
 	print $session->header('Content-type' => "text/html; charset=UTF-8");
 
 	# Chargement de la template principale de la page de document
-	$documentPageTemplateString = loadConfig($cdlTemplatesPath."document.html");
+	my $documentPageTemplateString = loadConfig($cdlTemplatesPath."document.html");
 
 	# Mettre les bonnes valeurs à la place des marqueurs dans le chaîne template
+
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	# L'identifiant du site
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'SITE_ID', $siteId);
@@ -146,6 +150,7 @@ if ($action) {
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
+	my $activateAudio = "";
 	if ($enableAudio) {
 		# Récupération de la session de la variable indiquant si l'audio est activé
 		$activateAudio = loadFromSession($session, 'activateAudio');
@@ -170,19 +175,31 @@ if ($action) {
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');
+	my $linkColor = loadFromSession($session, 'linkColor');
 	$backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 	$fontColor = $fontColor ? $fontColor : 'FFFFFF';
+	$linkColor = $linkColor ? $linkColor : $fontColor;
+	my $letterSpacing = loadFromSession($session, 'letterSpacing');
+	my $wordSpacing = loadFromSession($session, 'wordSpacing');
+	my $lineHeight = loadFromSession($session, 'lineHeight');
+	$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+	$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+	$lineHeight = $lineHeight ? $lineHeight : '1';
 
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'B_COLOR', $backgroundColor);
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'F_COLOR', $fontColor);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'L_COLOR', $linkColor);
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'F_SIZE', $fontSize);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'L_SPACING', $letterSpacing);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'W_SPACING', $wordSpacing);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'L_HEIGHT', $lineHeight);
 	if (isBigCursorNotAllowed()) {
 		$fontSize = 1;
 	}
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
 	my @now = localtime(time);
-	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	print $documentPageTemplateString;
 }

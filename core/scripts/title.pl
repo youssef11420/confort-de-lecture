@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use lib '../modules/utils';
 use constants;
 use misc_utils;
@@ -51,7 +53,7 @@ if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
 }
 
 # Création de l'objet CGI utile pour la session
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);

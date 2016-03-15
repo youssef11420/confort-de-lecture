@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use File::Path;
 
 use lib '../../modules/utils';
@@ -34,13 +36,14 @@ use config_manager;
 
 
 # Création de l'objet CGI
-my $cgi  = new CGI;
+my $cgi  = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
 
-# Chargement de la template principale de l'interface de configuration
-$configPageTemplateString = loadConfig($cdlTemplatesPath."config.html");
+$cdlRootPath .= "/..";
+$cdlTemplatesPath =~ s/templates/..\/templates/sgi;
+$cdlGlossaryConfigPath =~ s/configuration\/glossary/..\/configuration\/glossary/sgi;
 
 # Génération de la table des hachage des paramètres
 my @paramKeys = param;
@@ -56,9 +59,17 @@ $thisCdlUrl =~ s/%20/+/sgi;
 
 my $cdlAdmin = loadFromSession($session, 'cdlAdmin');
 
+$embeddedMode = "";
+$thisCdlUrl =~ s/^(\/cdl)/$embeddedMode = $1; ""/segi;
+
+# Chargement de la template principale de l'interface de configuration
+my $configPageTemplateString = loadConfig($cdlTemplatesPath."config.html");
+
+$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
+
 # Gestion de l'identification
 if (!$cdlAdmin and $thisCdlUrl !~ m/^\/admin\/login(\/action)?(\?.*?)?$/si) {
-	print $cgi->redirect("/admin/login?m=8");
+	print $cgi->redirect($embeddedMode."/admin/login?m=8");
 	exit;
 }
 if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
@@ -93,7 +104,7 @@ if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'GLOSSARY_FORM', "");
 
 	my @now = localtime(time);
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	# Affichage du code HTML
 	print "Content-type: text/html\n\n";
@@ -102,7 +113,7 @@ if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
 }
 if ($thisCdlUrl =~ m/^\/admin\/login\/action(\?.*?)?$/si) {
 	if (!param('loginAdmin') or !param('passwdAdmin')) {
-		print $cgi->redirect("/admin/login?m=6");
+		print $cgi->redirect($embeddedMode."/admin/login?m=6");
 		exit;
 	}
 
@@ -116,10 +127,10 @@ if ($thisCdlUrl =~ m/^\/admin\/login\/action(\?.*?)?$/si) {
 		editInSession($session, 'cdlAdmin', param('loginAdmin'));
 
 		# Envoyer le cookie représentant la session
-		my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
-		print $cgi->header(-status=>"302 Moved", -location=>"/admin", -cookie=>$cookie);
+		my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/admin", -cookie=>$cookie);
 	} else {
-		print $cgi->redirect("/admin/login?m=7");
+		print $cgi->redirect($embeddedMode."/admin/login?m=7");
 	}
 	exit;
 }
@@ -152,6 +163,10 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'HOME_PAGE_URI', $requestParameters{'homePageUri'}[0]);
 	# Aucun URI de page d'accueil au départ => liste vide
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'HOME_PAGE_URIS_LIST', "");
+
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGE_NO_CACHE', $requestParameters{'pageNoCache'}[0]);
+	# Aucun URI de page d'accueil au départ => liste vide
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGES_NO_CACHE_LIST', "");
 
 	# Pour chacun des paramètres de configuration suivants, on teste si on revient du formulaire à cause d'une erreur, on met la bonne valeur de configuration
 	if (!$requestParameters{'positionLocation'}[0] or $requestParameters{'positionLocation'}[0] eq "1") {
@@ -237,6 +252,78 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'SITE_LOGO', $logo);
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'LOGO_IMG', $requestParameters{'logo'}[0] ? getPartOfTemplateString($formTemplateString, 'LOGO_IMG') : "");
 
+	if ($requestParameters{'enableAudio'}[0] eq "0") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_YES', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_NO', "");
+	}
+
+	if ($requestParameters{'enableGlossary'}[0] eq "0") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_YES', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_NO', "");
+	}
+
+	if ($requestParameters{'voiceChoice'}[0] eq "0") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_YES', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_NO', "");
+	}
+
+	if ($requestParameters{'ttsMode'}[0] eq "sdk") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_SDK', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_VAAS', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_VAAS', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_SDK', "");
+	}
+
+	my $ttsServerName = $requestParameters{'ttsServerName'}[0];
+	$ttsServerName =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_SERVER_NAME', $ttsServerName);
+
+	my $ttsPort = $requestParameters{'ttsPort'}[0];
+	$ttsPort =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_PORT', $ttsPort);
+
+	my $ttsUri = $requestParameters{'ttsUri'}[0];
+	$ttsUri =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_URI', $ttsUri);
+
+	my $ttsDefaultQueryString = $requestParameters{'ttsDefaultQueryString'}[0];
+	$ttsDefaultQueryString =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_DEFAULT_QUERY_STRING', $ttsDefaultQueryString);
+
+	my $ttsVoiceParamName = $requestParameters{'ttsVoiceParamName'}[0];
+	$ttsVoiceParamName =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_VOICE_PARAM_NAME', $ttsVoiceParamName);
+
+	my $ttsRateParamName = $requestParameters{'ttsRateParamName'}[0];
+	$ttsRateParamName =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_RATE_PARAM_NAME', $ttsRateParamName);
+
+	my $ttsTextParamName = $requestParameters{'ttsTextParamName'}[0];
+	$ttsTextParamName =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_TEXT_PARAM_NAME', $ttsTextParamName);
+
+	if ($requestParameters{'utf8DecodeContent'}[0] eq "1") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_YES', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_NO', "");
+	}
+
+	my $cacheExpiry = $requestParameters{'cacheExpiry'}[0];
+	$cacheExpiry =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'CACHE_EXPIRY', $cacheExpiry);
+
 	# Affichage des messages d'erreur à l'ajout
 	if (param('m') eq "2") {
 		# Aucun identifiant renseigné
@@ -247,6 +334,9 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	} elsif (param('m') eq "5") {
 		# Utilisation de caractères non permis
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'MESSAGE', "<div class=\"messageErr\">L'identifiant que vous avez renseigné n'est pas au bon format.</div><br>");
+	} elsif (param('m') eq "9") {
+		# Utilisation de caractères non permis
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'MESSAGE', "<div class=\"messageErr\">La durée du cache doit être numérique.</div><br>");
 	} else {
 		# Aucune erreur
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'MESSAGE', "");
@@ -262,7 +352,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
 
 	my @now = localtime(time);
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	# Affichage du code HTML
 	print "Content-type: text/html\n\n";
@@ -274,23 +364,28 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 	# Récupération de l'identifiant du site
 	my $siteId = $requestParameters{'siteId'}[0];
+	my $cacheExpiry = $requestParameters{'cacheExpiry'}[0];
 
-	$parametersString = $2;
+	my $parametersString = $2;
 
 	# Détection erreurs au niveau de l'identifiant du site
 	if ($siteId =~ m/[^a-z\d\-_\.]/si) {
 		# Erreur de caractère()s illégal(aux) dans l'identifiant
-		print $cgi->redirect("/admin/sites/create?m=5&".$parametersString);
+		print $cgi->redirect($embeddedMode."/admin/sites/create?m=5&".$parametersString);
 		exit;
 	}
 	if (!$siteId) {
 		# Aucun identifiant n'a été renseigné
-		print $cgi->redirect("/admin/sites/create?m=2&".$parametersString);
+		print $cgi->redirect($embeddedMode."/admin/sites/create?m=2&".$parametersString);
 		exit;
 	}
 	if (existConfigDirectory($siteId)) {
 		# L'identifiant spécifié existe déjà
-		print $cgi->redirect("/admin/sites/create?m=3&".$parametersString);
+		print $cgi->redirect($embeddedMode."/admin/sites/create?m=3&".$parametersString);
+		exit;
+	}
+	if ($cacheExpiry !~ m/^([\-\+\/\*%]?\d+)*$/si) {
+		print $cgi->redirect($embeddedMode."/admin/sites/create?m=9&".$parametersString);
 		exit;
 	}
 
@@ -326,9 +421,33 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 		if ($requestParameters{'parseTablesToList'}[0] ne "") {
 			$siteConfig = setConfig($siteConfig, 'parseTablesToList', $requestParameters{'parseTablesToList'}[0]);
 		}
+		if ($requestParameters{'enableAudio'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'enableAudio', $requestParameters{'enableAudio'}[0]);
+		}
+		if ($requestParameters{'enableGlossary'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'enableGlossary', $requestParameters{'enableGlossary'}[0]);
+		}
+		if ($requestParameters{'voiceChoice'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'voiceChoice', $requestParameters{'voiceChoice'}[0]);
+		}
+		if ($requestParameters{'ttsMode'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'ttsMode', $requestParameters{'ttsMode'}[0]);
+		}
+		if ($requestParameters{'utf8DecodeContent'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'utf8DecodeContent', $requestParameters{'utf8DecodeContent'}[0]);
+		}
 		$siteConfig = setConfig($siteConfig, 'siteLabel', $requestParameters{'siteLabel'}[0]);
 		$siteConfig = setConfig($siteConfig, 'defaultLanguage', $requestParameters{'defaultLanguage'}[0]);
 		$siteConfig = setConfig($siteConfig, 'logo', $requestParameters{'logo'}[0]);
+
+		$siteConfig = setConfig($siteConfig, 'ttsServerName', $requestParameters{'ttsServerName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsPort', $requestParameters{'ttsPort'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsUri', $requestParameters{'ttsUri'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsDefaultQueryString', $requestParameters{'ttsDefaultQueryString'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsVoiceParamName', $requestParameters{'ttsVoiceParamName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsRateParamName', $requestParameters{'ttsRateParamName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsTextParamName', $requestParameters{'ttsTextParamName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'cacheExpiry', $cacheExpiry);
 
 		# Vu qu'il n'y a pas encore de nom de domaine spécifié, on peut directement mettre celui passé en paramètre
 		$siteConfig = setConfig($siteConfig, 'siteDomainNames', $requestParameters{'siteDomainName'}[0]);
@@ -336,11 +455,14 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 		# Vu qu'il n'y a pas encore d'URI de page d'accueil spécifié, on peut directement mettre celle passée en paramètre
 		$siteConfig = setConfig($siteConfig, 'homePageUris', $requestParameters{'homePageUri'}[0]);
 
+		# Vu qu'il n'y a pas encore de page en no cache, on peut directement mettre celle passée en paramètre
+		$siteConfig = setConfig($siteConfig, 'pagesNoCache', $requestParameters{'pagesNoCache'}[0]);
+
 		# On sauvegarde la configuration ainsi mise à jour
 		saveConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini", $siteConfig);
 
 		# On redirige vers la page de modification du site venant d'être créé
-		print $cgi->redirect("/admin/sites/modify/".$siteId."?m=4");
+		print $cgi->redirect($embeddedMode."/admin/sites/modify/".$siteId."?m=4");
 	}
 	exit;
 }
@@ -359,6 +481,10 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 		die "Aucun site ne correspond à l'identifiant : ".$siteId.".\n";
 		exit;
 	}
+	if (!$siteId) {
+		die "Aucun identifiant de site n'a été renseigné.\n";
+		exit;
+	}
 
 	# Mettre le titre de la page
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'PAGE_TITLE', "Modification du site : \"".$siteId."\"");
@@ -367,7 +493,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my $formTemplateString = getPartOfTemplateString($configPageTemplateString, 'EDIT_FORM');
 
 	# Chargement des paramètre de configuration du site
-	$siteConfig = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+	my $siteConfig = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
 
 	# On rajoute un titre correspondant à l'identifiant du site à modifier
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'SITE_ID_FIELD', "");
@@ -384,10 +510,10 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my @domaineNameArray = split(/\t+/, getConfig($siteConfig, 'siteDomainNames'));
 
 	# Génération de la liste à puce des noms de domaine
-	$domaineNamesListString = @domaineNameArray ? "<ul>" : "";
+	my $domaineNamesListString = @domaineNameArray ? "<ul>" : "";
 
-	foreach $domainName (@domaineNameArray) {
-		$domaineNamesListString .= "<li>".$domainName."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"/admin/sites/delete-param/".$siteId."/siteDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine : ".$domainName."\"><img src='/design/images/delete.png' alt=\"Supprimer le nom de domaine : ".$domainName."\"></a></li>";
+	foreach my $domainName (@domaineNameArray) {
+		$domaineNamesListString .= "<li>".$domainName."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/siteDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine : ".$domainName."\"></a></li>";
 	}
 	$domaineNamesListString .= @domaineNameArray ? "</ul>" : "";
 
@@ -396,12 +522,12 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'HOME_PAGE_URI', $requestParameters{'homePageUri'}[0]);
 	# Lister les valeurs des URIs de la page d'acceuil
-	@homePageUrisArray = split(/\t+/, getConfig($siteConfig, 'homePageUris'));
+	my @homePageUrisArray = split(/\t+/, getConfig($siteConfig, 'homePageUris'));
 
 	# Génération de la liste à puce des URIs de la page d'accueil
-	$homePageUrisListString = @homePageUrisArray ? "<ul>" : "";
-	foreach $homePageUri (@homePageUrisArray) {
-		$homePageUrisListString .= "<li>".$homePageUri."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"/admin/sites/delete-param/".$siteId."/homePageUris?paramValue=".urlEncode($homePageUri)."\" title=\"Supprimer l'URI '".$homePageUri."' de la page d'accueil\"><img src='/design/images/delete.png' alt=\"Supprimer l'URI ".$homePageUri." de la page d'accueil\"/></a></li>";
+	my $homePageUrisListString = @homePageUrisArray ? "<ul>" : "";
+	foreach my $homePageUri (@homePageUrisArray) {
+		$homePageUrisListString .= "<li>".$homePageUri."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/homePageUris?paramValue=".urlEncode($homePageUri)."\" title=\"Supprimer l'URI '".$homePageUri."' de la page d'accueil\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer l'URI ".$homePageUri." de la page d'accueil\"/></a></li>";
 	}
 	$homePageUrisListString .= @homePageUrisArray ? "</ul>" : "";
 
@@ -409,7 +535,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'HOME_PAGE_URIS_LIST', $homePageUrisListString);
 
 	# Récupération de la configuration de la position du fil d'Ariane
-	$positionLocation = getConfig($siteConfig, 'positionLocation');
+	my $positionLocation = getConfig($siteConfig, 'positionLocation');
 	if (!$positionLocation or $positionLocation eq "1") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', "");
@@ -419,7 +545,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	}
 
 	# Récupération des paramètres de configuration du javascript
-	$activateJavascript = getConfig($siteConfig, 'activateJavascript');
+	my $activateJavascript = getConfig($siteConfig, 'activateJavascript');
 	if (!$activateJavascript or $activateJavascript eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'ACTIVATE_JS_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'ACTIVATE_JS_YES', "");
@@ -428,7 +554,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'ACTIVATE_JS_NO', "");
 	}
 
-	$parseJavascript = getConfig($siteConfig, 'parseJavascript');
+	my $parseJavascript = getConfig($siteConfig, 'parseJavascript');
 	if (!$parseJavascript or $parseJavascript eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'PARSE_JS_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'PARSE_JS_YES', "");
@@ -438,7 +564,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	}
 
 	# Récupération des paramètres de configuration des frames
-	$activateFrames = getConfig($siteConfig, 'activateFrames');
+	my $activateFrames = getConfig($siteConfig, 'activateFrames');
 	if (!$activateFrames or $activateFrames eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'ACTIVATE_FRAMES_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'ACTIVATE_FRAMES_YES', "");
@@ -448,7 +574,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	}
 
 	# Récupération des paramètres des medias
-	$displayImages = getConfig($siteConfig, 'displayImages');
+	my $displayImages = getConfig($siteConfig, 'displayImages');
 	if (!$displayImages or $displayImages eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_YES', "");
@@ -463,7 +589,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_IMAGES_ONLY_WITH_ALT', "");
 	}
 
-	$displayObjects = getConfig($siteConfig, 'displayObjects');
+	my $displayObjects = getConfig($siteConfig, 'displayObjects');
 	if (!$displayObjects or $displayObjects eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_OBJECTS_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_OBJECTS_YES', "");
@@ -472,7 +598,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_OBJECTS_NO', "");
 	}
 
-	$displayApplets = getConfig($siteConfig, 'displayApplets');
+	my $displayApplets = getConfig($siteConfig, 'displayApplets');
 	if (!$displayApplets or $displayApplets eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_APPLETS_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'DISPLAY_APPLETS_YES', "");
@@ -482,7 +608,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	}
 
 	# Récupération des paramètres des tables.
-	$parseTablesToList = getConfig($siteConfig, 'parseTablesToList');
+	my $parseTablesToList = getConfig($siteConfig, 'parseTablesToList');
 	if (!$parseTablesToList or $parseTablesToList eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'PARSE_TABLES_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'PARSE_TABLES_YES', "");
@@ -492,14 +618,69 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	}
 
 	# Récupération des paramètres : titre, langue, logo.
-	$siteLabel = getConfig($siteConfig, 'siteLabel');
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'SITE_LABEL', $siteLabel);
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'SITE_LABEL', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'DEFAULT_LANGUAGE', getConfig($siteConfig, 'defaultLanguage'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'SITE_LOGO', getConfig($siteConfig, 'logo'));
 
-	$defaultLanguage = getConfig($siteConfig, 'defaultLanguage');
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'DEFAULT_LANGUAGE', $defaultLanguage);
+	my $enableAudio = getConfig($siteConfig, 'enableAudio');
+	if ($enableAudio eq "1") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_YES', " checked");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_YES', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_AUDIO_NO', " checked");
+	}
 
-	$logo = getConfig($siteConfig, 'logo');
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'SITE_LOGO', $logo);
+	my $enableGlossary = getConfig($siteConfig, 'enableGlossary');
+	if ($enableGlossary eq "1") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_YES', " checked");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_YES', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'ENABLE_GLOSSARY_NO', " checked");
+	}
+
+	my $voiceChoice = getConfig($siteConfig, 'voiceChoice');
+	if ($voiceChoice eq "1") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_NO', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_YES', " checked");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_YES', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_NO', " checked");
+	}
+
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_SERVER_NAME', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_PORT', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_URI', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_DEFAULT_QUERY_STRING', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_VOICE_PARAM_NAME', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_RATE_PARAM_NAME', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_TEXT_PARAM_NAME', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'CACHE_EXPIRY', getConfig($siteConfig, 'siteLabel'));
+
+	my $utf8DecodeContent = getConfig($siteConfig, 'voiceChoice');
+	if ($utf8DecodeContent eq "0") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_YES', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_NO', "");
+	}
+
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGE_NO_CACHE', $requestParameters{'pageNoCache'}[0]);
+	# Lister les valeurs des pages sans cache
+	my @pageNoCacheArray = split(/\t+/, getConfig($siteConfig, 'pagesNoCache'));
+
+	# Génération de la liste à puce des pages sans cache
+	my $pagesNoCacheListString = @pageNoCacheArray ? "<ul>" : "";
+
+	foreach my $pageNoCache (@pageNoCacheArray) {
+		$pagesNoCacheListString .= "<li>".$pageNoCache."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/pagesNoCache?paramValue=".urlEncode($pageNoCache)."\" title=\"Supprimer la page : ".$pageNoCache."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer la page : ".$pageNoCache."\"></a></li>";
+	}
+	$pagesNoCacheListString .= @pageNoCacheArray ? "</ul>" : "";
+
+	# Afficher dans la template la liste des pages sans cache récupérée du fichier de config du site
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGES_NO_CACHE_LIST', $pagesNoCacheListString);
 
 	# Gestion des messages d'information
 	if (param('m') eq "1") {
@@ -522,7 +703,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
 
 	my @now = localtime(time);
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	# Affichage du code HTML
 	print "Content-type: text/html\n\n";
@@ -577,6 +758,31 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 		$siteConfig = setConfig($siteConfig, 'defaultLanguage', $requestParameters{'defaultLanguage'}[0]);
 		$siteConfig = setConfig($siteConfig, 'logo', $requestParameters{'logo'}[0]);
 
+		if ($requestParameters{'enableAudio'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'enableAudio', $requestParameters{'enableAudio'}[0]);
+		}
+		if ($requestParameters{'enableGlossary'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'enableGlossary', $requestParameters{'enableGlossary'}[0]);
+		}
+		if ($requestParameters{'voiceChoice'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'voiceChoice', $requestParameters{'voiceChoice'}[0]);
+		}
+		if ($requestParameters{'ttsMode'}[0] ne "") {
+			$siteConfig = setConfig( $siteConfig, 'ttsMode', $requestParameters{'ttsMode'}[0] );
+		}
+		$siteConfig = setConfig($siteConfig, 'ttsServerName', $requestParameters{'ttsServerName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsPort', $requestParameters{'ttsPort'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsUri', $requestParameters{'ttsUri'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsDefaultQueryString', $requestParameters{'ttsDefaultQueryString'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsVoiceParamName', $requestParameters{'ttsVoiceParamName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsRateParamName', $requestParameters{'ttsRateParamName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'ttsTextParamName', $requestParameters{'ttsTextParamName'}[0]);
+		$siteConfig = setConfig($siteConfig, 'siteLabel', $requestParameters{'siteLabel'}[0]);
+		$siteConfig = setConfig($siteConfig, 'cacheExpiry', $requestParameters{'cacheExpiry'}[0]);
+		if ($requestParameters{'utf8DecodeContent'}[0] ne "") {
+			$siteConfig = setConfig( $siteConfig, 'utf8DecodeContent', $requestParameters{'utf8DecodeContent'}[0] );
+		}
+
 		# Lister les valeurs du nom du domaine du site
 		my $siteDomaineNames = getConfig($siteConfig, 'siteDomainNames');
 
@@ -607,7 +813,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 		}
 
 		# Lister les valeurs du nom du domaine du site
-		$homePageUris = getConfig($siteConfig, 'homePageUris');
+		my $homePageUris = getConfig($siteConfig, 'homePageUris');
 
 		# Récupération de l'URI de la page d'accueil en paramètre
 		my $homePageUri = $requestParameters{'homePageUri'}[0];
@@ -635,12 +841,41 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 			$siteConfig = setConfig($siteConfig, 'homePageUris', $homePageUris);
 		}
 
+		# Lister les pages sans cache du site
+		my $pagesNoCache = getConfig($siteConfig, 'pagesNoCache');
+
+		# Récupération de la page sans cache en paramètre
+		my $pageNoCache = $requestParameters{'pageNoCache'}[0];
+
+		if ($pageNoCache) {
+			# Echappement des caractères spéciaux d'expression régulière
+			$pageNoCache =~ s/(\?|\/)/\\$1/sgi;
+			# Suppression de la page si elle existe déjà
+			$pagesNoCache =~ s/(^|\t+)$pageNoCache(\t+|$)/$1.$2/segi;
+
+			# Suppression des éventuelles tabulations en début et en fin de chaîne
+			$pagesNoCache =~ s/^\t*//sgi;
+			$pagesNoCache =~ s/\t*$//sgi;
+
+			# Suppression du caractère d'échappement \ pour insertion
+			$pageNoCache =~ s/\\(\?|\/)/$1/sgi;
+			# Insertion de la nouvelle page sans cache dans la chaîne des pages sans cache
+			if (!$pagesNoCache) {
+				$pagesNoCache = $pageNoCache;
+			} else {
+				$pagesNoCache .= "\t".$pageNoCache;
+			}
+
+			# Mise à jour dans la chaîne contenant configuration du site, du paramètre pagesNoCache
+			$siteConfig = setConfig($siteConfig, 'pagesNoCache', $pagesNoCache);
+		}
+
 		# Sauvegarder la config dans le fichier .ini
 		saveConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini", $siteConfig);
 	}
 
 	# Redirection vers le formulaire de modification du site, avec un message d'information pour notifier le bon déroulement de la modification
-	print $cgi->redirect("/admin/sites/modify/".$siteId."?m=1");
+	print $cgi->redirect($embeddedMode."/admin/sites/modify/".$siteId."?m=1");
 	exit;
 }
 
@@ -687,7 +922,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/delete\-param\/(.*?)\/(.*?)\/?\?(.*)$/si) 
 	saveConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini", $siteConfig);
 
 	# Redirection vers le formulaire de modification du site, avec un message d'information pour notifier le bon déroulement de la modification
-	print $cgi->redirect("/admin/sites/modify/".$siteId."?m=1");
+	print $cgi->redirect($embeddedMode."/admin/sites/modify/".$siteId."?m=1");
 	exit;
 }
 
@@ -705,12 +940,12 @@ if ($thisCdlUrl =~ m/^\/admin\/sites(\/list)?(\?.*?)?$/si) {
 	# Génération de la chaîne HTML correspondant à la liste à puce des sites
 	$sitesListString .= @sites ? "<ul>" : "";
 	foreach my $site (@sites) {
-		$sitesListString .= "<li><a href='/admin/sites/modify/".$site."'>".$site."</a>&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"/le-filtre/".$site."\" title=\"Visualiser le site : ".$site."\" target=\"_blank\"><img src='/design/images/view.png' alt=\"Visualiser le site : ".$site."\"></a>&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"/admin/sites/delete-site/".$site."\" title=\"Supprimer le site : ".$site."\" onclick=\"if (confirm('Voulez vous vraiment supprimer le site ".$site." ?')) {window.location.href = '/admin/sites/delete-site/".$site."'} return false;\"><img src='/design/images/delete.png' alt=\"Supprimer le site : ".$site."\"></a>";
+		$sitesListString .= "<li><a href='".$embeddedMode."/admin/sites/modify/".$site."'>".$site."</a>&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$site)."\" title=\"Visualiser le site : ".$site."\" target=\"_blank\"><img src='".$embeddedMode."/design/images/view.png' alt=\"Visualiser le site : ".$site."\"></a>&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-site/".$site."\" title=\"Supprimer le site : ".$site."\" onclick=\"if (confirm('Voulez vous vraiment supprimer le site ".$site." ?')) {window.location.href = '".$embeddedMode."/admin/sites/delete-site/".$site."'} return false;\"><img src='/design/images/delete.png' alt=\"Supprimer le site : ".$site."\"></a>";
 	}
 	$sitesListString .= @sites ? "</ul>" : "";
 
 	# Mise à jour dans la template pour afficher la liste des sites
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'SITES_LIST', "<h1>Gestion des sites</h1><!--cdlNav--><p><a href=\"/admin/sites/create\" class=\"black addLink\">Créer un site</a><!--/cdlNav-->".($sitesListString ? "<!--cdlBloc-->".$sitesListString."<!--/cdlBloc-->" : "<!--cdlBloc--><p><strong>Aucun site n'a été créé.</strong><!--/cdlBloc-->"));
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'SITES_LIST', "<h1>Gestion des sites</h1><!--cdlNav--><p><a href=\"".$embeddedMode."/admin/sites/create\" class=\"black addLink\">Créer un site</a><!--/cdlNav-->".($sitesListString ? "<!--cdlBloc-->".$sitesListString."<!--/cdlBloc-->" : "<!--cdlBloc--><p><strong>Aucun site n'a été créé.</strong><!--/cdlBloc-->"));
 	# On vide la partie réservée au formulaire d'édition
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'EDIT_FORM', "");
 	# On vide la partie de la template réservée au glossaire
@@ -719,7 +954,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites(\/list)?(\?.*?)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
 
 	my @now = localtime(time);
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	# Affichage de la template finale
 	print "Content-type: text/html\n\n";
@@ -733,7 +968,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/delete\-site\/(.*?)$/si) {
 	rmtree($cdlSitesConfigPath.$1);
 
 	# Redirection vers la page de liste avec un message d'information
-	print $cgi->redirect("/admin/sites/list?m=6");
+	print $cgi->redirect($embeddedMode."/admin/sites/list?m=6");
 	exit;
 }
 
@@ -762,6 +997,7 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary(\/index)?(\?.*)?$/si) {
 		my $formRow = setValueInTemplateString(setValueInTemplateString(setValueInTemplateString(setValueInTemplateString($rowTemplateString, 'ICASE_YES', $glossaryItemParts[3] eq "1" ? " selected" : ""), 'ICASE_NO', $glossaryItemParts[3] eq "0" ? " selected=\"selected\"" : ""), 'PATTERN', $glossaryItemParts[1]), 'REPLACEMENT', $glossaryItemParts[2]);
 		$formRow = setValueInTemplateString(setValueInTemplateString(setValueInTemplateString($formRow, 'SEPL_0', $glossaryItemParts[4] eq "0" ? "selected" : ""), 'SEPL_1', $glossaryItemParts[4] eq "1" ? "selected=\"selected\"" : ""), 'SEPL_2', $glossaryItemParts[4] eq "2" ? "selected=\"selected\"" : "");
 		$formRow = setValueInTemplateString(setValueInTemplateString(setValueInTemplateString($formRow, 'SEPR_0', $glossaryItemParts[5] eq "0" ? "selected" : ""), 'SEPR_1', $glossaryItemParts[5] eq "1" ? "selected=\"selected\"" : ""), 'SEPR_2', $glossaryItemParts[5] eq "2" ? "selected=\"selected\"" : "");
+		$formRow = setValueInTemplateString($formRow, 'INDEX_ITEM', $index);
 		$formRows .= $formRow;
 		if ($index%20 eq 0) {
 			$formRows .= '<tr><td colspan="300"><input type="submit" name="save" value="Sauvegarder" class="submit">';
@@ -779,7 +1015,7 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary(\/index)?(\?.*)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', "");
 
 	my @now = localtime(time);
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	# Affichage de la template finale
 	print "Content-type: text/html\n\n";
@@ -808,16 +1044,16 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary\/edit\-action(\?.*)?$/si) {
 	}
 	$glossaryContent =~ s/\n$//sgi;
 
-	my ($sec,$min,$hour,$mday,$month,$year,$wday,$yday,$isdst) = localtime(time);
+	my ($sec, $min, $hour, $mday, $month, $year) = localtime(time);
 	rename($cdlGlossaryConfigPath."/pronunciation_corrections.txt", $cdlRootPath.$cdlGlossaryConfigPath."/pronunciation_corrections_".($year+1900)."-".($month+1)."-".$mday."-".$hour.$min.$sec.".txt");
 
 	saveConfig($cdlGlossaryConfigPath."/pronunciation_corrections.txt", $glossaryContent);
 
 	# Redirection vers la page d'index du glossaire
-	print $cgi->redirect("/admin/glossary/index?m=7".($noPage ? "&p=".$noPage : ""));
+	print $cgi->redirect($embeddedMode."/admin/glossary/index?m=7".($noPage ? "&p=".$noPage : ""));
 	exit;
 }
 
 # Si on passe ici, c'est qu'il y a eu une erreur de manipulation de l'URL appelée
 print "Content-type: text/html; charset=UTF-8\n\n";
-print "<title>Interface d'administration &bull; Confort de lecture</title><link href=\"/favicon.png\" rel=\"shortcut icon\"><!--cdlBloc--><h1>Interface d'administration</h1><a href=\"/admin/sites/list\">Accès à la liste des sites</a><br><a href=\"/admin/glossary/index\">Accès au glossaire</a><!--/cdlBloc-->";
+print "<title>Interface d'administration &bull; Confort de lecture</title><link href=\"/favicon.png\" rel=\"shortcut icon\"><!--cdlBloc--><h1>Interface d'administration</h1><a href=\"".$embeddedMode."/admin/sites/list\">Accès à la liste des sites</a><br><a href=\"".$embeddedMode."/admin/glossary/index\">Accès au glossaire</a><!--/cdlBloc-->";

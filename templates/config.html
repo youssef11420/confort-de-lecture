@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="fr">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>###PAGE_TITLE### &bull; Interface d'administration &bull; Confort de lecture</title>
-<link href="/favicon.png" rel="shortcut icon">
-<link href="/design/css/config.css" rel="stylesheet">
+<meta name="robots" content="noindex,nofollow">
+<link href="###EMBEDDED_URL###/favicon.png" rel="shortcut icon">
+<link href="###EMBEDDED_URL###/design/css/config.css" rel="stylesheet">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script>
 jQuery.noConflict();
@@ -13,8 +14,8 @@ jQuery.noConflict();
 <div>
 ###SITES_LIST###<!--###IDENT_FORM###-->
 <h1>Identification</h1>
-<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
-<form action="/admin/login/action" method="get">
+<!--cdlNav--><br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
+<form action="###EMBEDDED_URL###/admin/login/action" method="get">
 <div class="center">###MESSAGE###</div>
 <div class="clearBoth"></div><br>
 <div class="formLine">
@@ -33,10 +34,10 @@ jQuery.noConflict();
 </form>
 <!--/###IDENT_FORM###--><!--###EDIT_FORM###-->
 <h1>Gestion des sites</h1>
-<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
-<!--cdlNav--><a href="/admin/sites/list">Retour &agrave; la liste des sites</a><!--/cdlNav--><br>
+<!--cdlNav--><br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
+<!--cdlNav--><a href="###EMBEDDED_URL###/admin/sites/list">Retour &agrave; la liste des sites</a><!--/cdlNav--><br>
 <!--cdlBloc-->
-<form action="/admin/sites/###EDIT_ACTION###-action###SITE_ID###" method="get">
+<form action="###EMBEDDED_URL###/admin/sites/###EDIT_ACTION###-action###SITE_ID###" method="get">
 <div class="center">###MESSAGE###</div>
 <div class="clearBoth"></div><br>
 <!--###SITE_ID_FIELD###-->
@@ -147,18 +148,97 @@ jQuery.noConflict();
 </div>
 </fieldset>
 <div class="clearBoth"></div>
+<fieldset>
+<legend>Vocalisation</legend>
+<div class="formLine">
+<div class="leftForm">Activer l'audio&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="enableAudio1" name="enableAudio" value="1"###ENABLE_AUDIO_YES###><label for="enableAudio1">oui</label>&nbsp;&nbsp;<input type="radio" id="enableAudio0" name="enableAudio" value="0"###ENABLE_AUDIO_NO###><label for="enableAudio0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Activer le glossaire&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="enableGlossary1" name="enableGlossary" value="1"###ENABLE_GLOSSARY_YES###><label for="enableGlossary1">oui</label>&nbsp;&nbsp;<input type="radio" id="enableGlossary0" name="enableGlossary" value="0"###ENABLE_GLOSSARY_NO###><label for="enableGlossary0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Permettre le choix de la voix&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="voiceChoice1" name="voiceChoice" value="1"###VOICE_CHOICE_YES###><label for="voiceChoice1">oui</label>&nbsp;&nbsp;<input type="radio" id="voiceChoice0" name="voiceChoice" value="0"###VOICE_CHOICE_NO###><label for="voiceChoice0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Mode de vocalisation :&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="ttsModeVaas" name="ttsMode" value="vaas"###TTS_MODE_VAAS###><label for="ttsModeVaas">VaaS</label>&nbsp;&nbsp;<input type="radio" id="ttsModeSdk" name="ttsMode" value="sdk"###TTS_MODE_SDK###><label for="ttsModeSdk">SDK</label></span></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsServerName">Nom de domaine du serveur VaaS :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsServerName" name="ttsServerName" value="###TTS_SERVER_NAME###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsPort">Port d'accès au serveur VaaS :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsPort" name="ttsPort" value="###TTS_PORT###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsUri">Chemin ou URL du programme de vocalisation :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsUri" name="ttsUri" value="###TTS_URI###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsDefaultQueryString">Paramètres VaaS par défaut :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsDefaultQueryString" name="ttsDefaultQueryString" value="###TTS_DEFAULT_QUERY_STRING###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsVoiceParamName">Nom du paramètre VaaS pour la voix :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsVoiceParamName" name="ttsVoiceParamName" value="###TTS_VOICE_PARAM_NAME###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsRateParamName">Nom du paramètre VaaS pour la vitesse :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsRateParamName" name="ttsRateParamName" value="###TTS_RATE_PARAM_NAME###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="ttsTextParamName">Nom du paramètre VaaS pour le contenu à vocaliser :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="ttsTextParamName" name="ttsTextParamName" value="###TTS_TEXT_PARAM_NAME###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Décoder en UTF-8 le contenu à vocaliser&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="utf8DecodeContent1" name="utf8DecodeContent" value="1"###UTF8_DECODE_CONTENT_YES###><label for="utf8DecodeContent1">oui</label>&nbsp;&nbsp;<input type="radio" id="utf8DecodeContent0" name="utf8DecodeContent" value="0"###UTF8_DECODE_CONTENT_NO###><label for="utf8DecodeContent0">non</label></span></div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
+<fieldset>
+<legend>Cache</legend>
+<div class="formLine">
+<div class="leftForm"><label for="cacheExpiry">Durée du cache :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="cacheExpiry" name="cacheExpiry" value="###CACHE_EXPIRY###"></div>
+<div class="clearBoth"></div>
+</div>
+<div class="formLine">
+<div class="leftForm"><label for="pageNoCache">Pages sans cache :&nbsp;<br><span class="info">Expressions régulières.&nbsp;&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="pageNoCache" name="pageNoCache" value="###PAGE_NO_CACHE###">&nbsp;<input type="submit" name="ajouterPagesNoCache" class="add" value="ajouter" title="ajouter la(es) page(s)">
+###PAGES_NO_CACHE_LIST###</div>
+<div class="clearBoth"></div>
+</div>
+</fieldset>
+<div class="clearBoth"></div>
 <div class="center">
 <input type="submit" name="valider" value="Valider" class="submit">
 </div>
 </form>
 <!--/cdlBloc-->
-<!--/###EDIT_FORM###--><!--###GLOSSARY_FORM###--><form action="/admin/glossary/edit-action" method="post" class="glossaryForm">
+<!--/###EDIT_FORM###--><!--###GLOSSARY_FORM###--><form action="###EMBEDDED_URL###/admin/glossary/edit-action" method="post" class="glossaryForm">
 <h1>Gestion du glossaire</h1>
-<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
+<!--cdlNav--><br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
 <div>###MESSAGE_GLOSSARY###</div>
 <table cellspacing="0">
 <tr>
-<th><input type="checkbox" name="deleteAllNewRows" class="deleteAllNewRows">
+<th><label for="deleteAllNewRows" class="hidden">Supprimer toutes les nouvelles lignes : </label><input type="checkbox" id="deleteAllNewRows" name="deleteAllNewRows" class="deleteAllNewRows" title="Supprimer toutes les nouvelles lignes">
 <th>Chaîne
 <th>Remplacement
 <th>Insensible à la casse
@@ -167,10 +247,10 @@ jQuery.noConflict();
 <th>&nbsp;
 
 <tr>
-<td colspan="300"><a href="#" class="deleteLines">Supprimer les lignes</a> | <a href="#" class="addLineLink">Ajouter des lignes :</a> <input type="text" name="rowstoadd" id="rowsToAdd" value="1" size="1" maxlength="2">
+<td colspan="300"><a href="#" class="deleteLines">Supprimer les lignes</a> | <a href="#" class="addLineLink">Ajouter des lignes :</a> <label for="rowsToAdd" class="hidden">Nombre de lignes à ajouter : </label><input type="text" name="rowstoadd" id="rowsToAdd" value="1" size="1" maxlength="2">
 
 <tr>
-<th style="width:1%"><input type="checkbox" name="deleteAllRows" class="deleteAllRows">
+<th style="width:1%"><label for="rowsToAdd" class="hidden">Supprimer toutes les lignes : </label><input type="checkbox" id="deleteAllRows" name="deleteAllRows" class="deleteAllRows" title="Supprimer toutes les lignes">
 <th>Chaîne
 <th>Remplacement
 <th style="width:1%">Insensible<br>à la casse
@@ -179,23 +259,23 @@ jQuery.noConflict();
 <th style="width:1%">&nbsp;
 
 <!--###GLOSSARY_ROWS###--><tr>
-<td><input type="checkbox" name="delete" class="deleteRow">
-<td class="inputTextCell"><input type="text" name="pattern" value="###PATTERN###" class="text">
-<td class="inputTextCell"><input type="text" name="replacement" value="###REPLACEMENT###" class="text">
-<td><select name="icase"><option value="1"###ICASE_YES###>Oui<option value="0"###ICASE_NO###>Non</select>
-<td><select name="sepl"><option value="0"###SEPL_0###>Indifférent<option value="1"###SEPL_1###>Non alphanumérique<option value="2"###SEPL_2###>Non alphabétique</select>
-<td><select name="sepr"><option value="0"###SEPR_0###>Indifférent<option value="1"###SEPR_1###>Non alphanumérique<option value="2"###SEPR_2###>Non alphabétique</select>
-<td><a href="#" class="deleteLineLink"><img src="/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>
+<td><label for="delete###INDEX_ITEM###" class="hidden">Supprimer la ligne : </label><input type="checkbox" id="delete###INDEX_ITEM###" name="delete" class="deleteRow">
+<td class="inputTextCell"><label for="pattern###INDEX_ITEM###" class="hidden">Supprimer la ligne : </label><input type="text" id="pattern###INDEX_ITEM###" name="pattern" value="###PATTERN###" class="text">
+<td class="inputTextCell"><label for="replacement###INDEX_ITEM###" class="hidden">Supprimer la ligne : </label><input type="text" id="replacement###INDEX_ITEM###" name="replacement" value="###REPLACEMENT###" class="text">
+<td><label for="icase###INDEX_ITEM###" class="hidden">Supprimer la ligne : </label><select id="icase###INDEX_ITEM###" name="icase"><option value="1"###ICASE_YES###>Oui<option value="0"###ICASE_NO###>Non</select>
+<td><label for="sepl###INDEX_ITEM###" class="hidden">Supprimer la ligne : </label><select id="sepl###INDEX_ITEM###" name="sepl"><option value="0"###SEPL_0###>Indifférent<option value="1"###SEPL_1###>Non alphanumérique<option value="2"###SEPL_2###>Non alphabétique</select>
+<td><label for="sepr###INDEX_ITEM###" class="hidden">Supprimer la ligne : </label><select id="sepr###INDEX_ITEM###" name="sepr"><option value="0"###SEPR_0###>Indifférent<option value="1"###SEPR_1###>Non alphanumérique<option value="2"###SEPR_2###>Non alphabétique</select>
+<td><a href="#" class="deleteLineLink"><img src="###EMBEDDED_URL###/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>
 
 <!--/###GLOSSARY_ROWS###--></table>
 <div>
 <br><input type="submit" name="save" value="Sauvegarder" class="submit">
 </div>
 </form><!--/###GLOSSARY_FORM###-->
-<!--cdlNav--><br><p><a href="/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
+<!--cdlNav--><br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a><!--/cdlNav-->
 </div>
 <div>
-<br><p>&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
+<br><p>&copy; ###CURRENT_YEAR### &mdash; confort de lecture
 </div>
 <script>
 //<![CDATA[
@@ -221,10 +301,10 @@ jQuery(document).on('change', '.deleteAllNewRows', function () {
 	}
 });
 jQuery(document).on('click', '.addLineLink', function () {
-	var count = jQuery('#rowsToAdd').val();
+	var count = jQuery('#rowsToAdd').val(), i;
 
 	for (i = 0; i < count; i++) {
-		jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
+		jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="###EMBEDDED_URL###/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
 	}
 	return false;
 });
@@ -234,10 +314,10 @@ jQuery(document).on('click', '.deleteLineLink', function () {
 });
 nbChampsErreur = 0;
 jQuery(document).on('click', 'input:submit', function () {
-	var leBoutonValidation = jQuery(this), erreurs = false, premierChampEnErreur = null;
-	jQuery('input[name="pattern"]').each(function (item) {
+	var erreurs = false, premierChampEnErreur = null;
+	jQuery('input[name="pattern"]').each(function () {
 		try {
-			var myRe = new RegExp(jQuery(this).val());
+			new RegExp(jQuery(this).val());
 			jQuery(this).css('background-color', 'white').css('border-color', 'black');
 		} catch (e) {
 			jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');
@@ -254,9 +334,9 @@ jQuery(document).on('click', 'input:submit', function () {
 	return !erreurs;
 });
 
-jQuery('input[name="pattern"]').each(function (item) {
+jQuery('input[name="pattern"]').each(function () {
 	try {
-		var myRe = new RegExp(jQuery(this).val());
+		new RegExp(jQuery(this).val());
 		jQuery(this).css('background-color', 'white').css('border-color', 'black');
 	} catch (e) {
 		jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');

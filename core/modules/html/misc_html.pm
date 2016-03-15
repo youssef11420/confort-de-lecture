@@ -101,17 +101,18 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl)
 	}
 
 	# Si l'URL ne commence pas par "protocole://", il faut rajouter l'URI du chemin $pagePath
-	if ($url !~ m/^[\w\d]+:\/\//si) {
+	if ($url !~ m/^https?:\/\//si) {
 		$url = $siteRootUrl.($url =~ m/^\//si ? "" : $pagePath."/").$url;
 	}
 
 	# Gestion des protocoles (http et https, puis les autres protocoles impossible à gérer)
-	if ($url =~ m/^http(s?):\/\/(.*)$/si) {
+	if ($url =~ m/^http(s)?:\/\/([^\/]+\/*)(.*)$/si) {
 		my $secure = $1;
-		$url = $2;
-		$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}."/le-filtre-https/".$siteId."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}."/le-filtre/".$siteId."/")).$url;
-	} elsif ($url =~ m/^[\w\d]+:\/\//si) {
-		$url = "/sortie/".$defaultLanguage."/".$url;
+		$url = ($embeddedMode ne "" ? "" : $2).$3;
+		$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs/" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f/" : "/le-filtre/".$siteId)."/")).$url;
+	} elsif ($url =~ m/^http(s)?:\/\//si) {
+		my $secure = $1;
+		$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/get/".$url;
 	}
 
 	# Suppression du nom de domaine de la page (qui se trouve déjà dans la balise base)
@@ -119,7 +120,7 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl)
 	if ($url =~ m/^$siteRootUrl\/*/si) {
 		$url =~ s/^$siteRootUrl\/*//sgi;
 	} else {
-		if ($url !~ m/^\/le-filtre(-https)?\/$siteId/si and $url !~ m/^[\w\d]+:\/\//si) {
+		if ($embeddedMode eq "" and $url !~ m/^\/le-filtre(-https)?(\/$siteId)?/si and $url !~ m/^https?:\/\//si) {
 			$url = "../".$url;
 		}
 	}
@@ -139,6 +140,7 @@ sub getCleanedPageContent #($response, $contentType)
 	my ($response, $contentType) = @_;
 
 	# Récupération du contenu de la réponse
+	my $htmlCode;
 	if ($contentType =~ m/charset=utf\-?\d+/si) {
 		$htmlCode = $response->decoded_content;
 	} else {
@@ -231,7 +233,7 @@ sub cleanHtml #($htmlCode)
 	$htmlCode =~ s/(<([\w\d]+))( [^>]*?)>/$1.cleanAttributesValues($3).">"/segi;
 
 	# On supprime le code temporaire _cdl_ (_cdl_XXXX ==> XXXX)
-	$htmlCode =~ s/_cdl_width=((\"|\')(.*?)\2)( |>)/my $endTag = $4;"width=".$1." style=\"width:".$3.($3 =~ m\/\%\/si ? "" : "px")." !important\"".$endTag/segi;
+	$htmlCode =~ s/_cdl_width=((\"|\')(.*?)\2)( |>)/my $endTag = $4;"width=".$1." style='width:".$3.($3 =~ m\/%\/si ? "" : "px")." !important'".$endTag/segi;
 	$htmlCode =~ s/_cdl_(type|value|height|size)=(.*?)( |>)/$1=$2$3/sgi;
 
 	# Ajout du commentaire javascript avant le code HTML au début des scripts
@@ -275,7 +277,7 @@ sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath
 
 	$htmlCode = cleanStyles($htmlCode);
 
-	$headHtmlCode = getHeadContent($htmlCode);
+	my $headHtmlCode = getHeadContent($htmlCode);
 
 	my $allLinks;
 	my $allMetas;
@@ -414,7 +416,7 @@ sub getBodyAttributesInHash #($tagAttributes, $parseJavascript)
 	my $attributesString = "";
 
 	# Construire la liste des attributs qu'on veut garder en chaîne
-	$attributesRegExpString = join("|", @eventListeners);
+	my $attributesRegExpString = join("|", @eventListeners);
 
 	# Récupérer les bons attributs javascript
 	$tagAttributes =~ s/ ($attributesRegExpString)=((\"|\')(.*?)\3)/$attributesString .= " ".($parseJavascript ? parseJavascriptCode($1) : $1)."=".$2;/segi;
@@ -432,9 +434,9 @@ sub getBodyAttributesInHash #($tagAttributes, $parseJavascript)
 # Paramètres:
 #	$htmlCode - code HTML où chercher les attributs de la balise body
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
-sub getBodyAttributes #($htmlCode, $parseJavascript)
+sub getBodyAttributes #($htmlCode)
 {
-	my ($htmlCode, $parseJavascript) = @_;
+	my ($htmlCode) = @_;
 
 	my $attributesString = "";
 
@@ -470,7 +472,7 @@ sub prepareForHighlighting #($htmlCode)
 {
 	my ($htmlCode) = @_;
 
-	$tree = HTML::TreeBuilder->new;
+	my $tree = HTML::TreeBuilder->new;
 	$tree->store_comments(0);
 	$tree->parse($htmlCode);
 	$tree->eof();

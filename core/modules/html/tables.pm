@@ -47,7 +47,9 @@ sub getTableCellHeaders #($tdAttributes, $tdNumber, %theadersHash)
 
 	my @headers = ($tdNumber);
 
-	$tdAttributes =~ s/ (headers)=(\"|\')(.*?)\2/@headers = split(\/\s\/, $3);/segi;
+	if ($tdAttributes =~ m/ (headers)=(\"|\')(.*?)\2/si) {
+		@headers = split(/\s/, $3);
+	}
 
 	# Remplissage du contenu des entêtes de la cellule en fonction leurs disponibilités
 	foreach my $header (@headers) {
@@ -97,7 +99,7 @@ sub parseTableCellsToSubItems #($trHtmlCode, %theadersHash)
 	my $numCell = 0;
 
 	# Détection des balises td et traitement pour afficher les entêtes correspondantes et le contenu
-	my ($tdHeadersContent, $tdNumber) = ("", 0);
+	my $tdHeadersContent = "";
 	$trHtmlCode =~ s/<td( [^>]*?)?>(.*?)(?=(<t(r|h|d)( [^>]*?)?>|$))/
 		$tdHeadersContent = getTableCellHeaders($1, $numCell++, %theadersHash);
 		"<li class=\"cdlTableCell\"".getTableTagId($1).">".($tdHeadersContent ? "<div><strong>".$tdHeadersContent."&nbsp;:<\/strong><\/div> " : "").$2."<\/li>";/segi;

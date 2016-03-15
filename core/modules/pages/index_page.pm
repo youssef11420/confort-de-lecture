@@ -21,11 +21,11 @@
 #	Exécution du script index principal (partie initialisation de base)
 #
 # Paramètres:
-#	
+#
 sub processIndexPage
 {
 	# Création de l'objet CGI
-	my $cgi = new CGI;
+	my $cgi = CGI->new();
 
 	# Création de la session et récupération de l'objet de gestion de la session
 	my $session = createOrGetSession($cgi);
@@ -83,7 +83,9 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 	my $pageContent = "";
 	my $pageContentFile = "";
 	my $pageUriWithoutServerName = $pageUri;
-	$pageUriWithoutServerName =~ s/^([^\/]*)\///sgi;
+	if ($embeddedMode eq "") {
+		$pageUriWithoutServerName =~ s/^([^\/]*)\///sgi;
+	}
 	if ($requestMethod !~ m/post/si and ($pagesNoCache eq "" or $pageUriWithoutServerName !~ m/($pagesNoCache)/si)) {
 		($pageContentFile, $pageContent) = getPageContentFromCache($requestMethod, $pageUrl, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'), $cacheExpiry);
 	}
@@ -96,10 +98,10 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			$pageContent =~ s/(<meta( [^>]*)? http-equiv=(\"|\')Content-Type\3[^>]* content=(\"|\')([^>]*?)\4[^>]*>)/$contentType = $5; $1/segi;
 		}
 		$pageContent = $pageContent."\n<div class=\"cdlPageCached\"></div>";
-		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters);
+		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters);
 	}
 
-	if ($siteDomainNames and $urlToParse =~ m/^https?:\/\/($siteDomainNames)/si) {
+	if (($siteDomainNames and $urlToParse =~ m/^https?:\/\/($siteDomainNames)/si) or ($embeddedMode ne "" and $ENV{'SERVER_NAME'} =~ m/($siteDomainNames)/si)) {
 
 		# On effectue la requête HTTP en récupérant la réponse
 		my $response = sendRequest($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, %requestParameters);
@@ -116,7 +118,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 
 				renderIndexPage($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, %requestParameters);
 			} else {
-				redirectToDocumentPage($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $siteRootUrl, $pageUri, $pagePath, $secure, %requestParameters);
+				redirectToDocumentPage($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 			}
 		} elsif ($response->is_redirect) {
 			redirectToAnotherPage($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure);
@@ -202,19 +204,31 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');
+	my $linkColor = loadFromSession($session, 'linkColor');
 	$backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 	$fontColor = $fontColor ? $fontColor : 'FFFFFF';
+	$linkColor = $linkColor ? $linkColor : $fontColor;
+	my $letterSpacing = loadFromSession($session, 'letterSpacing');
+	my $wordSpacing = loadFromSession($session, 'wordSpacing');
+	my $lineHeight = loadFromSession($session, 'lineHeight');
+	$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+	$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+	$lineHeight = $lineHeight ? $lineHeight : '1';
 
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'B_COLOR', $backgroundColor);
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'F_COLOR', $fontColor);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'L_COLOR', $linkColor);
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'F_SIZE', $fontSize);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'L_SPACING', $letterSpacing);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'W_SPACING', $wordSpacing);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'L_HEIGHT', $lineHeight);
 	if (isBigCursorNotAllowed()) {
 		$fontSize = 1;
 	}
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'F_SIZE_BROWSER_DEPENDS', $fontSize);
 
 	my @now = localtime(time);
-	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	print $session->header('Content-type' => "text/html; charset=utf-8");
 	print $errorPageTemplateString;
@@ -261,6 +275,15 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	# Langue de la page
 	my $pageLanguage = getDocumentLanguage($htmlCode, $siteDefaultLanguage);
 
+	# Gestion des langues
+	if (-e "../modules/dictionary/".$pageLanguage.".pm") {
+		require("../modules/dictionary/".$pageLanguage.".pm");
+	} else {
+		require("../modules/dictionary/fr.pm");
+	}
+
+	$entirePageTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;
+
 	# Récupération de l'URL de base d'où extraire le chemin des liens relatifs de la page
 	my $baseHref = getBaseHref($htmlCode);
 	if ($baseHref) {
@@ -270,7 +293,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	# Mise à jour de l'attribut href de la balise base en mettant l'entête de base de tous les liens http://{CDL_SERVER_NAME}/le-filtre/{SITE_ID}/{SITE_SERVER_NAME}
 	my $siteServerName = $siteRootUrl;
 	$siteServerName =~ s/^https?:\/\///sgi;
-	$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BASE_HREF', "http".$secure."://".$ENV{'SERVER_NAME'}."/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteServerName."/");
+	$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BASE_HREF', "http".$secure."://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f".$secure."/" : "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteServerName."/"));
 
 	$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'LANGUAGE', $pageLanguage);
 
@@ -314,7 +337,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	($htmlCode, $entirePageTemplateString) = parseAllBlocs($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $entirePageTemplateString, $cadreTemplateString);
 
 	# Gestion des attributs du body (listeners javascript et attributs génériques)
-	$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BODY_ATTRIBUTES', $activateJavascript ? getBodyAttributes($htmlCode, $parseJavascript) : "");
+	$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BODY_ATTRIBUTES', $activateJavascript ? getBodyAttributes($htmlCode) : "");
 
 	# Sauvegarder du contenu de la page dans un fichier
 	$urlToParse =~ s/^https?:\/\///segi;
@@ -324,7 +347,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	}
 	my $pageContentFile = savePageContentInCache($requestMethod, $urlToParse, $entirePageTemplateString, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'));
 
-	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters);
+	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters);
 }
 
 # Function: printPage
@@ -332,15 +355,11 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 #
 # Paramètres:
 #	$session - objet session utile pour la gestion des cookies
-#	$pageContent - code HTML de la page finale
 #	$contentType - type de contenu et encodage de la page
-#	$siteId - Identifiant du site parsé
-#	$siteRootUrl - URL racine du site
-#	$pagePath - chemin vers la page en cours de traitement
-#	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
-sub printPage #($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $secure)
+#	$pageContent - code HTML de la page finale
+sub printPage #($pageContent, $pageContentFile, $session)
 {
-	my ($session, $contentType, $pageContent, $siteId, $siteRootUrl, $pagePath, $secure) = @_;
+	my ($session, $contentType, $pageContent) = @_;
 
 	print $session->header('Content-type' => $contentType);
 	print $pageContent;
@@ -361,10 +380,12 @@ sub printPage #($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl,
 #	$contentType - type de contenu et encodage de la page
 #	$enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
+#	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
+#	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
 #	%requestParameters - paramètres passés à la page
-sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters)
+sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters)
 {
-	my ($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, %requestParameters) = @_;
+	my ($pageContent, $pageContentFile, $session, $siteId, $siteRootUrl, $pagePath, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters) = @_;
 
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
@@ -375,7 +396,12 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteR
 	my $pageUriForHtml = $pageUri;
 	$pageUriForHtml =~ s/&amp;/&/sgi;
 	$pageUriForHtml =~ s/&/&amp;/sgi;
-	$pageContent = setValueInTemplateString($pageContent, 'PERSONALIZATION_URL', $language."/".$contrast."/".$siteId."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
+
+	$pageContent = setValueInTemplateString($pageContent, 'ORIGINAL_URL', "http".$secure."://".$pageUri);
+
+	$pageContent = setValueInTemplateString($pageContent, 'EMBEDDED_URL', $embeddedMode);
+
+	$pageContent = setValueInTemplateString($pageContent, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
 
 	my $iconContent;
 	open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
@@ -418,22 +444,34 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $siteR
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');
+	my $linkColor = loadFromSession($session, 'linkColor');
 	$backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 	$fontColor = $fontColor ? $fontColor : 'FFFFFF';
+	$linkColor = $linkColor ? $linkColor : $fontColor;
+	my $letterSpacing = loadFromSession($session, 'letterSpacing');
+	my $wordSpacing = loadFromSession($session, 'wordSpacing');
+	my $lineHeight = loadFromSession($session, 'lineHeight');
+	$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+	$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+	$lineHeight = $lineHeight ? $lineHeight : '1';
 	$pageContent = setValueInTemplateString($pageContent, 'B_COLOR', $backgroundColor);
 	$pageContent = setValueInTemplateString($pageContent, 'F_COLOR', $fontColor);
+	$pageContent = setValueInTemplateString($pageContent, 'L_COLOR', $linkColor);
 	$pageContent = setValueInTemplateString($pageContent, 'F_SIZE', $fontSize);
 	$pageContent = setValueInTemplateString($pageContent, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
+	$pageContent = setValueInTemplateString($pageContent, 'L_SPACING', $letterSpacing);
+	$pageContent = setValueInTemplateString($pageContent, 'W_SPACING', $wordSpacing);
+	$pageContent = setValueInTemplateString($pageContent, 'L_HEIGHT', $lineHeight);
 	if (isBigCursorNotAllowed()) {
 		$fontSize = 1;
 	}
 	$pageContent = setValueInTemplateString($pageContent, 'F_SIZE_BROWSER_DEPENDS', $fontSize);
 
 	my @now = localtime(time);
-	$pageContent = setValueInTemplateString($pageContent, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$pageContent = setValueInTemplateString($pageContent, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	# Initialisation de l'entête et affichage de la page finale
-	printPage($session, $contentType, $pageContent, $siteId, $siteRootUrl, $pagePath, $secure);
+	printPage($session, $contentType, $pageContent);
 	exit;
 }
 

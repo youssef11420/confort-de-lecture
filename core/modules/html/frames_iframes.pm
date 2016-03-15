@@ -23,11 +23,10 @@
 # Paramètres:
 #	$htmlCode - code html où changer l'attribut src
 #	$pagePath - chemin vers la page en cours de traitement
-#	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-sub parseFrameSrc #($htmlCode, $pagePath, $siteId, $siteRootUrl)
+sub parseFrameSrc #($htmlCode, $pagePath, $siteRootUrl)
 {
-	my ($htmlCode, $pagePath, $siteId, $siteRootUrl) = @_;
+	my ($htmlCode, $pagePath, $siteRootUrl) = @_;
 	
 	# Transformation de l'attribut src pour rester sur CDL
 	$htmlCode =~ s/( (src))=(\"|\')(.*?)\3/$1."=".$3.makeUrlAbsolute($4, $siteRootUrl, $pagePath).$3/segi;
@@ -49,10 +48,10 @@ sub parseAllFramesSrc #($htmlCode, $pagePath, $siteId)
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl) = @_;
 
 	# Transformation de l'attribut src dans la balise farme 
-	$htmlCode =~ s/(<frame)( [^>]*?)?(>)/$1.parseFrameSrc($2, $pagePath, $siteId, $siteRootUrl).$3/segi;
+	$htmlCode =~ s/(<frame)( [^>]*?)?(>)/$1.parseFrameSrc($2, $pagePath, $siteRootUrl).$3/segi;
 	
 	# Transformation de l'attribut src dans la balise ifrmae
-	$htmlCode =~ s/(<iframe)( [^>]*?)?(>)/$1.parseFrameSrc($2, $pagePath, $siteId, $siteRootUrl).$3/segi;
+	$htmlCode =~ s/(<iframe)( [^>]*?)?(>)/$1.parseFrameSrc($2, $pagePath, $siteRootUrl).$3/segi;
 	
 	# Retourner le code html après modification des URL de destinations des frames/iframes
 	return $htmlCode;

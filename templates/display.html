@@ -1,38 +1,62 @@
 <!doctype html>
 <html lang="###LANGUAGE###">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>###_DICO_TITLE_PERSONNALISER_AFFICHAGE### &bull; Confort de lecture</title>
-<link href="/favicon.png" rel="shortcut icon">
-<link href="/styles/default.css" rel="stylesheet">
-<link href="/styles/###SITE_ID###/personalization.css" rel="stylesheet">
-<link href="/styles/print.css" rel="stylesheet" media="print">
+<meta name="robots" content="noindex,nofollow">
+<link href="###EMBEDDED_URL###/favicon.png" rel="shortcut icon">
+<link href="###EMBEDDED_URL###/styles/default.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/print.css" rel="stylesheet" media="print">
 <!--[if IE]>
-<link href="/styles/ie.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/ie.css" rel="stylesheet">
 <![endif]-->
 <!--###CONTRAST_CSS###--><style>*{background-color:#FFFFFF;color:#000000;border-color:#000000}</style>
 <!--/###CONTRAST_CSS###--><style>
 .cdlPreview, .cdlPreview *{background-color:####B_COLOR###}
 .cdlPreview, .cdlPreview *{color:####F_COLOR###}
+.cdlPreview a, .cdlPreview a *{color:####L_COLOR###}
 .cdlPreview td div{font-size:###F_SIZE###%}
 </style>
 <body###CONTRAST_BODY_STYLE###>
-<form action="/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden"><input type="hidden" name="cdlbc" value="###B_COLOR###" class="cdlHidden"><input type="hidden" name="cdlfc" value="###F_COLOR###" class="cdlHidden"><input type="hidden" name="cdlfs" value="###F_SIZE_INDEX###" class="cdlHidden">
+<form action="###EMBEDDED_URL###/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden"><input type="hidden" name="cdlbc" value="###B_COLOR###" class="cdlHidden"><input type="hidden" name="cdlfc" value="###F_COLOR###" class="cdlHidden"><input type="hidden" name="cdllc" value="###L_COLOR###" class="cdlHidden"><input type="hidden" name="cdlfs" value="###F_SIZE_INDEX###" class="cdlHidden">
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<div class="cdlChangeDisplayButton"><span title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###_DICO_TITLE_PERSONNALISER_AFFICHAGE###</span></div><!--###AUDIO_ACTIONS###-->
-<div class="cdlChangeAudioButton"><input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="###_DICO_TITLE_PERSONNALISER_AUDIO###" title="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="d"></div>
-<div class="cdlChangeAudioHelpButton"><input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="###_DICO_TITLE_AIDE_AUDIO###" title="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
+<div class="cdlChangeDisplayButton"><span title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/display_picto_3.png" alt="Personnaliser vos param&egrave;tres d'affichage"><svg version="1.1" id="cdlDisplayIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="148.1 211.8 42 42" enable-background="new 148.1 211.8 42 42" xml:space="preserve" width="68px" height="68px" fill="####FLASH_FONT_COLOR###" style="width:68px !important;height:68px !important"><g>
+<path d="M156.6,220.3c-4.6,4.6-4.6,12.2,0,16.8c4,4,10.1,4.6,14.6,1.8l9.1,9.1c1.1,1.1,2.8,1.1,4,0c1.1-1.1,1.1-2.8,0-4l-9.1-9.1
+	c2.8-4.6,2.2-10.7-1.8-14.6C168.8,215.7,161.3,215.7,156.6,220.3z M170.7,234.5c-3.1,3.1-8.3,3.1-11.4,0c-3.1-3.1-3.1-8.3,0-11.4
+	c3.1-3.1,8.3-3.1,11.4,0C173.9,226.2,173.9,231.3,170.7,234.5z"></path>
+<path d="M156.6,220.3L156.6,220.3l2.7,2.7l0,0c3.1-3.1,8.3-3.2,11.4,0c3.1,3.1,3.1,8.3,0,11.4l0,0l13.6,13.6c1.1-1.1,1.1-2.8,0-4
+	l-9.1-9.1c2.8-4.6,2.2-10.7-1.8-14.6C168.8,215.7,161.3,215.7,156.6,220.3z"></path>
+</g></svg></span></div><!--###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###"><svg version="1.1" id="cdlAudioIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="196.5 280.5 42 42" enable-background="new 196.5 280.5 42 42" xml:space="preserve" width="68px" height="68px" fill="####FLASH_FONT_COLOR###" style="width:68px !important;height:68px !important">
+<path d="M201.5,296v11h7.1l8.9,9.1v-29.2l-8.9,9.1L201.5,296L201.5,296z M225.5,301.5c0-3.2-1.8-6-4.4-7.3v14.7
+	C223.7,307.5,225.5,304.7,225.5,301.5z M221.1,285.5v3.7c5.1,1.6,8.9,6.5,8.9,12.3s-3.7,10.7-8.9,12.3v3.7c7.1-1.7,12.4-8.2,12.4-16
+	S228.2,287.2,221.1,285.5z"></path>
+</svg><input type="image" src="###EMBEDDED_URL###/design/images/util_links_pictos/audio_picto_3.png" id="cdlchangeaudio" name="cdlchangeaudio" value="1" alt="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="d"></div>
+<div class="cdlChangeAudioHelpButton"><svg version="1.1" id="cdlAudioHelpIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="89.5 299 42.2 39.4" enable-background="new 89.5 299 42.2 39.4" xml:space="preserve" width="68px" height="68px" fill="####FLASH_FONT_COLOR###" style="width:68px !important;height:68px !important"><polygon points="91.5,313.3 91.5,324.3 98.6,324.3 107.5,333.4 107.5,304.2 98.6,313.4 91.5,313.4 "></polygon>
+<path d="M118.9,303c5.4,0,10.8,2.5,10.8,8.5c0,5.5-6.3,7.6-7.7,9.6c-1,1.5-0.7,3.6-3.5,3.6c-1.8,0-2.7-1.5-2.7-2.8
+	c0-5,7.4-6.2,7.4-10.3c0-2.3-1.5-3.6-4.1-3.6c-5.4,0-3.3,5.6-7.4,5.6c-1.5,0-2.8-0.9-2.8-2.6C109,306.7,113.8,303,118.9,303z
+	 M118.7,327.4c1.9,0,3.5,1.6,3.5,3.5c0,1.9-1.6,3.5-3.5,3.5c-1.9,0-3.5-1.6-3.5-3.5C115.2,329,116.8,327.4,118.7,327.4z"></path>
+</svg><input type="image" src="###EMBEDDED_URL###/design/images/util_links_pictos/help_picto_3.png" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" title="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
 <div class="cdlAudioObjectContent" style="height:68px">
-<object type="application/x-shockwave-flash" data="/design/player/cdl_player_3.swf" width="386" height="78" id="lecteurCDL" style="width:386px !important">
-<param name="movie" value="/design/player/cdl_player_3.swf">
+<div id="containerLecteurAudioCDL"></div>
+<audio controls class="cdlHidden" id="lecteurAudioCDL">
+<object type="application/x-shockwave-flash" data="###EMBEDDED_URL###/design/player/cdl_player_3.swf" width="386" height="78" id="lecteurCDL" style="width:386px !important">
+<param name="movie" value="###EMBEDDED_URL###/design/player/cdl_player_3.swf">
 <param name="wmode" value="transparent">
 <param name="allowscriptaccess" value="always">
 <param name="FlashVars" value="racineAudio=http://###SERVER_NAME###/audio-text/###SITE_ID###&amp;fgcolor=###FLASH_FONT_COLOR###&amp;cursorSize=###FONT_SIZE_BROWSER_DEPENDS###">
 </object>
+</audio>
+<script>
+if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecteurAudioCDL').play) {
+	document.getElementById('containerLecteurAudioCDL').innerHTML = '<ul class="cdlAudioControls"><li><a href="#" class="cdlAudioPrevBloc cdlDisabled" title="###_DICO_BLOC_PRECEDENT###"><span>###_DICO_BLOC_PRECEDENT###</span></a><li><a href="#" class="cdlAudioPrevLine cdlDisabled" title="###_DICO_PHRASE_PRECEDENTE###"><span>###_DICO_PHRASE_PRECEDENTE###</span></a><li><a href="#" class="cdlAudioPlayPause cdlAudioPlay" title="###_DICO_LECTURE_PAUSE###"><span>###_DICO_LECTURE_PAUSE###</span></a><li><a href="#" class="cdlAudioStop cdlDisabled" title="###_DICO_STOPPER_LA_LECTURE###"><span>###_DICO_STOP###</span></a><li><a href="#" class="cdlAudioNextLine" title="###_DICO_PHRASE_SUIVANTE###"><span>###_DICO_PHRASE_SUIVANTE###</span></a><li><a href="#" class="cdlAudioNextBloc" title="###_DICO_BLOC_SUIVANT###"><span>###_DICO_BLOC_SUIVANT###</span></a></ul>';
+}
+</script>
 </div>
 </div>
 </div><!--/###AUDIO###-->
@@ -43,7 +67,7 @@
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">
 <h1 class="cdlSiteLogo"><a href="###SITE_URL###" title="###SITE_TITLE###" target="_blank"><img src="###SITE_LOGO###" alt="###SITE_TITLE###"></a></h1>
-<div class="cdlLogoCdl"><img src="/design/images/logo_confortdelecture.png" alt=""></div>
+<div class="cdlLogoCdl"><img src="###EMBEDDED_URL###/design/images/logo_confortdelecture.png" alt=""></div>
 <div class="cdlClearBoth"></div>
 </div>
 <div class="cdlCadreContainer">
@@ -52,29 +76,36 @@
 <div class="cdlDisplayParametersForm">
 <div class="cdlConfigChoices">
 <div class="cdlConfigChoice"><ul>
-<li id="cdlBackgroundConfigBlack"###B_COLOR_000000###><a id="cdlBackgroundConfigBlackAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlbc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigBlackAnchor"###B_COLOR2_000000###><span>###_DICO_LABEL_FOND_NOIR###</span></a>
-<li id="cdlBackgroundConfigWhite"###B_COLOR_FFFFFF###><a id="cdlBackgroundConfigWhiteAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlbc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigWhiteAnchor"###B_COLOR2_FFFFFF###><span>###_DICO_LABEL_FOND_BLANC###</span></a>
-<li id="cdlBackgroundConfigGreen"###B_COLOR_009900###><a id="cdlBackgroundConfigGreenAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlbc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigGreenAnchor"###B_COLOR2_009900###><span>###_DICO_LABEL_FOND_VERT###</span></a>
-<li id="cdlBackgroundConfigYellow"###B_COLOR_FFFF00###><a id="cdlBackgroundConfigYellowAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlbc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigYellowAnchor"###B_COLOR2_FFFF00###><span>###_DICO_LABEL_FOND_JAUNE###</span></a>
-<li id="cdlBackgroundConfigBlue"###B_COLOR_0000FF###><a id="cdlBackgroundConfigBlueAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlbc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigBlueAnchor"###B_COLOR2_0000FF###><span>###_DICO_LABEL_FOND_BLEU###</span></a>
+<li id="cdlBackgroundConfigBlack"###B_COLOR_000000###><a id="cdlBackgroundConfigBlackAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigBlackAnchor"###B_COLOR2_000000###><span>###_DICO_LABEL_FOND_NOIR###</span></a>
+<li id="cdlBackgroundConfigWhite"###B_COLOR_FFFFFF###><a id="cdlBackgroundConfigWhiteAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigWhiteAnchor"###B_COLOR2_FFFFFF###><span>###_DICO_LABEL_FOND_BLANC###</span></a>
+<li id="cdlBackgroundConfigGreen"###B_COLOR_009900###><a id="cdlBackgroundConfigGreenAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigGreenAnchor"###B_COLOR2_009900###><span>###_DICO_LABEL_FOND_VERT###</span></a>
+<li id="cdlBackgroundConfigYellow"###B_COLOR_FFFF00###><a id="cdlBackgroundConfigYellowAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigYellowAnchor"###B_COLOR2_FFFF00###><span>###_DICO_LABEL_FOND_JAUNE###</span></a>
+<li id="cdlBackgroundConfigBlue"###B_COLOR_0000FF###><a id="cdlBackgroundConfigBlueAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigBlueAnchor"###B_COLOR2_0000FF###><span>###_DICO_LABEL_FOND_BLEU###</span></a>
 </ul><span class="cdlButtons"><input type="submit" name="morebackgroundcolors" value="###_DICO_BOUTON_PLUS_DE_COULEURS###" title="###_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_FOND###"></span><div class="cdlClearBoth"></div></div>
 <div class="cdlConfigChoice"><ul>
-<li id="cdlTextSizeConfig1"###F_SIZE_1###><a id="cdlTextSizeConfig1Anchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfs=1&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig1Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_TRES_PETITE###</span></a>
-<li id="cdlTextSizeConfig2"###F_SIZE_2###><a id="cdlTextSizeConfig2Anchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfs=2&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig2Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_PETITE###</span></a>
-<li id="cdlTextSizeConfig3"###F_SIZE_3###><a id="cdlTextSizeConfig3Anchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfs=3&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig3Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_MOYENNE###</span></a>
-<li id="cdlTextSizeConfig4"###F_SIZE_4###><a id="cdlTextSizeConfig4Anchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfs=4&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig4Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_GRANDE###</span></a>
-<li id="cdlTextSizeConfig5"###F_SIZE_5###><a id="cdlTextSizeConfig5Anchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfs=5&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig5Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
+<li id="cdlTextSizeConfig1"###F_SIZE_1###><a id="cdlTextSizeConfig1Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=1&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig1Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_TRES_PETITE###</span></a>
+<li id="cdlTextSizeConfig2"###F_SIZE_2###><a id="cdlTextSizeConfig2Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=2&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig2Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_PETITE###</span></a>
+<li id="cdlTextSizeConfig3"###F_SIZE_3###><a id="cdlTextSizeConfig3Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=3&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig3Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_MOYENNE###</span></a>
+<li id="cdlTextSizeConfig4"###F_SIZE_4###><a id="cdlTextSizeConfig4Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=4&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig4Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_GRANDE###</span></a>
+<li id="cdlTextSizeConfig5"###F_SIZE_5###><a id="cdlTextSizeConfig5Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=5&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig5Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
 </ul><div class="cdlClearBoth"></div></div>
 <div class="cdlConfigChoice"><ul>
-<li id="cdlFontColorConfigBlack"###F_COLOR_000000###><a id="cdlFontColorConfigBlackAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigBlackAnchor"###F_COLOR2_000000###><span>###_DICO_LABEL_TEXTE_NOIR###</span></a>
-<li id="cdlFontColorConfigWhite"###F_COLOR_FFFFFF###><a id="cdlFontColorConfigWhiteAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigWhiteAnchor"###F_COLOR2_FFFFFF###><span>###_DICO_LABEL_TEXTE_BLANC###</span></a>
-<li id="cdlFontColorConfigGreen"###F_COLOR_009900###><a id="cdlFontColorConfigGreenAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigGreenAnchor"###F_COLOR2_009900###><span>###_DICO_LABEL_TEXTE_VERT###</span></a>
-<li id="cdlFontColorConfigYellow"###F_COLOR_FFFF00###><a id="cdlFontColorConfigYellowAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigYellowAnchor"###F_COLOR2_FFFF00###><span>###_DICO_LABEL_TEXTE_JAUNE###</span></a>
-<li id="cdlFontColorConfigBlue"###F_COLOR_0000FF###><a id="cdlFontColorConfigBlueAnchor" href="/personnalisation?cdlchangedisplay=1&amp;cdlfc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigBlueAnchor"###F_COLOR2_0000FF###><span>###_DICO_LABEL_TEXTE_BLEU###</span></a>
+<li id="cdlFontColorConfigBlack"###F_COLOR_000000###><a id="cdlFontColorConfigBlackAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigBlackAnchor"###F_COLOR2_000000###><span>###_DICO_LABEL_TEXTE_NOIR###</span></a>
+<li id="cdlFontColorConfigWhite"###F_COLOR_FFFFFF###><a id="cdlFontColorConfigWhiteAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigWhiteAnchor"###F_COLOR2_FFFFFF###><span>###_DICO_LABEL_TEXTE_BLANC###</span></a>
+<li id="cdlFontColorConfigGreen"###F_COLOR_009900###><a id="cdlFontColorConfigGreenAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigGreenAnchor"###F_COLOR2_009900###><span>###_DICO_LABEL_TEXTE_VERT###</span></a>
+<li id="cdlFontColorConfigYellow"###F_COLOR_FFFF00###><a id="cdlFontColorConfigYellowAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigYellowAnchor"###F_COLOR2_FFFF00###><span>###_DICO_LABEL_TEXTE_JAUNE###</span></a>
+<li id="cdlFontColorConfigBlue"###F_COLOR_0000FF###><a id="cdlFontColorConfigBlueAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigBlueAnchor"###F_COLOR2_0000FF###><span>###_DICO_LABEL_TEXTE_BLEU###</span></a>
 </ul><span class="cdlButtons"><input type="submit" name="morefontcolors" value="###_DICO_BOUTON_PLUS_DE_COULEURS###" title="###_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_TEXTE###"></span><div class="cdlClearBoth"></div></div>
+<div class="cdlConfigChoice"><ul>
+<li id="cdlLinkColorConfigBlack"###L_COLOR_000000###><a id="cdlLinkColorConfigBlackAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigBlackAnchor"###L_COLOR2_000000###><span>###_DICO_LABEL_LIEN_NOIR###</span></a>
+<li id="cdlLinkColorConfigWhite"###L_COLOR_FFFFFF###><a id="cdlLinkColorConfigWhiteAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigWhiteAnchor"###L_COLOR2_FFFFFF###><span>###_DICO_LABEL_LIEN_BLANC###</span></a>
+<li id="cdlLinkColorConfigGreen"###L_COLOR_009900###><a id="cdlLinkColorConfigGreenAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigGreenAnchor"###L_COLOR2_009900###><span>###_DICO_LABEL_LIEN_VERT###</span></a>
+<li id="cdlLinkColorConfigYellow"###L_COLOR_FFFF00###><a id="cdlLinkColorConfigYellowAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigYellowAnchor"###L_COLOR2_FFFF00###><span>###_DICO_LABEL_LIEN_JAUNE###</span></a>
+<li id="cdlLinkColorConfigBlue"###L_COLOR_0000FF###><a id="cdlLinkColorConfigBlueAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigBlueAnchor"###L_COLOR2_0000FF###><span>###_DICO_LABEL_LIEN_BLEU###</span></a>
+</ul><span class="cdlButtons"><input type="submit" name="morelinkcolors" value="###_DICO_BOUTON_PLUS_DE_COULEURS###" title="###_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_LIEN###"></span><div class="cdlClearBoth"></div></div>
 </div>
 <div class="cdlPreview"><table><tr><td style="border-color:####F_COLOR###"><div>###_DICO_BOUTON_APERCU###</div></table></div>
-<div class="cdlArrow1"><div class="cdlArrow2"><div class="cdlArrow3"></div></div></div>
+<div class="cdlArrow1"><div class="cdlArrow2"><div class="cdlArrow3"><div class="cdlArrow4"></div></div></div></div>
 <div class="cdlClearBoth"></div><br>
 <span class="cdlButtons cdlAdvancedParameters"><input type="submit" name="cdladvancedparameters" value="###_DICO_PARAMETRES_AVANCES###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER###"></span>
@@ -86,7 +117,7 @@
 </div>
 </div>
 <div class="cdlFoot">
-<p class="cdlCopyright">&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
+<p class="cdlCopyright">&copy; ###CURRENT_YEAR### &mdash; confort de lecture
 <div class="cdlClearBoth"></div>
 </div>
 </div></div>
@@ -94,43 +125,56 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script>
 jQuery.noConflict();
-cdlBackgroundColor = '#' + (jQuery('body').hasClass('cdlContrasted') ? 'FFFFFF' : '000000');
-cdlFontColor = '#' + (jQuery('body').hasClass('cdlContrasted') ? '000000' : 'FFFFFF');
+var bodyContrasted = jQuery('body').hasClass('cdlContrasted');
+cdlBackgroundColor = '#' + (bodyContrasted ? 'FFFFFF' : '000000');
+cdlFontColor = '#' + (bodyContrasted ? '000000' : 'FFFFFF');
+cdlLinkColor = cdlFontColor;
+cdlEmbeddedURL = '###EMBEDDED_URL###';
+cdlSiteId = '###SITE_ID###';
 </script>
 <script>
 var backgroundColor = "###B_COLOR###";
 var fontColor = "###F_COLOR###";
+var linkColor = "###L_COLOR###";
 var fontSize = "###F_SIZE_INDEX###";
+jQuery('.cdlPreview a').on('click', function () {return false;});
 jQuery('.cdlConfigChoice li a').bind('click',function () {
+	var cdlPreview = jQuery('.cdlPreview, .cdlPreview *'), cdlPreviewTd = jQuery('.cdlPreview td'), cdlPreviewLink = jQuery('.cdlPreview a, .cdlPreview a *'), cdlPreviewDiv = jQuery('.cdlPreview td div');
 	jQuery('.choiceSelected', jQuery(this).parent().parent()).removeClass('choiceSelected');
 	jQuery('.linkChoiceSelected', jQuery(this).parent().parent()).removeClass('linkChoiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');
 	jQuery(this).addClass('linkChoiceSelected');
 	switch (jQuery(this).parent().attr('id')) {
-	case "cdlBackgroundConfigBlack":jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#000000");backgroundColor="000000";break;
-	case "cdlBackgroundConfigWhite": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#FFFFFF");backgroundColor="FFFFFF";break;
-	case "cdlBackgroundConfigGreen": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#009900");backgroundColor="009900";break;
-	case "cdlBackgroundConfigYellow": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#FFFF00");backgroundColor="FFFF00";break;
-	case "cdlBackgroundConfigBlue": jQuery('.cdlPreview, .cdlPreview *').css('background-color',"#0000FF");backgroundColor="0000FF";break;
-	case "cdlFontColorConfigBlack": jQuery('.cdlPreview, .cdlPreview *').css('color',"#000000");jQuery('.cdlPreview td').css('border-color',"#000000");fontColor="000000";break;
-	case "cdlFontColorConfigWhite": jQuery('.cdlPreview, .cdlPreview *').css('color',"#FFFFFF");jQuery('.cdlPreview td').css('border-color',"#FFFFFF");fontColor="FFFFFF";break;
-	case "cdlFontColorConfigGreen": jQuery('.cdlPreview, .cdlPreview *').css('color',"#009900");jQuery('.cdlPreview td').css('border-color',"#009900");fontColor="009900";break;
-	case "cdlFontColorConfigYellow": jQuery('.cdlPreview, .cdlPreview *').css('color',"#FFFF00");jQuery('.cdlPreview td').css('border-color',"#FFFF00");fontColor="FFFF00";break;
-	case "cdlFontColorConfigBlue": jQuery('.cdlPreview, .cdlPreview *').css('color',"#0000FF");jQuery('.cdlPreview td').css('border-color',"#0000FF");fontColor="0000FF";break;
-	case "cdlTextSizeConfig1": jQuery('.cdlPreview td div').css('font-size',"80%");fontSize="1";break;
-	case "cdlTextSizeConfig2": jQuery('.cdlPreview td div').css('font-size',"115%");fontSize="2";break;
-	case "cdlTextSizeConfig3": jQuery('.cdlPreview td div').css('font-size',"170%");fontSize="3";break;
-	case "cdlTextSizeConfig4": jQuery('.cdlPreview td div').css('font-size',"220%");fontSize="4";break;
-	case "cdlTextSizeConfig5": jQuery('.cdlPreview td div').css('font-size',"300%");fontSize="5";break;
+	case "cdlBackgroundConfigBlack":cdlPreview.css('background-color',"#000000");backgroundColor="000000";break;
+	case "cdlBackgroundConfigWhite": cdlPreview.css('background-color',"#FFFFFF");backgroundColor="FFFFFF";break;
+	case "cdlBackgroundConfigGreen": cdlPreview.css('background-color',"#009900");backgroundColor="009900";break;
+	case "cdlBackgroundConfigYellow": cdlPreview.css('background-color',"#FFFF00");backgroundColor="FFFF00";break;
+	case "cdlBackgroundConfigBlue": cdlPreview.css('background-color',"#0000FF");backgroundColor="0000FF";break;
+	case "cdlFontColorConfigBlack": cdlPreview.css('color',"#000000");cdlPreviewTd.css('border-color',"#000000");fontColor="000000";break;
+	case "cdlFontColorConfigWhite": cdlPreview.css('color',"#FFFFFF");cdlPreviewTd.css('border-color',"#FFFFFF");fontColor="FFFFFF";break;
+	case "cdlFontColorConfigGreen": cdlPreview.css('color',"#009900");cdlPreviewTd.css('border-color',"#009900");fontColor="009900";break;
+	case "cdlFontColorConfigYellow": cdlPreview.css('color',"#FFFF00");cdlPreviewTd.css('border-color',"#FFFF00");fontColor="FFFF00";break;
+	case "cdlFontColorConfigBlue": cdlPreview.css('color',"#0000FF");cdlPreviewTd.css('border-color',"#0000FF");fontColor="0000FF";break;
+	case "cdlLinkColorConfigBlack": cdlPreviewLink.css('color',"#000000");linkColor="000000";break;
+	case "cdlLinkColorConfigWhite": cdlPreviewLink.css('color',"#FFFFFF");linkColor="FFFFFF";break;
+	case "cdlLinkColorConfigGreen": cdlPreviewLink.css('color',"#009900");linkColor="009900";break;
+	case "cdlLinkColorConfigYellow": cdlPreviewLink.css('color',"#FFFF00");linkColor="FFFF00";break;
+	case "cdlLinkColorConfigBlue": cdlPreviewLink.css('color',"#0000FF");linkColor="0000FF";break;
+	case "cdlTextSizeConfig1": cdlPreviewDiv.css('font-size',"90%");fontSize="1";break;
+	case "cdlTextSizeConfig2": cdlPreviewDiv.css('font-size',"115%");fontSize="2";break;
+	case "cdlTextSizeConfig3": cdlPreviewDiv.css('font-size',"170%");fontSize="3";break;
+	case "cdlTextSizeConfig4": cdlPreviewDiv.css('font-size',"220%");fontSize="4";break;
+	case "cdlTextSizeConfig5": cdlPreviewDiv.css('font-size',"300%");fontSize="5";break;
 	default: break;
 	}
 	jQuery('input[name="cdlbc"]').attr('value', backgroundColor);
 	jQuery('input[name="cdlfc"]').attr('value', fontColor);
+	jQuery('input[name="cdllc"]').attr('value', linkColor);
 	jQuery('input[name="cdlfs"]').attr('value', fontSize);
 
 	return false;
 });
 </script>
-<script src="/design/js/jquery/jquery.nicescroll.min.js"></script><!--###JS_AUDIO_FILE_INCLUDE###-->
-<script src="/design/js/cdl/highlight.js"></script><!--/###JS_AUDIO_FILE_INCLUDE###-->
-<script src="/javascript/title_###SITE_ID###_3.js"></script>
+<script src="###EMBEDDED_URL###/design/js/jquery/jquery.nicescroll.min.js"></script><!--###JS_AUDIO_FILE_INCLUDE###-->
+<script src="###EMBEDDED_URL###/design/js/cdl/highlight.js"></script><!--/###JS_AUDIO_FILE_INCLUDE###-->
+<script src="###EMBEDDED_URL###/javascript/title_###SITE_ID###_3.js"></script>

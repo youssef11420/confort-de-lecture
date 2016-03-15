@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use JSON;
 
 use LWP::UserAgent;
@@ -93,5 +95,7 @@ use position;
 
 use lib '../modules/pages';
 use index_page;
+
+$embeddedMode = "";
 
 processIndexPage;

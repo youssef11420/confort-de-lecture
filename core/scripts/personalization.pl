@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use lib '../modules/utils';
 use constants;
 use misc_utils;
@@ -32,7 +34,7 @@ use config_manager;
 
 
 # Création de l'objet CGI
-my $cgi  = new CGI;
+my $cgi  = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -41,8 +43,17 @@ my $session = createOrGetSession($cgi);
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
 
+$embeddedMode = "";
+
 # Récupération des paramètres
-my ($action, $secure, $language, $contrast, $siteId, $urlToParse);
+my ($action, $secure, $secureEmbeddedMode, $language, $contrast, $siteId, $urlToParse);
+$thisCdlUrl =~ s/^(\/cdl)\/personnalisation\-([^\/]*)(\-http(s))?\/([a-z]{2})\/(bn|nb)(\/(.*))?$/
+	$embeddedMode = $1;
+	($action, $secure, $secureEmbeddedMode, $language, $contrast, $siteId, $urlToParse) = ($2, $3, $4, $5, $6, "", $8);
+	editInSession($session, 'language', $language);
+	editInSession($session, 'contrast', $contrast);
+	/segi;
+$thisCdlUrl =~ s/^(\/cdl)\/personnalisation(\/|$)/$embeddedMode = $1;/segi;
 $thisCdlUrl =~ s/^\/personnalisation\-([^\/]*)(\-https)?\/([a-z]{2})\/(bn|nb)\/([^\/]*)(\/(.*))?$/
 	($action, $secure, $language, $contrast, $siteId, $urlToParse) = ($1, $2, $3, $4, $5, $7);
 	editInSession($session, 'language', $language);
@@ -58,17 +69,22 @@ if (-e "../modules/dictionary/".$language.".pm") {
 
 # Détection d'erreurs au niveau de l'identifiant du site
 if (!$siteId) {
-	$siteId = param('cdlid');
-	if (!$siteId) {
-		die "Aucun identifiant de site n'a été renseigné.\n";
-		exit;
+	if ($embeddedMode ne "") {
+		my $siteDomain = $ENV{'SERVER_NAME'};
+		$siteId = getSiteFromDomain($siteDomain);
+	} else {
+		$siteId = param('cdlid');
+		if (!$siteId) {
+			die "Aucun identifiant de site n'a été renseigné dans l'URL.\n";
+			exit;
+		}
 	}
 }
 
 if (!existConfigDirectory($siteId)) {
 	$siteId = param('cdlid');
 	if (!$siteId) {
-		die "Aucun identifiant de site n'a été renseigné.\n";
+		die "Aucun identifiant de site n'a été renseigné en paramètre.\n";
 		exit;
 	}
 	if (!existConfigDirectory($siteId)) {
@@ -109,29 +125,40 @@ my $personalizationTemplateString = "";
 if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."display.html");
 
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
+
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');
+	my $linkColor = loadFromSession($session, 'linkColor');
 	$backgroundColor = $backgroundColor ? $backgroundColor : ($contrast eq "nb" ? "FFFFFF" : "000000");
 	$fontColor = $fontColor ? $fontColor : ($contrast eq "nb" ? "000000" : "FFFFFF");
+	$linkColor = $linkColor ? $linkColor : '';
 
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR_'.$backgroundColor, " class=\"choiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR_'.$fontColor, " class=\"choiceSelected\"");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR_'.$linkColor, " class=\"choiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_'.$fontSize, " class=\"choiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR_[0-9a-fA-F]{6}', "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_[1-5]', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR2_'.$backgroundColor, " class=\"linkChoiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR2_'.$fontColor, " class=\"linkChoiceSelected\"");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR2_'.$linkColor, " class=\"linkChoiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE2_'.$fontSize, " class=\"linkChoiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR2_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR2_[0-9a-fA-F]{6}', "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR2_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE2_[1-5]', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR', $backgroundColor);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR', $fontColor);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR', $linkColor);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_INDEX', $fontSize);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE', $fontSizes{$fontSize});
 } elsif ($action =~ m/^avancee$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."advanced.html");
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	# Chargement des paramètres utilisateur
 	my $positionLocation = loadFromSession($session, 'positionLocation');
@@ -141,6 +168,12 @@ if ($action =~ m/^affichage$/si) {
 	my $displayObjects = loadFromSession($session, 'displayObjects');
 	my $displayApplets = loadFromSession($session, 'displayApplets');
 	my $parseTablesToList = loadFromSession($session, 'parseTablesToList');
+	my $letterSpacing = loadFromSession($session, 'letterSpacing');
+	my $wordSpacing = loadFromSession($session, 'wordSpacing');
+	my $lineHeight = loadFromSession($session, 'lineHeight');
+	$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+	$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+	$lineHeight = $lineHeight ? $lineHeight : '1';
 
 	# Si un paramètre n'est pas renseigné, on met celui par défaut du site
 	if ($positionLocation eq "") {
@@ -188,6 +221,16 @@ if ($action =~ m/^affichage$/si) {
 		$parseTablesToList = getConfig($defaultConfiguration, 'parseTablesToList');
 	}
 
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING2_1', $letterSpacing eq "1" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING2_2', $letterSpacing eq "2" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING2_3', $letterSpacing eq "3" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING2_1', $wordSpacing eq "1" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING2_2', $wordSpacing eq "2" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING2_3', $wordSpacing eq "3" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_1', $lineHeight eq "1" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_2', $lineHeight eq "2" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_3', $lineHeight eq "3" ? " checked" : "");
+
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP', $positionLocation eq "1" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_BOTTOM', $positionLocation eq "1" ? "" : " checked");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'IMG_YES', $displayImages eq "1" ? " checked" : "");
@@ -204,6 +247,8 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'APPLET_NO', $displayApplets eq "1" ? "" : " checked");
 } elsif ($action =~ m/^audio$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."audio.html");
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	my $activateAudio = loadFromSession($session, 'activateAudio');
 	my $voice = loadFromSession($session, 'voice');
@@ -238,22 +283,28 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_SPEED_CHOICES', $speedChoices);
 } elsif ($action =~ m/^aide\-audio$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."audio_help.html");
-} elsif ($action =~ m/^palette\-couleurs\-(b|f)$/si) {
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
+} elsif ($action =~ m/^palette\-couleurs\-(b|f|l)$/si) {
 	my $paramToSet = $1;
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."more_colors.html");
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	my $color;
 	if ($paramToSet eq "b") {
 		$color = loadFromSession($session, 'backgroundColor');
 		$color = $color ? $color : ($contrast eq "nb" ? "FFFFFF" : "000000");
-	} else {
+	} elsif ($paramToSet eq "f") {
 		$color = loadFromSession($session, 'fontColor');
-		$color = $color ? $color : ($contrast eq "nb" ? "000000" : "FFFFFF");
+		$color = $color ? $color : ($contrast eq "nb" ? "FFFFFF" : "000000");
+	} else {
+		$color = loadFromSession($session, 'linkColor');
 	}
 
-	$colorChoices = "";
+	my $colorChoices = "";
 	foreach my $colorItem (@allColors) {
-		$colorChoices .= "<li id=\"cdlColorConfig".$colorItem."\"".($colorItem eq $color ? " class=\"choiceSelected\"" : "")."><a href=\"/personnalisation?more".($paramToSet eq "b" ? "background" : "font")."colors=1&amp;cdl###PARAM_TO_SET###c=".$colorItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlColorConfig".$colorItem."\"><span class=\"cdlTransPix\"><img src=\"/design/images/transparent_pix.png\" alt=\"\" style=\"background-color:#".$colorItem."\"><span class=\"cdlClearBoth\"></span></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_COULEUR### #<span>".$colorItem."</span></span></a>";
+		$colorChoices .= "<li id=\"cdlColorConfig".$colorItem."\"".($colorItem eq $color ? " class=\"choiceSelected\"" : "")."><a href=\"".$embeddedMode."/personnalisation?more".($paramToSet eq "b" ? "background" : ($paramToSet eq "f" ? "font" : "link"))."colors=1&amp;cdl###PARAM_TO_SET###c=".$colorItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlColorConfig".$colorItem."\"><span class=\"cdlTransPix\"><img src=\"".$embeddedMode."/design/images/transparent_pix.png\" alt=\"\" style=\"background-color:#".$colorItem."\"><span class=\"cdlClearBoth\"></span></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_COULEUR### #<span>".$colorItem."</span></span></a>";
 	}
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'COLOR_LIST', $colorChoices);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'PARAM_TO_SET', $paramToSet);
@@ -271,8 +322,20 @@ if ($action =~ m/^affichage$/si) {
 	if (param('cdlfc') ne "") {
 		editInSession($session, 'fontColor', param('cdlfc'));
 	}
+	if (param('cdllc') ne "") {
+		editInSession($session, 'linkColor', param('cdllc'));
+	}
 	if (param('cdlfs') ne "") {
 		editInSession($session, 'fontSize', param('cdlfs'));
+	}
+	if (param('cdlls') ne "") {
+		editInSession($session, 'letterSpacing', param('cdlls'));
+	}
+	if (param('cdlws') ne "") {
+		editInSession($session, 'wordSpacing', param('cdlws'));
+	}
+	if (param('cdllh') ne "") {
+		editInSession($session, 'lineHeight', param('cdllh'));
 	}
 	if (param('cdlariane') ne "") {
 		editInSession($session, 'positionLocation', param('cdlariane'));
@@ -306,7 +369,7 @@ if ($action =~ m/^affichage$/si) {
 	}
 
 	# Envoyer le cookie représentant la session
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+	my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 
 	if ($action =~ m/^audio\-acces\-direct$/si) {
 		if ($enableAudio) {
@@ -316,7 +379,7 @@ if ($action =~ m/^affichage$/si) {
 		}
 
 		# Rediriger vers le script principal (page filtrée)
-		my $redirectUrl = "/le-filtre".$secure."/".$siteId."/".$urlToParse;
+		my $redirectUrl = ($embeddedMode ne "" ? $embeddedMode."/f".$secureEmbeddedMode : "/le-filtre".$secure."/".$siteId)."/".$urlToParse;
 
 		print $cgi->header(-status=>"302 Moved", -location=>$redirectUrl, -cookie=>$cookie);
 		exit;
@@ -326,7 +389,7 @@ if ($action =~ m/^affichage$/si) {
 		editInSession($session, 'activateAudio', "0");
 
 		# Rediriger vers le script principal (page filtrée)
-		my $redirectUrl = "/le-filtre".$secure."/".$siteId."/".$urlToParse;
+		my $redirectUrl = ($embeddedMode ne "" ? $embeddedMode."/f".$secureEmbeddedMode : "/le-filtre".$secure."/".$siteId)."/".$urlToParse;
 
 		print $cgi->header(-status=>"302 Moved", -location=>$redirectUrl, -cookie=>$cookie);
 		exit;
@@ -336,34 +399,38 @@ if ($action =~ m/^affichage$/si) {
 
 	if (param('cdlvalidate') or $action =~ m/^audio\-acces\-direct$/si) {
 		# Rediriger vers le script principal (page filtrée)
-		my $redirectUrl = "/le-filtre".$secure."/".$siteId."/".$urlToParse;
+		my $redirectUrl = ($embeddedMode ne "" ? $embeddedMode."/f".$secureEmbeddedMode : "/le-filtre".$secure."/".$siteId)."/".$urlToParse;
 
 		print $cgi->header(-status=>"302 Moved", -location=>$redirectUrl, -cookie=>$cookie);
 		exit;
 	}
 
 	if (param('cdladvancedparameters')) {
-		print $cgi->header(-status=>"302 Moved", -location=>"/personnalisation-avancee".$secure."/".$language."/".$contrast."/".$siteId."/".$urlToParse, -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-avancee".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
 	if (param('morebackgroundcolors')) {
-		print $cgi->header(-status=>"302 Moved", -location=>"/personnalisation-palette-couleurs-b".$secure."/".$language."/".$contrast."/".$siteId."/".$urlToParse, -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-palette-couleurs-b".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
 	if (param('morefontcolors')) {
-		print $cgi->header(-status=>"302 Moved", -location=>"/personnalisation-palette-couleurs-f".$secure."/".$language."/".$contrast."/".$siteId."/".$urlToParse, -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-palette-couleurs-f".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
+		exit;
+	}
+	if (param('morelinkcolors')) {
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-palette-couleurs-l".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
 	if (param('cdlvalidateadvanced') or param('cdlchangedisplay')) {
-		print $cgi->header(-status=>"302 Moved", -location=>"/personnalisation-affichage".$secure."/".$language."/".$contrast."/".$siteId."/".$urlToParse, -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-affichage".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
 	if (param('cdlchangeaudio')) {
-		print $cgi->header(-status=>"302 Moved", -location=>"/personnalisation-audio".$secure."/".$language."/".$contrast."/".$siteId."/".$urlToParse, -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-audio".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
 	if (param('cdlchangeaudiohelp')) {
-		print $cgi->header(-status=>"302 Moved", -location=>"/personnalisation-aide-audio".$secure."/".$language."/".$contrast."/".$siteId."/".$urlToParse, -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-aide-audio".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
 }
@@ -411,7 +478,7 @@ if (isBigCursorNotAllowed()) {
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
 my @now = localtime(time);
-$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 
 $personalizationTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;

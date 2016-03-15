@@ -84,7 +84,7 @@ sub getLabelsForId #($htmlCode)
 	my %labelsTexts = ();
 
 	# Récupérer chaque label : comme clé la valeur de l'attibut for (ID du champ correspondant), et on associe à la valeur de la clé le contenu de la balise label
-	$htmlCode =~ s/<label( [^>]*)?for=(\"|\')(.*?)\2([^>]*)>\s*(.*?)\s*<\/label>/%labelTagAttributes = getTagAttributes($1." ".$4);$labelsTexts{$3} .= (length($labelTagAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($5)->as_text) ? $labelTagAttributes{'title'} : $5)." ";/segi;
+	$htmlCode =~ s/<label( [^>]*)?for=(\"|\')(.*?)\2([^>]*)>\s*(.*?)\s*<\/label>/my %labelTagAttributes = getTagAttributes($1." ".$4);$labelsTexts{$3} .= (length($labelTagAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($5)->as_text) ? $labelTagAttributes{'title'} : $5)." ";/segi;
 
 	return %labelsTexts;
 }
@@ -121,7 +121,8 @@ sub getIndexUrlParameters
 	my $thisCdlUrl = $ENV{'REQUEST_URI'};
 	$thisCdlUrl =~ s/%20/+/sgi;
 
-	$thisCdlUrl =~ s/^\/le\-filtre(\-https)?\/([^\/]*)(\/(([^\?]*?)(\?.*)?)?)?$/$siteId = urlDecode($2); $pageUri = urlDecode($4); $secure = $1 ? "s" : "";/segi;
+	$thisCdlUrl =~ s/^(\/cdl)\/f(s)?(\/(([^\?]*?)(\?.*)?)?)?$/$embeddedMode = $1; $siteId = ""; $pageUri = urlDecode($4); $secure = $2; $&/segi;
+	$thisCdlUrl =~ s/^\/le\-filtre(\-https)?\/([^\/]*)(\/(([^\?]*?)(\?.*)?)?)?$/$siteId = urlDecode($2); $pageUri = urlDecode($4); $secure = $1 ? "s" : ""; $&/segi;
 
 	return ($siteId, $pageUri, $secure);
 }
@@ -136,17 +137,22 @@ sub verifySiteId #($siteId)
 	my ($siteId) = @_;
 
 	if (!$siteId) {
-		$siteId = param('cdlid');
-		if (!$siteId) {
-			die "Aucun identifiant de site n'a été renseigné.\n";
-			exit;
+		if ($embeddedMode ne "") {
+			my $siteDomain = $ENV{'SERVER_NAME'};
+			$siteId = getSiteFromDomain($siteDomain);
+		} else {
+			$siteId = param('cdlid');
+			if (!$siteId) {
+				die "Aucun identifiant de site n'a été renseigné dans l'URL.\n";
+				exit;
+			}
 		}
 	}
 
 	if (!existConfigDirectory($siteId)) {
 		$siteId = param('cdlid');
 		if (!$siteId) {
-			die "Aucun identifiant de site n'a été renseigné.\n";
+			die "Aucun identifiant de site n'a été renseigné en paramètre.\n";
 			exit;
 		}
 		if (!existConfigDirectory($siteId)) {
@@ -173,10 +179,6 @@ sub getAllConfigs #($session, $siteId)
 
 	# Chargement de la configuration du site
 	my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
-
-	# Récupérer la liste de tous les noms de domaine du site
-	my $siteDomainNamesConfig = getConfig($siteConfiguration, 'siteDomainNames');
-	my @homePageUrisConfig = split(/\t+/, getConfig($siteConfiguration, 'homePageUris'));
 
 	# Chargement des paramètres utilisateur
 	my $positionLocation = loadFromSession($session, 'positionLocation');
@@ -225,7 +227,7 @@ sub getAllConfigs #($session, $siteId)
 	my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
 
 	# Récupérer la liste de tous les noms de domaine du site
-	$siteDomainNames = getConfig($siteConfiguration, 'siteDomainNames');
+	my $siteDomainNames = getConfig($siteConfiguration, 'siteDomainNames');
 	$siteDomainNames =~ s/\s+/\|/sgi;
 
 	my $homePageUri = getConfig($siteConfiguration, 'homePageUris');
@@ -250,20 +252,25 @@ sub buildUrlToParse #($cgi, $session, $pageUri, $secure, $siteDomainNames, $home
 
 	my $urlToParse = $pageUri;
 
-	# Si l'URI est vide (ie. on arrive avec le lien raccorci /le-filtre/siteId/), on redirige vers le filtre avec une URI complète en rajoutant le nom de domaine par défaut du site
-	if (!$urlToParse) {
-		my $redirectUrl = $ENV{'REQUEST_URI'};
-		# Ajout automatique du / à la fin
-		$redirectUrl =~ s/([^\/])$/$1\//sgi;
-		my @siteDomainNamesArray = split(/\|/, $siteDomainNames);
-		$redirectUrl .= $siteDomainNamesArray[0].$homePageUri;
-		my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
-		print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
-		exit;
+	if ($embeddedMode eq "") {
+		# Si l'URI est vide (ie. on arrive avec le lien raccorci /le-filtre/siteId/), on redirige vers le filtre avec une URI complète en rajoutant le nom de domaine par défaut du site
+		if (!$urlToParse) {
+			my $redirectUrl = $ENV{'REQUEST_URI'};
+			# Ajout automatique du / à la fin
+			$redirectUrl =~ s/([^\/])$/$1\//sgi;
+			my @siteDomainNamesArray = split(/\|/, $siteDomainNames);
+			$redirectUrl .= $siteDomainNamesArray[0].$homePageUri;
+			my $cookie = CGI::Cookie-new(-name=>$session->name, -value=>$session->id);
+			print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
+			exit;
+		}
+	} else {
+		$urlToParse =~ s/^\///sgi;
+		$urlToParse = $ENV{'SERVER_NAME'}."/".$urlToParse;
 	}
 
 	# Si l'URL n'est pas absolue on la met en absolue
-	if ($urlToParse !~ m/^[\w\d]+:\/\//si) {
+	if ($urlToParse !~ m/^https?:\/\//si) {
 		$urlToParse = "http".$secure."://".$urlToParse;
 	}
 
@@ -301,19 +308,21 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 		$newSiteId = getSiteFromDomain($siteDomain);
 	}
 
-	$urlToParse =~ s/^https?:\/\///sgi;
+	if ($embeddedMode eq "") {
+		$urlToParse =~ s/^https?:\/\///sgi;
 
-	# Si le site existe, on redirige vers ce script mais avec le bon siteId et la bonne uri
-	if ($newSiteId) {
-		my $redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$newSiteId."/".$urlToParse;
+		# Si le site existe, on redirige vers ce script mais avec le bon siteId et la bonne uri
+		if ($newSiteId) {
+			my $redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$newSiteId."/".$urlToParse;
 
-		if ($requestMethod =~ m/post/si) {
-			$redirectUrl = putParametersInUrl($redirectUrl, %requestParameters);
+			if ($requestMethod =~ m/post/si) {
+				$redirectUrl = putParametersInUrl($redirectUrl, %requestParameters);
+			}
+
+			my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
+			print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
+			exit;
 		}
-
-		my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
-		print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
-		exit;
 	}
 
 	# On redirige vers la page de sortie de CDL vers un autre site
@@ -323,7 +332,7 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 		editInSession($session, 'cdl_post_parameters_to_exit', encode_json(\%requestParameters));
 	}
 
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+	my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 	print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
 }
 
@@ -350,11 +359,11 @@ sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $p
 	$redirectUrl = parseLinkHrefAttribute($redirectUrl, $pagePath, $siteId, $siteRootUrl, $pageUri);
 
 	$siteRootUrl =~ s/^https?:\/\///sgi;
-	if ($redirectUrl !~ m/^\/le\-filtre(\-https)?\/$siteId\//si and $redirectUrl !~ m/^[\w\d]+:\/\//si) {
-		$redirectUrl = "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteRootUrl."/".$redirectUrl;
+	if ($redirectUrl !~ m/^\/(cdl\/fs?|\/le\-filtre(\-https)?\/$siteId)/si and $redirectUrl !~ m/^https?:\/\//si) {
+		$redirectUrl = ($embeddedMode ne "" ? $embeddedMode."/f".$secure : "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteRootUrl)."/".$redirectUrl;
 	}
 
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+	my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 	print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
 }
 
@@ -369,14 +378,11 @@ sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $p
 #	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
 #	$response - objet réponse HTTP d'où l'URL de redirection
 #	$urlToParse - URL du document non HTML
-#	$siteRootUrl - URL racine du site
-#	$pageUri - URI de la page en cours
-#	$pagePath - chemin vers la page en cours de traitement
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
 #	%requestParameters - paramètres à coller à l'URL
-sub redirectToDocumentPage #($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $siteRootUrl, $pageUri, $pagePath, $secure, %requestParameters)
+sub redirectToDocumentPage #($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters)
 {
-	my ($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $siteRootUrl, $pageUri, $pagePath, $secure, %requestParameters) = @_;
+	my ($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters) = @_;
 
 	# On récupère plutôt le type mime à partir de son contenu (les premiers octets du fichier)
 	# pour éviter les informations incomplètes du Content-type du site distant.
@@ -417,14 +423,14 @@ sub redirectToDocumentPage #($cgi, $session, $siteId, $siteDefaultLanguage, $req
 
 	# On redirige vers la page proposition de téléchargement du document
 	$contentType =~ s/(\+)/_/segi;
-	my $redirectUrl = "/document".($secure eq "s" ? "-https" : "")."/".$siteId."/".$contentType."/".lc($requestMethod)."/".$siteDefaultLanguage."/cdl-url/".$urlToParse;
+	my $redirectUrl = $embeddedMode."/document".($secure eq "s" ? "-https" : "")."/".$siteId."/".$contentType."/".lc($requestMethod)."/".$siteDefaultLanguage."/cdl-url/".$urlToParse;
 
 	# Ajout des paramètres éventuels
 	if ($requestMethod =~ m/post/si) {
 		$redirectUrl = putParametersInUrl($redirectUrl, %requestParameters);
 	}
 
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+	my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 	print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
 }
 
@@ -455,14 +461,14 @@ sub redirectToProtectedAccessLogin #($cgi, $session, $siteId, $siteDefaultLangua
 	$urlToParse =~ s/^https?:\/\///segi;
 
 	# On redirige vers la page d'authentification au site
-	my $redirectUrl = "/acces-protege".($secure eq "s" ? "-https" : "")."/".$siteId."/".lc($requestMethod)."/".$siteDefaultLanguage."/cdl-url/".$urlToParse;
+	my $redirectUrl = $embeddedMode."/acces-protege".($secure eq "s" ? "-https" : "")."/".$siteId."/".lc($requestMethod)."/".$siteDefaultLanguage."/cdl-url/".$urlToParse;
 
 	# Ajout des paramètres éventuels
 	if ($requestMethod =~ m/post/si) {
 		$redirectUrl = putParametersInUrl($redirectUrl, %requestParameters);
 	}
 
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+	my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 	print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
 }
 
@@ -690,7 +696,7 @@ sub initRequest #($method, $url, $typeAccept, $referer, %requestParameters)
 	}
 
 	# Création de l'objet requête
-	$request = new HTTP::Request($methodKey => $url);
+	$request = HTTP::Request->new($methodKey => $url);
 	initParametersForRequest($request, $methodKey, %requestParameters);
 
 	# Géneration des headers selon les paramètres mentionnés
@@ -792,6 +798,8 @@ sub getReferer #($url, $siteRootUrl)
 
 	$siteRootUrl =~ s/^https?:\/\///sgi;
 
+	$url =~ s/(([\w\d]+):\/\/$ENV{'SERVER_NAME'})?\/cdl\/f(s)?\/?$/$refererUrl = "http".$3.":\/\/".$ENV{'SERVER_NAME'};/segi;
+	$url =~ s/(([\w\d]+):\/\/$ENV{'SERVER_NAME'})?\/cdl\/f(s)?\/(.*)$/$refererUrl = "http".$3.":\/\/".$ENV{'SERVER_NAME'}."\/".$4;/segi;
 	$url =~ s/(([\w\d]+):\/\/$ENV{'SERVER_NAME'})?\/le\-filtre(-http(s)?)?\/?$/$refererUrl = "http".$4.":\/\/".$siteRootUrl;/segi;
 	$url =~ s/(([\w\d]+):\/\/$ENV{'SERVER_NAME'})?\/le\-filtre(-http(s)?)?\/(.*?)\/(.*)$/$refererUrl = "http".$4.":\/\/".$6;/segi;
 
@@ -838,6 +846,10 @@ sub redirectDownload #($action, $requestMethod, $url, $session, $siteId, %reques
 	# Création de l'agent HTTP
 	my $userAgent = initHTTPAgent;
 
+	my $siteRootUrl;
+	$url =~ s/^(https?:\/\/[^\/]+)$/$siteRootUrl = $1; $1/segi;
+	$url =~ s/^((https?:\/\/[^\/]+)(.*)\/([^\/]*?))/$siteRootUrl = $2; $1/segi;
+
 	# Initialisation de la requête HTTP
 	my $request = initRequest($requestMethod, $url, $cdlAccept, getReferer(param('cdlreferer'), $siteRootUrl), %requestParameters);
 
@@ -860,7 +872,7 @@ sub redirectDownload #($action, $requestMethod, $url, $session, $siteId, %reques
 
 	# On récupère plutôt le type mime à partir de son contenu (les premiers octets du fichier)
 	# pour éviter les informations incomplètes du Content-type du site distant
-	$contentType = getDocumentContentType($documentContent, $session, $siteId);
+	my $contentType = getDocumentContentType($documentContent, $session, $siteId);
 
 	# Si on ne dispose pas du nom de fichier dans Content-Disposition (c'est à dire que c'est un lien direct vers le fichier),
 	# on récupère son nom à partir de l'URL
@@ -914,6 +926,10 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 	# Création de l'agent HTTP
 	my $userAgent = initHTTPAgent;
 
+	my $siteRootUrl;
+	$url =~ s/^(https?:\/\/[^\/]+)$/$siteRootUrl = $1; $1/segi;
+	$url =~ s/^((https?:\/\/[^\/]+)(.*)\/([^\/]*?))/$siteRootUrl = $2; $1/segi;
+
 	# Initialisation de la requête HTTP
 	my $request = initRequest($requestMethod, $url, $cdlAccept, getReferer($ENV{'HTTP_REFERER'}, $siteRootUrl), %requestParameters);
 
@@ -934,7 +950,7 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 		$redirectUrl =~ s/(\?|&)cdlact=(.+?)(&|$)/$1/sgi;
 		$redirectUrl =~ s/(\?|&)$//sgi;
 
-		my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+		my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 		print $cgi->redirect(-status=>"302 Moved", -location=>$redirectUrl."&cdlloginerror=1", -cookie=>$cookie);
 		exit;
 	}
@@ -944,14 +960,18 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 	editInSession($session, 'cdl_'.$siteId.'_realm', $realm);
 
 	# Redirection vers le script principal pour traitement de la page
-	my $redirectUrl = "/le-filtre";
+	my $redirectUrl = $embeddedMode.($embeddedMode ne "" ? "/le-filtre" : "/f");
 	if ($url =~ m/^https:\/\//si) {
-		$redirectUrl .= "-https";
+		$redirectUrl .= ($embeddedMode ne "" ? "" : "-http")."s";
 	}
-	$url =~ s/^https?:\/\///sgi;
-	$redirectUrl .= "/".$siteId."/".putParametersInUrl($url, %requestParameters);
+	if ($embeddedMode ne "") {
+		$url =~ s/^https?:\/\/[^\/]+\///sgi;
+	} else {
+		$url =~ s/^https?:\/\///sgi;
+	}
+	$redirectUrl .= ($embeddedMode ne "" ? "" : "/".$siteId)."/".putParametersInUrl($url, %requestParameters);
 
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
+	my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 	print $cgi->redirect(-status=>"302 Moved", -location=>$redirectUrl, -cookie=>$cookie);
 	exit;
 }
@@ -1013,6 +1033,7 @@ sub sendCookie #($request, $session, $siteId)
 	if ($cookieToSend) {
 		if ($cookieToSend =~ m/\|\#cdl\#\|/si) {
 			my @cookiesToSend = split(/\|\#cdl\#\|/, $cookieToSend);
+			my $cookiesString = "";
 			foreach my $cookie (@cookiesToSend) {
 				$cookie =~ s/(;(.*))?$//sgi;
 				$cookiesString .= $cookie . "; ";
@@ -1033,10 +1054,9 @@ sub sendCookie #($request, $session, $siteId)
 # Paramètres:
 #	$documentContent - URL du document pour lequel on veut connaître le type
 #	$session - objet session utile pour la gestion des cookies
-#	$siteId - identifiant du site en cours de traitement
-sub getDocumentContentType #($documentContent, $session, $siteId)
+sub getDocumentContentType #($documentContent, $session)
 {
-	my ($documentContent, $session, $siteId) = @_;
+	my ($documentContent, $session) = @_;
 
 	my $contentType;
 
@@ -1100,7 +1120,8 @@ sub savePageContentInCache #($requestMethod, $pageUrl, $pageContent, $displayPar
 	my ($requestMethod, $pageUrl, $pageContent, $displayParameters) = @_;
 
 	# Générer en md5 une clé à partir des informations de la page
-	use Digest::SHA1  qw(sha1_hex);
+
+		use Digest::SHA1  qw(sha1_hex);
 	my $cryptedPartOfFileName = Digest::SHA1::sha1_hex($requestMethod."==>".$pageUrl);
 
 	# Sauvegarde du contenu de la page
@@ -1129,7 +1150,7 @@ sub getPageContentFromCache #($requestMethod, $pageUrl, $displayParameters, $cac
 
 	my $pageContent = "";
 	if (-e $cdlContentCachePath.$cryptedPartOfFileName."_".$displayParameters.".html") {
-		$lastModified = (stat $cdlContentCachePath.$cryptedPartOfFileName."_".$displayParameters.".html")[9];
+		my $lastModified = (stat $cdlContentCachePath.$cryptedPartOfFileName."_".$displayParameters.".html")[9];
 		my $lastModifiedExpire = $lastModified+eval($cacheExpiry);
 		my $now = time;
 		if ($lastModifiedExpire > $now) {

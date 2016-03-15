@@ -1,28 +1,37 @@
 <!doctype html>
 <html lang="###LANGUAGE###">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Acc&egrave;s &agrave; une page prot&eacute;g&eacute;e &bull; Confort de lecture</title>
-<link href="/favicon.png" rel="shortcut icon">
-<link href="/styles/default.css" rel="stylesheet">
-<link href="/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###F_SIZE###.css" rel="stylesheet">
-<link href="/styles/print.css" rel="stylesheet" media="print">
+<meta name="robots" content="noindex,nofollow">
+<link href="###EMBEDDED_URL###/favicon.png" rel="shortcut icon">
+<link href="###EMBEDDED_URL###/styles/default.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###L_COLOR###_###F_SIZE###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/print.css" rel="stylesheet" media="print">
 <!--[if IE]>
-<link href="/styles/ie.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/ie.css" rel="stylesheet">
 <![endif]--><!--###AUDIO###-->
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<!-- <a href="/audio-protected/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3" title="T&eacute;l&eacute;charger la page en MP3"></a> -->
+<!-- <a href="###EMBEDDED_URL###/audio-protected/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3" title="T&eacute;l&eacute;charger la page en MP3"></a> -->
 </div>
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
 <div class="cdlAudioObjectContent" style="height:###DIV_MP3_PLAYER_HEIGHT###px">
-<object type="application/x-shockwave-flash" data="/design/player/cdl_player_###F_SIZE###.swf" width="###MP3_PLAYER_WIDTH###" height="###MP3_PLAYER_HEIGHT###" id="lecteurCDL" style="width:###MP3_PLAYER_WIDTH###px !important">
-<param name="movie" value="/design/player/cdl_player_###F_SIZE###.swf">
+<div id="containerLecteurAudioCDL"></div>
+<audio controls src="###EMBEDDED_URL###/audio-protected/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlHidden" id="lecteurAudioCDL">
+<object type="application/x-shockwave-flash" data="###EMBEDDED_URL###/design/player/cdl_player_###F_SIZE###.swf" width="###MP3_PLAYER_WIDTH###" height="###MP3_PLAYER_HEIGHT###" id="lecteurCDL" style="width:###MP3_PLAYER_WIDTH###px !important">
+<param name="movie" value="###EMBEDDED_URL###/design/player/cdl_player_###F_SIZE###.swf">
 <param name="wmode" value="transparent">
 <param name="allowscriptaccess" value="always">
 <param name="FlashVars" value="racineAudio=http://###SERVER_NAME###/audio-text/###SITE_ID###&amp;fgcolor=###F_COLOR###&amp;cursorSize=###F_SIZE_BROWSER_DEPENDS###&amp;mp3=http://###SERVER_NAME###/audio-protected/###CONTENT_TO_READ_WITH_ACAPELA###">
 </object>
+</audio>
+<script>
+if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecteurAudioCDL').play) {
+	document.getElementById('containerLecteurAudioCDL').innerHTML = '<ul class="cdlAudioControls"><li><a href="#" class="cdlAudioPrevBloc cdlDisabled" title="###_DICO_BLOC_PRECEDENT###"><span>###_DICO_BLOC_PRECEDENT###</span></a><li><a href="#" class="cdlAudioPrevLine cdlDisabled" title="###_DICO_PHRASE_PRECEDENTE###"><span>###_DICO_PHRASE_PRECEDENTE###</span></a><li><a href="#" class="cdlAudioPlayPause cdlAudioPlay" title="###_DICO_LECTURE_PAUSE###"><span>###_DICO_LECTURE_PAUSE###</span></a><li><a href="#" class="cdlAudioStop cdlDisabled" title="###_DICO_STOPPER_LA_LECTURE###"><span>###_DICO_STOP###</span></a><li><a href="#" class="cdlAudioNextLine" title="###_DICO_PHRASE_SUIVANTE###"><span>###_DICO_PHRASE_SUIVANTE###</span></a><li><a href="#" class="cdlAudioNextBloc" title="###_DICO_BLOC_SUIVANT###"><span>###_DICO_BLOC_SUIVANT###</span></a></ul>';
+}
+</script>
 </div>
 </div>
 </div>
@@ -54,7 +63,7 @@
 </div>
 </div>
 <div class="cdlFoot">
-<p class="cdlCopyright">&copy; ###ANNEE_COURANTE### &mdash; confort de lecture
+<p class="cdlCopyright">&copy; ###CURRENT_YEAR### &mdash; confort de lecture
 <div class="cdlClearBoth"></div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -62,9 +71,12 @@
 jQuery.noConflict();
 cdlBackgroundColor = '####B_COLOR###';
 cdlFontColor = '####F_COLOR###';
+cdlLinkColor = '####L_COLOR###';
+cdlEmbeddedURL = '###EMBEDDED_URL###';
+cdlSiteId = '###SITE_ID###';
 </script>
-<script src="/design/js/jquery/jquery.nicescroll.min.js"></script>
-<!--###JS_AUDIO_FILE_INCLUDE###--><script src="/javascript/highlight.js"></script>
+<script src="###EMBEDDED_URL###/design/js/jquery/jquery.nicescroll.min.js"></script>
+<!--###JS_AUDIO_FILE_INCLUDE###--><script src="###EMBEDDED_URL###/javascript/highlight.js"></script>
 <script>
 jQuery(window).bind('load', function() {
 	if (parentMovie("lecteurCDL")) {
@@ -75,4 +87,4 @@ jQuery(window).bind('load', function() {
 	}
 });
 </script>
-<!--/###JS_AUDIO_FILE_INCLUDE###--><script src="/javascript/title_###SITE_ID###_###F_SIZE###.js"></script>
+<!--/###JS_AUDIO_FILE_INCLUDE###--><script src="###EMBEDDED_URL###/javascript/title_###SITE_ID###_###F_SIZE###.js"></script>

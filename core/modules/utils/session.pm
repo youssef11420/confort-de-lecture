@@ -28,7 +28,7 @@ sub createOrGetSession #($cgi)
 
 	my $sid = $cgi->cookie('CGISESSID');
 
-	my $session = new CGI::Session("driver:File", $sid, {Directory=>$cdlSessionCachePath});
+	my $session = CGI::Session->new("driver:File", $sid, {Directory=>$cdlSessionCachePath});
 
 	$session->expires("+20y");
 

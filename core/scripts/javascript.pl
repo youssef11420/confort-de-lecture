@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use LWP::UserAgent;
 
 use lib '../modules/utils';
@@ -41,12 +43,15 @@ use javascript;
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
 
+$embeddedMode = "";
+
 # Extraction des différents paramètres dans l'URL réécrite
 my ($secure, $siteId, $urlToParse);
-$thisCdlUrl =~ s/^(\/javascript(\-https)?\/([^\/]*)\/([^\?]*))/
-	$secure = $2 ? "s" : "";
-	$siteId = $3;
-	$urlToParse = $4;
+$thisCdlUrl =~ s/^((\/cdl)?\/javascript(\-http(s))?\/([^\/]*)\/([^\?]*))/
+	$embeddedMode = $2;
+	$secure = $4;
+	$siteId = $5;
+	$urlToParse = $6;
 	$1/segi;
 
 # Détection d'erreurs au niveau de l'identifiant du site
@@ -83,7 +88,7 @@ $urlToParse =~ s/^((https?:\/\/[^\/]+)(.*?)(\/([^\/]*))?)/$siteRootUrl = $2; $pa
 print "Content-type: text/javascript\n\n";
 
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -112,7 +117,7 @@ my $response = getResponse($userAgent, $request);
 putCookieInSession($response, $session, $siteId);
 
 # Récupération du type d'encodage des caractères reçus dans la réponse HTTP
-$contentType = $response->header('Content-type');
+my $contentType = $response->header('Content-type');
 
 # Si le code retour est OK (200) on traite le code javascript
 if ($response->code eq "200" and $contentType =~ m/javascript/si) {

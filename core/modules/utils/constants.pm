@@ -31,7 +31,8 @@ $cdlAccept = "*/*";
 
 # String: $cdlRootPath
 # Le chemin physique vers la racine du site
-$cdlRootPath = $ENV{'DOCUMENT_ROOT'};
+
+$cdlRootPath = cwd() . "/../..";
 
 # String: $cdlTemplatesPath
 # Le chemin à partir de la racine vers le répertoire contenant les templates XHTML et CSS
@@ -80,6 +81,18 @@ $agentNameToSend = 'Confort de lecture [Lnet - aYaline]';
 # Hash: %fontSizes
 # La liste des tailles de police
 %fontSizes = ('1' => '90', '2' => '115', '3' => '170', '4' => '220', '5' => '300');
+
+# Hash: %letterSpacings
+# La liste des espacements de lettres
+%letterSpacings = ('1' => '0', '2' => '.2em', '3' => '.5em');
+
+# Hash: %wordSpacings
+# La liste des espacements de mots
+%wordSpacings = ('1' => '0', '2' => '.4em', '3' => '.8em');
+
+# Hash: %lineHeights
+# La liste des hauteurs de ligne de texte
+%lineHeights = ('1' => 'normal', '2' => '2', '3' => '2.5');
 
 # Hash: %cursorSizes
 # La liste des tailles des curseurs

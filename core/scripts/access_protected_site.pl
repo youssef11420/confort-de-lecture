@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use LWP::UserAgent;
 
 use lib '../modules/utils';
@@ -40,15 +42,23 @@ use misc_html;
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
 
+$embeddedMode = "";
+
 # Extraction des différents paramètres dans l'URL réécrite
-my ($action, $siteId, $contentType, $requestMethod, $defaultLanguage, $urlToParse, $secure);
-$thisCdlUrl =~ s/^(\/acces\-protege(\-https)?\/([^\/]*)\/([^\/]*)\/([^\/]*)\/cdl\-url\/([^\?]*))/
-	$secure = $2 ? "s" : "";
-	$siteId = $3;
-	$requestMethod = $4;
-	$defaultLanguage = $5;
-	$urlToParse = $6;
+my ($siteId, $requestMethod, $defaultLanguage, $urlToParse, $secure);
+$thisCdlUrl =~ s/^((\/cdl)?\/acces\-protege(\-http(s))?\/([^\/]*)\/([^\/]*)\/([^\/]*)\/cdl\-url\/([^\?]*))/
+	$embeddedMode = $2;
+	$secure = $4;
+	$siteId = $5;
+	$requestMethod = $6;
+	$defaultLanguage = $7;
+	$urlToParse = $8;
 	$1/segi;
+
+if (!$siteId and $embeddedMode ne "") {
+	my $siteDomain = $ENV{'SERVER_NAME'};
+	$siteId = getSiteFromDomain($siteDomain);
+}
 
 # Détection d'erreurs au niveau de l'identifiant du site
 if (!$siteId) {
@@ -68,7 +78,7 @@ if ($activateAudio eq "") {
 }
 
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -105,7 +115,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	print $session->header('Content-type' => "text/html; charset=UTF-8");
 
 	# Chargement de la template principale de la page de document
-	$protectedPageTemplateString = loadConfig($cdlTemplatesPath."access_protected_login_form.html");
+	my $protectedPageTemplateString = loadConfig($cdlTemplatesPath."access_protected_login_form.html");
 
 	# Mettre les bonnes valeurs à la place des marqueurs dans le chaîne template
 
@@ -170,19 +180,31 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');
+	my $linkColor = loadFromSession($session, 'linkColor');
 	$backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 	$fontColor = $fontColor ? $fontColor : 'FFFFFF';
+	$linkColor = $linkColor ? $linkColor : $fontColor;
+	my $letterSpacing = loadFromSession($session, 'letterSpacing');
+	my $wordSpacing = loadFromSession($session, 'wordSpacing');
+	my $lineHeight = loadFromSession($session, 'lineHeight');
+	$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+	$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+	$lineHeight = $lineHeight ? $lineHeight : '1';
 
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'B_COLOR', $backgroundColor);
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'F_COLOR', $fontColor);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'L_COLOR', $linkColor);
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'F_SIZE', $fontSize);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'L_SPACING', $letterSpacing);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'W_SPACING', $wordSpacing);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'L_HEIGHT', $lineHeight);
 	if (isBigCursorNotAllowed()) {
 		$fontSize = 1;
 	}
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
 	my @now = localtime(time);
-	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'ANNEE_COURANTE', 1900 + $now[5]);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);
 
 	print $protectedPageTemplateString;
 }

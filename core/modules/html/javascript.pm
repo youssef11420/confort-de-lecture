@@ -31,7 +31,7 @@ sub parseEventListenersAttributes  #($tagAttributes, $siteId, $pagePath, $siteRo
 
 	# Génération de la chaîne des choix pour l'expression régulière :
 	# onclick|onunload|onload|onmouseover|onmouseout|onfocus|onblur|onchange|onselect|onsubmit ...
-	$eventListenersRegExpString = join("|", @eventListeners);
+	my $eventListenersRegExpString = join("|", @eventListeners);
 
 	$tagAttributes =~ s/ ($eventListenersRegExpString)=(\"|\')(.*?)\2/" ".$1."=".$2.parseJavascriptCode($3, $siteId, $pagePath, $siteRootUrl, 1).$2/segi;
 
@@ -56,7 +56,7 @@ sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript
 	if ($parseJavascript) {
 		$htmlCode =~ s/(<script( [^>]*)? )src=(\"|\')(.*?)\3([^>]*?>)/
 			my ($isHttps, $jsUrl) = makeUrlAbsoluteWithoutProtocol($4, $siteRootUrl, $pagePath);
-			$1."src=".$3."\/javascript".$isHttps."\/".$siteId."\/".makeUrlAbsoluteWithoutProtocol($4, $siteRootUrl, $pagePath).$3.$5/segi;
+			$1."src=".$3.$embeddedMode."\/javascript".$isHttps."\/".$siteId."\/".$jsUrl.$3.$5/segi;
 	} else {
 		$htmlCode =~ s/(<script( [^>]*)? )src=(\"|\')(.*?)\3(.*?>)/
 			$1."src=".$3.makeUrlAbsolute($4, $siteRootUrl, $pagePath).$3.$5/segi;
@@ -90,7 +90,7 @@ sub cleanEventListenersAttributes #($tagAttributes)
 
 	# Génération de la chaîne des choix pour l'expression régulière :
 	# onclick|onunload|onload|onmouseover|onmouseout|onfocus|onblur|onchange|onselect|onsubmit ...
-	$eventListenersRegExpString = join("|", @eventListeners);
+	my $eventListenersRegExpString = join("|", @eventListeners);
 
 	# Suppression des attributs "event listeners" javascript
 	$tagAttributes =~ s/ ($eventListenersRegExpString)=(\"|\')(.*?)\2//sgi;
@@ -187,25 +187,27 @@ sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAt
 	$jsCode =~ s/\.style\.(position|display|visibility|zIndex)\s*=\s*/._cdl_style.$1=/sgi;
 	$jsCode =~ s/(\.style\.)[\w\d]+(\s*=\s*)/$1cdlFakeStyle$2/sgi;
 	$jsCode =~ s/\.css\s*(\(\s*[^,]*?\s*\))/._cdl_css$1/sgi;
-	$jsCode =~ s/\.css\s*\(\s*(\"|\'|&\#39;)(position|display|visibility|z\-index|)\1\s*,\s*(.*?)\s*\)/._cdl_css($1$2$1,$3)/sgi;
+	$jsCode =~ s/\.css\s*\(\s*(\"|\'|&\#39;)(position|display|visibility|z\-index)\1\s*,\s*(.*?)\s*\)/._cdl_css($1$2$1,$3)/sgi;
 	$jsCode =~ s/(\.css\s*\(\s*)(.*?)(\s*,\s*.*?\s*\))/$1cdl-fake-style$2/sgi;
 	$jsCode =~ s/_cdl_(css|style)/$1/sgi;
 
 	# Le nom de domaine en cours
-	my $currentServerName;
-	$siteRootUrl =~ s/^(https?:\/\/(.*))$/$currentServerName = $2;$1/segi;
+	my $currentServerName = "";
+	if ($embeddedMode eq "") {
+		$siteRootUrl =~ s/^(https?:\/\/(.*))$/$currentServerName = "\/".$2;$1/segi;
+	}
 
 	# Transformer l'URL dans l'instruction de redirection pour passer par le script principal
-	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*(\"|\'|&\#39;)(.*?)\4/$1."=".$4.cleanJavascriptRedirectUrl("\/le\-filtre\/".$siteId."\/".$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)).$4/segi;
-	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*([\w\d_]+)\s*/$1."=".generateJavascriptForCompletingPageVariable("\/le\-filtre\/".$siteId."\/", $currentServerName, $4, $isInAttribute)/segi;
+	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*(\"|\'|&\#39;)(.*?)\4/$1."=".$4.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)).$4/segi;
+	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*([\w\d_]+)\s*/$1."=".generateJavascriptForCompletingPageVariable(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId), $currentServerName, $4, $isInAttribute)/segi;
 
 	# Transformer l'URL dans l'instruction d'ouverture dans une nouvelle fenêtre pour passer par le script principal
-	$jsCode =~ s/(window\.open\s*\()\s*(\"|\'|&\#39;)(.*?)\2(\s*(,|\)))/$1.$2.cleanJavascriptRedirectUrl("\/le\-filtre\/".$siteId."\/".$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl)).$2.$4/segi;
-	$jsCode =~ s/(window\.open\s*\()\s*([\w\d_]+)(\s*(,|\)))/$1.generateJavascriptForCompletingPageVariable("\/le\-filtre\/".$siteId."\/", $currentServerName, $2, $isInAttribute).$3/segi;
+	$jsCode =~ s/(window\.open\s*\()\s*(\"|\'|&\#39;)(.*?)\2(\s*(,|\)))/$1.$2.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl)).$2.$4/segi;
+	$jsCode =~ s/(window\.open\s*\()\s*([\w\d_]+)(\s*(,|\)))/$1.generateJavascriptForCompletingPageVariable(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId), $currentServerName, $2, $isInAttribute).$3/segi;
 
-	$jsCode =~ s/(\.autocomplete)\s*\(\s*(\"|\'|&\#39;)(.*?)\2/$1."\(".$2.cleanJavascriptRedirectUrl("\/le\-filtre-pour-ajax\/".$siteId."\/".$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl)).$2/segi;
+	$jsCode =~ s/(\.autocomplete)\s*\(\s*(\"|\'|&\#39;)(.*?)\2/$1."\(".$2.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl)).$2/segi;
 
-	$jsCode =~ s/((^|\s)(url|progress|review|saveMethod|failure)\s*:\s*)(\"|\'|&\#39;)(.*?)\4/$1.$4.cleanJavascriptRedirectUrl("\/le\-filtre-pour-ajax\/".$siteId."\/".$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)).$4/segi;
+	$jsCode =~ s/((^|\s)(url|progress|review|saveMethod|failure)\s*:\s*)(\"|\'|&\#39;)(.*?)\4/$1.$4.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)).$4/segi;
 
 	# Retourner le code javascript sans les instructions de styles et avec les URLs de redirection parsées
 	return $jsCode;

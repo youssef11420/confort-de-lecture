@@ -1,4 +1,4 @@
-*{background-color:####BACKGROUND_COLOR###;color:####FONT_COLOR###;border-color:####FONT_COLOR###;cursor:url(/design/cursors/arrow_cursor_###FONT_SIZE_INDEX###.cur), default}
+*{background-color:####BACKGROUND_COLOR###;color:####FONT_COLOR###;border-color:####FONT_COLOR###;letter-spacing:###LETTER_SPACING###;word-spacing:###WORD_SPACING###;line-height:###LINE_HEIGHT###;cursor:url(###EMBEDDED_URL###/design/cursors/arrow_cursor_###FONT_SIZE_INDEX###.cur), default}
 body{font-size:###FONT_SIZE###%}
 abbr,acronym{border-bottom-color:####FONT_COLOR###}
 fieldset,button,.cdlButtons input{border-color:####FONT_COLOR###}
@@ -15,11 +15,12 @@ input.cdlInputText:focus:-ms-input-placeholder,.cdlInputText input:focus:-ms-inp
 textarea{border-color:####FONT_COLOR###}
 table{border-color:####FONT_COLOR###}
 th,td{border-color:####FONT_COLOR###}
-a{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
-a *{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
-.cdlButtons input{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
-button,button *{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
-.cdlUtilLinks input{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+.cdlCadre a,.cdlCadre a *{color:####LINK_COLOR###;border-color:####LINK_COLOR###}
+a{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+.cdlButtons input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
+.cdlUtilLinks input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.cur), pointer}
 .cdlAudioObject{border-color:####FONT_COLOR###}
 .cdlCadre{border-color:####FONT_COLOR###}
 .cdlCadre hr{background-color:####FONT_COLOR###}
@@ -27,11 +28,21 @@ button,button *{cursor:url(/design/cursors/pointer_cursor_###FONT_SIZE_INDEX###.
 .cdlInversedColor *{background-color:####FONT_COLOR### !important;color:####BACKGROUND_COLOR### !important;border-color:####BACKGROUND_COLOR### !important}
 .cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{margin-top:10px;padding-top:###PAGE_MARGIN_TOP###px !important}
 :root .cdlInput_radio,:root .cdlInput_checkbox{border-color:####FONT_COLOR###;border-width:###INPUT_BORDER###px;width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px;margin-left:-###INPUT_SIZE###px}
-:root .cdlInput_radio,:root .cdlInput_checkbox,:root .cdlInput_radio strong,:root .cdlInput_checkbox strong{border-radius:###INPUT_SIZE###px;-moz-border-radius:###INPUT_SIZE###px;-WebKit-border-radius:###INPUT_SIZE###px;-khtml-border-radius:###INPUT_SIZE###px}
-:root .cdlInput_radio strong,:root .cdlInput_checkbox strong{border-color:####BACKGROUND_COLOR###}
+:root .cdlInput_radio,:root .cdlInput_checkbox,:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{border-radius:###INPUT_SIZE###px;-moz-border-radius:###INPUT_SIZE###px;-WebKit-border-radius:###INPUT_SIZE###px;-khtml-border-radius:###INPUT_SIZE###px}
+:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{border-color:####BACKGROUND_COLOR###}
 :root .cdlInput_checkbox{border-radius:###INPUT_BORDER###px;-moz-border-radius:###INPUT_BORDER###px;-WebKit-border-radius:###INPUT_BORDER###px;-khtml-border-radius:###INPUT_BORDER###px}
-:root .cdlInput_checkbox strong{border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
-:root input[type="radio"]:checked + .cdlInput_radio strong,:root input[type="checkbox"]:checked + .cdlInput_checkbox strong{background-color:####FONT_COLOR###}
+:root .cdlInput_checkbox:after{border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
+:root input[type="radio"]:checked + .cdlInput_radio:after{background-color:####FONT_COLOR###}
 :root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px}
+.cdlSelectInput select{right:-###SELECT_DOUBLE_ARROW_SIZE###px;margin-left:-###SELECT_DOUBLE_ARROW_SIZE###px}
 .cdlSelectInput span{background-color:####BACKGROUND_COLOR###}
-.cdlSelectInput span:after{border-top-color:####FONT_COLOR###}
+.cdlSelectInput span:after{border-top-color:####FONT_COLOR###;border-width:###SELECT_ARROW_SIZE###px ###SELECT_ARROW_SIZE###px 0;margin:-###SELECT_HALF_ARROW_SIZE###px ###SELECT_HALF_ARROW_SIZE###px 0 0}
+.cdlAudioControls li:after{background-color:####FONT_COLOR###}
+.cdlAudioControls li a{width:###INPUT_SIZE###px;height:###INPUT_SIZE###px}
+.cdlAudioPrevBloc:before,.cdlAudioPrevBloc:after{border-width:###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px 0;border-right-color:####FONT_COLOR###}
+.cdlAudioPrevLine{border-left-width:###INPUT_BORDER###px}
+.cdlAudioPrevLine:after{border-width:###INPUT_HALF_SIZE###px ###INPUT_SIZE###px ###INPUT_HALF_SIZE###px 0;border-right-color:####FONT_COLOR###}
+.cdlAudioPlay:after,.cdlAudioNextLine:after{border-width:###INPUT_HALF_SIZE###px 0 ###INPUT_HALF_SIZE###px ###INPUT_SIZE###px;border-left-color:####FONT_COLOR###}
+.cdlAudioStop,.cdlAudioPause:before,.cdlAudioPause:after{background-color:####FONT_COLOR###}
+.cdlAudioNextBloc:before,.cdlAudioNextBloc:after{border-width:###INPUT_HALF_SIZE###px 0 ###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px;border-left-color:####FONT_COLOR###}
+.cdlAudioNextLine{border-right-width:###INPUT_BORDER###px}

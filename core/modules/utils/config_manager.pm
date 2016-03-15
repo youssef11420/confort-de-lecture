@@ -62,6 +62,24 @@ sub createSiteConfig #($siteId)
 	$configString .= "siteLabel = \n";
 	$configString .= "defaultLanguage = \n";
 	$configString .= "logo = \n";
+	$configString .= "\n";
+	$configString .= "[Audio]\n";
+	$configString .= "enableAudio = \n";
+	$configString .= "voiceChoice = \n";
+	$configString .= "ttsMode = \n";
+	$configString .= "ttsServerName = \n";
+	$configString .= "ttsPort = \n";
+	$configString .= "ttsUri = \n";
+	$configString .= "ttsDefaultQueryString = \n";
+	$configString .= "ttsVoiceParamName = \n";
+	$configString .= "ttsRateParamName = \n";
+	$configString .= "ttsTextParamName = \n";
+	$configString .= "enableGlossary = \n";
+	$configString .= "utf8DecodeContent = \n";
+	$configString .= "\n";
+	$configString .= "[Cache]\n";
+	$configString .= "cacheExpiry = \n";
+	$configString .= "pagesNoCache = \n";
 
 	# Ecriture de la chaîne iniale de configuration dans le fichier
 	print SITE_INI $configString;
@@ -103,7 +121,7 @@ sub loadConfig #($configFile)
 	open(CONFIG_FILE, "<", $configFile) or die "Erreur d'ouverture du fichier : ".$configFile.".\n";
 
 	# Remplissage de la chaîne de caractères correspondant au contenu du fichier de configuration
-	$contentString = "";
+	my $contentString = "";
 	while (<CONFIG_FILE>) {
 		$contentString .= $_;
 	}

@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use Encode;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
@@ -72,33 +74,40 @@ use config_manager;
 
 
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
 
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
-my $siteId;
-$thisCdlUrl =~ s/^\/audio(\-[^\/]*)?\/([^\/\?]*)\/?(.*)?$/$siteId = urlDecode($2);/segi;
+
+$embeddedMode = "";
+
+my $siteId = "";
+$thisCdlUrl =~ s/^(\/cdl)?\/audio(\-[^\/]*)?\/([^\/\?]*)\/?(.*)?$/$embeddedMode = $1;$siteId = urlDecode($3);/segi;
 
 if (!$siteId) {
-	$siteId = param('cdlid');
-	if (!$siteId) {
-		die "Aucun identifiant de site n'a été renseigné.\n";
-		exit;
+	if ($embeddedMode ne "") {
+		my $siteDomain = $ENV{'SERVER_NAME'};
+		$siteId = getSiteFromDomain($siteDomain);
+	} else {
+		$siteId = param('cdlid');
+		if (!$siteId) {
+			die "Aucun identifiant de site n'a été renseigné dans l'URL.\n";
+			exit;
+		}
 	}
 }
 
 if (!existConfigDirectory($siteId)) {
 	$siteId = param('cdlid');
 	if (!$siteId) {
-		die "Aucun identifiant de site n'a été renseigné.\n";
+		die "Aucun identifiant de site n'a été renseigné en paramètre.\n";
 		exit;
 	}
 	if (!existConfigDirectory($siteId)) {
-		die "Aucun site ne correspond à l'identifiant : ".$siteId.".\n";
-		exit;
+		$siteId = "";
 	}
 }
 
@@ -106,8 +115,10 @@ if (!existConfigDirectory($siteId)) {
 require($cdlSitesConfigPath."default_override.pm");
 
 # Inclusion du module extension spécifique au site s'il y en a un
-if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
-	require($cdlSitesConfigPath.$siteId."/override/main.pm");
+if ($siteId ne "") {
+	if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
+		require($cdlSitesConfigPath.$siteId."/override/main.pm");
+	}
 }
 
 # Gestion des langues
@@ -121,18 +132,22 @@ if (-e "../modules/dictionary/".$language.".pm") {
 # Chargement de la configuration par défaut
 my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 
-my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
-my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
-my $ttsServerName = getConfig($siteConfiguration, 'ttsServerName');
-my $ttsPort = getConfig($siteConfiguration, 'ttsPort');
-my $ttsUri = getConfig($siteConfiguration, 'ttsUri');
-my $ttsDefaultQueryString = getConfig($siteConfiguration, 'ttsDefaultQueryString');
-my $ttsVoiceParamName = getConfig($siteConfiguration, 'ttsVoiceParamName');
-my $ttsTextParamName = getConfig($siteConfiguration, 'ttsTextParamName');
-my $ttsRateParamName = getConfig($siteConfiguration, 'ttsRateParamName');
+my ($ttsMode, $ttsServerName, $ttsPort, $ttsUri, $ttsDefaultQueryString, $ttsVoiceParamName, $ttsTextParamName, $ttsRateParamName, $enableGlossary, $utf8DecodeContent) = ("", "", "", "", "", "", "", "", "", "");
 
-my $enableGlossary = getConfig($siteConfiguration, 'enableGlossary');
-my $utf8DecodeContent = getConfig($siteConfiguration, 'utf8DecodeContent');
+if ($siteId ne "") {
+	my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+	$ttsMode = getConfig($siteConfiguration, 'ttsMode');
+	$ttsServerName = getConfig($siteConfiguration, 'ttsServerName');
+	$ttsPort = getConfig($siteConfiguration, 'ttsPort');
+	$ttsUri = getConfig($siteConfiguration, 'ttsUri');
+	$ttsDefaultQueryString = getConfig($siteConfiguration, 'ttsDefaultQueryString');
+	$ttsVoiceParamName = getConfig($siteConfiguration, 'ttsVoiceParamName');
+	$ttsTextParamName = getConfig($siteConfiguration, 'ttsTextParamName');
+	$ttsRateParamName = getConfig($siteConfiguration, 'ttsRateParamName');
+
+	$enableGlossary = getConfig($siteConfiguration, 'enableGlossary');
+	$utf8DecodeContent = getConfig($siteConfiguration, 'utf8DecodeContent');
+}
 
 if ($ttsMode eq "") {
 	$ttsMode = getConfig($defaultConfiguration, 'ttsMode');
@@ -182,7 +197,7 @@ my $deleteOptionTitle = 0;
 if (param('cdltext')) {
 	$pageContent = param('cdltext');
 	use Digest::SHA1  qw(sha1_hex);
-	$fileName = Digest::SHA1::sha1_hex($siteId."\n".$pageContent);
+	$fileName = Digest::SHA1::sha1_hex(($siteId ne "" ? $siteId."\n" : "").$pageContent);
 
 	if ($utf8DecodeContent ne "0") {
 		$pageContent = decode("utf8", $pageContent);
@@ -239,21 +254,23 @@ $pageContent =~ s/<label( [^>]*)?>.*?<\/label>//sgi;
 $pageContent =~ s/(<abbr( [^>]*)?>)(([A-Z]\.)+)(<\/abbr>)/$1.addSpaceToAcronym($3).$5/segi;
 
 # Transformation des liens images par le texte "Lien : {alt de l'image ou alt du lien ou title de l'image ou title du lien}". C'est le plus long de ces 4 attributs qui est mis
+my %linkAttributes;
+my %imgAttributes;
 $pageContent =~ s/<a( [^>]*)?>\s*<img( [^>]*)?>\s*<\/a>/
-	my %linkAttributes = getTagAttributes($1);
-	my %imgAttributes = getTagAttributes($2);
+	%linkAttributes = getTagAttributes($1);
+	%imgAttributes = getTagAttributes($2);
 	defined $linkAttributes{'href'} and $imgAttributes{'alt'} ? " ".decode("utf8", "Lien")." : ".(length($imgAttributes{'title'}) > length($imgAttributes{'alt'}) ? (length($linkAttributes{'title'}) > length($imgAttributes{'title'}) ? $linkAttributes{'title'} : $imgAttributes{'title'}) : (length($linkAttributes{'title'}) > length($imgAttributes{'alt'}) ? $linkAttributes{'title'} : $imgAttributes{'alt'})).".__cdl_brk500__" : ""
 	/segi;
 
 # Transformation des liens par le texte "Lien : {intitulé du lien (son contenu) ou son title}". C'est le plus long de ces 2 attributs qui est mis
 $pageContent =~ s/<img( [^>]*)?>/
-	my %imgAttributes = getTagAttributes($1);
+	%imgAttributes = getTagAttributes($1);
 	$imgAttributes{'alt'} or $imgAttributes{'title'} ? " ".(length($imgAttributes{'title'}) > length($imgAttributes{'alt'}) ? $imgAttributes{'title'} : $imgAttributes{'alt'}) : ""
 	/segi;
 
 # Transformation des liens par le texte "Lien : {intitulé du lien (son contenu) ou son title}". C'est le plus long de ces 2 attributs qui est mis
 $pageContent =~ s/<a( [^>]*)?>(.*?)<\/a>/
-	my %linkAttributes = getTagAttributes($1);
+	%linkAttributes = getTagAttributes($1);
 	defined $linkAttributes{'href'} ? " ".decode("utf8", "Lien")." : ".(length($linkAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($2)->as_text) ? $linkAttributes{'title'} : $2).".__cdl_brk500__" : ""
 	/segi;
 
@@ -481,7 +498,16 @@ $audioTextTemplateString =~ s/__cdl_brk(\d+)__//sgi;
 print "Content-type:audio/mpeg\n";
 print "Content-disposition:attachment;filename=".$pageTitle.".mp3\n\n";
 
-if ($ttsMode eq "vaas") {
+if ($ttsMode eq "vaas" or $embeddedMode ne "") {
+	if ($ttsMode eq "sdk" && $embeddedMode ne "") {
+		$ttsServerName = "solution.confortdelecture.org";
+		$ttsPort = "80";
+		$ttsUri = "/audio-text/".($siteId ne "" ? $siteId : "default")."/";
+		$ttsDefaultQueryString = "";
+		$ttsTextParamName = "cdltext";
+		$ttsVoiceParamName = "";
+	}
+
 	use Socket;
 
 	socket(SOCK, PF_INET, SOCK_STREAM, getprotobyname('tcp'));
@@ -492,43 +518,14 @@ if ($ttsMode eq "vaas") {
 	$| = 1;
 	select($oldFh);
 
-	my $audioParametersString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTemplateString);
 	my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
 
-	print SOCK "POST ".$ttsUri." HTTP/1.0\nUser-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\nContent-Length: ".length($audioParametersString)."\nContent-Type: application/x-www-form-urlencoded\n\n".$audioParametersString."\n";
+	print SOCK "POST ".$ttsUri." HTTP/1.0\nHost: $ttsServerName:$ttsPort\nUser-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\nContent-Length: ".length($audioParametersTextString)."\nContent-Type: application/x-www-form-urlencoded\nTransfer-Encoding: chunked\n\n".$audioParametersTextString."\n";
 	my $header = <SOCK>;
 
 	if ($header !~ m/200|OK/) {
-=begin
-		if (length($audioTextTemplateString) <= 100) {
-			system("wget \"http://".$ttsServerName.$ttsUri."?".$audioParametersTextString."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O -");
-		} else {
-			my @audioTextTemplateStringSplitted = split(" ", $audioTextTemplateString);
-
-			if (@audioTextTemplateStringSplitted > 0) {
-				my $audioTextTemplateStringFinal = "";
-				my $urlCallCommand = "";
-				foreach my $audioTextTemplateStringPart (@audioTextTemplateStringSplitted) {
-					if (length($audioTextTemplateStringFinal.$audioTextTemplateStringPart) > 100) {
-						$urlCallCommand .= "wget \"http://".$ttsServerName.$ttsUri."?".($ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateStringFinal))."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ; lame --quiet --decode ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 - >> ".$cdlAudioCachePath.$fileName.$parametersString."_mp3 ;";
-						$audioTextTemplateStringFinal = $audioTextTemplateStringPart;
-					} else {
-						$audioTextTemplateStringFinal .= " ".$audioTextTemplateStringPart;
-					}
-				}
-				if (length($audioTextTemplateStringFinal) > 0) {
-					$urlCallCommand .= "wget \"http://".$ttsServerName.$ttsUri."?".($ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateStringFinal))."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ; lame --quiet --decode ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 - >> ".$cdlAudioCachePath.$fileName.$parametersString."_mp3";
-				}
-
-				system($urlCallCommand);
-
-				system("lame --quiet -a -b 64 ".$cdlAudioCachePath.$fileName.$parametersString."_mp3 -");
-
-				system("rm -f ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ".$cdlAudioCachePath.$fileName.$parametersString."_mp3");
-			}
-		}
-=cut
-		system("wget \"http://".$ttsServerName.$ttsUri."?".$audioParametersTextString."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O -");
+		use LWP::Simple;
+		print get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
 	} else {
 		while($header = <SOCK>) {
 			chomp;

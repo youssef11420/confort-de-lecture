@@ -19,28 +19,40 @@
 # File: install.pl
 #	Script d'installation de CDL : A ne lancer qu'une seule fois
 
+use warnings FATAL => 'all';
 use CGI::Carp qw(fatalsToBrowser);
 
 use CGI qw(:standard);
 
+use Cwd;
+
 use lib 'core/modules/utils';
 use constants;
 
+# Récupération de l'URL réécrite pour en extraire les informations nécessaires
+my $thisCdlUrl = $ENV{'REQUEST_URI'};
+$thisCdlUrl =~ s/%20/+/sgi;
+
+$embeddedMode = "";
+$thisCdlUrl =~ s/^(\/cdl)/$embeddedMode = $1; ""/segi;
+
+$cdlRootPath = cwd();
+
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 if (not -e $cdlRootPath."/install_ok") {
 	if (param('valider')) {
 		if (!param('loginAdmin') or !param('passwdAdmin')) {
-			print $cgi->redirect("/install?m=1");
+			print $cgi->redirect($embeddedMode."/install?m=1");
 			exit;
 		}
 		if (param('loginAdmin') =~ m/[^a-z\d\-_\.]/si) {
-			print $cgi->redirect("/install?m=2");
+			print $cgi->redirect($embeddedMode."/install?m=2");
 			exit;
 		}
 		if (length(param('passwdAdmin')) < 6) {
-			print $cgi->redirect("/install?m=3");
+			print $cgi->redirect($embeddedMode."/install?m=3");
 			exit;
 		}
 
@@ -54,10 +66,10 @@ if (not -e $cdlRootPath."/install_ok") {
 		print WRITER "OK\n";
 		close(WRITER);
 
-		print $cgi->redirect("/install");
+		print $cgi->redirect($embeddedMode."/install");
 	} else {
 		print "Content-type: text/html; charset=utf-8\n\n";
-		print "<link href=\"/design/css/config.css\" rel=\"stylesheet\">";
+		print "<link href=\"".$embeddedMode."/design/css/config.css\" rel=\"stylesheet\">";
 		print "<br>";
 
 		if (param('m') eq "1") {
@@ -70,7 +82,7 @@ if (not -e $cdlRootPath."/install_ok") {
 			print "<div class=\"center\"><div class=\"messageErr\">Le mot de passe doit contenir 6 caractères minimum.</div><br></div>";
 		}
 
-		print "<form action=\"/install\" method=\"post\">";
+		print "<form action=\"".$embeddedMode."/install\" method=\"post\">";
 		print "<div class=\"clearBoth\"></div><br>";
 		print "<div class=\"formLine\">";
 		print "<div class=\"leftForm\"><label for=\"loginAdmin\">Identifiant de l'administrateur :&nbsp;</label></div>";

@@ -24,6 +24,8 @@ use CGI::Carp qw(fatalsToBrowser);
 use CGI qw(:standard);
 use CGI::Session;
 
+use Cwd;
+
 use LWP::UserAgent;
 
 use lib '../modules/utils';
@@ -34,7 +36,7 @@ use config_manager;
 
 
 # Création de l'objet CGI
-my $cgi = new CGI;
+my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
@@ -54,15 +56,23 @@ foreach my $paramKey (@paramKeys) {
 my $thisCdlUrl = $ENV{'REQUEST_URI'};
 $thisCdlUrl =~ s/%20/+/sgi;
 
+$embeddedMode = "";
+
 # Récupération du paramètre id et de l'uri à parser
 my ($siteId, $pageUri, $secure);
-$thisCdlUrl =~ s/^\/le\-filtre\-pour\-ajax\/([^\/]*)(\/(([^\?]*?)(\?.*)?)?)?$/$siteId = urlDecode($1); $pageUri = $requestMethod eq "POST" ? $3 : urlDecode($4);/segi;
+$thisCdlUrl =~ s/^(\/cdl)?\/le\-filtre\-pour\-ajax\/([^\/]*)(\/(([^\?]*?)(\?.*)?)?)?$/$embeddedMode = $1; $siteId = urlDecode($2); $pageUri = $requestMethod eq "POST" ? $4 : urlDecode($5);/segi;
 
 # Détection d'erreurs au niveau de l'identifiant du site
 if (!$siteId) {
-	if (!param('cdlid')) {
-		die "Aucun identifiant de site n'a été renseigné.\n";
-		exit;
+	if ($embeddedMode ne "") {
+		my $siteDomain = $ENV{'SERVER_NAME'};
+		$siteId = getSiteFromDomain($siteDomain);
+	} else {
+		$siteId = param('cdlid');
+		if (!$siteId) {
+			die "Aucun identifiant de site n'a été renseigné dans l'URL.\n";
+			exit;
+		}
 	}
 }
 
@@ -89,17 +99,6 @@ if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
 # Récupération de l'URI à parser pour en construire une URL
 my $urlToParse = $pageUri;
 
-# Si l'URI est vide (ie. on arrive avec le lien raccorci /le-filtre/siteId/ ), on redirige vers le filtre avec une URI complète en rajoutant le nom de domaine par défaut di site
-if (!$urlToParse) {
-	my $redirectUrl = $ENV{'REQUEST_URI'};
-	# Ajout automatique du / à la fin
-	$redirectUrl =~ s/([^\/])$/$1\//sgi;
-	$redirectUrl .= $siteDomainNamesArray[0].($homePageUris[0] ? $homePageUris[0] : "/");
-	my $cookie = new CGI::Cookie(-name=>$session->name, -value=>$session->id);
-	print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
-	exit;
-}
-
 # Si l'URL n'est pas absolue on la met en absolue
 if ($urlToParse !~ m/^[\w\d]+:\/\//si) {
 	$urlToParse = "http".$secure."://".$urlToParse;
@@ -111,13 +110,13 @@ $urlToParse =~ s/^(https?:\/\/[^\/]+)$/$siteRootUrl = $1; $1/segi;
 $urlToParse =~ s/^((https?:\/\/[^\/]+)(.*)\/([^\/]*?))/$siteRootUrl = $2; $pagePath = $3; $1/segi;
 
 # On effectue la requête HTTP en récupérant la réponse
-$response = sendRequest($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, %requestParameters);
+my $response = sendRequest($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, %requestParameters);
 
 # Récupération du cookie dans la réponse HTTP et sauvegarde dans la session
 putCookieInSession($response, $session, $siteId);
 
 # Récupération du type d'encodage des caractères reçus dans la réponse HTTP
-$contentType = $response->header('Content-type');
+my $contentType = $response->header('Content-type');
 
 
 # Initialisation de l'entête
@@ -126,6 +125,7 @@ print $session->header('Content-type' => $contentType);
 # Si le code retour est succès, on traite le contenu de la réponse
 if ($response->is_success) {
 	# Récupération du contenu de la réponse
+	my $htmlCode;
 	if ($contentType =~ m/charset=utf\-?\d+/si) {
 		$htmlCode = $response->content;
 	} else {
