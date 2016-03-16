@@ -492,43 +492,14 @@ if ($ttsMode eq "vaas") {
 	$| = 1;
 	select($oldFh);
 
-	my $audioParametersString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTemplateString);
 	my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
 
-	print SOCK "POST ".$ttsUri." HTTP/1.0\nUser-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\nContent-Length: ".length($audioParametersString)."\nContent-Type: application/x-www-form-urlencoded\n\n".$audioParametersString."\n";
+	print SOCK "POST ".$ttsUri." HTTP/1.0\nHost: $ttsServerName:$ttsPort\nUser-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\nContent-Length: ".length($audioParametersTextString)."\nContent-Type: application/x-www-form-urlencoded\nTransfer-Encoding: chunked\n\n".$audioParametersTextString."\n";
 	my $header = <SOCK>;
 
 	if ($header !~ m/200|OK/) {
-=begin
-		if (length($audioTextTemplateString) <= 100) {
-			system("wget \"http://".$ttsServerName.$ttsUri."?".$audioParametersTextString."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O -");
-		} else {
-			my @audioTextTemplateStringSplitted = split(" ", $audioTextTemplateString);
-
-			if (@audioTextTemplateStringSplitted > 0) {
-				my $audioTextTemplateStringFinal = "";
-				my $urlCallCommand = "";
-				foreach my $audioTextTemplateStringPart (@audioTextTemplateStringSplitted) {
-					if (length($audioTextTemplateStringFinal.$audioTextTemplateStringPart) > 100) {
-						$urlCallCommand .= "wget \"http://".$ttsServerName.$ttsUri."?".($ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateStringFinal))."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ; lame --quiet --decode ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 - >> ".$cdlAudioCachePath.$fileName.$parametersString."_mp3 ;";
-						$audioTextTemplateStringFinal = $audioTextTemplateStringPart;
-					} else {
-						$audioTextTemplateStringFinal .= " ".$audioTextTemplateStringPart;
-					}
-				}
-				if (length($audioTextTemplateStringFinal) > 0) {
-					$urlCallCommand .= "wget \"http://".$ttsServerName.$ttsUri."?".($ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateStringFinal))."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ; lame --quiet --decode ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 - >> ".$cdlAudioCachePath.$fileName.$parametersString."_mp3";
-				}
-
-				system($urlCallCommand);
-
-				system("lame --quiet -a -b 64 ".$cdlAudioCachePath.$fileName.$parametersString."_mp3 -");
-
-				system("rm -f ".$cdlAudioCachePath.$fileName.$parametersString."_mp3.mp3 ".$cdlAudioCachePath.$fileName.$parametersString."_mp3");
-			}
-		}
-=cut
-		system("wget \"http://".$ttsServerName.$ttsUri."?".$audioParametersTextString."\" --user-agent=\"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\" --referer=\"http://translate.google.com/\" -q -O -");
+		use LWP::Simple;
+		print get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
 	} else {
 		while($header = <SOCK>) {
 			chomp;
