@@ -960,7 +960,7 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 	editInSession($session, 'cdl_'.$siteId.'_realm', $realm);
 
 	# Redirection vers le script principal pour traitement de la page
-	my $redirectUrl = $embeddedMode.($embeddedMode ne "" ? "/le-filtre" : "/f");
+	my $redirectUrl = $embeddedMode.($embeddedMode ne "" ? "/f" : "/le-filtre");
 	if ($url =~ m/^https:\/\//si) {
 		$redirectUrl .= ($embeddedMode ne "" ? "" : "-http")."s";
 	}
