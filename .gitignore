@@ -1,0 +1,4 @@
+install_ok
+core/scripts/CGI
+core/scripts/JSON
+core/scripts/Digest
