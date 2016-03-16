@@ -19,7 +19,6 @@
 # File: install.pl
 #	Script d'installation de CDL : A ne lancer qu'une seule fois
 
-use warnings FATAL => 'all';
 use CGI::Carp qw(fatalsToBrowser);
 
 use CGI qw(:standard);
