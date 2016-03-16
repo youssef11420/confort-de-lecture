@@ -28,7 +28,7 @@ use Cwd;
 
 use File::Path;
 
-use lib '../../modules/utils';
+use lib '../modules/utils';
 use constants;
 use misc_utils;
 use session;
@@ -40,10 +40,6 @@ my $cgi  = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
-
-$cdlRootPath .= "/..";
-$cdlTemplatesPath =~ s/templates/..\/templates/sgi;
-$cdlGlossaryConfigPath =~ s/configuration\/glossary/..\/configuration\/glossary/sgi;
 
 # Génération de la table des hachage des paramètres
 my @paramKeys = param;
