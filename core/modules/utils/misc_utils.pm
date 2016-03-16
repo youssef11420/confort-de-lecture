@@ -260,7 +260,7 @@ sub buildUrlToParse #($cgi, $session, $pageUri, $secure, $siteDomainNames, $home
 			$redirectUrl =~ s/([^\/])$/$1\//sgi;
 			my @siteDomainNamesArray = split(/\|/, $siteDomainNames);
 			$redirectUrl .= $siteDomainNamesArray[0].$homePageUri;
-			my $cookie = CGI::Cookie-new(-name=>$session->name, -value=>$session->id);
+			my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
 			print $cgi->header(-status=>"302 Found", -location=>$redirectUrl, -cookie=>$cookie);
 			exit;
 		}
