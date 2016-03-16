@@ -22,6 +22,13 @@
 #
 # Paramètres:
 #	$cgi - objet CGI d'où extraire l'identifiant de session (s'il existe déjà)
+sub test(&) {
+	eval {
+		$_[0]->()
+	};
+	chomp $@;
+	print ++$b,$",$@ ? "Died: $@":"Success";
+}
 sub createOrGetSession #($cgi)
 {
 	my ($cgi) = @_;
@@ -30,7 +37,12 @@ sub createOrGetSession #($cgi)
 
 	my $session = CGI::Session->new("driver:File", $sid, {Directory=>$cdlSessionCachePath});
 
-	$session->expires("+20y");
+	#$session->expires("+20y");
+	#my $expiryLimit = "+20y";
+	test { $session->expire };
+	test { $session->expires };
+	test { $session->expired };
+	test { $session->jesii };
 
 	return $session;
 }
