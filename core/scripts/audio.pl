@@ -26,7 +26,7 @@ use CGI::Session;
 
 use Cwd;
 
-use Digest::SHA1 qw(sha1_hex);
+use Digest::SHA::PurePerl qw(sha1_hex);
 
 use Encode;
 use LWP::UserAgent;
