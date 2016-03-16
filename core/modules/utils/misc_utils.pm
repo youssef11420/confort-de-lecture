@@ -1121,7 +1121,7 @@ sub savePageContentInCache #($requestMethod, $pageUrl, $pageContent, $displayPar
 
 	# Générer en md5 une clé à partir des informations de la page
 
-	my $cryptedPartOfFileName = Digest::SHA1::sha1_hex($requestMethod."==>".$pageUrl);
+	my $cryptedPartOfFileName = sha1_hex($requestMethod."==>".$pageUrl);
 
 	# Sauvegarde du contenu de la page
 	open(WRITER, ">:encoding(iso-8859-1)", $cdlContentCachePath.$cryptedPartOfFileName."_".$displayParameters.".html") or die "Erreur d'ouverture du fichier : ".$cryptedPartOfFileName."_".$displayParameters.".html.\n";
@@ -1144,8 +1144,7 @@ sub getPageContentFromCache #($requestMethod, $pageUrl, $displayParameters, $cac
 	my ($requestMethod, $pageUrl, $displayParameters, $cacheExpiry) = @_;
 
 	# Générer en md5 une clé à partir des informations de la page
-	use Digest::SHA1  qw(sha1_hex);
-	my $cryptedPartOfFileName = Digest::SHA1::sha1_hex($requestMethod."==>".$pageUrl);
+	my $cryptedPartOfFileName = sha1_hex($requestMethod."==>".$pageUrl);
 
 	my $pageContent = "";
 	if (-e $cdlContentCachePath.$cryptedPartOfFileName."_".$displayParameters.".html") {
