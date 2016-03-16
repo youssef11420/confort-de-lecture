@@ -34,7 +34,7 @@ use Encode;
 
 use HTML::Entities;
 
-use Crypt::Digest::SHA1 qw(sha1_hex);
+use Digest::SHA1 qw(sha1_hex);
 
 use lib '../modules/utils';
 use constants;

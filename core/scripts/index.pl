@@ -31,7 +31,7 @@ if (-e "./JSON") {
 }
 use JSON;
 
-use Crypt::Digest::SHA1 qw(sha1_hex);
+use Digest::SHA1 qw(sha1_hex);
 
 use LWP::UserAgent;
 use HTML::TreeBuilder;
