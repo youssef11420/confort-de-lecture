@@ -121,6 +121,8 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 
 	# Mettre les bonnes valeurs à la place des marqueurs dans le chaîne template
 
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
+
 	# L'identifiant du site
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'SITE_ID', $siteId);
 
