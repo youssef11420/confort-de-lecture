@@ -450,7 +450,7 @@ if ($voiceChoice eq "1") {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'VOICE_CHOICE', "");
 }
 
-$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SERVER_NAME', $ENV{'SERVER_NAME'});
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_SERVER_NAME', $ENV{'SERVER_NAME'});
 
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SITE_ID', $siteId);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'LANGUAGE', $language);

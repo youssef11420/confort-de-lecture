@@ -176,6 +176,13 @@ if ($ttsRateParamName eq "") {
 	$ttsRateParamName = getConfig($defaultConfiguration, 'ttsRateParamName');
 }
 
+if ($enableGlossary eq "") {
+	$enableGlossary = getConfig($defaultConfiguration, 'enableGlossary');
+}
+if ($utf8DecodeContent eq "") {
+	$utf8DecodeContent = getConfig($defaultConfiguration, 'utf8DecodeContent');
+}
+
 my $fileName;
 my $pageContent = "";
 
