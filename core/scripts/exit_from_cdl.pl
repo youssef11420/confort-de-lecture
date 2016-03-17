@@ -167,7 +167,6 @@ my $fontSize = loadFromSession($session, 'fontSize');
 $fontSize = $fontSize ? $fontSize : 3;
 
 if ($activateAudio eq "1") {
-	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'JS_LIBRARY', getPartOfTemplateString($exitPageTemplateString, 'JS_LIBRARY'));
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', getPartOfTemplateString($exitPageTemplateString, 'JS_AUDIO_FILE_INCLUDE'));
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO', getPartOfTemplateString($exitPageTemplateString, 'AUDIO'));
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'MP3_PLAYER_WIDTH', 200+3.85*(($fontSize - 1)*20));
@@ -176,7 +175,6 @@ if ($activateAudio eq "1") {
 	# Mettre le nom de domaine pour complèter les URLs absolues
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 } else {
-	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'JS_LIBRARY', "");
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO', "");
 }

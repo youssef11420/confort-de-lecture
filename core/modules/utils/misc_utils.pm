@@ -953,7 +953,7 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 		$redirectUrl =~ s/(\?|&)$//sgi;
 
 		my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
-		print $cgi->redirect(-status=>"302 Moved", -location=>$redirectUrl."&cdlloginerror=1", -cookie=>$cookie);
+		print $cgi->redirect(-status=>"302 Moved", -location=>$redirectUrl."?cdlloginerror=1", -cookie=>$cookie);
 		exit;
 	}
 	# Sauvegarde des paramètres de connexion au site protégé en session.
@@ -962,7 +962,7 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 	editInSession($session, 'cdl_'.$siteId.'_realm', $realm);
 
 	# Redirection vers le script principal pour traitement de la page
-	my $redirectUrl = $embeddedMode.($embeddedMode ne "" ? "/f" : "/le-filtre");
+	my $redirectUrl = ($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre");
 	if ($url =~ m/^https:\/\//si) {
 		$redirectUrl .= ($embeddedMode ne "" ? "" : "-http")."s";
 	}

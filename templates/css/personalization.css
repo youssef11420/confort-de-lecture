@@ -139,3 +139,8 @@ p,input,li,select,.cdlLabelDiv,.cdlFieldDiv label,.cdlFoot{font-size:110%}
 .cdlContrasted .cdlAudioNextBloc:before,.cdlContrasted .cdlAudioNextBloc:after{border-width:29px 0 29px 29px;border-left-color:#FFFFFF}
 .cdlAudioPrevLine:after{border-width:29px 58px 29px 0;border-right-color:#FFFFFF}
 .cdlContrasted .cdlAudioPrevLine:after{border-right-color:#000000}
+.cdlSelectInput select{right:-36px;margin-left:-36px}
+.cdlSelectInput span{background-color:#000000}
+.cdlContrasted .cdlSelectInput span{background-color:#FFFFFF}
+.cdlSelectInput span:after{border-top-color:#FFFFFF;border-width:9px 9px 0;margin:-4.5px 4.5px 0 0}
+.cdlContrasted .cdlSelectInput span:after{border-top-color:#000000}

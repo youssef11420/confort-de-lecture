@@ -72,18 +72,21 @@ if (!existConfigDirectory($siteId)) {
 	exit;
 }
 
-my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
-my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
-my $activateAudio = getConfig($siteConfiguration, 'activateAudio');
-if ($activateAudio eq "") {
-	$activateAudio = getConfig($defaultConfiguration, 'activateAudio');
-}
-
 # Création de l'objet CGI
 my $cgi = CGI->new();
 
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
+
+my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
+my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
+$enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
+my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
+my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
+$ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
+my $siteDefaultLanguage = getConfig($siteConfiguration, 'defaultLanguage');
+$siteDefaultLanguage = $siteDefaultLanguage eq "" ? getConfig($defaultConfiguration, 'defaultLanguage') : $siteDefaultLanguage;
 
 my @paramKeys = param;
 
@@ -123,6 +126,27 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
+	# Mettre les liens qui permettent d'aller modifier la personnalisation
+	my $language = loadFromSession($session, 'language');
+	my $contrast = loadFromSession($session, 'contrast');
+	$language = $language ? $language : ($siteDefaultLanguage ? $siteDefaultLanguage : "fr");
+	$contrast = $contrast ? $contrast : "bn";
+
+	my $pageUriForHtml = $urlToParse;
+	$pageUriForHtml =~ s/&amp;/&/sgi;
+	$pageUriForHtml =~ s/&/&amp;/sgi;
+
+	if ($embeddedMode ne "") {
+		$pageUriForHtml =~ s/^(https?:\/\/)?[^\/]+\/?//sgi;
+	}
+
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
+
+	my $iconContent;
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'DISPLAY_ICON', $iconContent);
+
 	# L'identifiant du site
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'SITE_ID', $siteId);
 
@@ -148,7 +172,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 
 	# S'il y a eu une erreur d'authentification, on en notifie l'utilisateur
 	if (param('cdlloginerror') eq "1") {
-		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'ERROR_LOGIN_MESSAGE', "<strong>Vos identifiants sont incorrects. Veuillez r&eacute;essayer.</strong>");
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'ERROR_LOGIN_MESSAGE', "<strong>Vos identifiants sont incorrects. Veuillez réessayer.</strong>");
 	} else {
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'ERROR_LOGIN_MESSAGE', "");
 	}
@@ -160,15 +184,9 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
-	if ($activateAudio) {
-		# Récupération de la session de la variable indiquant si l'audio est activé
-		$activateAudio = loadFromSession($session, 'activateAudio');
-	}
-
 	my $fontSize = loadFromSession($session, 'fontSize');
 	$fontSize = $fontSize ? $fontSize : 3;
 	if ($activateAudio eq "1") {
-		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_LIBRARY', getPartOfTemplateString($protectedPageTemplateString, 'JS_LIBRARY'));
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', getPartOfTemplateString($protectedPageTemplateString, 'JS_AUDIO_FILE_INCLUDE'));
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO', getPartOfTemplateString($protectedPageTemplateString, 'AUDIO'));
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'MP3_PLAYER_WIDTH', 200+3.85*(($fontSize - 1)*20));
@@ -177,9 +195,21 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 		# Mettre le nom de domaine pour complèter les URLs absolues
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
-		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_LIBRARY', "");
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO', "");
+	}
+	if ($enableAudio eq "1") {
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_ACTIONS', getPartOfTemplateString($protectedPageTemplateString, 'AUDIO_ACTIONS'));
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_ICON', $iconContent);
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_HELP_ICON', $iconContent);
+	} else {
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_ACTIONS', "");
 	}
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
@@ -199,6 +229,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'F_COLOR', $fontColor);
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'L_COLOR', $linkColor);
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'F_SIZE', $fontSize);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'L_SPACING', $letterSpacing);
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'W_SPACING', $wordSpacing);
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'L_HEIGHT', $lineHeight);

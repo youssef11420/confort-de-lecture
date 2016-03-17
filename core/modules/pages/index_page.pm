@@ -98,7 +98,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			$pageContent =~ s/(<meta( [^>]*)? http-equiv=(\"|\')Content-Type\3[^>]* content=(\"|\')([^>]*?)\4[^>]*>)/$contentType = $5; $1/segi;
 		}
 		$pageContent = $pageContent."\n<div class=\"cdlPageCached\"></div>";
-		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
+		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
 	}
 
 	if (($siteDomainNames and $urlToParse =~ m/^https?:\/\/($siteDomainNames)/si) or ($embeddedMode ne "" and $ENV{'SERVER_NAME'} =~ m/($siteDomainNames)/si)) {
@@ -126,7 +126,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			redirectToProtectedAccessLogin($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 		} else {
 			# Affichage de la page de signelement d'une erreur au niveau de la requête HTTP vers le site distant
-			renderErrorPage($session, $siteId, $siteDefaultLanguage, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, %requestParameters);
+			renderErrorPage($session, $siteId, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, %requestParameters);
 		}
 	} else {
 		accessAnotherSite($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters);
@@ -141,21 +141,47 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 #	$siteId - Identifiant du site parsé
 #	$siteDefaultLanguage - Langue par défaut du site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
+#	enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$ttsMode - mode de vocalisation (VaaS, SDK, etc.)
 #	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
 #	$response - objet réponse HTTP d'où le code et l'intitulé de l'erreur
 #	$urlToParse - URL de la page en erreur
 #	%requestParameters - paramètres à coller à l'URL
-sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, %requestParameters)
+sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, %requestParameters)
 {
-	my ($session, $siteId, $siteDefaultLanguage, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, %requestParameters) = @_;
+	my ($session, $siteId, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, %requestParameters) = @_;
+
+	# Mettre les liens qui permettent d'aller modifier la personnalisation
+	my $language = loadFromSession($session, 'language');
+	my $contrast = loadFromSession($session, 'contrast');
+	$language = $language ? $language : ($siteDefaultLanguage ? $siteDefaultLanguage : "fr");
+	$contrast = $contrast ? $contrast : "bn";
+
+	my $pageUriForHtml = $urlToParse;
+	$pageUriForHtml =~ s/&amp;/&/sgi;
+	$pageUriForHtml =~ s/&/&amp;/sgi;
+
+	if ($embeddedMode ne "") {
+		$pageUriForHtml =~ s/^https?:\/\/[^\/]+\/?//sgi;
+	} else {
+		$pageUriForHtml =~ s/^https?:\/\///sgi;
+	}
 
 	# Chargement de la template d'erreur
 	my $errorPageTemplateString = loadConfig($cdlTemplatesPath."error_page.html");
 
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
+
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'SITE_ID', $siteId);
 
-	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'LANGUAGE', $siteDefaultLanguage);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'LANGUAGE', $language);
+
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
+
+	my $iconContent;
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'DISPLAY_ICON', $iconContent);
 
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'ERROR_NUMBER', $response->code);
 
@@ -190,7 +216,6 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 	my $fontSize = loadFromSession($session, 'fontSize');
 	$fontSize = $fontSize ? $fontSize : 3;
 	if ($activateAudio eq "1") {
-		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_LIBRARY', getPartOfTemplateString($errorPageTemplateString, 'JS_LIBRARY'));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', getPartOfTemplateString($errorPageTemplateString, 'JS_AUDIO_FILE_INCLUDE'));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO', getPartOfTemplateString($errorPageTemplateString, 'AUDIO'));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_WIDTH', 250+3.4*(($fontSize - 1)*20));
@@ -199,9 +224,21 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 		# Mettre le nom de domaine pour complèter les URLs absolues
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
-		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_LIBRARY', "");
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO', "");
+	}
+	if ($enableAudio eq "1") {
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_ACTIONS', getPartOfTemplateString($errorPageTemplateString, 'AUDIO_ACTIONS'));
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_ICON', $iconContent);
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_HELP_ICON', $iconContent);
+	} else {
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_ACTIONS', "");
 	}
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
@@ -221,6 +258,7 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'F_COLOR', $fontColor);
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'L_COLOR', $linkColor);
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'F_SIZE', $fontSize);
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'L_SPACING', $letterSpacing);
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'W_SPACING', $wordSpacing);
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'L_HEIGHT', $lineHeight);
@@ -350,7 +388,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	}
 	my $pageContentFile = savePageContentInCache($requestMethod, $urlToParse, $entirePageTemplateString, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'));
 
-	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
+	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
 }
 
 # Function: printPage
@@ -386,14 +424,14 @@ sub printPage #($pageContent, $pageContentFile, $session)
 #	$ttsMode - mode de vocalisation (VaaS, SDK, etc.)
 #	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
 #	%requestParameters - paramètres passés à la page
-sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters)
+sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters)
 {
-	my ($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters) = @_;
+	my ($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $siteDefaultLanguage, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters) = @_;
 
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
 	my $contrast = loadFromSession($session, 'contrast');
-	$language = $language ? $language : "fr";
+	$language = $language ? $language : ($siteDefaultLanguage ? $siteDefaultLanguage : "fr");
 	$contrast = $contrast ? $contrast : "bn";
 
 	my $pageUriForHtml = $pageUri;
@@ -411,14 +449,6 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	$iconContent = do { local $/; <ICON_FILE> };
 	$pageContent = setValueInTemplateString($pageContent, 'DISPLAY_ICON', $iconContent);
 
-	open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
-	$iconContent = do { local $/; <ICON_FILE> };
-	$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ICON', $iconContent);
-
-	open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
-	$iconContent = do { local $/; <ICON_FILE> };
-	$pageContent = setValueInTemplateString($pageContent, 'AUDIO_HELP_ICON', $iconContent);
-
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$pageContent = setValueInTemplateString($pageContent, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
@@ -426,7 +456,6 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	$fontSize = $fontSize ? $fontSize : '3';
 
 	if ($activateAudio eq "1") {
-		$pageContent = setValueInTemplateString($pageContent, 'JS_LIBRARY', getPartOfTemplateString($pageContent, 'JS_LIBRARY'));
 		$pageContent = setValueInTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE', getPartOfTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE'));
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO', getPartOfTemplateString($pageContent, 'AUDIO'));
 		$pageContent = setValueInTemplateString($pageContent, 'MP3_PLAYER_WIDTH', 250+3.4*(($fontSize - 1)*20));
@@ -435,12 +464,19 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		# Mettre le nom de domaine pour complèter les URLs absolues
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
-		$pageContent = setValueInTemplateString($pageContent, 'JS_LIBRARY', "");
 		$pageContent = setValueInTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE', "");
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO', "");
 	}
 	if ($enableAudio eq "1") {
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ACTIONS', getPartOfTemplateString($pageContent, 'AUDIO_ACTIONS'));
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ICON', $iconContent);
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_HELP_ICON', $iconContent);
 	} else {
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ACTIONS', "");
 	}

@@ -2,7 +2,7 @@
 <html lang="###LANGUAGE###">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ouverture / T&eacute;l&eacute;chargement d'un document &bull; Confort de lecture</title>
+<title>Ouverture / Téléchargement d'un document &bull; Confort de lecture</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="###EMBEDDED_URL###/favicon.png" rel="shortcut icon">
 <link href="###EMBEDDED_URL###/styles/default.css" rel="stylesheet">
@@ -17,12 +17,15 @@ function _closeWindow() {
 	window.close();
 }
 </script>
-<body><!--###AUDIO###-->
+<body>
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<!-- <a href="###EMBEDDED_URL###/audio-document/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3" title="T&eacute;l&eacute;charger la page en MP3"></a> -->
+<a href="###EMBEDDED_URL###/personnalisation-affichage/###PERSONALIZATION_URL###" accesskey="l" title="Personnaliser vos paramètres d'affichage"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/display_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres d'affichage">###DISPLAY_ICON###</a><!--###AUDIO_ACTIONS###-->
+<a href="###EMBEDDED_URL###/personnalisation-audio/###PERSONALIZATION_URL###" accesskey="m" title="Personnaliser vos paramètres audio"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/audio_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres audio">###AUDIO_ICON###</a>
+<a href="###EMBEDDED_URL###/personnalisation-aide-audio/###PERSONALIZATION_URL###" accesskey="m" title="Aide audio"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/help_picto_###F_SIZE###.png" alt="Aide audio">###AUDIO_HELP_ICON###</a>
+<!-- <a href="###EMBEDDED_URL###/audio-document/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="Télécharger la page en MP3" title="Télécharger la page en MP3"></a> --><!--/###AUDIO_ACTIONS###-->
 </div>
-<div class="cdlAudioContent">
+<!--###AUDIO###--><div class="cdlAudioContent">
 <div class="cdlAudioObject">
 <div class="cdlAudioObjectContent" style="height:###DIV_MP3_PLAYER_HEIGHT###px">
 <div id="containerLecteurAudioCDL"></div>
@@ -42,19 +45,19 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 </div>
 </div>
-<div class="cdlClearBoth"></div>
-</div><!--/###AUDIO###-->
+<!--/###AUDIO###--><div class="cdlClearBoth"></div>
+</div>
 <div class="cdlGlobalPage">
 <div class="documentContent">
 <div class="cdlCadreContainer">
 <div class="cdlCadre">
-<p>Vous allez acc&eacute;der &agrave; un document de type : <strong>###DOCUMENT_TYPE###</strong>.
+<p>Vous allez accéder à un document de type : <strong>###DOCUMENT_TYPE###</strong>.
 <br>
 <p>Que souhaitez-vous faire ?
 <ul>
 <li><a href="###DOCUMENT_OPEN_URL###">Ouvrir le document</a>
-<li><a href="###DOCUMENT_DOWNLOAD_URL###">T&eacute;l&eacute;charger le document</a>
-<!--###PREVIOUS_PAGE_BLOCK###--><li><a href="###PREVIOUS_PAGE###" onclick="if (history.length &gt; 1) {history.back();} else {_closeWindow();} return false;">Annuler et retourner &agrave; la page pr&eacute;c&eacute;dente</a><!--/###PREVIOUS_PAGE_BLOCK###-->
+<li><a href="###DOCUMENT_DOWNLOAD_URL###">Télécharger le document</a>
+<!--###PREVIOUS_PAGE_BLOCK###--><li><a href="###PREVIOUS_PAGE###" onclick="if (history.length &gt; 1) {history.back();} else {_closeWindow();} return false;">Annuler et retourner à la page précédente</a><!--/###PREVIOUS_PAGE_BLOCK###-->
 </ul>
 </div>
 </div>
@@ -76,6 +79,7 @@ cdlSiteId = '###SITE_ID###';
 <script src="###EMBEDDED_URL###/design/js/jquery/jquery.nicescroll.min.js"></script>
 <!--###JS_AUDIO_FILE_INCLUDE###--><script src="###EMBEDDED_URL###/design/js/cdl/highlight.js"></script>
 <script>
+jQuery('audio').prop('volume', 0.5);
 jQuery(window).bind('load', function() {
 	if (parentMovie("lecteurCDL")) {
 		parentMovie("lecteurCDL").pauseIt();

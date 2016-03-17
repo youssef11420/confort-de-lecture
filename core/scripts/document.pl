@@ -91,9 +91,12 @@ if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
 my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
 my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
-if ($enableAudio eq "") {
-	$enableAudio = getConfig($defaultConfiguration, 'enableAudio');
-}
+$enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
+my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
+my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
+$ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
+my $siteDefaultLanguage = getConfig($siteConfiguration, 'defaultLanguage');
+$siteDefaultLanguage = $siteDefaultLanguage eq "" ? getConfig($defaultConfiguration, 'defaultLanguage') : $siteDefaultLanguage;
 
 # Génération de la table des hachage des paramètres
 my @paramKeys = param;
@@ -118,6 +121,27 @@ if ($action) {
 
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
+	# Mettre les liens qui permettent d'aller modifier la personnalisation
+	my $language = loadFromSession($session, 'language');
+	my $contrast = loadFromSession($session, 'contrast');
+	$language = $language ? $language : ($siteDefaultLanguage ? $siteDefaultLanguage : "fr");
+	$contrast = $contrast ? $contrast : "bn";
+
+	my $pageUriForHtml = $urlToParse;
+	$pageUriForHtml =~ s/&amp;/&/sgi;
+	$pageUriForHtml =~ s/&/&amp;/sgi;
+
+	if ($embeddedMode ne "") {
+		$pageUriForHtml =~ s/^(https?:\/\/)?[^\/]+\/?//sgi;
+	}
+
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
+
+	my $iconContent;
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'DISPLAY_ICON', $iconContent);
+
 	# L'identifiant du site
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'SITE_ID', $siteId);
 
@@ -140,7 +164,23 @@ if ($action) {
 
 	# L'URL de la page précédente pour annuler et retourner
 	if ($ENV{'HTTP_REFERER'}) {
-		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'PREVIOUS_PAGE_BLOCK', setValueInTemplateString(getPartOfTemplateString($documentPageTemplateString, 'PREVIOUS_PAGE_BLOCK'), 'PREVIOUS_PAGE', $ENV{'HTTP_REFERER'}));
+		my $previousPage = $ENV{'HTTP_REFERER'};
+		$previousPage =~ s///sgi;
+		$previousPage =~ s/&amp;/&/sgi;
+		$previousPage =~ s/&/&amp;/sgi;
+		my $cryptedUrl = sha1_hex($pageUriForHtml);
+		$pageUriForHtml = quotemeta $pageUriForHtml;
+		if ($previousPage =~ /$pageUriForHtml$/) {
+			$previousPage = loadFromSession($session, 'cdl_referer_for_document_'.$siteId.'_'.$cryptedUrl);
+			if (!$previousPage) {
+				$previousPage = "http".$secure."://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$siteId);
+			}
+		} else {
+			$previousPage = $ENV{'HTTP_REFERER'};
+			editInSession($session, 'cdl_referer_for_document_'.$siteId.'_'.$cryptedUrl, $previousPage);
+		}
+
+		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'PREVIOUS_PAGE_BLOCK', setValueInTemplateString(getPartOfTemplateString($documentPageTemplateString, 'PREVIOUS_PAGE_BLOCK'), 'PREVIOUS_PAGE', $previousPage));
 	} else {
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'PREVIOUS_PAGE_BLOCK', "");
 	}
@@ -152,16 +192,9 @@ if ($action) {
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
-	my $activateAudio = "";
-	if ($enableAudio) {
-		# Récupération de la session de la variable indiquant si l'audio est activé
-		$activateAudio = loadFromSession($session, 'activateAudio');
-	}
-
 	my $fontSize = loadFromSession($session, 'fontSize');
 	$fontSize = $fontSize ? $fontSize : 3;
 	if ($activateAudio eq "1") {
-		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'JS_LIBRARY', getPartOfTemplateString($documentPageTemplateString, 'JS_LIBRARY'));
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', getPartOfTemplateString($documentPageTemplateString, 'JS_AUDIO_FILE_INCLUDE'));
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO', getPartOfTemplateString($documentPageTemplateString, 'AUDIO'));
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'MP3_PLAYER_WIDTH', 250+3.4*(($fontSize - 1)*20));
@@ -170,9 +203,21 @@ if ($action) {
 		# Mettre le nom de domaine pour complèter les URLs absolues
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
-		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'JS_LIBRARY', "");
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO', "");
+	}
+	if ($enableAudio eq "1") {
+		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_ACTIONS', getPartOfTemplateString($documentPageTemplateString, 'AUDIO_ACTIONS'));
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_ICON', $iconContent);
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_HELP_ICON', $iconContent);
+	} else {
+		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_ACTIONS', "");
 	}
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
@@ -192,6 +237,7 @@ if ($action) {
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'F_COLOR', $fontColor);
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'L_COLOR', $linkColor);
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'F_SIZE', $fontSize);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'L_SPACING', $letterSpacing);
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'W_SPACING', $wordSpacing);
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'L_HEIGHT', $lineHeight);

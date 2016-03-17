@@ -238,7 +238,7 @@ if (param('cdltext')) {
 	
 	$parametersString = "_".loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList');
 
-	# Récupération du fichier correspondant é la page dans le cache
+	# Récupération du fichier correspondant à la page dans le cache
 	my @files = glob($cdlContentCachePath.$fileName.$parametersString.".html");
 	if (!@files) {
 		die "Aucun nom de fichier ".$fileName." n'a été trouvé.\n";

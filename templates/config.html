@@ -35,14 +35,14 @@ jQuery.noConflict();
 <!--/###IDENT_FORM###--><!--###EDIT_FORM###-->
 <h1>Gestion des sites</h1>
 <!--cdlNav--><br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
-<!--cdlNav--><a href="###EMBEDDED_URL###/admin/sites/list">Retour &agrave; la liste des sites</a><!--/cdlNav--><br>
+<!--cdlNav--><a href="###EMBEDDED_URL###/admin/sites/list">Retour à la liste des sites</a><!--/cdlNav--><br>
 <!--cdlBloc-->
 <form action="###EMBEDDED_URL###/admin/sites/###EDIT_ACTION###-action###SITE_ID###" method="get">
 <div class="center">###MESSAGE###</div>
 <div class="clearBoth"></div><br>
 <!--###SITE_ID_FIELD###-->
 <div class="formLine">
-<div class="leftForm"><label for="siteId">Identifiant du site :&nbsp;<br><span class="info">caract&egrave;res autoris&eacute;s : alphanum&eacute;riques, le point '.', le tiret '-' et le soulign&eacute; '_'&nbsp;&nbsp;</span></label></div>
+<div class="leftForm"><label for="siteId">Identifiant du site :&nbsp;<br><span class="info">caractères autorisés : alphanumériques, le point '.', le tiret '-' et le souligné '_'&nbsp;&nbsp;</span></label></div>
 <div class="rightForm"><input class="text" type="text" id="siteId" name="siteId" value="###SITE_ID_VALUE###"></div>
 <div class="clearBoth"></div>
 </div>
@@ -72,7 +72,7 @@ jQuery.noConflict();
 <fieldset>
 <legend>Fil d'Ariane</legend>
 <div class="formLine">
-<div class="leftForm">Position du fil d'ariane :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;</span></div>
+<div class="leftForm">Position du fil d'ariane :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="positionLocation1" name="positionLocation" value="1"###POSITION_LOCATION_TOP###><label for="positionLocation1">haut</label>&nbsp;&nbsp;<input type="radio" id="positionLocation2" name="positionLocation" value="2"###POSITION_LOCATION_BOTTOM###><label for="positionLocation2">bas</label></span></div>
 <div class="clearBoth"></div>
 </div>
@@ -81,7 +81,7 @@ jQuery.noConflict();
 <fieldset>
 <legend>Javascript</legend>
 <div class="formLine">
-<div class="leftForm">Activer le javascript :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le fonctionnement alternatif est activ&eacute;)&nbsp;&nbsp;</span></div>
+<div class="leftForm">Activer le javascript :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le fonctionnement alternatif est activé)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="activateJavascript1" name="activateJavascript" value="1"###ACTIVATE_JS_YES###><label for="activateJavascript1">oui</label>&nbsp;&nbsp;<input type="radio" id="activateJavascript0" name="activateJavascript" value="0"###ACTIVATE_JS_NO###><label for="activateJavascript0">non</label></span></div>
 <div class="clearBoth"></div>
 </div>
@@ -95,26 +95,26 @@ jQuery.noConflict();
 <fieldset>
 <legend>Frames/IFrames</legend>
 <div class="formLine">
-<div class="leftForm">Activer les frames/iframes :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="leftForm">Activer les frames/iframes :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="activateFrames1" name="activateFrames" value="1"###ACTIVATE_FRAMES_YES###><label for="activateFrames1">oui</label>&nbsp;&nbsp;<input type="radio" id="activateFrames0" name="activateFrames" value="0"###ACTIVATE_FRAMES_NO###><label for="activateFrames0">non</label></span></div>
 <div class="clearBoth"></div>
 </div>
 </fieldset>
 <div class="clearBoth"></div>
 <fieldset>
-<legend>M&eacute;dias</legend>
+<legend>Médias</legend>
 <div class="formLine">
-<div class="leftForm">Afficher les images :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="leftForm">Afficher les images :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="displayImages1" name="displayImages" value="1"###DISPLAY_IMAGES_YES###><label for="displayImages1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayImages0" name="displayImages" value="0"###DISPLAY_IMAGES_NO###><label for="displayImages0">non</label>&nbsp;&nbsp;<input type="radio" id="displayImages2" name="displayImages" value="2"###DISPLAY_IMAGES_ONLY_WITH_ALT###><label for="displayImages2">avec alternative</label></span></div>
 <div class="clearBoth"></div>
 </div>
 <div class="formLine">
-<div class="leftForm">Afficher les objects :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="leftForm">Afficher les objects :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="displayObjects1" name="displayObjects" value="1"###DISPLAY_OBJECTS_YES###><label for="displayObjects1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayObjects0" name="displayObjects" value="0"###DISPLAY_OBJECTS_NO###><label for="displayObjects0">non</label></span></div>
 <div class="clearBoth"></div>
 </div>
 <div class="formLine">
-<div class="leftForm">Afficher les applets :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(si 'non' est coch&eacute;, le contenu alternatif est affich&eacute;)&nbsp;&nbsp;</span></div>
+<div class="leftForm">Afficher les applets :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="displayApplets1" name="displayApplets" value="1"###DISPLAY_APPLETS_YES###><label for="displayApplets1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayApplets0" name="displayApplets" value="0"###DISPLAY_APPLETS_NO###><label for="displayApplets0">non</label></span></div>
 <div class="clearBoth"></div>
 </div>
@@ -123,7 +123,7 @@ jQuery.noConflict();
 <fieldset>
 <legend>Tables</legend>
 <div class="formLine">
-<div class="leftForm">Lin&eacute;ariser les tableaux :&nbsp;<br><span class="info">si l'internaute ne pr&eacute;cise rien.&nbsp;&nbsp;<br>(transformer en listes &agrave; puce)&nbsp;&nbsp;</span></div>
+<div class="leftForm">Linéariser les tableaux :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(transformer en listes à puce)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="parseTablesToList1" name="parseTablesToList" value="1"###PARSE_TABLES_YES###><label for="parseTablesToList1">oui</label>&nbsp;&nbsp;<input type="radio" id="parseTablesToList0" name="parseTablesToList" value="0"###PARSE_TABLES_NO###><label for="parseTablesToList0">non</label></span></div>
 <div class="clearBoth"></div>
 </div>
@@ -137,7 +137,7 @@ jQuery.noConflict();
 <div class="clearBoth"></div>
 </div>
 <div class="formLine">
-<div class="leftForm"><label for="defaultLanguage">Langue par d&eacute;faut du site :&nbsp;</label></div>
+<div class="leftForm"><label for="defaultLanguage">Langue par défaut du site :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="defaultLanguage" name="defaultLanguage" value="###DEFAULT_LANGUAGE###"></div>
 <div class="clearBoth"></div>
 </div>

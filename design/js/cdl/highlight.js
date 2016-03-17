@@ -752,36 +752,38 @@ jQuery('.cdlAudioControls a').on('click', function () {
 });
 
 function initAnchorLinks() {
-    jQuery.address.change(function (event) {
-        if (event.value !== '/') {
-            jQuery('[name="' + event.value + '"]:first, #' + event.value).each(function () {
-                var cdlToReadClassName, anchorRelated;
-                if (jQuery(this).is('[class*="cdlToRead"]')) {
-                    cdlToReadClassName = jQuery(this).attr('class');
-                } else {
-                    anchorRelated = jQuery('[class*="cdlToRead"]:first', jQuery(this));
-                    if (anchorRelated.size() > 0) {
-                        cdlToReadClassName = anchorRelated.attr('class');
+    if (jQuery.address) {
+        jQuery.address.change(function (event) {
+            if (event.value !== '/') {
+                jQuery('[name="' + event.value + '"]:first, #' + event.value).each(function () {
+                    var cdlToReadClassName, anchorRelated;
+                    if (jQuery(this).is('[class*="cdlToRead"]')) {
+                        cdlToReadClassName = jQuery(this).attr('class');
                     } else {
-                        anchorRelated = jQuery(this).nextAll('[class*="cdlToRead"]:first');
+                        anchorRelated = jQuery('[class*="cdlToRead"]:first', jQuery(this));
                         if (anchorRelated.size() > 0) {
                             cdlToReadClassName = anchorRelated.attr('class');
                         } else {
-                            anchorRelated = jQuery('[class*="cdlToRead"]:first', jQuery(this).nextAll());
+                            anchorRelated = jQuery(this).nextAll('[class*="cdlToRead"]:first');
                             if (anchorRelated.size() > 0) {
                                 cdlToReadClassName = anchorRelated.attr('class');
                             } else {
-                                cdlToReadClassName = "cdlToRead0";
+                                anchorRelated = jQuery('[class*="cdlToRead"]:first', jQuery(this).nextAll());
+                                if (anchorRelated.size() > 0) {
+                                    cdlToReadClassName = anchorRelated.attr('class');
+                                } else {
+                                    cdlToReadClassName = "cdlToRead0";
+                                }
                             }
                         }
                     }
-                }
-                cdlToReadClassName = cdlToReadClassName.replace(/.*?cdlToRead(\d+).*?/, "$1");
-                initLecture();
-                currentIndice = cdlToReadClassName;
-                timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + playMode + "')", 0);
-            });
-        }
-        return false;
-    });
+                    cdlToReadClassName = cdlToReadClassName.replace(/.*?cdlToRead(\d+).*?/, "$1");
+                    initLecture();
+                    currentIndice = cdlToReadClassName;
+                    timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + playMode + "')", 0);
+                });
+            }
+            return false;
+        });
+    }
 }

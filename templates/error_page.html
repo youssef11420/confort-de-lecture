@@ -2,7 +2,7 @@
 <html lang="###LANGUAGE###">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Erreur ###ERROR_NUMBER### sur la page demand&eacute;e &bull; Confort de lecture</title>
+<title>Erreur ###ERROR_NUMBER### sur la page demandée &bull; Confort de lecture</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="###EMBEDDED_URL###/favicon.png" rel="shortcut icon">
 <link href="###EMBEDDED_URL###/styles/default.css" rel="stylesheet">
@@ -11,12 +11,15 @@
 <!--[if IE]>
 <link href="###EMBEDDED_URL###/styles/ie.css" rel="stylesheet">
 <![endif]-->
-<body><!--###AUDIO###-->
+<body>
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<!-- <a href="###EMBEDDED_URL###/audio-error/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="T&eacute;l&eacute;charger la page en MP3" title="T&eacute;l&eacute;charger la page en MP3"></a> -->
+<a href="###EMBEDDED_URL###/personnalisation-affichage/###PERSONALIZATION_URL###" accesskey="l" title="Personnaliser vos paramètres d'affichage"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/display_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres d'affichage">###DISPLAY_ICON###</a><!--###AUDIO_ACTIONS###-->
+<a href="###EMBEDDED_URL###/personnalisation-audio/###PERSONALIZATION_URL###" accesskey="m" title="Personnaliser vos paramètres audio"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/audio_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres audio">###AUDIO_ICON###</a>
+<a href="###EMBEDDED_URL###/personnalisation-aide-audio/###PERSONALIZATION_URL###" accesskey="m" title="Aide audio"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/help_picto_###F_SIZE###.png" alt="Aide audio">###AUDIO_HELP_ICON###</a>
+<!-- <a href="###EMBEDDED_URL###/audio-error/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="Télécharger la page en MP3" title="Télécharger la page en MP3"></a> --><!--/###AUDIO_ACTIONS###-->
 </div>
-<div class="cdlAudioContent">
+<!--###AUDIO###--><div class="cdlAudioContent">
 <div class="cdlAudioObject">
 <div class="cdlAudioObjectContent" style="height:###DIV_MP3_PLAYER_HEIGHT###px">
 <div id="containerLecteurAudioCDL"></div>
@@ -36,8 +39,8 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 </div>
 </div>
-<div class="cdlClearBoth"></div>
-</div><!--/###AUDIO###-->
+<!--/###AUDIO###--><div class="cdlClearBoth"></div>
+</div>
 <div class="cdlGlobalPage">
 <div class="errorContent">
 <div class="cdlCadreContainer">
@@ -46,8 +49,8 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <p>sur la page :
 <p><a href="###PAGE_ON_ERROR_URL###"><strong>###PAGE_ON_ERROR_URL###</strong></a><br><br>
 <ul>
-<li><a href="###CDL_PAGE_URL###">Vous pouvez r&eacute;essayer en cliquant ici</a>
-<!--###PREVIOUS_CDL_PAGE_BLOCK###--><li><a href="###PREVIOUS_CDL_PAGE###">Retour &agrave; la page pr&eacute;c&eacute;dente</a><!--/###PREVIOUS_CDL_PAGE_BLOCK###-->
+<li><a href="###CDL_PAGE_URL###">Vous pouvez réessayer en cliquant ici</a>
+<!--###PREVIOUS_CDL_PAGE_BLOCK###--><li><a href="###PREVIOUS_CDL_PAGE###">Retour à la page précédente</a><!--/###PREVIOUS_CDL_PAGE_BLOCK###-->
 </ul>
 </div>
 </div>
