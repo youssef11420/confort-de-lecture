@@ -195,7 +195,7 @@ if ($activateAudio eq "1") {
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 	# Mettre le nom de domaine pour complèter les URLs absolues
-	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode);
+	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "recette.cdl.lnet.fr" :  $ENV{'SERVER_NAME'}.$embeddedMode);
 } else {
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO', "");

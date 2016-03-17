@@ -521,7 +521,7 @@ print "Content-disposition:attachment;filename=".$pageTitle.".mp3\n\n";
 
 if ($ttsMode eq "vaas" or $embeddedMode ne "") {
 	if ($ttsMode eq "sdk" && $embeddedMode ne "") {
-		$ttsServerName = "solution.confortdelecture.org";
+		$ttsServerName = "recette.cdl.lnet.fr";
 		$ttsPort = "80";
 		$ttsUri = "/audio-text/".($siteId ne "" ? $siteId : "default")."/";
 		$ttsDefaultQueryString = "";
