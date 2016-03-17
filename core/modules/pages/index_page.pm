@@ -197,7 +197,7 @@ sub renderErrorPage #($session, $siteId, $siteDefaultLanguage, $activateAudio, $
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', $ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode);
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_LIBRARY', "");
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
@@ -433,7 +433,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		$pageContent = setValueInTemplateString($pageContent, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$pageContent = setValueInTemplateString($pageContent, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', $ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode);
+		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
 		$pageContent = setValueInTemplateString($pageContent, 'JS_LIBRARY', "");
 		$pageContent = setValueInTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE', "");
@@ -475,7 +475,6 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 
 	# Initialisation de l'entête et affichage de la page finale
 	printPage($session, $contentType, $pageContent);
-	exit;
 }
 
 # Pour dire au pl que le pm s'est bien exécuté, il faut lui renvoyer une valeur vraie (donc 1 par ex)

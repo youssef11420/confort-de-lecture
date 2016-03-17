@@ -175,7 +175,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_SERVER_NAME', $ENV{'SERVER_NAME'});
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
 	} else {
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_LIBRARY', "");
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
