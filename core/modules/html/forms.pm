@@ -75,7 +75,7 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
 	$htmlCode =~ s/(<form( [^>]*)? action=(\"|\'))(.*?)(\3([^>]*)>)/$1.parseLinkHrefAttribute($4, $pagePath, $siteId, $siteRootUrl, $pageUri).$5/segi;
 
 	# Entourer les champs textuels de formulaire par un span de classe cdlInputText
-	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(text|email|search|date|number|password|file|tel)\3[^>]*>)/<span class=cdlInputText>$1<\/span>/sgi;
+	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)\3[^>]*>)/<span class=cdlInputText>$1<\/span>/sgi;
 	# Entourer les autres textuels de formulaire par un span de classe cdlOtherInput
 	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(radio|checkbox)\3[^>]*>)/<span class=cdlOtherInput>$1<strong class=cdlInput_$4><\/strong><\/span>/sgi;
 	# Gestion des balises input sans attribut type (donc par défaut de type texte)

@@ -85,8 +85,6 @@ $enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudi
 my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
 my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
 $ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
-my $siteDefaultLanguage = getConfig($siteConfiguration, 'defaultLanguage');
-$siteDefaultLanguage = $siteDefaultLanguage eq "" ? getConfig($defaultConfiguration, 'defaultLanguage') : $siteDefaultLanguage;
 
 my @paramKeys = param;
 
@@ -129,7 +127,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
 	my $contrast = loadFromSession($session, 'contrast');
-	$language = $language ? $language : ($siteDefaultLanguage ? $siteDefaultLanguage : "fr");
+	$language = $language ? $language : ($defaultLanguage ? $defaultLanguage : "fr");
 	$contrast = $contrast ? $contrast : "bn";
 
 	my $pageUriForHtml = $urlToParse;
@@ -151,7 +149,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'SITE_ID', $siteId);
 
 	# La langue du site
-	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'LANGUAGE', $defaultLanguage);
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'LANGUAGE', $language);
 
 	# Tous les paramètres reçus (cf index.pl)
 	my $hiddenParams = "";
@@ -193,7 +191,7 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
+		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "solution.confortdelecture.org" : $ENV{'SERVER_NAME'}.$embeddedMode);
 	} else {
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO', "");

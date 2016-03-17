@@ -310,6 +310,19 @@ $pageContent =~ s/<input( [^>]*)?>/
 	elsif ($inputAttributes{'type'} eq "file") {" ".decode("utf8", "Champ fichier")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
 	# Transformation des champs cryptés (masqués avec des *) par le texte "Champ crypté : {intitulé récupéré dans le label}"
 	elsif ($inputAttributes{'type'} eq "password") {" ".decode("utf8", "Champ crypté")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "color") {" ".decode("utf8", "Champ couleur")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "date") {" ".decode("utf8", "Champ date")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "datetime") {" ".decode("utf8", "Champ date et heure")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "datetime-local") {" ".decode("utf8", "Champ date et heure locale")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "email") {" ".decode("utf8", "Champ email")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "month") {" ".decode("utf8", "Champ mois")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "number") {" ".decode("utf8", "Champ nombre")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "range") {" ".decode("utf8", "Champ intervalle")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "search") {" ".decode("utf8", "Champ de recherche")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "tel") {" ".decode("utf8", "Champ téléphone")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "time") {" ".decode("utf8", "Champ heure")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "url") {" ".decode("utf8", "Champ lien")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "week") {" ".decode("utf8", "Champ semaine")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
 	# Transformation des champs texte par le texte "Champ texte : {intitulé récupéré dans le label}, {en indiquant la valeur du champ s'il est prérempli}"
 	elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" ".decode("utf8", "Champ d'édition")." : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
 	/segi;
@@ -355,7 +368,7 @@ $pageContent =~ s/<td( [^>]*)?>(.*?)<\/td>/" ".decode("utf8", "Cellule")." :\n".
 $pageContent =~ s/<th( [^>]*)?>(.*?)<\/th>/" ".decode("utf8", "Entête de cellule")." :\n".$2."__cdl_brk200__"/segi;
 
 # Si on est en train de lire une page intermédiaire (téléchargement d'un document, accés é une page protégée ou sortie de CDL), on supprime la balise object correspondant au lecteur mp3 puisqu'on ne veut pas le prendre en compte lors de la lecture
-if (param('cdlpagetype') =~ m/document|exit|protected/si) {
+if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 	$pageContent =~ s/<object( [^>]*)?>(.*?)<\/object>//sgi;
 }
 
@@ -376,7 +389,7 @@ $audioTextTemplateString = setValueInTemplateString($audioTextTemplateString, 'R
 
 # Si on est en train de lire une page intermédiaire (téléchargement d'un document, accés é une page protégée ou sortie de CDL), on met dans la template juste le contenu centrale de la page
 # Sinon on met dans la template toutes les parties de la page (entéte, contenu principal, éléments de navigation, lien retour é l'accueil, lien modifier votre parametrage, et enfin la mention copyright Confort de lecture
-if (param('cdlpagetype') =~ m/document|exit|protected/si) {
+if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 	my $pageContentBloc = $root->content->[1]->content->[1]->content->[0]->as_text;
 
 	if ($enableGlossary ne "0") {

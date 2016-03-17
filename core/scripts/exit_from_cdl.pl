@@ -100,20 +100,42 @@ if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
 my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
 my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
-if ($enableAudio eq "") {
-	$enableAudio = getConfig($defaultConfiguration, 'enableAudio');
-}
+$enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
+my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
+my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
+$ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
 
 # Chargement de la template principale de la page de sortie vers un site externe
 my $exitPageTemplateString = loadConfig($cdlTemplatesPath."exit_from_cdl.html");
 
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
-# La langue du site
+# Mettre les liens qui permettent d'aller modifier la personnalisation
+my $language = loadFromSession($session, 'language');
+my $contrast = loadFromSession($session, 'contrast');
+$language = $language ? $language : ($defaultLanguage ? $defaultLanguage : "fr");
+$contrast = $contrast ? $contrast : "bn";
+
+my $pageUriForHtml = $urlToParse;
+$pageUriForHtml =~ s/&amp;/&/sgi;
+$pageUriForHtml =~ s/&/&amp;/sgi;
+
+if ($embeddedMode ne "") {
+	$pageUriForHtml =~ s/^(https?:\/\/)?[^\/]+\/?//sgi;
+}
+
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
+
+my $iconContent;
+open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
+$iconContent = do { local $/; <ICON_FILE> };
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'DISPLAY_ICON', $iconContent);
+
+# L'identifiant du site
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'SITE_ID', $siteId);
 
 # La langue du site
-$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'LANGUAGE', $defaultLanguage);
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'LANGUAGE', $language);
 
 # Génération de la table des hachage des paramètres
 my @paramKeys = param;
@@ -173,7 +195,7 @@ if ($activateAudio eq "1") {
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 	# Mettre le nom de domaine pour complèter les URLs absolues
-	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
+	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode);
 } else {
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'AUDIO', "");

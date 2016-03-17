@@ -450,7 +450,7 @@ if ($voiceChoice eq "1") {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'VOICE_CHOICE', "");
 }
 
-$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode);
 
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SITE_ID', $siteId);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'LANGUAGE', $language);

@@ -95,8 +95,6 @@ $enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudi
 my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
 my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
 $ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
-my $siteDefaultLanguage = getConfig($siteConfiguration, 'defaultLanguage');
-$siteDefaultLanguage = $siteDefaultLanguage eq "" ? getConfig($defaultConfiguration, 'defaultLanguage') : $siteDefaultLanguage;
 
 # Génération de la table des hachage des paramètres
 my @paramKeys = param;
@@ -124,7 +122,7 @@ if ($action) {
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
 	my $contrast = loadFromSession($session, 'contrast');
-	$language = $language ? $language : ($siteDefaultLanguage ? $siteDefaultLanguage : "fr");
+	$language = $language ? $language : ($defaultLanguage ? $defaultLanguage : "fr");
 	$contrast = $contrast ? $contrast : "bn";
 
 	my $pageUriForHtml = $urlToParse;
@@ -146,7 +144,7 @@ if ($action) {
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'SITE_ID', $siteId);
 
 	# La langue du site
-	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'LANGUAGE', $defaultLanguage);
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'LANGUAGE', $language);
 
 	# Le type mime du document (donné en paramètre)
 	$contentType =~ s/\+/ /sgi;
@@ -201,7 +199,7 @@ if ($action) {
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "" ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode));
+		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "solution.confortdelecture.org" :  $ENV{'SERVER_NAME'}.$embeddedMode);
 	} else {
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO', "");

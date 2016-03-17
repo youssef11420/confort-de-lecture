@@ -29,7 +29,7 @@ AddHandler cgi-script .pl
 
 	RewriteRule ^audio/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$1&cdlcontent=$2 [L]
 	RewriteRule ^audio\-download/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$1&cdldownload=1&cdlcontent=$2 [L]
-	RewriteRule ^audio\-(document|exit|protected)/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$2&cdlcontent=$3&cdlpagetype=$1 [L]
+	RewriteRule ^audio\-(document|exit|protected|error)/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$2&cdlcontent=$3&cdlpagetype=$1 [L]
 	RewriteRule ^audio\-(voice|speed|help\-[a-z]{2})\-demo/([^/]*)/([^/]*)/([^/]*)$ core/scripts/audio.pl?cdlid=$2&cdldemo=1&cdltype=$1&cdlvoice=$3&cdlspeed=$4 [L]
 	RewriteRule ^audio\-text/([^/]*)/?$ core/scripts/audio.pl [L]
 
