@@ -212,7 +212,7 @@ if (param('cdltext')) {
 	}
 
 	my $root = HTML::TreeBuilder->new_from_content($pageContent);
-	$pageContent = $root->as_HTML;
+	$pageContent = $root->as_HTML('<>&');
 
 	if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"cdlDemoVoice\-([^\"]*)\"[^>]*>/si) {
 		$voice = $3;
@@ -414,10 +414,6 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 } else {
 	if (param('cdltext')) {
 		my $textContent = $root->as_text;
-
-		if ($utf8DecodeContent eq "1") {
-			$textContent = encode("utf8", $root->as_text);
-		}
 
 		if ($textContent !~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si) {
 			$textContent = "";
