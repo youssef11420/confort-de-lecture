@@ -207,6 +207,8 @@ if (param('cdltext')) {
 	$pageContent = param('cdltext');
 	$fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$pageContent);
 
+	$pageContent =~ s/(&nbsp;| )+/ /sgi;
+
 	if ($utf8DecodeContent ne "0") {
 		$pageContent = decode("utf8", $pageContent);
 	}
