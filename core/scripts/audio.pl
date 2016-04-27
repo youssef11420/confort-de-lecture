@@ -226,7 +226,7 @@ if (param('cdltext')) {
 	}
 	$pageContent =~ s/^<html><head><\/head><body><select( [^>]*)? id=\"cdlGhostSelect\"[^>]*><option([^>]*)>(.*?)<\/option><\/select><\/body><\/html>$/
 		my %optionAttributes = getTagAttributes($2);
-		($deleteOptionTitle ne 1 ? " ".decode("utf8", "Option de liste").($optionAttributes{'selected'} eq "selected" ? " ".decode("utf8", "sélectionnée") : "")." : " : "").($3 ? (length($optionAttributes{'title'}) > length($3) ? $optionAttributes{'title'} : $3) : "vide")."\n"
+		($deleteOptionTitle ne 1 ? " Option de liste".($optionAttributes{'selected'} eq "selected" ? " sélectionnée" : "")." : " : "").($3 ? (length($optionAttributes{'title'}) > length($3) ? $optionAttributes{'title'} : $3) : "vide")."\n"
 		/segi;
 } else {
 	# Récupérer le nom du fichier encrypté passé en paramétre
@@ -235,7 +235,7 @@ if (param('cdltext')) {
 		die "Aucun nom de fichier n'a été renseigné.\n";
 		exit;
 	}
-	
+
 	$parametersString = "_".loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList');
 
 	# Récupération du fichier correspondant à la page dans le cache
@@ -267,7 +267,7 @@ my %imgAttributes;
 $pageContent =~ s/<a( [^>]*)?>\s*<img( [^>]*)?>\s*<\/a>/
 	%linkAttributes = getTagAttributes($1);
 	%imgAttributes = getTagAttributes($2);
-	defined $linkAttributes{'href'} and $imgAttributes{'alt'} ? " ".decode("utf8", "Lien")." : ".(length($imgAttributes{'title'}) > length($imgAttributes{'alt'}) ? (length($linkAttributes{'title'}) > length($imgAttributes{'title'}) ? $linkAttributes{'title'} : $imgAttributes{'title'}) : (length($linkAttributes{'title'}) > length($imgAttributes{'alt'}) ? $linkAttributes{'title'} : $imgAttributes{'alt'})).".__cdl_brk500__" : ""
+	defined $linkAttributes{'href'} and $imgAttributes{'alt'} ? " Lien : ".(length($imgAttributes{'title'}) > length($imgAttributes{'alt'}) ? (length($linkAttributes{'title'}) > length($imgAttributes{'title'}) ? $linkAttributes{'title'} : $imgAttributes{'title'}) : (length($linkAttributes{'title'}) > length($imgAttributes{'alt'}) ? $linkAttributes{'title'} : $imgAttributes{'alt'})).".__cdl_brk500__" : ""
 	/segi;
 
 # Transformation des liens par le texte "Lien : {intitulé du lien (son contenu) ou son title}". C'est le plus long de ces 2 attributs qui est mis
@@ -279,93 +279,93 @@ $pageContent =~ s/<img( [^>]*)?>/
 # Transformation des liens par le texte "Lien : {intitulé du lien (son contenu) ou son title}". C'est le plus long de ces 2 attributs qui est mis
 $pageContent =~ s/<a( [^>]*)?>(.*?)<\/a>/
 	%linkAttributes = getTagAttributes($1);
-	defined $linkAttributes{'href'} ? " ".decode("utf8", "Lien")." : ".(length($linkAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($2)->as_text) ? $linkAttributes{'title'} : $2).".__cdl_brk500__" : ""
+	defined $linkAttributes{'href'} ? " Lien : ".(length($linkAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($2)->as_text) ? $linkAttributes{'title'} : $2).".__cdl_brk500__" : ""
 	/segi;
 
 # Transformation des liens dans les images map par le texte "Lien : {alt ou title du lien}". C'est le plus long de ces 2 attributs qui est mis
 $pageContent =~ s/<area( [^>]*)?>/
 	my %areaAttributes = getTagAttributes($1);
-	defined $areaAttributes{'href'} and $areaAttributes{'alt'} ? " ".decode("utf8", "Lien")." : ".(length($areaAttributes{'title'}) > length($areaAttributes{'alt'}) ? $areaAttributes{'title'} : $areaAttributes{'alt'}).".__cdl_brk500__" : ""
+	defined $areaAttributes{'href'} and $areaAttributes{'alt'} ? " Lien : ".(length($areaAttributes{'title'}) > length($areaAttributes{'alt'}) ? $areaAttributes{'title'} : $areaAttributes{'alt'}).".__cdl_brk500__" : ""
 	/segi;
 
 # Transformation des boutons (normal, de validation et de réinitialisation) par le texte "Bouton (validation, réinitialisation) : {intitulé du bouton (son contenu) ou son title}". C'est le plus long de ces 2 attributs qui est mis
 $pageContent =~ s/<button( [^>]*)?>(.*?)<\/button>/
 	my %buttonAttributes = getTagAttributes($1);
-	" ".decode("utf8", "Bouton").($buttonAttributes{'type'} eq "reset" ? " ".decode("utf8", "réinitialisation") : (!$buttonAttributes{'type'} or $buttonAttributes{'type'} eq "submit" ? " ".decode("utf8", "validation") : ""))." : ".(length($buttonAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($2)->as_text) ? $buttonAttributes{'title'} : $2).".__cdl_brk500__"
+	" Bouton".($buttonAttributes{'type'} eq "reset" ? " réinitialisation" : (!$buttonAttributes{'type'} or $buttonAttributes{'type'} eq "submit" ? " validation" : ""))." : ".(length($buttonAttributes{'title'}) > length(HTML::TreeBuilder->new_from_content($2)->as_text) ? $buttonAttributes{'title'} : $2).".__cdl_brk500__"
 	/segi;
 
 # Transformation des boutons (normal, de validation et de réinitialisation) et champs de formulaire par leurs textes appropriés
 $pageContent =~ s/<input( [^>]*)?>/
 	my %inputAttributes = getTagAttributes($1);
 	# Transformation des boutons (normal, de validation et de réinitialisation) par le texte "Bouton (validation, réinitialisation) : {intitulé du bouton (son contenu)}"
-	if ($inputAttributes{'type'} eq "button") {" ".decode("utf8", "Bouton")." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
-	elsif ($inputAttributes{'type'} eq "reset") {" ".decode("utf8", "Bouton réinitialisation")." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
-	elsif ($inputAttributes{'type'} eq "submit") {" ".decode("utf8", "Bouton validation")." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
-	elsif ($inputAttributes{'type'} eq "image") {" ".decode("utf8", "Bouton validation")." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'alt'}) ? $inputAttributes{'title'} : $inputAttributes{'alt'}).".__cdl_brk500__"}
+	if ($inputAttributes{'type'} eq "button") {" Bouton : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
+	elsif ($inputAttributes{'type'} eq "reset") {" Bouton réinitialisation : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
+	elsif ($inputAttributes{'type'} eq "submit") {" Bouton validation : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
+	elsif ($inputAttributes{'type'} eq "image") {" Bouton validation : ".(length($inputAttributes{'title'}) > length($inputAttributes{'alt'}) ? $inputAttributes{'title'} : $inputAttributes{'alt'}).".__cdl_brk500__"}
 	# Transformation des cases é cocher par le texte "Case à cocher : {intitulé récupéré dans le label}, {en indiquant si la case est précochée}"
-	elsif ($inputAttributes{'type'} eq "checkbox") {" ".decode("utf8", "Case à cocher")." : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? decode("utf8", "cochée") : "").".__cdl_brk500__"}
+	elsif ($inputAttributes{'type'} eq "checkbox") {" Case à cocher : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? "cochée" : "").".__cdl_brk500__"}
 	# Transformation des boutons radio par le texte "Bouton radio : {intitulé récupéré dans le label}, {en indiquant si le bouton radio est précoché}"
-	elsif ($inputAttributes{'type'} eq "radio") {" ".decode("utf8", "Bouton radio")." : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? decode("utf8", "coché") : "").".__cdl_brk500__"}
+	elsif ($inputAttributes{'type'} eq "radio") {" Bouton radio : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? "coché" : "").".__cdl_brk500__"}
 	# Transformation des champs d'upload de fichiers par le texte "Champ fichier : {intitulé récupéré dans le label}"
-	elsif ($inputAttributes{'type'} eq "file") {" ".decode("utf8", "Champ fichier")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
+	elsif ($inputAttributes{'type'} eq "file") {" Champ fichier : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
 	# Transformation des champs cryptés (masqués avec des *) par le texte "Champ crypté : {intitulé récupéré dans le label}"
-	elsif ($inputAttributes{'type'} eq "password") {" ".decode("utf8", "Champ crypté")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "color") {" ".decode("utf8", "Champ couleur")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "date") {" ".decode("utf8", "Champ date")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "datetime") {" ".decode("utf8", "Champ date et heure")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "datetime-local") {" ".decode("utf8", "Champ date et heure locale")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "email") {" ".decode("utf8", "Champ email")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "month") {" ".decode("utf8", "Champ mois")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "number") {" ".decode("utf8", "Champ nombre")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "range") {" ".decode("utf8", "Champ intervalle")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "search") {" ".decode("utf8", "Champ de recherche")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "tel") {" ".decode("utf8", "Champ téléphone")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "time") {" ".decode("utf8", "Champ heure")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "url") {" ".decode("utf8", "Champ lien")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
-	elsif ($inputAttributes{'type'} eq "week") {" ".decode("utf8", "Champ semaine")." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif ($inputAttributes{'type'} eq "password") {" Champ crypté : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "color") {" Champ couleur : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "date") {" Champ date : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "datetime") {" Champ date et heure : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "datetime-local") {" Champ date et heure locale : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "email") {" Champ email : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "month") {" Champ mois : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "number") {" Champ nombre : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "range") {" Champ intervalle : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "search") {" Champ de recherche : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "tel") {" Champ téléphone : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "time") {" Champ heure : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "url") {" Champ lien : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "week") {" Champ semaine : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
 	# Transformation des champs texte par le texte "Champ texte : {intitulé récupéré dans le label}, {en indiquant la valeur du champ s'il est prérempli}"
-	elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" ".decode("utf8", "Champ d'édition")." : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."}
+	elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" Champ d'édition : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
 	/segi;
 
 # Transformation des listes déroulantes par le texte "Liste déroulante : {intitulé récupéré dans le label}"
 $pageContent =~ s/<select( [^>]*)?>(.*?)<\/select>/
 	my %selectAttributes = getTagAttributes($1);
-	" ".decode("utf8", "Liste déroulante")." : ".$labelsTexts{$selectAttributes{'id'}}.":\n".$2."."
+	" Liste déroulante : ".$labelsTexts{$selectAttributes{'id'}}.":\n".$2."."
 	/segi;
 
 # Transformation des options de liste déroulante par le texte "Option de liste {en indiquant si l'option est préselectionnée} : {intitulé de l'option (son contenu), en précisant si l'option est vide}"
 $pageContent =~ s/<option( [^>]*)?>(.*?)<\/option>/
 	my %optionAttributes = getTagAttributes($1);
-	$optionAttributes{'selected'} eq "selected" ? ($deleteOptionTitle ne 1 ? " ".decode("utf8", "Option de liste sélectionnée")." : " : "").($2 ? (length($optionAttributes{'title'}) > length($2) ? $optionAttributes{'title'} : $2) : decode("utf8", "vide")) : ""
+	$optionAttributes{'selected'} eq "selected" ? ($deleteOptionTitle ne 1 ? " Option de liste sélectionnée : " : "").($2 ? (length($optionAttributes{'title'}) > length($2) ? $optionAttributes{'title'} : $2) : "vide") : ""
 	/segi;
 
 # Transformation des zones de saisie multiligne par le texte "Zone de saisie multiligne {intitulé récupéré dans le label}, {en indiquant la valeur de la zone si elle est préremplie}"
 $pageContent =~ s/<textarea( [^>]*)?>(.*?)<\/textarea>/
 	my %textareaAttributes = getTagAttributes($1);
-	" ".decode("utf8", "Champ d'édition multiligne")." : ".$labelsTexts{$textareaAttributes{'id'}}.($2 ? " : ".$2 : "").".__cdl_brk3000__ ".decode("utf8", "Pour sortir de ce champ, utilisez la touche échap")."."
+	" Champ d'édition multiligne : ".$labelsTexts{$textareaAttributes{'id'}}.($2 ? " : ".$2 : "").".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."
 	/segi;
 
 # Transformation des légendes des fieldset dans les formulaires par le texte "Légende : {intitulé de la légende (son contenu)}"
-$pageContent =~ s/<legend( [^>]*)?>(.*?)<\/legend>/ " ".decode("utf8", "Légende")." : ".$2.".\n"/segi;
+$pageContent =~ s/<legend( [^>]*)?>(.*?)<\/legend>/ " Légende : ".$2.".\n"/segi;
 
 # Marquage d'un temps d'arrét aprés chaque item
 $pageContent =~ s/(<li( [^>]*)?>(.*?)<\/li>)/$1." "/segi;
 # Transformation des termes définis dans des listes de définitions par le texte "Terme défini : {intitulé du terme (son contenu)}"
-$pageContent =~ s/(<dt( [^>]*)?>(.*?)<\/dt>)/ " ".decode("utf8", "Terme défini")." : ".$1.".__cdl_brk200__"/segi;
+$pageContent =~ s/(<dt( [^>]*)?>(.*?)<\/dt>)/ " Terme défini : ".$1.".__cdl_brk200__"/segi;
 # Transformation des définitions dans des listes de définitions par le texte "Définition terme : {définition du terme (contenu de la définition)}"
-$pageContent =~ s/(<dd( [^>]*)?>(.*?)<\/dd>)/ " ".decode("utf8", "Définition terme")." : ".$1.".__cdl_brk200__"/segi;
+$pageContent =~ s/(<dd( [^>]*)?>(.*?)<\/dd>)/ " Définition terme : ".$1.".__cdl_brk200__"/segi;
 # Ajout d'un point aprés chaque élément "bloc" pour s'assurer qu'il y aura une pause de lecture é la fin d'un paragraphe ou d'un div
 $pageContent =~ s/(<\/(p|div|address|pre|blockquote|ins|del)>)/ ".".$1/segi;
 # Remplacement des retours é la ligne HTML (balises br) par des points pour marquer un pause.
 $pageContent =~ s/<br( [^>]*)?>/ ".\n"/segi;
 # Transformation des zones de codes par le texte "Zone de code : {contenu de la zone code}"
-$pageContent =~ s/<code( [^>]*)?>(.*?)<\/code>/" ".decode("utf8", "Zone de code")." :\n".$2.".__cdl_brk200__"/segi;
+$pageContent =~ s/<code( [^>]*)?>(.*?)<\/code>/" Zone de code :\n".$2.".__cdl_brk200__"/segi;
 # Transformation des citations par le texte "Citation : {contenu de la citation}"
-$pageContent =~ s/<cite( [^>]*)?>(.*?)<\/cite>/" ".decode("utf8", "Citation")." :\n".$2.".__cdl_brk200__"/segi;
+$pageContent =~ s/<cite( [^>]*)?>(.*?)<\/cite>/" Citation :\n".$2.".__cdl_brk200__"/segi;
 # Transformation des cellules de tableaux par le texte "Cellule : {contenu de la cellule}"
-$pageContent =~ s/<td( [^>]*)?>(.*?)<\/td>/" ".decode("utf8", "Cellule")." :\n".$2."__cdl_brk200__"/segi;
+$pageContent =~ s/<td( [^>]*)?>(.*?)<\/td>/" Cellule :\n".$2."__cdl_brk200__"/segi;
 # Transformation des entétes de cellules de tableaux par le texte "Entéte de cellule : {contenu de l'entéte de cellule}"
-$pageContent =~ s/<th( [^>]*)?>(.*?)<\/th>/" ".decode("utf8", "Entête de cellule")." :\n".$2."__cdl_brk200__"/segi;
+$pageContent =~ s/<th( [^>]*)?>(.*?)<\/th>/" Entête de cellule :\n".$2."__cdl_brk200__"/segi;
 
 # Si on est en train de lire une page intermédiaire (téléchargement d'un document, accés é une page protégée ou sortie de CDL), on supprime la balise object correspondant au lecteur mp3 puisqu'on ne veut pas le prendre en compte lors de la lecture
 if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
