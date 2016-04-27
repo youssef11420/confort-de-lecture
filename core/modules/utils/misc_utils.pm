@@ -1208,8 +1208,6 @@ sub glossaryMain #($string)
 {
 	my ($string) = @_;
 
-	utf8::encode($string);
-
 	# Transformation des caractéres '|' '-' pour ne pas géner la lecture, et juste marquer une pause
 	$string =~ s/\|/./sgi;
 	$string =~ s/\s+(–|\-)\s+/ , /sgi;
