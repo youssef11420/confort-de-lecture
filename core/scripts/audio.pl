@@ -508,7 +508,9 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 # Transformation des codes temporaires pour les temporisations
 $audioTemplateString =~ s/__cdl_brk(\d+)__//sgi;
 $audioTextTemplateString =~ s/__cdl_brk(\d+)__//sgi;
-# Alléger les pauses
+
+$audioTemplateString =~ s/([\?!:\.,;])\./$1/sgi;
+$audioTextTemplateString =~ s/([\?!:\.,;])\./$1/sgi;
 
 # Appel du service audio, qui retourne le texte transformé en mp3
 
