@@ -502,7 +502,7 @@ function detectKeyDownForFocusable(e) {
             return;
         // autres
         default:
-            if (jQuery(this).is('input[type="text"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="range"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], input[type="password"], textarea') && kc !== 13) {
+            if (jQuery(this).is('input[type="text"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="range"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], input[type="password"], textarea') && ((kc >= 48 && kc <= 90) || (kc >= 96 && kc <= 111) || (kc >= 186 && kc <= 222))) {
                 char = String.fromCharCode(kc);
                 if (char) {
                     timer = window.setTimeout("lectureMorceau('" + char.replace(/'/, "\\'") + "',playDirection,playMode)", duree);
