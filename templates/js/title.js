@@ -91,4 +91,10 @@ jQuery(document).ready(function () {
         autohidemode: false,
         zindex: 114200
     });
+
+    jQuery('.cdlCadre img').each(function () {
+        if (jQuery(this).width() < 800) {
+            jQuery(this).width(800);
+        }
+    });
 });

@@ -5,7 +5,6 @@ a *{text-decoration:underline;cursor:pointer}
 fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
 img{display:block;padding-bottom:2px;max-width:100%}
-.cdlCadre img{min-width:800px}
 .cdlButtons{padding:5px 0;display:block}
 fieldset,button,.cdlButtons input{border-width:1px}
 .cdlButtons input{cursor:pointer}
