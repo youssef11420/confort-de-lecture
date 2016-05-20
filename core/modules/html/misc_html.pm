@@ -493,7 +493,7 @@ sub prepareForHighlighting #($htmlCode)
 
 	$htmlCode =~ s/(<\/(li|dt|dd|caption|th|td|button)>)/<\/span>$1/sgi;
 
-	$htmlCode =~ s/(<(ul|ol|menu|dl|table|select|textarea|label|object|legend)( [^>]*?)?>)/<\/span><\/span>$1/sgi;
+	$htmlCode =~ s/(<(ul|ol|menu|dl|table|tfoot|tbody|thead|select|textarea|label|object|legend)( [^>]*?)?>)/<\/span><\/span>$1/sgi;
 
 	$htmlCode =~ s/(<\/(ul|ol|menu|dl|table|select|textarea|label|object|legend)>)/$1<span class=cdlPartOfText>/sgi;
 

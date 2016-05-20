@@ -155,10 +155,13 @@ sub parseTableRowsToItems #($tableHtmlCode, $tableAttributes)
 {
 	my ($tableHtmlCode, $tableAttributes) = @_;
 
+	my $footerHtmlCode = "";
+	$tableHtmlCode =~ s/<tfoot( [^>]*?)?>(.*?)(?=(<t(head|body)( [^>]*?)?>|$))/
+		$footerHtmlCode = $2; ""/segi;
+
 	# Nettoyage des autres balises (thead, tbody, ..)
 	$tableHtmlCode =~ s/<thead( [^>]*?)?>//sgi;
 	$tableHtmlCode =~ s/<tbody( [^>]*?)?>//sgi;
-	$tableHtmlCode =~ s/<tfoot( [^>]*?)?>//sgi;
 	$tableHtmlCode =~ s/<colgroup( [^>]*?)?>//sgi;
 	$tableHtmlCode =~ s/<col( [^>]*?)?>//sgi;
 
@@ -167,16 +170,29 @@ sub parseTableRowsToItems #($tableHtmlCode, $tableAttributes)
 
 	# Récupération de la table de hachage des entêtes
 	my %theadersHash;
+	my %tfootHeadersHash;
 	my $thNumber = 0;
 	my $theaderId = "";
-	# On construit la table de hachage des entêtes, eton les supprime du code HTML de la table
+
+	# On construit la table de hachage des entêtes, et on les supprime du code HTML de la table
+	$footerHtmlCode =~ s/<th( [^>]*?)?>(.*?)(?=(<t(r|h|d|body)( [^>]*?)?>|$))/
+		($theaderId, $thNumber) = getThisThIdAndNextThNumber($1, $thNumber); $tfootHeadersHash{$theaderId} = $2; ""/segi;
+	$thNumber = 0;
 	$tableHtmlCode =~ s/<th( [^>]*?)?>(.*?)(?=(<t(r|h|d|body)( [^>]*?)?>|$))/
 		($theaderId, $thNumber) = getThisThIdAndNextThNumber($1, $thNumber); $theadersHash{$theaderId} = $2; ""/segi;
 
-	# Transformation du contenu de chaque ligne du tableau
+	# Transformation du contenu de chaque ligne du footer du tableau
 	my $nbRows = 0;
+
+	# Transformation du contenu de chaque ligne du tableau
+
+	# Suppression de la première ligne qui concerne les entêtes
+	$footerHtmlCode =~ s/<tr( [^>]*?)?>(.*?)(?=(<tr( [^>]*?)?>|$))/$nbRows++; "<li".getTableTagId($1)."><ul class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %tfootHeadersHash)."<\/ul><hr><br class=\"cdlHidden\">";/segi;
+
 	# Suppression de la première ligne qui concerne les entêtes
 	$tableHtmlCode =~ s/<tr( [^>]*?)?>(.*?)(?=(<tr( [^>]*?)?>|$))/$nbRows++; "<li".getTableTagId($1)."><ul class=\"cdlTableRowContent\">".parseTableCellsToSubItems($2, %theadersHash)."<\/ul><hr><br class=\"cdlHidden\">";/segi;
+
+	$tableHtmlCode .= $footerHtmlCode ne "" ? "<br><hr><br class=\"cdlHidden\">".$footerHtmlCode : "";
 
 	# Gestion des cas limite :
 	# - s'il n'y a qu'un seul li, on enlève le séparateur hr
