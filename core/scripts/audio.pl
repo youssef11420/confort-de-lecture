@@ -509,8 +509,8 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 $audioTemplateString =~ s/__cdl_brk(\d+)__//sgi;
 $audioTextTemplateString =~ s/__cdl_brk(\d+)__//sgi;
 
-$audioTemplateString =~ s/([\?!:\.,;])\./$1/sgi;
-$audioTextTemplateString =~ s/([\?!:\.,;])\./$1/sgi;
+$audioTemplateString =~ s/([\?!:\.,;])\s*\./$1/sgi;
+$audioTextTemplateString =~ s/([\?!:\.,;])\s*\./$1/sgi;
 
 # Appel du service audio, qui retourne le texte transformé en mp3
 
