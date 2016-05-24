@@ -91,9 +91,10 @@ sub makeUrlAbsoluteWithoutProtocol #($url, $siteRootUrl, $pagePath)
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl)
+#	$method - Méthode d'appel de l'URL (dans le cas des formulaires)
+sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method)
 {
-	my ($url, $pagePath, $siteId, $siteRootUrl) = @_;
+	my ($url, $pagePath, $siteId, $siteRootUrl, $method) = @_;
 
 	# Si l'URL est vide, on va vers la page d'accueil
 	if ($url eq "") {
@@ -108,11 +109,14 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl)
 	# Gestion des protocoles (http et https, puis les autres protocoles impossible à gérer)
 	if ($url =~ m/^http(s)?:\/\/([^\/]+\/*)(.*)$/si) {
 		my $secure = $1;
-		$url = ($embeddedMode ne "" ? "" : $2).$3;
-		$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs/" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f/" : "/le-filtre/".$siteId)."/")).$url;
-	} elsif ($url =~ m/^http(s)?:\/\//si) {
-		my $secure = $1;
-		$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/get/".$url;
+		my $domainName = $2;
+		if ($siteRootUrl =~ m/^http(s)?:\/\/$domainName/si) {
+			$url = ($embeddedMode ne "" ? "" : $domainName).$3;
+			$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs/" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f/" : "/le-filtre/".$siteId)."/")).$url;
+		} else {
+			$url =~ s/^http(s)?:\/\///sgi;
+			$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
+		}
 	}
 
 	# Suppression du nom de domaine de la page (qui se trouve déjà dans la balise base)

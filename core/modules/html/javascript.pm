@@ -198,16 +198,16 @@ sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAt
 	}
 
 	# Transformer l'URL dans l'instruction de redirection pour passer par le script principal
-	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*(\"|\'|&\#39;)(.*?)\4/$1."=".$4.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)).$4/segi;
+	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*(\"|\'|&\#39;)(.*?)\4/$1."=".$4.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl, 'get')).$4/segi;
 	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*([\w\d_]+)\s*/$1."=".generateJavascriptForCompletingPageVariable(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId), $currentServerName, $4, $isInAttribute)/segi;
 
 	# Transformer l'URL dans l'instruction d'ouverture dans une nouvelle fenêtre pour passer par le script principal
-	$jsCode =~ s/(window\.open\s*\()\s*(\"|\'|&\#39;)(.*?)\2(\s*(,|\)))/$1.$2.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl)).$2.$4/segi;
+	$jsCode =~ s/(window\.open\s*\()\s*(\"|\'|&\#39;)(.*?)\2(\s*(,|\)))/$1.$2.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl, 'get')).$2.$4/segi;
 	$jsCode =~ s/(window\.open\s*\()\s*([\w\d_]+)(\s*(,|\)))/$1.generateJavascriptForCompletingPageVariable(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId), $currentServerName, $2, $isInAttribute).$3/segi;
 
-	$jsCode =~ s/(\.autocomplete)\s*\(\s*(\"|\'|&\#39;)(.*?)\2/$1."\(".$2.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl)).$2/segi;
+	$jsCode =~ s/(\.autocomplete)\s*\(\s*(\"|\'|&\#39;)(.*?)\2/$1."\(".$2.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl, 'get')).$2/segi;
 
-	$jsCode =~ s/((^|\s)(url|progress|review|saveMethod|failure)\s*:\s*)(\"|\'|&\#39;)(.*?)\4/$1.$4.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl)).$4/segi;
+	$jsCode =~ s/((^|\s)(url|progress|review|saveMethod|failure)\s*:\s*)(\"|\'|&\#39;)(.*?)\4/$1.$4.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl, 'get')).$4/segi;
 
 	# Retourner le code javascript sans les instructions de styles et avec les URLs de redirection parsées
 	return $jsCode;

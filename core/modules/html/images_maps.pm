@@ -100,7 +100,7 @@ sub parseMapAreaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl)
 	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl) = @_;
 
 	# Transformer l'URL pour passer par le script CDL principal
-	$tagAttributes =~ s/( (href))=(\"|\')(.*?)\3/$1."=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl).$3/segi;
+	$tagAttributes =~ s/( (href))=(\"|\')(.*?)\3/$1."=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get').$3/segi;
 
 	# Retourner les attributs du area en parsant l'URL dans le href
 	return $tagAttributes;
@@ -130,11 +130,11 @@ sub parseMapAreas #($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl)
 		# Remplacer la balise area par la balise li contenant un lien vers la destination du area
 		# Traitement des 3 cas, où l'attribut href est avant alt, et inversement, puis le cas où il n'y a pas de alt
 		$htmlCode =~ s/<area( [^>]*?)? (href)=(\"|\')(.*?)\3( [^>]*?)? (alt)=(\"|\')(.*?)\7.*?>/
-			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl).$3.">".$8."<\/a><\/li>"/segi;
+			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get').$3.">".$8."<\/a><\/li>"/segi;
 		$htmlCode =~ s/<area( [^>]*?)? (alt)=(\"|\')(.*?)\3( [^>]*?)? (href)=(\"|\')(.*?)\7.*?>/
-			"<li><a href=".$7.getUriFromUrl($8, $pagePath, $siteId, $siteRootUrl).$7.">".$4."<\/a><\/li>"/segi;
+			"<li><a href=".$7.getUriFromUrl($8, $pagePath, $siteId, $siteRootUrl, 'get').$7.">".$4."<\/a><\/li>"/segi;
 		$htmlCode =~ s/<area( [^>]*?)? (href)=(\"|\')(.*?)\3.*?>/
-			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl).$3.">".(length($4) > 100 ? substr($4, 0, 97)."..." : $4)."<\/a><\/li>"/segi;
+			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get').$3.">".(length($4) > 100 ? substr($4, 0, 97)."..." : $4)."<\/a><\/li>"/segi;
 	}
 
 	# Retourner le code HTML avec les balise map/area parsées

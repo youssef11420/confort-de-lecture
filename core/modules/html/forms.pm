@@ -71,8 +71,12 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
 
 	# Traitement du code des formulaires :
 
+	my $method = 'get';
+
+	$htmlCode =~ s/(<form( [^>]*)? method=(\"|\'))(.*?)(\3([^>]*)>)/$method = $4; $1.$4.$5/segi;
+
 	# Modification de la valeur de l'attribut action pour rester sur CDL
-	$htmlCode =~ s/(<form( [^>]*)? action=(\"|\'))(.*?)(\3([^>]*)>)/$1.parseLinkHrefAttribute($4, $pagePath, $siteId, $siteRootUrl, $pageUri).$5/segi;
+	$htmlCode =~ s/(<form( [^>]*)? action=(\"|\'))(.*?)(\3([^>]*)>)/$1.parseLinkHrefAttribute($4, $pagePath, $siteId, $siteRootUrl, $pageUri, $method).$5/segi;
 
 	# Entourer les champs textuels de formulaire par un span de classe cdlInputText
 	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)\3[^>]*>)/<span class=cdlInputText>$1<\/span>/sgi;

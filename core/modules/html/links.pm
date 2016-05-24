@@ -26,9 +26,10 @@
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
-sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri)
+#	$method - Méthode d'appel de l'URL (dans le cas des formulaires)
+sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method)
 {
-	my ($url, $pagePath, $siteId, $siteRootUrl, $pageUri) = @_;
+	my ($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method) = @_;
 
 	$url =~ s/\s+$//sgi;
 
@@ -45,11 +46,11 @@ sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri)
 
 	# Si l'URL contient un # au milieu, c'est un lien vers une page, mais avec un ancre sur un emplacement dans la page destination : on traite l'URL et on rajoute l'ancre à la fin non encodée pour qu'elle soit prise en compte dans la version filtrée
 	if ($url =~ m/(.*?)(\#.*)/si) {
-		$url =~ s/(.*?)(\#.*)/return getUriFromUrl($1, $pagePath, $siteId, $siteRootUrl).$2;/segi;
+		$url =~ s/(.*?)(\#.*)/return getUriFromUrl($1, $pagePath, $siteId, $siteRootUrl, $method).$2;/segi;
 	}
 
 	# Sinon traiter l'URL en entier
-	return getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl);
+	return getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl, $method);
 }
 
 # Function: encodeSpaces
@@ -82,7 +83,7 @@ sub parseLinkHref #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri) = @_;
 
 	# Transformation du href en mettant le script CDL principal en intermédiaire
-	$htmlCode =~ s/(<a( [^>]*?)? (href))=(\"|\')(.*?)\4/$1."=".$4.encodeSpaces(parseLinkHrefAttribute($5, $pagePath, $siteId, $siteRootUrl, $pageUri)).$4/segi;
+	$htmlCode =~ s/(<a( [^>]*?)? (href))=(\"|\')(.*?)\4/$1."=".$4.encodeSpaces(parseLinkHrefAttribute($5, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get')).$4/segi;
 
 	# Retourner de code HTML parsé
 	return $htmlCode;

@@ -360,7 +360,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 		my $backHomeTemplateString = loadConfig($cdlTemplatesPath."back_home_link.html");
 
 		# Affichage du lien Retour à l'accueil
-		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', setValueInTemplateString($backHomeTemplateString, 'HOME_URL', parseLinkHrefAttribute($homePageUri, $pagePath, $siteId, $siteRootUrl, $pageUri))));
+		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', setValueInTemplateString($backHomeTemplateString, 'HOME_URL', parseLinkHrefAttribute($homePageUri, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get'))));
 	} else {
 		# Chargement de la template de titre du site
 		my $siteTitleTemplateString = loadConfig($cdlTemplatesPath."site_title.html");

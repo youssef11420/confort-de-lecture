@@ -358,7 +358,7 @@ sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $p
 	my $redirectUrl = $response->header("Location");
 
 	# Transformation de l'URL pour rester dans CDL
-	$redirectUrl = parseLinkHrefAttribute($redirectUrl, $pagePath, $siteId, $siteRootUrl, $pageUri);
+	$redirectUrl = parseLinkHrefAttribute($redirectUrl, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get');
 
 	$siteRootUrl =~ s/^https?:\/\///sgi;
 	if ($redirectUrl !~ m/^\/(cdl\/fs?|\/le\-filtre(\-https)?\/$siteId)/si and $redirectUrl !~ m/^https?:\/\//si) {
