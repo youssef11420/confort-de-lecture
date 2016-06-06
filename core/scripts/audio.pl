@@ -311,22 +311,22 @@ $pageContent =~ s/<input( [^>]*)?>/
 	# Transformation des champs d'upload de fichiers par le texte "Champ fichier : {intitulé récupéré dans le label}"
 	elsif ($inputAttributes{'type'} eq "file") {" Champ fichier : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
 	# Transformation des champs cryptés (masqués avec des *) par le texte "Champ crypté : {intitulé récupéré dans le label}"
-	elsif ($inputAttributes{'type'} eq "password") {" Champ crypté : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "color") {" Champ couleur : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "date") {" Champ date : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "datetime") {" Champ date et heure : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "datetime-local") {" Champ date et heure locale : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "email") {" Champ email : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "month") {" Champ mois : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "number") {" Champ nombre : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "range") {" Champ intervalle : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "search") {" Champ de recherche : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "tel") {" Champ téléphone : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "time") {" Champ heure : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "url") {" Champ lien : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
-	elsif ($inputAttributes{'type'} eq "week") {" Champ semaine : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif ($inputAttributes{'type'} eq "password") {" Champ crypté : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "color") {" Champ couleur : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "date") {" Champ date : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "datetime") {" Champ date et heure : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "datetime-local") {" Champ date et heure locale : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "email") {" Champ email : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "month") {" Champ mois : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "number") {" Champ nombre : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "range") {" Champ intervalle : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "search") {" Champ de recherche : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "tel") {" Champ téléphone : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "time") {" Champ heure : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "url") {" Champ lien : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
+	elsif ($inputAttributes{'type'} eq "week") {" Champ semaine : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
 	# Transformation des champs texte par le texte "Champ texte : {intitulé récupéré dans le label}, {en indiquant la valeur du champ s'il est prérempli}"
-	elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" Champ d'édition : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."}
+	elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" Champ d'édition : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."}
 	/segi;
 
 # Transformation des listes déroulantes par le texte "Liste déroulante : {intitulé récupéré dans le label}"
@@ -344,7 +344,7 @@ $pageContent =~ s/<option( [^>]*)?>(.*?)<\/option>/
 # Transformation des zones de saisie multiligne par le texte "Zone de saisie multiligne {intitulé récupéré dans le label}, {en indiquant la valeur de la zone si elle est préremplie}"
 $pageContent =~ s/<textarea( [^>]*)?>(.*?)<\/textarea>/
 	my %textareaAttributes = getTagAttributes($1);
-	" Champ d'édition multiligne : ".$labelsTexts{$textareaAttributes{'id'}}.($2 ? " : ".$2 : "").".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échap."
+	" Champ d'édition multiligne : ".$labelsTexts{$textareaAttributes{'id'}}.($2 ? " : ".$2 : "").".__cdl_brk3000__ Pour sortir de ce champ, utilisez la touche échappe."
 	/segi;
 
 # Transformation des légendes des fieldset dans les formulaires par le texte "Légende : {intitulé de la légende (son contenu)}"
