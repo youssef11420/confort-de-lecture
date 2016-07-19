@@ -75,7 +75,13 @@ my $styleString = loadConfig($cdlTemplatesPath."css/".$styleToLoad.".css");
 $styleString = setValueInTemplateString($styleString, 'EMBEDDED_URL', $embeddedMode);
 $styleString = setValueInTemplateString($styleString, 'SITE_ID', $siteId);
 
-my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
+my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight);
+
+if ($styleToLoad eq "all") {
+	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (loadFromSession($session, "backgroundColor"), loadFromSession($session, "fontColor"), loadFromSession($session, "linkColor"), loadFromSession($session, "fontSize"), loadFromSession($session, "letterSpacing"), loadFromSession($session, "wordSpacing"), loadFromSession($session, "lineHeight"));
+} else {
+	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
+}
 
 my $pagePaddingTop = $fontSize eq "" ? "94" : "".66+0.7*(($fontSize - 1)*20);
 my $pageMarginTop = $fontSize eq "" ? "86" : "".58+0.7*(($fontSize - 1)*20);
