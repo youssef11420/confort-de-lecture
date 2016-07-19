@@ -73,6 +73,7 @@ if ($styleToLoad eq "") {
 my $styleString = loadConfig($cdlTemplatesPath."css/".$styleToLoad.".css");
 
 $styleString = setValueInTemplateString($styleString, 'EMBEDDED_URL', $embeddedMode);
+$styleString = setValueInTemplateString($styleString, 'SITE_ID', $siteId);
 
 my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
 
@@ -82,6 +83,7 @@ my $inputSize = $fontSize eq "" ? "58" : "".30+0.7*(($fontSize - 1)*20);
 my $inputBorder = $fontSize eq "" ? "9" : "".5+0.1*(($fontSize - 1)*20);
 
 $fontSize = $fontSize ? $fontSize : '3';
+$styleString = setValueInTemplateString($styleString, 'F_SIZE_INDEX', $fontSize);
 $styleString = setValueInTemplateString($styleString, 'FONT_SIZE_INDEX', isBigCursorNotAllowed() ? 1 : $fontSize);
 $styleString = setValueInTemplateString($styleString, 'FONT_SIZE_BROWSER_DEPENDS', isBigCursorNotAllowed() ? 1 : 3);
 

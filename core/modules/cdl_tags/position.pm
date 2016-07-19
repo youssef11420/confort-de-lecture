@@ -101,8 +101,12 @@ sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $pa
 		$cadreTemplateString = setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', $positionContent)."\n";
 
 		# Insertion du fil d'Ariane dans la template générale de la page
-		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_'.($positionLocation=="2" ? 'BOTTOM' : 'TOP'), $cadreTemplateString);
-		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_'.($positionLocation=="2" ? 'TOP' : 'BOTTOM'), "");
+		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_'.($positionLocation eq "2" or $positionLocation eq "3" ? 'BOTTOM' : 'TOP'), $cadreTemplateString);
+		if ($positionLocation eq "3") {
+			$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_TOP', $cadreTemplateString);
+		} else {
+			$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_'.($positionLocation eq "2" ? 'TOP' : 'BOTTOM'), "");
+		}
 	} else {
 		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_TOP', "");
 		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_BOTTOM', "");

@@ -8,6 +8,7 @@ AddHandler cgi-script .pl
 
 	RewriteRule ^styles/([^/]*)/personalization\.css$ core/scripts/styles.pl?cdlid=$1&cdln=personalization [L]
 	RewriteRule ^styles/([^/]*)/custom_([^_]*)_([^_]*)_([^\.]*)_([^\.]*)_([^\.]*)_([^\.]*)_([^\.]*)\.css$ core/scripts/styles.pl?cdln=custom&cdlid=$1&cdlbc=$2&cdlfc=$3&cdllc=$4&cdlfs=$5&cdlls=$6&cdlws=$7&cdllh=$8 [L]
+	RewriteRule ^styles/([^/]*)/all\.css$ core/scripts/styles.pl?cdln=all&cdlid=$1 [L]
 	RewriteRule ^styles/default\.css$ design/css/default.css [L]
 	RewriteRule ^styles/ie\.css$ design/css/ie.css [L]
 	RewriteRule ^styles/print\.css$ design/css/print.css [L]

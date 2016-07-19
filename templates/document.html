@@ -46,7 +46,7 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 </div>
 </div>
-<!--/###AUDIO###--><div class="cdlClearBoth"></div>
+<!--/###AUDIO###-->
 </div>
 <div class="cdlGlobalPage">
 <div class="documentContent">
@@ -66,7 +66,6 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 <div class="cdlFoot">
 <p class="cdlCopyright">&copy; ###CURRENT_YEAR### &mdash; confort de lecture
-<div class="cdlClearBoth"></div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script>
@@ -82,7 +81,9 @@ cdlSiteId = '###SITE_ID###';
 <script>
 jQuery('audio').prop('volume', 0.5);
 jQuery(window).bind('load', function() {
-	if (parentMovie("lecteurCDL")) {
+	if (lecteurAudioParentHTML5 && lecteurAudioParentHTML5.pause) {
+		window.opener.cdlPauseIt();
+	} else if (parentMovie("lecteurCDL") && parentMovie("lecteurCDL").pauseIt) {
 		parentMovie("lecteurCDL").pauseIt();
 	}
 	if (thisMovie("lecteurCDL")) {

@@ -122,8 +122,6 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 
 	# Mettre les bonnes valeurs à la place des marqueurs dans le chaîne template
 
-	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
-
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
 	my $contrast = loadFromSession($session, 'contrast');
@@ -209,6 +207,8 @@ if ((param('cdlact') eq "c") and (param('cdlloginerror') ne "1")) {
 	} else {
 		$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'AUDIO_ACTIONS', "");
 	}
+
+	$protectedPageTemplateString = setValueInTemplateString($protectedPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');

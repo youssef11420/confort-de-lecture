@@ -87,16 +87,14 @@ if (not -e $cdlRootPath."/install_ok") {
 		}
 
 		print "<form action=\"".$embeddedMode."/install\" method=\"post\">";
-		print "<div class=\"clearBoth\"></div><br>";
+		print "<br>";
 		print "<div class=\"formLine\">";
 		print "<div class=\"leftForm\"><label for=\"loginAdmin\">Identifiant de l'administrateur :&nbsp;</label></div>";
 		print "<div class=\"rightForm\"><input class=\"text\" type=\"text\" id=\"loginAdmin\" name=\"loginAdmin\"></div>";
-		print "<div class=\"clearBoth\"></div>";
 		print "</div>";
 		print "<div class=\"formLine\">";
 		print "<div class=\"leftForm\"><label for=\"passwdAdmin\">Mot de passe de l'administrateur :&nbsp;</label></div>";
 		print "<div class=\"rightForm\"><input class=\"text\" type=\"password\" id=\"passwdAdmin\" name=\"passwdAdmin\"></div>";
-		print "<div class=\"clearBoth\"></div>";
 		print "</div>";
 		print "<div class=\"center\">";
 		print "<input type=\"submit\" name=\"valider\" value=\"Valider\" class=\"submit\">";

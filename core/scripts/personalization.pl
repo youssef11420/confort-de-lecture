@@ -121,18 +121,24 @@ if ($voiceChoice eq "") {
 my $fontSize = loadFromSession($session, 'fontSize');
 $fontSize = $fontSize ? $fontSize : "3";
 
+my $backgroundColor = loadFromSession($session, 'backgroundColor');
+my $fontColor = loadFromSession($session, 'fontColor');
+my $linkColor = loadFromSession($session, 'linkColor');
+$backgroundColor = $backgroundColor ? $backgroundColor : ($contrast eq "nb" ? "FFFFFF" : "000000");
+$fontColor = $fontColor ? $fontColor : ($contrast eq "nb" ? "000000" : "FFFFFF");
+$linkColor = $linkColor ? $linkColor : '';
+my $letterSpacing = loadFromSession($session, 'letterSpacing');
+my $wordSpacing = loadFromSession($session, 'wordSpacing');
+my $lineHeight = loadFromSession($session, 'lineHeight');
+$letterSpacing = $letterSpacing ? $letterSpacing : '1';
+$wordSpacing = $wordSpacing ? $wordSpacing : '1';
+$lineHeight = $lineHeight ? $lineHeight : '1';
+
 my $personalizationTemplateString = "";
 if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."display.html");
 
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
-
-	my $backgroundColor = loadFromSession($session, 'backgroundColor');
-	my $fontColor = loadFromSession($session, 'fontColor');
-	my $linkColor = loadFromSession($session, 'linkColor');
-	$backgroundColor = $backgroundColor ? $backgroundColor : ($contrast eq "nb" ? "FFFFFF" : "000000");
-	$fontColor = $fontColor ? $fontColor : ($contrast eq "nb" ? "000000" : "FFFFFF");
-	$linkColor = $linkColor ? $linkColor : '';
 
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR_'.$backgroundColor, " class=\"choiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR_'.$fontColor, " class=\"choiceSelected\"");
@@ -155,6 +161,10 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR', $linkColor);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_INDEX', $fontSize);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE', $fontSizes{$fontSize});
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING', $letterSpacing);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING', $wordSpacing);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT', $lineHeight);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 } elsif ($action =~ m/^avancee$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."advanced.html");
 
@@ -163,17 +173,9 @@ if ($action =~ m/^affichage$/si) {
 	# Chargement des paramètres utilisateur
 	my $positionLocation = loadFromSession($session, 'positionLocation');
 	my $activateJavascript = loadFromSession($session, 'activateJavascript');
-	my $activateFrames = loadFromSession($session, 'activateFrames');
 	my $displayImages = loadFromSession($session, 'displayImages');
 	my $displayObjects = loadFromSession($session, 'displayObjects');
-	my $displayApplets = loadFromSession($session, 'displayApplets');
 	my $parseTablesToList = loadFromSession($session, 'parseTablesToList');
-	my $letterSpacing = loadFromSession($session, 'letterSpacing');
-	my $wordSpacing = loadFromSession($session, 'wordSpacing');
-	my $lineHeight = loadFromSession($session, 'lineHeight');
-	$letterSpacing = $letterSpacing ? $letterSpacing : '1';
-	$wordSpacing = $wordSpacing ? $wordSpacing : '1';
-	$lineHeight = $lineHeight ? $lineHeight : '1';
 
 	# Si un paramètre n'est pas renseigné, on met celui par défaut du site
 	if ($positionLocation eq "") {
@@ -182,17 +184,11 @@ if ($action =~ m/^affichage$/si) {
 	if ($activateJavascript eq "") {
 		$activateJavascript = getConfig($siteConfiguration, 'activateJavascript');
 	}
-	if ($activateFrames eq "") {
-		$activateFrames = getConfig($siteConfiguration, 'activateFrames');
-	}
 	if ($displayImages eq "") {
 		$displayImages = getConfig($siteConfiguration, 'displayImages');
 	}
 	if ($displayObjects eq "") {
 		$displayObjects = getConfig($siteConfiguration, 'displayObjects');
-	}
-	if ($displayApplets eq "") {
-		$displayApplets = getConfig($siteConfiguration, 'displayApplets');
 	}
 	if ($parseTablesToList eq "") {
 		$parseTablesToList = getConfig($siteConfiguration, 'parseTablesToList');
@@ -205,17 +201,11 @@ if ($action =~ m/^affichage$/si) {
 	if ($activateJavascript eq "") {
 		$activateJavascript = getConfig($defaultConfiguration, 'activateJavascript');
 	}
-	if ($activateFrames eq "") {
-		$activateFrames = getConfig($defaultConfiguration, 'activateFrames');
-	}
 	if ($displayImages eq "") {
 		$displayImages = getConfig($defaultConfiguration, 'displayImages');
 	}
 	if ($displayObjects eq "") {
 		$displayObjects = getConfig($defaultConfiguration, 'displayObjects');
-	}
-	if ($displayApplets eq "") {
-		$displayApplets = getConfig($defaultConfiguration, 'displayApplets');
 	}
 	if ($parseTablesToList eq "") {
 		$parseTablesToList = getConfig($defaultConfiguration, 'parseTablesToList');
@@ -231,8 +221,9 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_2', $lineHeight eq "2" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_3', $lineHeight eq "3" ? " checked" : "");
 
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP', $positionLocation eq "1" ? " checked" : "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_BOTTOM', $positionLocation eq "1" ? "" : " checked");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP_AND_BOTTOM', $positionLocation eq "3" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP', (!$positionLocation or $positionLocation eq "1") ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_BOTTOM', $positionLocation eq "2" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'IMG_YES', $displayImages eq "1" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'IMG_NO', $displayImages eq "1" ? "" : " checked");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'OBJECT_YES', $displayObjects eq "1" ? " checked" : "");
@@ -241,10 +232,16 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'TABLE_NO', $parseTablesToList eq "1" ? "" : " checked");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'JS_YES', $activateJavascript eq "1" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'JS_NO', $activateJavascript eq "1" ? "" : " checked");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FRAME_YES', $activateFrames eq "1" ? " checked" : "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FRAME_NO', $activateFrames eq "1" ? "" : " checked");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'APPLET_YES', $displayApplets eq "1" ? " checked" : "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'APPLET_NO', $displayApplets eq "1" ? "" : " checked");
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR', $backgroundColor);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR', $fontColor);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR', $linkColor);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_INDEX', $fontSize);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE', $fontSizes{$fontSize});
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING', $letterSpacing);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING', $wordSpacing);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT', $lineHeight);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 } elsif ($action =~ m/^audio$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."audio.html");
 
@@ -343,17 +340,11 @@ if ($action =~ m/^affichage$/si) {
 	if (param('cdljs') ne "") {
 		editInSession($session, 'activateJavascript', param('cdljs'));
 	}
-	if (param('cdlframe') ne "") {
-		editInSession($session, 'activateFrames', param('cdlframe'));
-	}
 	if (param('cdlimg') ne "") {
 		editInSession($session, 'displayImages', param('cdlimg'));
 	}
 	if (param('cdlobject') ne "") {
 		editInSession($session, 'displayObjects', param('cdlobject'));
-	}
-	if (param('cdlapplet') ne "") {
-		editInSession($session, 'displayApplets', param('cdlapplet'));
 	}
 	if (param('cdltable') ne "") {
 		editInSession($session, 'parseTablesToList', param('cdltable'));
@@ -471,11 +462,6 @@ if ($contrast eq "nb") {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'CONTRAST_CSS', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FLASH_FONT_COLOR', "FFFFFF");
 }
-$fontSize = 3;
-if (isBigCursorNotAllowed()) {
-	$fontSize = 1;
-}
-$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FONT_SIZE_BROWSER_DEPENDS', $fontSize);
 
 my @now = localtime(time);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);

@@ -446,9 +446,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	$pageUriForHtml =~ s/&amp;/&/sgi;
 	$pageUriForHtml =~ s/&/&amp;/sgi;
 
-	$pageContent = setValueInTemplateString($pageContent, 'ORIGINAL_URL', "http".$secure."://".$pageUri);
-
-	$pageContent = setValueInTemplateString($pageContent, 'EMBEDDED_URL', $embeddedMode);
+	$pageContent = setValueInTemplateString($pageContent, 'ORIGINAL_URL', "http".$secure."://".($embeddedMode ne "" ? $ENV{'SERVER_NAME'} : "").$pageUri);
 
 	$pageContent = setValueInTemplateString($pageContent, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
 
@@ -488,6 +486,8 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	} else {
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ACTIONS', "");
 	}
+
+	$pageContent = setValueInTemplateString($pageContent, 'EMBEDDED_URL', $embeddedMode);
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');

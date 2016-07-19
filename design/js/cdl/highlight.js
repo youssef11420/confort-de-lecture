@@ -22,6 +22,7 @@ var focusedSelect = null;
 var focusedSelectedIndex = null;
 var firstFieldIndex = null;
 var lecteurAudioHTML5 = document.getElementById('lecteurAudioCDL');
+var lecteurAudioParentHTML5 = window.opener && window.opener.document ? window.opener.document.getElementById('lecteurAudioCDL') : null;
 var cdlAudioPrev = jQuery('.cdlAudioPrevBloc,.cdlAudioPrevLine');
 var cdlAudioPlayPause = jQuery('.cdlAudioPlayPause');
 var cdlAudioStop = jQuery('.cdlAudioStop');
@@ -105,7 +106,7 @@ function cdlLit(text, playDirectionParam, playModeParam) {
     if (text) {
         updateLecteur('play');
 
-        lecteurAudioHTML5.src = (window.cdlEmbeddedURL || "") + "/audio-text/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(content);
+        lecteurAudioHTML5.src = (window.cdlEmbeddedURL || "") + "/audio-text/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(text);
         lecteurAudioHTML5.currentTime = pausePosition;
         lecteurAudioHTML5.play();
         pausePosition = 0;
@@ -505,7 +506,7 @@ function detectKeyDownForFocusable(e) {
             if (jQuery(this).is('input[type="text"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="range"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], input[type="password"], textarea') && ((kc >= 48 && kc <= 90) || (kc >= 96 && kc <= 111) || (kc >= 186 && kc <= 222))) {
                 char = String.fromCharCode(kc);
                 if (char) {
-                    timer = window.setTimeout("cdlLit('" + char.replace(/'/, "\\'") + "',playDirection,playMode)", duree);
+                    timer = window.setTimeout("cdlLit('\"" + char.toLowerCase().replace(/'/, "\\'") + "\"',playDirection,playMode)", duree);
                 }
             }
             return;

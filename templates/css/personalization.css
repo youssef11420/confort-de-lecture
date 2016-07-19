@@ -1,36 +1,27 @@
-*{background-color:#000000;color:#FFFFFF;border-color:#FFFFFF;cursor:url(###EMBEDDED_URL###/design/cursors/arrow_cursor_###FONT_SIZE_BROWSER_DEPENDS###.cur), default}
-a{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_BROWSER_DEPENDS###.cur), pointer}
-a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_BROWSER_DEPENDS###.cur), pointer}
-.cdlButtons input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_BROWSER_DEPENDS###.cur), pointer}
-button{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_BROWSER_DEPENDS###.cur), pointer}
-.cdlUtilLinks input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###FONT_SIZE_BROWSER_DEPENDS###.cur), pointer}
-.cdlCadre,input,select,.cdlAudioObject{border-color:#FFFFFF !important}
 .cdlContrasted .cdlCadre,.cdlContrasted input,.cdlContrasted select,.cdlContrasted .cdlAudioObject{border-color:#000000 !important}
-body{font-size:155%}
-p,input,li,select,.cdlLabelDiv,.cdlFieldDiv label,.cdlFoot{font-size:110%}
-.cdlAllPage{padding-top:110px !important}
-.cdlPersonalizationHeader{padding:0 21px 7px 0}
+.cdlPersonalizationHeader{margin:0 40px 20px 0;border-bottom-width:2px;padding-bottom:12px;overflow:hidden}
+.cdlPersonalizationHeader a{display:block}
 .cdlSiteLogo{float:left}
 .cdlLogoCdl{float:right}
-.cdlLittleArrow,.cdlConfigChoice{background:url(###EMBEDDED_URL###/design/images/arrow.png) no-repeat 0 .25em;margin-left:-20px;padding:7px 0 0 64px;min-height:34px;margin-bottom:10px}
+.cdlLittleArrow,.cdlConfigChoice{margin-bottom:10px}
 .cdlLittleArrow{margin-bottom:20px}
-.cdlContrasted .cdlLittleArrow,.cdlContrasted .cdlConfigChoice{background-image:url(###EMBEDDED_URL###/design/images/arrow_black.png)}
-.cdlConfigChoices{float:left}
 .cdlPreview{float:right;margin:-15px 30px 0 0;padding:7px;font-size:65%}
 .cdlPreview table{width:80px !important;border-width:0}
 .cdlPreview td{text-align:center;height:450px;padding:0 0 .5em !important;border:2px solid #FFFFFF;vertical-align:middle}
 .cdlContrasted .cdlPreview td{border-color:#000000}
 .cdlPreview span{display:block;text-align:center;text-transform:uppercase}
-.cdlConfigChoice{padding-top:0;margin:0 5px 40px -20px;background-position:0 50%}
-.cdlConfigChoice ul{padding:0 15px 0 0;float:left}
+.cdlConfigChoices{overflow:hidden}
+.cdlConfigChoice{float:left}
+.cdlConfigChoice ul{padding:0 0 15px 0;overflow:hidden}
 .cdlConfigChoice ul li{list-style:none;display:block;float:left;padding:4px}
+.cdlConfigChoice ul li:nth-child(2n+1){clear:left}
 .cdlConfigChoice ul li a{display:block;float:left;width:64px !important;height:64px;overflow:hidden;color:#000000;border-width:2px;border-color:#000000 !important;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 .cdlContrasted .cdlConfigChoice ul li a{color:#FFFFFF;border-color:#FFFFFF !important}
 .cdlConfigChoice ul li a:hover,.cdlConfigChoice ul li a:focus{border-color:#FFFFFF !important}
 .cdlContrasted .cdlConfigChoice ul li a:hover,.cdlContrasted .cdlConfigChoice ul li a:focus{border-color:#000000 !important}
 .cdlConfigChoice ul li a span{position:absolute;top:-3000px;left:-3000px}
 .cdlConfigChoice .cdlButtons{float:left}
-.cdlConfigChoice .cdlButtons input{display:block;height:66px;float:left;padding-left:20px;padding-right:20px;font-size:130%}
+.cdlConfigChoice .cdlButtons input{display:block;min-height:66px;float:left;padding-left:20px;padding-right:20px;font-size:130%}
 .cdlButtons input{border-width:2px}
 #cdlBackgroundConfigBlack a{border-color:#FFFFFF !important;background-color:#000000}
 .cdlContrasted #cdlBackgroundConfigBlack a:hover,.cdlContrasted #cdlBackgroundConfigBlack a:focus{border-color:#000000 !important}
@@ -39,6 +30,7 @@ p,input,li,select,.cdlLabelDiv,.cdlFieldDiv label,.cdlFoot{font-size:110%}
 #cdlBackgroundConfigGreen a{background-color:#009900}
 #cdlBackgroundConfigYellow a{background-color:#FFFF00}
 #cdlBackgroundConfigBlue a{background-color:#0000FF}
+#cdlBackgroundConfigRed a{background-color:#FF0033}
 #cdlTextSizeConfig1 a{background:url(###EMBEDDED_URL###/design/images/very_small.png) no-repeat 50% 50%}
 #cdlTextSizeConfig2 a{background:url(###EMBEDDED_URL###/design/images/small.png) no-repeat 50% 50%}
 #cdlTextSizeConfig3 a{background:url(###EMBEDDED_URL###/design/images/medium.png) no-repeat 50% 50%}
@@ -86,7 +78,7 @@ p,input,li,select,.cdlLabelDiv,.cdlFieldDiv label,.cdlFoot{font-size:110%}
 .cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
 .cdlContrasted .cdlInversedColor{background-color:#000000 !important;color:#FFFFFF !important}
 .cdlContrasted .cdlInversedColor *{background-color:#000000 !important;color:#FFFFFF !important;border-color:#FFFFFF !important}
-.cdlColors{padding:0;margin:0}
+.cdlColors{padding:0;margin:0;overflow:hidden}
 .cdlColors li{list-style:none;display:block;float:left;text-align:center;box-sizing: border-box;width:6.25% !important;padding:0.1%;min-width:25px}
 .cdlColors li a{display:block;overflow:hidden;color:#000000;padding:5%}
 .cdlContrasted .cdlColors li a{color:#FFFFFF}
@@ -100,13 +92,8 @@ p,input,li,select,.cdlLabelDiv,.cdlFieldDiv label,.cdlFoot{font-size:110%}
 .cdlColors .choiceSelected a .cdlTransPix,.cdlColors li a:hover .cdlTransPix,.cdlColors li a:focus .cdlTransPix{border:none !important}
 .cdlColorsForm{padding-bottom:10px}
 .cdlLittleArrow strong{font-size:110%}
-.cdlFormPersonalization{float:left;width:100% !important;height:100%;overflow:hidden}
 .cdlUtilLinksContainer{margin-top:-5px}
-.cdlUtilLinks div{float:left;margin:0 5px 0 0;width:70px !important;height:70px;overflow:hidden;background:no-repeat 50% 50%;cursor:default}
 .cdlUtilLinks input,.cdlUtilLinks span{display:block;overflow:hidden}
-.cdlChangeDisplayButton{background-image:url(###EMBEDDED_URL###/design/images/util_links_pictos/display_picto_3.png)}
-.cdlChangeAudioButton{background-image:url(###EMBEDDED_URL###/design/images/util_links_pictos/audio_picto_3.png)}
-.cdlChangeAudioHelpButton{background-image:url(###EMBEDDED_URL###/design/images/util_links_pictos/help_picto_3.png)}
 .audioHelpIntro ul{padding-top:20px;padding-bottom:5px}
 .audioHelpIntro li{padding-bottom:20px}
 :root .cdlInput_radio,:root .cdlInput_checkbox{border:9px solid #FFFFFF;width:58px !important;height:58px;margin-left:-58px}
@@ -121,26 +108,3 @@ p,input,li,select,.cdlLabelDiv,.cdlFieldDiv label,.cdlFoot{font-size:110%}
 :root .cdlContrasted .cdlInput_radio,:root .cdlContrasted .cdlInput_checkbox{border-color:#000000}
 :root .cdlContrasted .cdlInput_radio:after,:root .cdlContrasted .cdlInput_checkbox:after{border-color:#FFFFFF}
 :root .cdlContrasted input[type="radio"]:checked + .cdlInput_radio:after,:root .cdlContrasted input[type="checkbox"]:checked + .cdlInput_checkbox:after{background-color:#000000}
-.cdlContrasted .cdlSelectInput span{background-color:#FFFFFF}
-.cdlContrasted .cdlSelectInput span:after{border-top-color:#000000}
-:root .cdlContrasted .cdlUtilLinks,:root .cdlContrasted .cdlUtilLinks *{background-color:#000000}
-.cdlAudioControls li:after{background-color:#FFFFFF}
-.cdlContrasted .cdlAudioControls li:after{background-color:#000000 !important}
-.cdlAudioControls li a{width:58px;height:58px}
-.cdlAudioPrevBloc:before,.cdlAudioPrevBloc:after{border-width:29px 29px 29px 0;border-right-color:#FFFFFF}
-.cdlContrasted .cdlAudioPrevBloc:before,.cdlContrasted .cdlAudioPrevBloc:after{border-right-color:#000000}
-.cdlAudioPrevLine{border-left-width:9px}
-.cdlAudioPlay:after,.cdlAudioNextLine:after{border-width:29px 0 29px 58px;border-left-color:#FFFFFF}
-.cdlContrasted .cdlAudioPlay:after,.cdlContrasted .cdlAudioNextLine:after{border-left-color:#000000}
-.cdlAudioNextLine{border-right-width:9px}
-.cdlAudioStop,.cdlAudioPause:before,.cdlAudioPause:after{background-color:#FFFFFF}
-.cdlContrasted .cdlAudioStop,.cdlContrasted .cdlAudioPause:before,.cdlContrasted .cdlAudioPause:after{background-color:#000000}
-.cdlAudioNextBloc:before,.cdlAudioNextBloc:after{border-width:29px 0 29px 29px;border-left-color:#FFFFFF}
-.cdlContrasted .cdlAudioNextBloc:before,.cdlContrasted .cdlAudioNextBloc:after{border-width:29px 0 29px 29px;border-left-color:#FFFFFF}
-.cdlAudioPrevLine:after{border-width:29px 58px 29px 0;border-right-color:#FFFFFF}
-.cdlContrasted .cdlAudioPrevLine:after{border-right-color:#000000}
-.cdlSelectInput select{right:-36px;margin-left:-36px}
-.cdlSelectInput span{background-color:#000000}
-.cdlContrasted .cdlSelectInput span{background-color:#FFFFFF}
-.cdlSelectInput span:after{border-top-color:#FFFFFF;border-width:9px 9px 0;margin:-4.5px 4.5px 0 0}
-.cdlContrasted .cdlSelectInput span:after{border-top-color:#000000}

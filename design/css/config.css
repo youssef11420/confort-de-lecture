@@ -1,6 +1,6 @@
 *{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif}
 body{font-size:80%}
-.formLine{margin-bottom:.2em}
+.formLine{margin-bottom:.2em;overflow:hidden}
 a{font-weight:bold;color:#006666}
 label{display:block}
 .leftForm{float:left;width:50%;text-align:right}
@@ -9,7 +9,6 @@ input{vertical-align:middle}
 input.text{width:75%;border:1px solid black;padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 .rightForm{float:left;width:50%}
 .rightForm .add{font-weight:bold}
-.clearBoth{clear:both}
 .hidden{display:none}
 img{border:none;vertical-align:middle}
 .center{text-align:center}
@@ -18,8 +17,8 @@ fieldset{margin-bottom:2px;overflow:hidden;border:2px solid #006;border-radius:7
 legend{padding:0 5px;font-weight:bold}
 ul, li{padding:0;margin:3px 0 0 10px}
 li{line-height:1.2em}
-.messageOk{font-weight:bold;border:2px solid #090;color:#090;padding:3px 10px;display:inline;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
-.messageErr{font-weight:bold;border:2px solid #C00;color:#C00;padding:3px 10px;display:inline;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.messageOk{font-weight:bold;border:2px solid #090;color:#090;padding:3px 10px;display:inline-block;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.messageErr{font-weight:bold;border:2px solid #C00;color:#C00;padding:3px 10px;display:inline-block;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .radio label{display:inline;vertical-align:0}
 .radio input{margin-bottom:.3em}
 span.info{font-size:90%;color:#888}

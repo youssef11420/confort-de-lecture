@@ -534,9 +534,15 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my $positionLocation = getConfig($siteConfig, 'positionLocation');
 	if (!$positionLocation or $positionLocation eq "1") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP_AND_BOTTOM', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', "");
+	} elsif ($positionLocation eq "3") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP_AND_BOTTOM', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', "");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', "");
 	} else {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP_AND_BOTTOM', "");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', "");
 	}
 
@@ -931,7 +937,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites(\/list)?(\?.*?)?$/si) {
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'PAGE_TITLE', "Liste des sites (".@sites.")");
 
 	# Affichage du message d'information pour le bon déroulement de la suppression d'un site
-	my $sitesListString = $requestParameters{'m'}[0] eq "6" ? "<div class=\"messageOk\">Le site a bien été supprimé.</div><div class=\"clearBoth\"></div><br>" : "";
+	my $sitesListString = $requestParameters{'m'}[0] eq "6" ? "<div class=\"messageOk\">Le site a bien été supprimé.</div><br>" : "";
 
 	# Génération de la chaîne HTML correspondant à la liste à puce des sites
 	$sitesListString .= @sites ? "<ul>" : "";

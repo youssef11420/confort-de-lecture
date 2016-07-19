@@ -17,16 +17,14 @@ jQuery.noConflict();
 <!--cdlNav--><br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a><br><!--/cdlNav-->
 <form action="###EMBEDDED_URL###/admin/login/action" method="get">
 <div class="center">###MESSAGE###</div>
-<div class="clearBoth"></div><br>
+<br>
 <div class="formLine">
 <div class="leftForm"><label for="loginAdmin">Identifiant :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="loginAdmin" name="loginAdmin"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="passwdAdmin">Mot de passe :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="password" id="passwdAdmin" name="passwdAdmin"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="center">
 <input type="submit" name="valider" value="Valider" class="submit">
@@ -39,18 +37,16 @@ jQuery.noConflict();
 <!--cdlBloc-->
 <form action="###EMBEDDED_URL###/admin/sites/###EDIT_ACTION###-action###SITE_ID###" method="get">
 <div class="center">###MESSAGE###</div>
-<div class="clearBoth"></div><br>
+<br>
 <!--###SITE_ID_FIELD###-->
 <div class="formLine">
 <div class="leftForm"><label for="siteId">Identifiant du site :&nbsp;<br><span class="info">caractères autorisés : alphanumériques, le point '.', le tiret '-' et le souligné '_'&nbsp;&nbsp;</span></label></div>
 <div class="rightForm"><input class="text" type="text" id="siteId" name="siteId" value="###SITE_ID_VALUE###"></div>
-<div class="clearBoth"></div>
 </div>
 <!--/###SITE_ID_FIELD###--><!--###SITE_ID_TITLE###-->
 <div class="formLine">
 <div class="leftForm"><span class="blueText">Identifiant du site :&nbsp;</span></div>
 <div class="rightForm"><h1 class="noMargin">###SITE_ID_VALUE###</h1></div>
-<div class="clearBoth"></div>
 </div>
 <!--/###SITE_ID_TITLE###-->
 <fieldset>
@@ -59,174 +55,138 @@ jQuery.noConflict();
 <div class="leftForm"><label for="siteDomainName">Noms de domaine :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="siteDomainName" name="siteDomainName" value="###SITE_DOMAIN_NAME###">&nbsp;<input type="submit" name="ajouterSiteDomainNames" class="add" value="ajouter" title="ajouter le nom de domaine">
 ###SITE_DOMAINE_NAMES_LIST###</div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="homePageUri">URIs de page d'accueil :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="homePageUri" name="homePageUri" value="###HOME_PAGE_URI###">&nbsp;<input type="submit" name="ajouterHomePageUris" class="add" value="ajouter" title="ajouter le nom de domaine">
 ###HOME_PAGE_URIS_LIST###</div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Fil d'Ariane</legend>
 <div class="formLine">
 <div class="leftForm">Position du fil d'ariane :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;</span></div>
-<div class="rightForm"><span class="radio"><input type="radio" id="positionLocation1" name="positionLocation" value="1"###POSITION_LOCATION_TOP###><label for="positionLocation1">haut</label>&nbsp;&nbsp;<input type="radio" id="positionLocation2" name="positionLocation" value="2"###POSITION_LOCATION_BOTTOM###><label for="positionLocation2">bas</label></span></div>
-<div class="clearBoth"></div>
+<div class="rightForm"><span class="radio"><input type="radio" id="positionLocation1" name="positionLocation" value="1"###POSITION_LOCATION_TOP###><label for="positionLocation1">haut</label>&nbsp;&nbsp;<input type="radio" id="positionLocation2" name="positionLocation" value="2"###POSITION_LOCATION_BOTTOM###><label for="positionLocation2">bas</label>&nbsp;&nbsp;<input type="radio" id="positionLocation3" name="positionLocation" value="3"###POSITION_LOCATION_BOTTOM###><label for="positionLocation3">haut et bas</label></span></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Javascript</legend>
 <div class="formLine">
 <div class="leftForm">Activer le javascript :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le fonctionnement alternatif est activé)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="activateJavascript1" name="activateJavascript" value="1"###ACTIVATE_JS_YES###><label for="activateJavascript1">oui</label>&nbsp;&nbsp;<input type="radio" id="activateJavascript0" name="activateJavascript" value="0"###ACTIVATE_JS_NO###><label for="activateJavascript0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Transformer le javascript :&nbsp;</div>
 <div class="rightForm"><span class="radio"><input type="radio" id="parseJavascript1" name="parseJavascript" value="1"###PARSE_JS_YES###><label for="parseJavascript1">oui</label>&nbsp;&nbsp;<input type="radio" id="parseJavascript0" name="parseJavascript" value="0"###PARSE_JS_NO###><label for="parseJavascript0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Frames/IFrames</legend>
 <div class="formLine">
 <div class="leftForm">Activer les frames/iframes :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="activateFrames1" name="activateFrames" value="1"###ACTIVATE_FRAMES_YES###><label for="activateFrames1">oui</label>&nbsp;&nbsp;<input type="radio" id="activateFrames0" name="activateFrames" value="0"###ACTIVATE_FRAMES_NO###><label for="activateFrames0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Médias</legend>
 <div class="formLine">
 <div class="leftForm">Afficher les images :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="displayImages1" name="displayImages" value="1"###DISPLAY_IMAGES_YES###><label for="displayImages1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayImages0" name="displayImages" value="0"###DISPLAY_IMAGES_NO###><label for="displayImages0">non</label>&nbsp;&nbsp;<input type="radio" id="displayImages2" name="displayImages" value="2"###DISPLAY_IMAGES_ONLY_WITH_ALT###><label for="displayImages2">avec alternative</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Afficher les objects :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="displayObjects1" name="displayObjects" value="1"###DISPLAY_OBJECTS_YES###><label for="displayObjects1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayObjects0" name="displayObjects" value="0"###DISPLAY_OBJECTS_NO###><label for="displayObjects0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Afficher les applets :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(si 'non' est coché, le contenu alternatif est affiché)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="displayApplets1" name="displayApplets" value="1"###DISPLAY_APPLETS_YES###><label for="displayApplets1">oui</label>&nbsp;&nbsp;<input type="radio" id="displayApplets0" name="displayApplets" value="0"###DISPLAY_APPLETS_NO###><label for="displayApplets0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Tables</legend>
 <div class="formLine">
 <div class="leftForm">Linéariser les tableaux :&nbsp;<br><span class="info">si l'internaute ne précise rien.&nbsp;&nbsp;<br>(transformer en listes à puce)&nbsp;&nbsp;</span></div>
 <div class="rightForm"><span class="radio"><input type="radio" id="parseTablesToList1" name="parseTablesToList" value="1"###PARSE_TABLES_YES###><label for="parseTablesToList1">oui</label>&nbsp;&nbsp;<input type="radio" id="parseTablesToList0" name="parseTablesToList" value="0"###PARSE_TABLES_NO###><label for="parseTablesToList0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Titre, langue et logo du site</legend>
 <div class="formLine">
 <div class="leftForm"><label for="siteLabel">Titre du site :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="siteLabel" name="siteLabel" value="###SITE_LABEL###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="defaultLanguage">Langue par défaut du site :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="defaultLanguage" name="defaultLanguage" value="###DEFAULT_LANGUAGE###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="logo">Logo du site :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="logo" name="logo" value="###SITE_LOGO###"><br><!--###LOGO_IMG###--><img src="###SITE_LOGO###" alt="logo du site : ###SITE_LABEL###" class="siteLogo"><!--/###LOGO_IMG###--></div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Vocalisation</legend>
 <div class="formLine">
 <div class="leftForm">Activer l'audio&nbsp;</div>
 <div class="rightForm"><span class="radio"><input type="radio" id="enableAudio1" name="enableAudio" value="1"###ENABLE_AUDIO_YES###><label for="enableAudio1">oui</label>&nbsp;&nbsp;<input type="radio" id="enableAudio0" name="enableAudio" value="0"###ENABLE_AUDIO_NO###><label for="enableAudio0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Activer le glossaire&nbsp;</div>
 <div class="rightForm"><span class="radio"><input type="radio" id="enableGlossary1" name="enableGlossary" value="1"###ENABLE_GLOSSARY_YES###><label for="enableGlossary1">oui</label>&nbsp;&nbsp;<input type="radio" id="enableGlossary0" name="enableGlossary" value="0"###ENABLE_GLOSSARY_NO###><label for="enableGlossary0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Permettre le choix de la voix&nbsp;</div>
 <div class="rightForm"><span class="radio"><input type="radio" id="voiceChoice1" name="voiceChoice" value="1"###VOICE_CHOICE_YES###><label for="voiceChoice1">oui</label>&nbsp;&nbsp;<input type="radio" id="voiceChoice0" name="voiceChoice" value="0"###VOICE_CHOICE_NO###><label for="voiceChoice0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Mode de vocalisation :&nbsp;</div>
 <div class="rightForm"><span class="radio"><input type="radio" id="ttsModeVaas" name="ttsMode" value="vaas"###TTS_MODE_VAAS###><label for="ttsModeVaas">VaaS</label>&nbsp;&nbsp;<input type="radio" id="ttsModeSdk" name="ttsMode" value="sdk"###TTS_MODE_SDK###><label for="ttsModeSdk">SDK</label></span></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsServerName">Nom de domaine du serveur VaaS :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsServerName" name="ttsServerName" value="###TTS_SERVER_NAME###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsPort">Port d'accès au serveur VaaS :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsPort" name="ttsPort" value="###TTS_PORT###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsUri">Chemin ou URL du programme de vocalisation :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsUri" name="ttsUri" value="###TTS_URI###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsDefaultQueryString">Paramètres VaaS par défaut :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsDefaultQueryString" name="ttsDefaultQueryString" value="###TTS_DEFAULT_QUERY_STRING###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsVoiceParamName">Nom du paramètre VaaS pour la voix :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsVoiceParamName" name="ttsVoiceParamName" value="###TTS_VOICE_PARAM_NAME###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsRateParamName">Nom du paramètre VaaS pour la vitesse :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsRateParamName" name="ttsRateParamName" value="###TTS_RATE_PARAM_NAME###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="ttsTextParamName">Nom du paramètre VaaS pour le contenu à vocaliser :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="ttsTextParamName" name="ttsTextParamName" value="###TTS_TEXT_PARAM_NAME###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm">Décoder en UTF-8 le contenu à vocaliser&nbsp;</div>
 <div class="rightForm"><span class="radio"><input type="radio" id="utf8DecodeContent1" name="utf8DecodeContent" value="1"###UTF8_DECODE_CONTENT_YES###><label for="utf8DecodeContent1">oui</label>&nbsp;&nbsp;<input type="radio" id="utf8DecodeContent0" name="utf8DecodeContent" value="0"###UTF8_DECODE_CONTENT_NO###><label for="utf8DecodeContent0">non</label></span></div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <fieldset>
 <legend>Cache</legend>
 <div class="formLine">
 <div class="leftForm"><label for="cacheExpiry">Durée du cache :&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="cacheExpiry" name="cacheExpiry" value="###CACHE_EXPIRY###"></div>
-<div class="clearBoth"></div>
 </div>
 <div class="formLine">
 <div class="leftForm"><label for="pageNoCache">Pages sans cache :&nbsp;<br><span class="info">Expressions régulières.&nbsp;&nbsp;</label></div>
 <div class="rightForm"><input class="text" type="text" id="pageNoCache" name="pageNoCache" value="###PAGE_NO_CACHE###">&nbsp;<input type="submit" name="ajouterPagesNoCache" class="add" value="ajouter" title="ajouter la(es) page(s)">
 ###PAGES_NO_CACHE_LIST###</div>
-<div class="clearBoth"></div>
 </div>
 </fieldset>
-<div class="clearBoth"></div>
 <div class="center">
 <input type="submit" name="valider" value="Valider" class="submit">
 </div>

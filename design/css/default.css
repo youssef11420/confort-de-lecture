@@ -1,4 +1,4 @@
-*{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border:0 solid;word-wrap:break-word}
+*{font-family:Verdana,"Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border:0 solid;word-wrap:break-word;font-size:100%}
 abbr,acronym{border-bottom:1px dotted;display:inline-block}
 a{text-decoration:underline;cursor:pointer;display:inline-block;max-width:100%}
 a *{text-decoration:underline;cursor:pointer}
@@ -10,7 +10,6 @@ fieldset,button,.cdlButtons input{border-width:1px}
 .cdlButtons input{cursor:pointer}
 button{cursor:pointer;background:none}
 button,.cdlButtons input{padding:.1em 5px;margin:0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
-input,select,button,textarea{font-size:100%}
 input{vertical-align:middle;margin:0 3px}
 input.cdlInputText,.cdlInputText input,textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 select{border-width:1px;margin-bottom:5px;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
@@ -38,17 +37,17 @@ th,td{border-width:0 1px 1px 0;padding:5px}
 p{padding-bottom:.3em}
 .cdlLoginForm .cdlButtons{text-align:center}
 .cdlAudioContent{padding:6px 9px 5px 0;float:right}
-.cdlAudioObject{float:left;padding:0 2px;margin-right:7px;border-width:1px;position:relative;z-index:86000;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
+.cdlAudioObject{float:left;padding:1px 3px;margin-right:7px;position:relative;z-index:86000}
 .cdlAudioObjectContent{float:left;overflow:hidden}
 .cdlAudioObjectContent object{float:left;margin-top:-5px;background-color:transparent !important}
 .cdlDownloadAudioLink{display:block;white-space:nowrap;margin-right:7px}
 .cdlCadreContainer{padding-bottom:7px}
 .cdlCadre{border-width:2px;padding:5px 20px 5px 5px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlCadre hr{color:inherit;border:none;margin:5px 0;display:block;height:2px !important;overflow:hidden}
-.cdlClearBoth{display:block;clear:both;font-size:0;height:0;overflow:hidden}
 .cdlHidden{display:none}
-.cdlFoot{margin:-2px 0 5px;padding:0 5px}
+.cdlFoot{margin:-2px 0 5px;padding:0 5px;overflow:hidden}
 .cdlCopyright{float:right;padding:0 20px 0 10px}
+.cdlLineDiv{overflow:hidden}
 .cdlLabelDiv,.cdlFieldDiv{float:left;width:50% !important}
 .cdlLabelDiv{text-align:right;padding-top:.15em}
 .cdlBoldLink{font-weight:bold}
@@ -64,9 +63,9 @@ p{padding-bottom:.3em}
 .cdlUtilLinks{float:left;margin:6px 0 6px 7px;padding:0 7px;background-color:black;overflow:hidden;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlUtilLinks *{background-color:black}
 .cdlUtilLinks img{padding-bottom:0}
-.cdlUtilLinks a,.cdlUtilLinks input{display:block;float:left;margin-right:5px}
+.cdlUtilLinks a,.cdlUtilLinks input,.cdlUtilLinks div{display:block;float:left;margin-right:5px;position:relative}
 .cdlUtilLinks input{cursor:pointer}
-.cdlUtilLinksContainer{position:fixed;width:97% !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 54px 0 0;border-width:0 2px 2px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlUtilLinksContainer{position:fixed;overflow:hidden;width:97% !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 54px 0 0;border-width:0 2px 2px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlUtilLinksContainer *{position:relative;z-index:86000}
 .cdlAllPage{padding:0 7px 1px}
 .protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
@@ -79,9 +78,9 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .gm-style img{max-width:none}
 :root .cdlUtilLinks,:root .cdlUtilLinks *{background-color:transparent}
 :root .cdlUtilLinks img{display:none}
-:root .cdlUtilLinks input[type="image"]{position:absolute;opacity:0;top:0;left:0}
+:root .cdlUtilLinks input[type="submit"]{position:absolute;opacity:0;top:0;left:0;width:100%;height:100%}
 :root .cdlUtilLinks a{padding:1px}
-:root .cdlUtilLinks a svg{display:block}
+:root .cdlUtilLinks svg{display:block;float:left}
 :root input[type="radio"],:root input[type="checkbox"]{opacity:0;margin:0}
 .cdlInput_radio,.cdlInput_checkbox{margin:5px .3em 5px 0;line-height:normal !important}
 :root .cdlInput_radio,:root .cdlInput_checkbox{display:inline-block;border:solid;box-sizing:border-box;vertical-align:middle}
@@ -93,7 +92,7 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box;border-width:1px 1px 1px 0}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:5px}
-.cdlAudioControls li{list-style:none;float:left;padding-right:16px}
+.cdlAudioControls li{list-style:none;float:left;padding-right:16px;position:relative}
 .cdlAudioControls li:after{content:"";display:block;width:6px;height:6px;position:absolute;right:5px;top:50%;margin-top:-3px;z-index:11420;border-radius:100px;-moz-border-radius:100px;-WebKit-border-radius:100px;-khtml-border-radius:100px}
 .cdlAudioControls li:last-child{padding-right:0}
 .cdlAudioControls li a{display:block;position:relative}

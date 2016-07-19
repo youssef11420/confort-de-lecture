@@ -117,8 +117,6 @@ if ($action) {
 
 	# Mettre les bonnes valeurs à la place des marqueurs dans le chaîne template
 
-	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
-
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
 	my $contrast = loadFromSession($session, 'contrast');
@@ -217,6 +215,8 @@ if ($action) {
 	} else {
 		$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'AUDIO_ACTIONS', "");
 	}
+
+	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');

@@ -55,7 +55,6 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 </div>
 </div><!--/###AUDIO###-->
-<div class="cdlClearBoth"></div>
 </div>
 <div class="cdlAllPageContainer"><div class="cdlAllPage">
 <div class="cdlGlobalPage">
@@ -63,21 +62,23 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <div class="cdlPersonalizationHeader">
 <h1 class="cdlSiteLogo"><a href="###SITE_URL###" title="###SITE_TITLE###" target="_blank"><img src="###SITE_LOGO###" alt="###SITE_TITLE###"></a></h1>
 <div class="cdlLogoCdl"><img src="###EMBEDDED_URL###/design/images/logo_confortdelecture.png" alt=""></div>
-<div class="cdlClearBoth"></div>
 </div>
 <div class="cdlCadreContainer">
 <div class="cdlCadre">
 <p class="cdlLittleArrow audioIntro">###_DICO_INTRO_AUDIO###
 <div class="cdlAudioForm">
+<div class="cdlLineDiv">
 <div class="cdlLabelDiv" style="padding-top:.5em">###_DICO_PARAMETRES_ACTIVER_AUDIO###&nbsp;:&nbsp;</div>
 <div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="activateAudio1" name="cdlaudio" value="1"###ACTIVATE_AUDIO_YES###><strong class="cdlInput_radio"></strong></span><label for="activateAudio1">###_DICO_OUI###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="activateAudio0" name="cdlaudio" value="0"###ACTIVATE_AUDIO_NO###><strong class="cdlInput_radio"></strong></span><label for="activateAudio0">###_DICO_NON###</label></div>
-<div class="cdlClearBoth"></div><!--###VOICE_CHOICE###-->
+</div><!--###VOICE_CHOICE###-->
+<div class="cdlLineDiv">
 <div class="cdlLabelDiv"><label for="voice">###_DICO_PARAMETRES_AUDIO_VOIX###&nbsp;:&nbsp;</label></div>
 <div class="cdlFieldDiv"><strong class="cdlSelectInput"><select id="voice" name="cdlvoice">###AUDIO_VOICE_CHOICES###</select><span></span></strong></div>
-<div class="cdlClearBoth"></div><!--/###VOICE_CHOICE###-->
+</div><!--/###VOICE_CHOICE###-->
+<div class="cdlLineDiv">
 <div class="cdlLabelDiv"><label for="speed">###_DICO_PARAMETRES_AUDIO_VITESSE###&nbsp;:&nbsp;</label></div>
 <div class="cdlFieldDiv"><strong class="cdlSelectInput"><select id="speed" name="cdlspeed">###AUDIO_SPEED_CHOICES###</select><span></span></strong></div>
-<div class="cdlClearBoth"></div>
+</div>
 <br>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER###"></span>
 </div>
@@ -88,7 +89,6 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 <div class="cdlFoot">
 <p class="cdlCopyright">&copy; ###CURRENT_YEAR### &mdash; confort de lecture
-<div class="cdlClearBoth"></div>
 </div>
 </div></div>
 </form>
