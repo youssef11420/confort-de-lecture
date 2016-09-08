@@ -651,14 +651,14 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_NO', " checked");
 	}
 
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_SERVER_NAME', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_PORT', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_URI', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_DEFAULT_QUERY_STRING', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_VOICE_PARAM_NAME', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_RATE_PARAM_NAME', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_TEXT_PARAM_NAME', getConfig($siteConfig, 'siteLabel'));
-	$formTemplateString = setValueInTemplateString($formTemplateString, 'CACHE_EXPIRY', getConfig($siteConfig, 'siteLabel'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_SERVER_NAME', getConfig($siteConfig, 'ttsServerName'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_PORT', getConfig($siteConfig, 'ttsPort'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_URI', getConfig($siteConfig, 'ttsUri'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_DEFAULT_QUERY_STRING', getConfig($siteConfig, 'ttsDefaultQueryString'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_VOICE_PARAM_NAME', getConfig($siteConfig, 'ttsVoiceParamName'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_RATE_PARAM_NAME', getConfig($siteConfig, 'ttsRateParamName'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_TEXT_PARAM_NAME', getConfig($siteConfig, 'ttsTextParamName'));
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'CACHE_EXPIRY', getConfig($siteConfig, 'cacheExpiry'));
 
 	my $utf8DecodeContent = getConfig($siteConfig, 'voiceChoice');
 	if ($utf8DecodeContent eq "0") {

@@ -516,8 +516,9 @@ $audioTextTemplateString =~ s/([\?!:\.,;])\s*\./$1/sgi;
 
 # Le type mime de sortie de ce script est audio/mpeg
 #print "Content-type:text/plain; charset=utf-8\n\n";
-print "Content-type:audio/mpeg\n";
-print "Content-disposition:attachment;filename=".$pageTitle.".mp3\n\n";
+#print $audioTextTemplateString;exit;
+print "Content-type:audio/mpeg\n\n";
+#print "Content-disposition:attachment;filename=".$pageTitle.".mp3\n\n";
 
 if ($ttsMode eq "vaas" or $embeddedMode ne "") {
 	if ($ttsMode eq "sdk" && $embeddedMode ne "") {
