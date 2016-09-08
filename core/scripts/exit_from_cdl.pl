@@ -124,7 +124,7 @@ if ($embeddedMode ne "") {
 	$pageUriForHtml =~ s/^(https?:\/\/)?[^\/]+\/?//sgi;
 }
 
-$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod !~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
 
 my $iconContent;
 open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
@@ -152,16 +152,20 @@ if ($requestMethod =~ m/post/si) {
 		my %postRequestParameters = %{decode_json($postRequestParametersString)};
 
 		foreach my $postRequestParameterName (keys(%postRequestParameters)) {
-			my $refPostRequestParameterValues = $postRequestParameters{$postRequestParameterName};
-			my @postRequestParameterValues = @$refPostRequestParameterValues;
-			foreach my $postRequestParameterValue (@postRequestParameterValues) {
-				$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
-				$postRequestParameterValue =~ s/\"/&quot;/sgi;
-				$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.encode("utf8", $postRequestParameterValue).'">';
-			}
+			$requestParameters{$postRequestParameterName} = $postRequestParameters{$postRequestParameterName};
 		}
 	}
 	deleteFromSession($session, 'cdl_post_parameters_to_exit');
+
+	foreach my $postRequestParameterName (keys(%requestParameters)) {
+		my $refPostRequestParameterValues = $requestParameters{$postRequestParameterName};
+		my @postRequestParameterValues = @$refPostRequestParameterValues;
+		foreach my $postRequestParameterValue (@postRequestParameterValues) {
+			$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
+			$postRequestParameterValue =~ s/\"/&quot;/sgi;
+			$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.encode("utf8", $postRequestParameterValue).'">';
+		}
+	}
 }
 
 # L'URL externe vers laquelle on sort

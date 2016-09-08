@@ -305,12 +305,12 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 	my $pageUri = "";
 	$urlToParse =~ s/^(https?:\/\/([^\/]*)(\/(.*)|$))/$siteDomain = $2; $pageUri = $4; $1/segi;
 
-	my $newSiteId = "";
-	if ($siteDomain) {
-		$newSiteId = getSiteFromDomain($siteDomain);
-	}
-
 	if ($embeddedMode eq "") {
+		my $newSiteId = "";
+		if ($siteDomain) {
+			$newSiteId = getSiteFromDomain($siteDomain);
+		}
+
 		$urlToParse =~ s/^https?:\/\///sgi;
 
 		# Si le site existe, on redirige vers ce script mais avec le bon siteId et la bonne uri
@@ -326,6 +326,8 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 			exit;
 		}
 	}
+
+	$urlToParse =~ s/^https?:\/\///sgi;
 
 	# On redirige vers la page de sortie de CDL vers un autre site
 	my $redirectUrl = "/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteDefaultLanguage."/".$requestMethod."/".$urlToParse;
@@ -1287,7 +1289,7 @@ sub getGlossaryItems #($siteId)
 	my $glossaryDir = $siteId ? $cdlSitesConfigPath.$siteId : $cdlGlossaryConfigPath;
 
 	if (-f $glossaryDir."/pronunciation_corrections.txt") {
-		$glossaryContent = loadConfig($glossaryDir."/pronunciation_corrections.txt");
+		$glossaryContent = loadConfig($cdlSitesConfigPath.$siteId."/pronunciation_corrections.txt");
 	}
 
 	$glossaryContent =~ s/\n$//sgi;
