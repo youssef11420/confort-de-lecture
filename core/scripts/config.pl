@@ -65,10 +65,12 @@ $configPageTemplateString = setValueInTemplateString($configPageTemplateString, 
 
 # Gestion de l'identification
 if (!$cdlAdmin and $thisCdlUrl !~ m/^\/admin\/login(\/action)?(\?.*?)?$/si) {
-	print $cgi->redirect($embeddedMode."/admin/login?m=8");
+	print $cgi->redirect($embeddedMode."/admin/login?m=8&p=".urlEncode($thisCdlUrl));
 	exit;
 }
 if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
+	my $pageRedirect = param('p');
+
 	# Mettre le titre de la page
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'PAGE_TITLE', "Identification");
 
@@ -90,6 +92,9 @@ if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
 
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'MESSAGE', "");
 
+	# l'URL de la page qui a été sollicité avant d'être redirigé vers le login
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGE_REDIRECT', $pageRedirect);
+
 	# On met à jour dans la template tout le formulaire ainsi rempli
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'IDENT_FORM', $formTemplateString);
 	# Vider de la partie réservée à la liste des sites
@@ -108,8 +113,9 @@ if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
 	exit;
 }
 if ($thisCdlUrl =~ m/^\/admin\/login\/action(\?.*?)?$/si) {
+	my $pageRedirect = param('p');
 	if (!param('loginAdmin') or !param('passwdAdmin')) {
-		print $cgi->redirect($embeddedMode."/admin/login?m=6");
+		print $cgi->redirect($embeddedMode."/admin/login?m=6&p=".urlEncode($pageRedirect));
 		exit;
 	}
 
@@ -124,7 +130,7 @@ if ($thisCdlUrl =~ m/^\/admin\/login\/action(\?.*?)?$/si) {
 
 		# Envoyer le cookie représentant la session
 		my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
-		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/admin", -cookie=>$cookie);
+		print $cgi->header(-status=>"302 Moved", -location=>($pageRedirect ? $pageRedirect : $embeddedMode."/admin"), -cookie=>$cookie);
 	} else {
 		print $cgi->redirect($embeddedMode."/admin/login?m=7");
 	}
