@@ -163,7 +163,7 @@ if ($requestMethod =~ m/post/si) {
 		foreach my $postRequestParameterValue (@postRequestParameterValues) {
 			$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
 			$postRequestParameterValue =~ s/\"/&quot;/sgi;
-			$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.encode("utf8", $postRequestParameterValue).'">';
+			$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.$postRequestParameterValue.'">';
 		}
 	}
 }
