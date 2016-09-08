@@ -136,10 +136,5 @@ $dictionary{'AIDE_AUDIO_SUITE'} = "Les paramètres audio vous donnent accès au 
 # La voix par défaut utilisée pour lire les pages
 $defaultVoice = "Thomas";
 
-# Hash: %glossary
-# La liste des mots à prononcer différement
-%glossary = ();
-$glossaryIndex = 1;
-
 # Pour dire au pl que le pm s'est bien exécuté, il faut lui renvoyer une valeur vraie (donc 1 par ex)
 1;

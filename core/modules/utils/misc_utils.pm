@@ -1204,9 +1204,10 @@ sub isNotAlphanumeric #($string)
 #
 # Paramètres:
 #	$string - chaine à traiter
-sub glossaryMain #($string)
+#	$siteId - identifiant du site parsé
+sub glossaryMain #($string, $siteId)
 {
-	my ($string) = @_;
+	my ($string, $siteId) = @_;
 
 	# Transformation des caractéres '|' '-' pour ne pas géner la lecture, et juste marquer une pause
 	$string =~ s/\|/./sgi;
@@ -1215,10 +1216,18 @@ sub glossaryMain #($string)
 	$string =~ s/^\s*\.\s+/, /sgi;
 	$string =~ s/\((.*?)\)/\[$1\]/sgi;
 
-	#$string =~ s/(([a-zŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ])(\.[\wŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]\.?)+)/join(' ',split(\/\.\/,$1))/segi;
+	my $glossaryIndex = 1;
+	my %glossary = ();
 
-	# Ajout des éléments administrés du glossaire
-	my @glossaryItems = getGlossaryItems();
+	# Ajout des éléments administrés du glossaire global
+	my @glossaryItems = getGlossaryItems("");
+	foreach my $glossaryItem (@glossaryItems) {
+		my @glossaryItemParts = split(/\t/, $glossaryItem);
+		$glossary{sprintf("%09d", $glossaryIndex++)} = {'iCase' => $glossaryItemParts[3], 'sepL' => $glossaryItemParts[4], 'sepR' => $glossaryItemParts[5], 'pattern' => $glossaryItemParts[1], 'replacement' => $glossaryItemParts[2]};
+	}
+
+	# Ajout des éléments administrés du glossaire du site
+	@glossaryItems = getGlossaryItems($siteId);
 	foreach my $glossaryItem (@glossaryItems) {
 		my @glossaryItemParts = split(/\t/, $glossaryItem);
 		$glossary{sprintf("%09d", $glossaryIndex++)} = {'iCase' => $glossaryItemParts[3], 'sepL' => $glossaryItemParts[4], 'sepR' => $glossaryItemParts[5], 'pattern' => $glossaryItemParts[1], 'replacement' => $glossaryItemParts[2]};
@@ -1268,11 +1277,18 @@ sub getArrayWithParameterValues #($paramKey, %requestParameters)
 #	Récupérer la liste items du glossaire dans un tableau
 #
 # Paramètres:
-#	
-sub getGlossaryItems
+	#	$siteId - identifiant du site parsé
+sub getGlossaryItems #($siteId)
 {
+	my ($siteId) = @_;
+
 	# Chargement du fichier texte de glossaire
-	my $glossaryContent = loadConfig($cdlGlossaryConfigPath."/pronunciation_corrections.txt");
+	my $glossaryContent = "";
+	my $glossaryDir = $siteId ? $cdlSitesConfigPath.$siteId : $cdlGlossaryConfigPath;
+
+	if (-f $glossaryDir."/pronunciation_corrections.txt") {
+		$glossaryContent = loadConfig($glossaryDir."/pronunciation_corrections.txt");
+	}
 
 	$glossaryContent =~ s/\n$//sgi;
 

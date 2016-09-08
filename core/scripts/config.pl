@@ -509,7 +509,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my $domaineNamesListString = @domaineNameArray ? "<ul>" : "";
 
 	foreach my $domainName (@domaineNameArray) {
-		$domaineNamesListString .= "<li>".$domainName."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/siteDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine : ".$domainName."\"></a></li>";
+		$domaineNamesListString .= "<li>".$domainName."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/siteDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine : ".$domainName."\"></a></li>";
 	}
 	$domaineNamesListString .= @domaineNameArray ? "</ul>" : "";
 
@@ -523,7 +523,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	# Génération de la liste à puce des URIs de la page d'accueil
 	my $homePageUrisListString = @homePageUrisArray ? "<ul>" : "";
 	foreach my $homePageUri (@homePageUrisArray) {
-		$homePageUrisListString .= "<li>".$homePageUri."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/homePageUris?paramValue=".urlEncode($homePageUri)."\" title=\"Supprimer l'URI '".$homePageUri."' de la page d'accueil\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer l'URI ".$homePageUri." de la page d'accueil\"/></a></li>";
+		$homePageUrisListString .= "<li>".$homePageUri."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/homePageUris?paramValue=".urlEncode($homePageUri)."\" title=\"Supprimer l'URI '".$homePageUri."' de la page d'accueil\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer l'URI ".$homePageUri." de la page d'accueil\"/></a></li>";
 	}
 	$homePageUrisListString .= @homePageUrisArray ? "</ul>" : "";
 
@@ -677,7 +677,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my $pagesNoCacheListString = @pageNoCacheArray ? "<ul>" : "";
 
 	foreach my $pageNoCache (@pageNoCacheArray) {
-		$pagesNoCacheListString .= "<li>".$pageNoCache."&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/pagesNoCache?paramValue=".urlEncode($pageNoCache)."\" title=\"Supprimer la page : ".$pageNoCache."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer la page : ".$pageNoCache."\"></a></li>";
+		$pagesNoCacheListString .= "<li>".$pageNoCache."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/pagesNoCache?paramValue=".urlEncode($pageNoCache)."\" title=\"Supprimer la page : ".$pageNoCache."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer la page : ".$pageNoCache."\"></a></li>";
 	}
 	$pagesNoCacheListString .= @pageNoCacheArray ? "</ul>" : "";
 
@@ -942,12 +942,12 @@ if ($thisCdlUrl =~ m/^\/admin\/sites(\/list)?(\?.*?)?$/si) {
 	# Génération de la chaîne HTML correspondant à la liste à puce des sites
 	$sitesListString .= @sites ? "<ul>" : "";
 	foreach my $site (@sites) {
-		$sitesListString .= "<li><a href='".$embeddedMode."/admin/sites/modify/".$site."'>".$site."</a>&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$site)."\" title=\"Visualiser le site : ".$site."\" target=\"_blank\"><img src='".$embeddedMode."/design/images/view.png' alt=\"Visualiser le site : ".$site."\"></a>&nbsp;<!--cdlReplace--><!--|&nbsp;--><!--/cdlReplace--><a href=\"".$embeddedMode."/admin/sites/delete-site/".$site."\" title=\"Supprimer le site : ".$site."\" onclick=\"if (confirm('Voulez vous vraiment supprimer le site ".$site." ?')) {window.location.href = '".$embeddedMode."/admin/sites/delete-site/".$site."'} return false;\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le site : ".$site."\"></a>";
+		$sitesListString .= "<li><a href='".$embeddedMode."/admin/sites/modify/".$site."'>".$site."</a>&nbsp;<a href='".$embeddedMode."/admin/glossary/".$site."' title=\"Glossaire du site : ".$site."\"><img src='".$embeddedMode."/design/images/glossary.png' alt=\"Glossaire du site : ".$site."\"></a>&nbsp;<a href=\"".($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$site)."\" title=\"Visualiser le site : ".$site."\" target=\"_blank\"><img src='".$embeddedMode."/design/images/view.png' alt=\"Visualiser le site : ".$site."\"></a>&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-site/".$site."\" title=\"Supprimer le site : ".$site."\" onclick=\"if (confirm('Voulez vous vraiment supprimer le site ".$site." ?')) {window.location.href = '".$embeddedMode."/admin/sites/delete-site/".$site."'} return false;\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le site : ".$site."\"></a>";
 	}
 	$sitesListString .= @sites ? "</ul>" : "";
 
 	# Mise à jour dans la template pour afficher la liste des sites
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'SITES_LIST', "<h1>Gestion des sites</h1><!--cdlNav--><p><a href=\"".$embeddedMode."/admin/sites/create\" class=\"black addLink\">Créer un site</a><!--/cdlNav-->".($sitesListString ? "<!--cdlBloc-->".$sitesListString."<!--/cdlBloc-->" : "<!--cdlBloc--><p><strong>Aucun site n'a été créé.</strong><!--/cdlBloc-->"));
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'SITES_LIST', "<h1>Gestion des sites</h1><p><a href=\"".$embeddedMode."/admin/sites/create\" class=\"black addLink\">Créer un site</a><!--/cdlNav-->".($sitesListString ? $sitesListString : "<p><strong>Aucun site n'a été créé.</strong>"));
 	# On vide la partie réservée au formulaire d'édition
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'EDIT_FORM', "");
 	# On vide la partie de la template réservée au glossaire
@@ -975,20 +975,19 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/delete\-site\/(.*?)$/si) {
 }
 
 # Affichage de la page d'édition du glossaire
-if ($thisCdlUrl =~ m/^\/admin\/glossary(\/index)?(\?.*)?$/si) {
-	my $noPage = param('p');
-	$noPage = $noPage ? $noPage : 1;
+if ($thisCdlUrl =~ m/^\/admin\/glossary(\/([^\/]+))?(\/index)?(\?.*)?$/si) {
+	my $siteId = $2;
 
 	# Affichage du message d'information pour le bon déroulement de la mise à jour du glossaire
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'MESSAGE_GLOSSARY', $requestParameters{'m'}[0] eq "7" ? "<div class=\"messageOk\">Le glossaire a bien été modifié.</div><div class=\"clearBoth\"></div><br>" : "");
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'MESSAGE_GLOSSARY', $requestParameters{'m'}[0] eq "7" ? "<div class=\"messageOk\">Le glossaire".($siteId ? " spécifique au site ".$siteId : "")." a bien été modifié.</div><div class=\"clearBoth\"></div><br>" : "");
 
 	# Récupération de la partie du formulaire d'édition du glossaire
 	my $rowTemplateString = getPartOfTemplateString($configPageTemplateString, 'GLOSSARY_ROWS');
 
-	my @glossaryItems = getGlossaryItems(0, 1000000);
+	my @glossaryItems = getGlossaryItems($siteId);
 
 	# Mettre le titre de la page
-	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'PAGE_TITLE', "Gestion du glossaire (".@glossaryItems.")");
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'PAGE_TITLE', "Gestion du glossaire".($siteId ? " spécifique au site ".$siteId : "")." (".@glossaryItems.")");
 
 	my $formRows = "";
 	my $index = 0;
@@ -1026,8 +1025,8 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary(\/index)?(\?.*)?$/si) {
 }
 
 # Affichage de la page d'édition du glossaire
-if ($thisCdlUrl =~ m/^\/admin\/glossary\/edit\-action(\?.*)?$/si) {
-	my $noPage = param('p');
+if ($thisCdlUrl =~ m/^\/admin\/glossary\/([^\/]+\/)?edit\-action(\?.*)?$/si) {
+	my $siteId = $1;
 
 	my @patterns = getArrayWithParameterValues('pattern',%requestParameters);
 	my @replacements = getArrayWithParameterValues('replacement',%requestParameters);
@@ -1046,16 +1045,20 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary\/edit\-action(\?.*)?$/si) {
 	}
 	$glossaryContent =~ s/\n$//sgi;
 
-	my ($sec, $min, $hour, $mday, $month, $year) = localtime(time);
-	rename($cdlGlossaryConfigPath."/pronunciation_corrections.txt", $cdlRootPath.$cdlGlossaryConfigPath."/pronunciation_corrections_".($year+1900)."-".($month+1)."-".$mday."-".$hour.$min.$sec.".txt");
+	my $glossaryDir = $siteId ? $cdlSitesConfigPath.$siteId : $cdlGlossaryConfigPath;
 
-	saveConfig($cdlGlossaryConfigPath."/pronunciation_corrections.txt", $glossaryContent);
+	my ($sec, $min, $hour, $mday, $month, $year) = localtime(time);
+	if (-f $glossaryDir."/pronunciation_corrections.txt") {
+		rename($glossaryDir."/pronunciation_corrections.txt", $glossaryDir."pronunciation_corrections_".($year + 1900)."-".($month + 1)."-".$mday."-".$hour.$min.$sec.".txt");
+	}
+
+	saveConfig($glossaryDir."pronunciation_corrections.txt", $glossaryContent);
 
 	# Redirection vers la page d'index du glossaire
-	print $cgi->redirect($embeddedMode."/admin/glossary/index?m=7".($noPage ? "&p=".$noPage : ""));
+	print $cgi->redirect($embeddedMode."/admin/glossary/".$siteId."index?m=7");
 	exit;
 }
 
 # Si on passe ici, c'est qu'il y a eu une erreur de manipulation de l'URL appelée
 print "Content-type: text/html; charset=UTF-8\n\n";
-print "<title>Interface d'administration &bull; Confort de lecture</title><link href=\"/favicon.png\" rel=\"shortcut icon\"><!--cdlBloc--><h1>Interface d'administration</h1><a href=\"".$embeddedMode."/admin/sites/list\">Accès à la liste des sites</a><br><a href=\"".$embeddedMode."/admin/glossary/index\">Accès au glossaire</a><!--/cdlBloc-->";
+print "<title>Interface d'administration &bull; Confort de lecture</title><link href=\"/favicon.png\" rel=\"shortcut icon\"><h1>Interface d'administration</h1><a href=\"".$embeddedMode."/admin/sites/list\">Accès à la liste des sites</a><br><a href=\"".$embeddedMode."/admin/glossary/index\">Accès au glossaire</a>";

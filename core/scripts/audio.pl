@@ -369,11 +369,6 @@ $pageContent =~ s/<td( [^>]*)?>(.*?)<\/td>/" Cellule :\n".$2."__cdl_brk200__"/se
 # Transformation des entétes de cellules de tableaux par le texte "Entéte de cellule : {contenu de l'entéte de cellule}"
 $pageContent =~ s/<th( [^>]*)?>(.*?)<\/th>/" Entête de cellule :\n".$2."__cdl_brk200__"/segi;
 
-# Si on est en train de lire une page intermédiaire (téléchargement d'un document, accés é une page protégée ou sortie de CDL), on supprime la balise object correspondant au lecteur mp3 puisqu'on ne veut pas le prendre en compte lors de la lecture
-if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
-	$pageContent =~ s/<object( [^>]*)?>(.*?)<\/object>//sgi;
-}
-
 $pageContent =~ s/&nbsp;/ /sgi;
 
 # Génération d'un object qui contient l'arborescence HTML de la page é lire
@@ -395,7 +390,7 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 	my $pageContentBloc = $root->content->[1]->content->[1]->content->[0]->as_text;
 
 	if ($enableGlossary ne "0") {
-		$pageContentBloc = glossaryMain($pageContentBloc);
+		$pageContentBloc = glossaryMain($pageContentBloc, $siteId);
 	}
 
 	if ($pageContentBloc =~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si) {
@@ -423,7 +418,7 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 		$textContent =~ s/>|</,/sgi;
 
 		if ($enableGlossary ne "0") {
-			$textContent = glossaryMain($textContent);
+			$textContent = glossaryMain($textContent, $siteId);
 		}
 
 		$audioTemplateString = setValueInTemplateString($audioTemplateString, 'PAGE_TOP_CONTAINER', "");
@@ -457,11 +452,11 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 		$pageHeader =~ s/>|</,/sgi;
 
 		if ($enableGlossary ne "0") {
-			$pageHeader = glossaryMain($pageHeader);
-			$pageContentBloc = glossaryMain($pageContentBloc);
-			$pageNav = glossaryMain($pageNav);
-			$pageFooter = glossaryMain($pageFooter);
-			$backToHomeLink = glossaryMain($backToHomeLink);
+			$pageHeader = glossaryMain($pageHeader, $siteId);
+			$pageContentBloc = glossaryMain($pageContentBloc, $siteId);
+			$pageNav = glossaryMain($pageNav, $siteId);
+			$pageFooter = glossaryMain($pageFooter, $siteId);
+			$backToHomeLink = glossaryMain($backToHomeLink, $siteId);
 		}
 
 		if ($pageHeader =~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si and param('cdldownload') ne "1") {

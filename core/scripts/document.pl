@@ -150,11 +150,11 @@ if ($action) {
 	$contentType =~ s/\/x-/\//sgi;
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'DOCUMENT_TYPE', urlDecode($contentType));
 
-	$thisCdlUrl =~ s/^(\/document)(\/.*)$/$1."\/ouvrir".$2/segi;
+	$thisCdlUrl =~ s/^($embeddedMode\/document)(\/.*)$/$1."\/ouvrir".$2/segi;
 	# L'URL du script pour ouverture directe
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'DOCUMENT_OPEN_URL', $thisCdlUrl);
 
-	$thisCdlUrl =~ s/^(\/document)\/ouvrir(\/.*)$/$1."\/telecharger".$2/segi;
+	$thisCdlUrl =~ s/^($embeddedMode\/document)\/ouvrir(\/.*)$/$1."\/telecharger".$2/segi;
 	# L'URL du script pour téléchargement
 	$documentPageTemplateString = setValueInTemplateString($documentPageTemplateString, 'DOCUMENT_DOWNLOAD_URL', $thisCdlUrl);
 
