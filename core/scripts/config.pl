@@ -975,7 +975,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/delete\-site\/(.*?)$/si) {
 }
 
 # Affichage de la page d'édition du glossaire
-if ($thisCdlUrl =~ m/^\/admin\/glossary(\/([^\/]+))?(\/index)?(\?.*)?$/si) {
+if ($thisCdlUrl =~ m/^\/admin\/glossary(\/([^\/\?]+))?(\?.*)?$/si) {
 	my $siteId = $2;
 
 	# Affichage du message d'information pour le bon déroulement de la mise à jour du glossaire
@@ -985,6 +985,8 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary(\/([^\/]+))?(\/index)?(\?.*)?$/si) {
 	my $rowTemplateString = getPartOfTemplateString($configPageTemplateString, 'GLOSSARY_ROWS');
 
 	my @glossaryItems = getGlossaryItems($siteId);
+
+	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'SITE_ID', $siteId ? $siteId."/" : "");
 
 	# Mettre le titre de la page
 	$configPageTemplateString = setValueInTemplateString($configPageTemplateString, 'PAGE_TITLE', "Gestion du glossaire".($siteId ? " spécifique au site ".$siteId : "")." (".@glossaryItems.")");
@@ -1054,11 +1056,13 @@ if ($thisCdlUrl =~ m/^\/admin\/glossary\/([^\/]+\/)?edit\-action(\?.*)?$/si) {
 
 	saveConfig($glossaryDir."pronunciation_corrections.txt", $glossaryContent);
 
+	$siteId =~ s/\/$//sgi;
+
 	# Redirection vers la page d'index du glossaire
-	print $cgi->redirect($embeddedMode."/admin/glossary/".$siteId."index?m=7");
+	print $cgi->redirect($embeddedMode."/admin/glossary/".$siteId."?m=7");
 	exit;
 }
 
 # Si on passe ici, c'est qu'il y a eu une erreur de manipulation de l'URL appelée
 print "Content-type: text/html; charset=UTF-8\n\n";
-print "<title>Interface d'administration &bull; Confort de lecture</title><link href=\"/favicon.png\" rel=\"shortcut icon\"><h1>Interface d'administration</h1><a href=\"".$embeddedMode."/admin/sites/list\">Accès à la liste des sites</a><br><a href=\"".$embeddedMode."/admin/glossary/index\">Accès au glossaire</a>";
+print "<title>Interface d'administration &bull; Confort de lecture</title><link href=\"/favicon.png\" rel=\"shortcut icon\"><h1>Interface d'administration</h1><a href=\"".$embeddedMode."/admin/sites/list\">Accès à la liste des sites</a><br><a href=\"".$embeddedMode."/admin/glossary\">Accès au glossaire</a>";
