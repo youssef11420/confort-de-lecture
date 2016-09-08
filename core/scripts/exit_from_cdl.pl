@@ -171,7 +171,7 @@ if ($requestMethod =~ m/post/si) {
 # L'URL externe vers laquelle on sort
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'REQUEST_METHOD', lc($requestMethod));
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'HIDDEN_POST_PARAMS', $hiddenPostParameters);
-$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EXTERNAL_URL', "http".$secure."://".urlDecode(putParametersInUrl($urlToParse, %requestParameters)));
+$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EXTERNAL_URL', "http".$secure."://".urlDecode($requestMethod !~ m/post/si ? putParametersInUrl($urlToParse, %requestParameters) : $urlToParse));
 
 # L'URL de la page précédente pour annuler et retourner
 $exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'PREVIOUS_PAGE', $ENV{'HTTP_REFERER'});
