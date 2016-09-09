@@ -1288,8 +1288,8 @@ sub getGlossaryItems #($siteId)
 	my $glossaryContent = "";
 	my $glossaryDir = $siteId ? $cdlSitesConfigPath.$siteId : $cdlGlossaryConfigPath;
 
-	if (-f $glossaryDir."/pronunciation_corrections.txt") {
-		$glossaryContent = loadConfig($cdlSitesConfigPath.$siteId."/pronunciation_corrections.txt");
+	if (-f $glossaryDir."pronunciation_corrections.txt") {
+		$glossaryContent = loadConfig($glossaryDir."pronunciation_corrections.txt");
 	}
 
 	$glossaryContent =~ s/\n$//sgi;
