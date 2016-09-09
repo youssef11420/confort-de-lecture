@@ -164,7 +164,6 @@ if ($requestMethod =~ m/post/si) {
 		foreach my $postRequestParameterValue (@postRequestParameterValues) {
 			$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
 			$postRequestParameterValue =~ s/\"/&quot;/sgi;
-			$postRequestParameterValue =~ s/^((https?:\/\/)($siteDomainNames))/$embeddedMode ne "" ? $1.$embeddedMode."\/f".$secure : $2.$ENV{'SERVER_NAME'}."\/le-filtre\/".$siteId."\/".$3/segi;
 			$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.$postRequestParameterValue.'">';
 		}
 	}

@@ -203,7 +203,7 @@ my $pageTitle = "page-en-audio";
 
 my $deleteOptionTitle = 0;
 
-if (param('cdltext')) {
+if (param('cdltext') ne "") {
 	$pageContent = param('cdltext');
 	$fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$pageContent);
 
@@ -560,9 +560,10 @@ if ($ttsMode eq "vaas" or $embeddedMode ne "") {
 	# - serveur de synthèse vocale, où seront traités les textes et où le son audio sera généré
 	# - la voix avec laquelle lire le contenu (soit choisi par l'utilisateur soit la voix définir par défaut dans : <constants.pm>
 	# - Contenu SSML à lire
-	my $fileSize = -s $cdlAudioCachePath."infos_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3";
-	if (-e $cdlAudioCachePath."infos_".$fileName.".mp3" and $fileSize > 626) {
-		system("cat ".$cdlAudioCachePath."infos_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3");
+	my $fileAudio = $cdlAudioCachePath."sound_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3";
+	my $fileSize = -s $fileAudio;
+	if (-e $fileAudio and $fileSize > 626) {
+		system("cat ".$fileAudio);
 	} else {
 		open(WRITER, ">", $cdlAudioCachePath."infos_".$fileName.".txt") || die "Erreur d'ouverture du fichier : infos_".$fileName.".txt.\n";
 		print WRITER $audioTextTemplateString;
@@ -574,7 +575,7 @@ if ($ttsMode eq "vaas" or $embeddedMode ne "") {
 		use IO::Handle;
 		STDOUT->autoflush(1);
 
-		my $command = "export LD_LIBRARY_PATH=".$ttsPath." ; ".$ttsUri." ".$ttsDefaultQueryString.($ttsVoiceParamName ? " -".$ttsVoiceParamName." ".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? " -".$ttsRateParamName." ".(($speed ne "" ? $speed : $defaultSpeed)*2) : "")." -".$ttsTextParamName." ".$cdlAudioCachePath."infos_".$fileName.".txt -o stdout | lame --quiet -r -h -b 64 -m m -s 22 - - | tee ".$cdlAudioCachePath."infos_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3";
+		my $command = "export LD_LIBRARY_PATH=".$ttsPath." ; ".$ttsUri." ".$ttsDefaultQueryString.($ttsVoiceParamName ? " -".$ttsVoiceParamName." ".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? " -".$ttsRateParamName." ".(($speed ne "" ? $speed : $defaultSpeed)*2) : "")." -".$ttsTextParamName." ".$cdlAudioCachePath."infos_".$fileName.".txt -o stdout | lame --quiet -r -h -b 64 -m m -s 22 - - | tee ".$fileAudio;
 
 		system($command);
 	}

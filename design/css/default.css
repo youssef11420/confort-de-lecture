@@ -5,15 +5,15 @@ a *{text-decoration:underline;cursor:pointer}
 fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
 img{display:block;padding-bottom:2px;max-width:100%}
-.cdlButtons{padding:5px 0;display:block}
-fieldset,button,.cdlButtons input{border-width:1px}
-.cdlButtons input{cursor:pointer}
+fieldset,button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{border-width:1px}
+.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:pointer}
 button{cursor:pointer;background:none}
-button,.cdlButtons input{padding:.1em 5px;margin:0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 input{vertical-align:middle;margin:0 3px}
-input.cdlInputText,.cdlInputText input,textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-ms-clear{display:none}
+input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"],textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 select{border-width:1px;margin-bottom:5px;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
-input.cdlInputText,.cdlInputText input{border-width:1px;margin:2px 0 3px;width:50% !important;vertical-align:middle}
+input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"]{border-width:1px;margin:2px 0 3px;width:50% !important;vertical-align:middle}
 textarea{overflow:auto;width:98.95% !important;margin:3px 0;border-width:1px}
 option{padding-bottom:1px}
 optgroup option{padding-left:2em}
@@ -70,7 +70,7 @@ p{padding-bottom:.3em}
 .cdlAllPage{padding:0 7px 1px}
 .protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
 .cdlFormExitFromCdl{display:inline;margin:0;padding:0;border:none}
-.cdlFormExitFromCdl input{font-weight:bold;text-decoration:underline;vertical-align:0;cursor:pointer}
+.cdlFormExitFromCdl input{font-weight:bold;text-decoration:underline;vertical-align:0;cursor: url(/cdl/design/cursors/arrow_cursor_4.cur), default;}
 div#cdlToolTipDiv{position:absolute;z-index:95200;border:2px solid #000000;display:none;padding:3px 5px;background-color:#FFFFCC;color:#000000}
 div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .gm-style,.gm-style-iw{font-size:100% !important}
@@ -88,7 +88,7 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 :root .cdlInput_checkbox:after{width:76% !important;height:76%;margin:12%}
 :root input[type="checkbox"]:checked + .cdlInput_checkbox:after{content:"✔";line-height:.7;font-size:130%}
 .cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box}
-.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding-right:1.8em;width:100%;box-sizing:content-box}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding-right:1.8em;width:100%;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box;border-width:1px 1px 1px 0}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:5px}
