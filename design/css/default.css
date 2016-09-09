@@ -70,7 +70,7 @@ p{padding-bottom:.3em}
 .cdlAllPage{padding:0 7px 1px}
 .protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
 .cdlFormExitFromCdl{display:inline;margin:0;padding:0;border:none}
-.cdlFormExitFromCdl input{font-weight:bold;text-decoration:underline;vertical-align:0;cursor: url(/cdl/design/cursors/arrow_cursor_4.cur), default;}
+.cdlFormExitFromCdl input[type="submit"]{font-weight:bold;text-decoration:underline;border:0;vertical-align:0;display:inline-block}
 div#cdlToolTipDiv{position:absolute;z-index:95200;border:2px solid #000000;display:none;padding:3px 5px;background-color:#FFFFCC;color:#000000}
 div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .gm-style,.gm-style-iw{font-size:100% !important}
