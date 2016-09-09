@@ -232,16 +232,6 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'TABLE_NO', $parseTablesToList eq "1" ? "" : " checked");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'JS_YES', $activateJavascript eq "1" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'JS_NO', $activateJavascript eq "1" ? "" : " checked");
-
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR', $backgroundColor);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR', $fontColor);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR', $linkColor);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_INDEX', $fontSize);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE', $fontSizes{$fontSize});
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING', $letterSpacing);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING', $wordSpacing);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT', $lineHeight);
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 } elsif ($action =~ m/^audio$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."audio.html");
 
@@ -425,6 +415,16 @@ if ($action =~ m/^affichage$/si) {
 		exit;
 	}
 }
+
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR', $backgroundColor);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR', $fontColor);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR', $linkColor);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_INDEX', $fontSize);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE', $fontSizes{$fontSize});
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING', $letterSpacing);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING', $wordSpacing);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT', $lineHeight);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
 
 if ($enableAudio eq "1") {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_ACTIONS', getPartOfTemplateString($personalizationTemplateString, 'AUDIO_ACTIONS'));

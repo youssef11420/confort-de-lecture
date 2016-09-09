@@ -409,7 +409,7 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 	$audioTextTemplateString = setValueInTemplateString($audioTextTemplateString, 'PAGE_BOTTOM_CONTAINER', "");
 	$audioTextTemplateString = setValueInTemplateString($audioTextTemplateString, 'BACK_HOME_LINK_CONTAINER', "");
 } else {
-	if (param('cdltext')) {
+	if (param('cdltext') ne "") {
 		my $textContent = $root->as_text;
 
 		if ($textContent !~ m/[\w\dŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ]/si) {
