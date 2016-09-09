@@ -23,6 +23,16 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="cdl_recette">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/cache" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
       <paths name="formation magento">
         <serverdata>
           <mappings>
@@ -66,6 +76,13 @@
         </serverdata>
       </paths>
       <paths name="qualicaf">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="qualicaf.user">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
