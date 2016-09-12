@@ -295,10 +295,11 @@ sub buildUrlToParse #($cgi, $session, $pageUri, $secure, $siteDomainNames, $home
 #	$requestMethod - méthode HTTP pour sortir
 #	$urlToParse - URL du nouveau site
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	%requestParameters - paramètres à coller à l'URL
-sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters)
+sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, $trustedDomainNames, %requestParameters)
 {
-	my ($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters) = @_;
+	my ($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, $trustedDomainNames, %requestParameters) = @_;
 
 	# On teste si le site est pris en compte par CDL
 	my $siteDomain = "";

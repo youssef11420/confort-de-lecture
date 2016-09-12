@@ -69,7 +69,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 	my ($cgi, $session, $requestMethod, $siteId, $pageUri, $secure, %requestParameters) = @_;
 
 	# Chargement de la configuration
-	my ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry, $ttsMode) = getAllConfigs($session, $siteId);
+	my ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry, $ttsMode) = getAllConfigs($session, $siteId);
 
 	# Récupération de l'URI à parser pour en construire une URL
 	my ($urlToParse, $siteRootUrl, $pagePath) = buildUrlToParse($cgi, $session, $pageUri, $secure, $siteDomainNames, $homePageUri);
@@ -129,7 +129,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			renderErrorPage($session, $siteId, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 		}
 	} else {
-		accessAnotherSite($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, %requestParameters);
+		accessAnotherSite($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, $trustedDomainNames, %requestParameters);
 	}
 }
 

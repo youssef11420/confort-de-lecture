@@ -125,7 +125,7 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method)
 	if ($url =~ m/^$siteRootUrl\/*/si) {
 		$url =~ s/^$siteRootUrl\/*//sgi;
 	} else {
-		if ($embeddedMode eq "" and $url !~ m/^\/le-filtre(-https)?(\/$siteId)?/si and $url !~ m/^https?:\/\//si) {
+		if ($embeddedMode eq "" and $url !~ m/^\/(le-filtre|sortie)(-https)?(\/$siteId)?/si and $url !~ m/^https?:\/\//si) {
 			$url = "../".$url;
 		}
 	}

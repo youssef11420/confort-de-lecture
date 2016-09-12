@@ -157,7 +157,6 @@ if ($requestMethod =~ m/post/si) {
 	}
 	deleteFromSession($session, 'cdl_post_parameters_to_exit');
 
-	my $siteDomainNames = getConfig($siteConfiguration, 'siteDomainNames');
 	foreach my $postRequestParameterName (keys(%requestParameters)) {
 		my $refPostRequestParameterValues = $requestParameters{$postRequestParameterName};
 		my @postRequestParameterValues = @$refPostRequestParameterValues;

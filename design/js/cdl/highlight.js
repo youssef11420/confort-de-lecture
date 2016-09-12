@@ -927,7 +927,7 @@ jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input
         var value = "Contenu du champ après coller : " + jQuery(element).val();
         var lecteurAudioCDLPaste = document.getElementById("lecteurAudioCDL_paste");
         if (!lecteurAudioCDLPaste) {
-            jQuery(".lecteursAudioCDL").append("<audio controls autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
+            jQuery(".lecteursAudioCDL").append("<audio autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
         } else {
             jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value);
             lecteurAudioCDLPaste.pause();
@@ -1029,7 +1029,7 @@ jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input
                     k_z: "z"
                 };
                 jQuery.each(chars, function (key, value) {
-                    jQuery(".lecteursAudioCDL").append("<audio controls preload=\"none\" src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_" + key.substring(2) + "\"></audio>");
+                    jQuery(".lecteursAudioCDL").append("<audio preload=\"auto\" src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_" + key.substring(2) + "\"></audio>");
                 });
             }, 100);
             preloadedChars = true;

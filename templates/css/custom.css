@@ -37,6 +37,7 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###F
 .cdlSelectInput select{right:-###SELECT_DOUBLE_ARROW_SIZE###px;margin-left:-###SELECT_DOUBLE_ARROW_SIZE###px}
 .cdlSelectInput span{background-color:####BACKGROUND_COLOR###}
 .cdlSelectInput span:after{border-top-color:####FONT_COLOR###;border-width:###SELECT_ARROW_SIZE###px ###SELECT_ARROW_SIZE###px 0;margin:-###SELECT_HALF_ARROW_SIZE###px ###SELECT_HALF_ARROW_SIZE###px 0 0}
+.cdlInversedColor.cdlSelectInput span:after{border-top-color:####BACKGROUND_COLOR###}
 .cdlAudioControls li:after{background-color:####FONT_COLOR###}
 .cdlAudioControls li a{width:###INPUT_SIZE###px;height:###INPUT_SIZE###px}
 .cdlAudioPrevBloc:before,.cdlAudioPrevBloc:after{border-width:###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px 0;border-right-color:####FONT_COLOR###}

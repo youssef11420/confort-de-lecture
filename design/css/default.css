@@ -12,7 +12,7 @@ button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="bu
 input{vertical-align:middle;margin:0 3px}
 input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-ms-clear{display:none}
 input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"],textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
-select{border-width:1px;margin-bottom:5px;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
+select{border-width:1px;margin-bottom:5px}
 input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"]{border-width:1px;margin:2px 0 3px;width:50% !important;vertical-align:middle}
 textarea{overflow:auto;width:98.95% !important;margin:3px 0;border-width:1px}
 option{padding-bottom:1px}
@@ -87,9 +87,9 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 :root .cdlInput_radio:after,:root .cdlInput_checkbox:after{content:"";display:inline-block;box-sizing:border-box;width:60% !important;height:60%;margin:20%}
 :root .cdlInput_checkbox:after{width:76% !important;height:76%;margin:12%}
 :root input[type="checkbox"]:checked + .cdlInput_checkbox:after{content:"✔";line-height:.7;font-size:130%}
-.cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box}
-.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.5em .1em .1em;width:100%;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
-.cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box;border-width:1px 1px 1px 0}
+.cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box;border-width:1px;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.5em .1em .1em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
+.cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:5px}
 .cdlAudioControls li{list-style:none;float:left;padding-right:16px;position:relative}
