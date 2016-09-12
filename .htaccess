@@ -16,26 +16,26 @@ AddHandler cgi-script .pl
 
 	RewriteRule ^javascript/title_(.*)_([1-5])\.js$ core/scripts/title.pl?cdlid=$1&cdls=$2 [L]
 
-	RewriteRule ^javascript(\-https)?/.*$ core/scripts/javascript.pl [L]
+	RewriteRule ^javascript(-https)?/.*$ core/scripts/javascript.pl [L]
 
-	RewriteRule ^(le\-filtre(\-https)?|fs?)(/.*)?$ core/scripts/index.pl [L]
+	RewriteRule ^(le-filtre(-https)?|fs?)(/.*)?$ core/scripts/index.pl [L]
 
-	RewriteRule ^le\-filtre\-pour\-ajax/.*$ core/scripts/index_for_ajax.pl [L]
+	RewriteRule ^le-filtre-pour-ajax/.*$ core/scripts/index_for_ajax.pl [L]
 
-	RewriteRule ^document(\-https)?(/(ouvrir|telecharger))?/[^/]*/[^/]*/[^/]*/[^/]*/.*$ core/scripts/document.pl [L]
+	RewriteRule ^document(-https)?(/(ouvrir|telecharger))?/[^/]*/[^/]*/[^/]*/[^/]*/.*$ core/scripts/document.pl [L]
 
-	RewriteRule ^acces\-protege(\-https)?/.*$ core/scripts/access_protected_site.pl [L]
+	RewriteRule ^acces-protege(-https)?/.*$ core/scripts/access_protected_site.pl [L]
 
-	RewriteRule ^sortie(\-https)?/.*$ core/scripts/exit_from_cdl.pl [L]
+	RewriteRule ^sortie(-https)?/.*$ core/scripts/exit_from_cdl.pl [L]
 
 	RewriteRule ^audio/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$1&cdlcontent=$2 [L]
-	RewriteRule ^audio\-download/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$1&cdldownload=1&cdlcontent=$2 [L]
-	RewriteRule ^audio\-(document|exit|protected|error)/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$2&cdlcontent=$3&cdlpagetype=$1 [L]
-	RewriteRule ^audio\-(voice|speed|help\-[a-z]{2})\-demo/([^/]*)/([^/]*)/([^/]*)$ core/scripts/audio.pl?cdlid=$2&cdldemo=1&cdltype=$1&cdlvoice=$3&cdlspeed=$4 [L]
-	RewriteRule ^audio\-text/([^/]*)/?$ core/scripts/audio.pl [L]
+	RewriteRule ^audio-download/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$1&cdldownload=1&cdlcontent=$2 [L]
+	RewriteRule ^audio-(document|exit|protected|error)/([^/]*)/(.*)$ core/scripts/audio.pl?cdlid=$2&cdlcontent=$3&cdlpagetype=$1 [L]
+	RewriteRule ^audio-(voice|speed|help-[a-z]{2})-demo/([^/]*)/([^/]*)/([^/]*)$ core/scripts/audio.pl?cdlid=$2&cdldemo=1&cdltype=$1&cdlvoice=$3&cdlspeed=$4 [L]
+	RewriteRule ^audio-text(-letter)?/([^/]*)/?$ core/scripts/audio.pl [L]
 
 	RewriteRule ^admin(/.*)?$ core/scripts/config.pl [L]
 
-	RewriteRule ^personnalisation\-(affichage|avancee|audio|aide\-audio|palette\-couleurs-(b|f|l)|audio\-acces\-direct|acces\-direct)/.*$ core/scripts/personalization.pl [L]
+	RewriteRule ^personnalisation-(affichage|avancee|audio|aide-audio|palette-couleurs-(b|f|l)|audio-acces-direct|acces-direct)/.*$ core/scripts/personalization.pl [L]
 	RewriteRule ^personnalisation$ core/scripts/personalization.pl [L]
 </IfModule>

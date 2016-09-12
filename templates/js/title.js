@@ -2,7 +2,11 @@ var elementsTitres = [];
 var elementCourantTitre = null;
 
 jQuery(document).ready(function () {
-    var indiceElementsTitres = 0, cdlToolTipDiv, htmlElt = jQuery('html'), bodyElt = jQuery('body');
+    "use strict";
+    var indiceElementsTitres = 0;
+    var cdlToolTipDiv;
+    var htmlElt = jQuery("html");
+    var bodyElt = jQuery("body");
 
     bodyElt.append("<div id='cdlToolTipDiv'></div>");
 
@@ -11,61 +15,67 @@ jQuery(document).ready(function () {
     jQuery("[title]").each(function () {
         var elementCourant = jQuery(this);
 
-        if (elementCourant.attr('title')) {
-            elementsTitres['cdlTitled' + indiceElementsTitres] = elementCourant.attr('title');
-            elementCourant.attr('class', "cdlTitled" + indiceElementsTitres + " " + elementCourant.attr('class'));
+        if (elementCourant.attr("title")) {
+            elementsTitres["cdlTitled" + indiceElementsTitres] = elementCourant.attr("title");
+            elementCourant.attr("class", "cdlTitled" + indiceElementsTitres + " " + elementCourant.attr("class"));
 
-            elementCourant.on('mouseenter', function () {
-                var elementCourant2 = jQuery(this), thisClassName = elementCourant2.attr('class'), aAppliquer = false, elementCourantTitreClassName;
+            elementCourant.on("mouseenter", function () {
+                var elementCourant2 = jQuery(this);
+                var thisClassName = elementCourant2.attr("class");
+                var aAppliquer = false;
+                var elementCourantTitreClassName;
 
-                thisClassName = thisClassName.replace(/^([^ ]*) (.*)/, "$1");
+                thisClassName = thisClassName.replace(/^([^\s]*)\s(.*)/, "$1");
 
                 if (!elementCourantTitre || elementCourantTitre.size() === 0) {
                     aAppliquer = true;
                 } else {
-                    elementCourantTitreClassName = elementCourantTitre.attr('class').replace(/^([^ ]*) (.*)/, "$1");
-                    if (elementCourant2.is('.' + elementCourantTitreClassName + " ." + elementCourant2)) {
+                    elementCourantTitreClassName = elementCourantTitre.attr("class").replace(/^([^\s]*)\s(.*)/, "$1");
+                    if (elementCourant2.is("." + elementCourantTitreClassName + " ." + elementCourant2)) {
                         aAppliquer = true;
                     }
                 }
                 if (aAppliquer) {
                     elementCourantTitre = elementCourant2;
                     cdlToolTipDiv.stop(true, true);
-                    if (!elementCourant2.attr('title')) {
-                        thisClassName = elementCourant2.attr('class').replace(/^([^ ]*) (.*)/, "$1");
-                        elementCourant2.attr('title', elementsTitres[thisClassName]);
+                    if (!elementCourant2.attr("title")) {
+                        thisClassName = elementCourant2.attr("class").replace(/^([^\s]*)\s(.*)/, "$1");
+                        elementCourant2.attr("title", elementsTitres[thisClassName]);
                     }
-                    cdlToolTipDiv.html(elementCourant2.attr('title')).fadeIn(200);
-                    jQuery("[alt]", elementCourant2).attr('alt', "");
-                    elementCourant2.attr('title', "");
+                    cdlToolTipDiv.html(elementCourant2.attr("title")).fadeIn(200);
+                    jQuery("[alt]", elementCourant2).attr("alt", "");
+                    elementCourant2.attr("title", "");
                 } else {
-                    elementCourant2.attr('title', "");
+                    elementCourant2.attr("title", "");
                 }
             });
 
-            elementCourant.on('mouseleave', function () {
-                var elementCourant2 = jQuery(this), thisClassName = elementCourant2.attr('class');
+            elementCourant.on("mouseleave", function () {
+                var elementCourant2 = jQuery(this);
+                var thisClassName = elementCourant2.attr("class");
 
                 cdlToolTipDiv.stop(true, true);
                 cdlToolTipDiv.fadeOut(200);
-                thisClassName = thisClassName.replace(/^([^ ]*) (.*)/, "$1");
-                elementCourant2.attr('title', elementsTitres[thisClassName]);
+                thisClassName = thisClassName.replace(/^([^\s]*)\s(.*)/, "$1");
+                elementCourant2.attr("title", elementsTitres[thisClassName]);
                 elementCourantTitre = null;
-            }).on('click', function () {
-                var elementCourant2 = jQuery(this), thisClassName = elementCourant2.attr('class');
+            }).on("click", function () {
+                var elementCourant2 = jQuery(this);
+                var thisClassName = elementCourant2.attr("class");
 
                 cdlToolTipDiv.stop(true, true);
                 cdlToolTipDiv.fadeOut(200);
-                thisClassName = thisClassName.replace(/^([^ ]*) (.*)/, "$1");
-                elementCourant2.attr('title', elementsTitres[thisClassName]);
+                thisClassName = thisClassName.replace(/^([^\s]*)\s(.*)/, "$1");
+                elementCourant2.attr("title", elementsTitres[thisClassName]);
                 elementCourantTitre = null;
-            }).on('mousemove', function (e) {
-                var cursorSize = parseInt('###CURSOR_SIZE###', 10), elementCourant2 = jQuery(this);
-                cdlToolTipDiv.css({'top': e.pageY, 'left': e.pageX + cursorSize});
+            }).on("mousemove", function (e) {
+                var cursorSize = parseInt("###CURSOR_SIZE###", 10);
+                var elementCourant2 = jQuery(this);
+                cdlToolTipDiv.css({"top": e.pageY, "left": e.pageX + cursorSize});
                 if (e.pageX + cursorSize + cdlToolTipDiv.width() + 14 > htmlElt.width()) {
-                    cdlToolTipDiv.css({'top': e.pageY + cursorSize, 'left': htmlElt.width() - cdlToolTipDiv.width() - 14 - cursorSize});
+                    cdlToolTipDiv.css({"top": e.pageY + cursorSize, "left": htmlElt.width() - cdlToolTipDiv.width() - 14 - cursorSize});
                 } else {
-                    cdlToolTipDiv.css({'top': e.pageY, 'left': e.pageX + cursorSize});
+                    cdlToolTipDiv.css({"top": e.pageY, "left": e.pageX + cursorSize});
                 }
                 if (!elementCourantTitre || elementCourantTitre.size() === 0) {
                     elementCourant2.mouseenter();
@@ -73,14 +83,14 @@ jQuery(document).ready(function () {
             });
             indiceElementsTitres += 1;
         } else {
-            elementCourant.removeAttr('title');
+            elementCourant.removeAttr("title");
         }
     });
 
     if (bodyElt.width() < 680) {
-        jQuery('.cdlFormPersonalization, .cdlAllPageContainer').css('overflow', "visible").css('margin-top', "0");
-        jQuery('html, body').css('overflow', "auto").css('height', "auto");
-        jQuery('.cdlUtilLinksContainer').css('margin', "0 0 10px 0").css('padding', "2px 0 2px 0").css('border-width', "2px").css('left', "0").appendTo('.cdlGlobalPage');
+        jQuery(".cdlFormPersonalization, .cdlAllPageContainer").css("overflow", "visible").css("margin-top", "0");
+        jQuery("html, body").css("overflow", "auto").css("height", "auto");
+        jQuery(".cdlUtilLinksContainer").css("margin", "0 0 10px 0").css("padding", "2px 0 2px 0").css("border-width", "2px").css("left", "0").appendTo(".cdlGlobalPage");
     }
 
     htmlElt.niceScroll({
@@ -92,7 +102,7 @@ jQuery(document).ready(function () {
         zindex: 114200
     });
 
-    jQuery('.cdlCadre img').each(function () {
+    jQuery(".cdlCadre img").each(function () {
         if (jQuery(this).width() < 800) {
             jQuery(this).width(800);
         }

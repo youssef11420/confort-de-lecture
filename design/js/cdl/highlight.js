@@ -12,8 +12,8 @@ var focusOnAField = false;
 var timer;
 var duree = 250;
 var content = "";
-var playDirection = '';
-var playMode = '';
+var playDirection = "";
+var playMode = "";
 var isInProtectedField = false;
 var isPaused = false;
 var isStopped = true;
@@ -21,34 +21,41 @@ var myScrollTop = 0;
 var focusedSelect = null;
 var focusedSelectedIndex = null;
 var firstFieldIndex = null;
-var lecteurAudioHTML5 = document.getElementById('lecteurAudioCDL');
-var lecteurAudioParentHTML5 = window.opener && window.opener.document ? window.opener.document.getElementById('lecteurAudioCDL') : null;
-var cdlAudioPrev = jQuery('.cdlAudioPrevBloc,.cdlAudioPrevLine');
-var cdlAudioPlayPause = jQuery('.cdlAudioPlayPause');
-var cdlAudioStop = jQuery('.cdlAudioStop');
-var cdlAudioNext = jQuery('.cdlAudioNextBloc,.cdlAudioNextLine');
+var lecteurAudioHTML5 = document.getElementById("lecteurAudioCDL");
+var lecteurAudioParentHTML5 = (window.opener && window.opener.document)
+    ? window.opener.document.getElementById("lecteurAudioCDL")
+    : null;
+var cdlAudioPrev = jQuery(".cdlAudioPrevBloc,.cdlAudioPrevLine");
+var cdlAudioPlayPause = jQuery(".cdlAudioPlayPause");
+var cdlAudioStop = jQuery(".cdlAudioStop");
+var cdlAudioNext = jQuery(".cdlAudioNextBloc,.cdlAudioNextLine");
 var pausePosition = 0;
+var preloadedChars = false;
 
 jQuery.fn.outer = function () {
-    return jQuery(jQuery('<div></div>').html(this.clone())).html();
+    "use strict";
+    return jQuery(jQuery("<div></div>").html(this.clone())).html();
 };
 
 // Positionne le flag de lecture à faux mais le flag de pause à vrai
 function estPretEnPause() {
+    "use strict";
     isReading = false;
     isPaused = true;
 }
 // Positionne le flag de lecture à faux
 function estPret() {
+    "use strict";
     isReading = false;
 }
 
 // A appeler à l'arrêt de la lecture
 function stopLecture() {
-    jQuery('.cdlInversedColor input[type="text"], .cdlInversedColor input[type="color"], .cdlInversedColor input[type="date"], .cdlInversedColor input[type="datetime"], .cdlInversedColor input[type="datetime-local"], .cdlInversedColor input[type="email"], .cdlInversedColor input[type="month"], .cdlInversedColor input[type="number"], .cdlInversedColor input[type="range"], .cdlInversedColor input[type="search"], .cdlInversedColor input[type="tel"], .cdlInversedColor input[type="time"], .cdlInversedColor input[type="url"], .cdlInversedColor input[type="week"], .cdlInversedColor input[type="password"], .cdlInversedColor textarea, .cdlInversedColor select').blur();
-    jQuery('.cdlInversedColor').removeClass('cdlInversedColor');
+    "use strict";
+    jQuery(".cdlInversedColor input[type=\"text\"], .cdlInversedColor input[type=\"color\"], .cdlInversedColor input[type=\"date\"], .cdlInversedColor input[type=\"datetime\"], .cdlInversedColor input[type=\"datetime-local\"], .cdlInversedColor input[type=\"email\"], .cdlInversedColor input[type=\"month\"], .cdlInversedColor input[type=\"number\"], .cdlInversedColor input[type=\"range\"], .cdlInversedColor input[type=\"search\"], .cdlInversedColor input[type=\"tel\"], .cdlInversedColor input[type=\"time\"], .cdlInversedColor input[type=\"url\"], .cdlInversedColor input[type=\"week\"], .cdlInversedColor input[type=\"password\"], .cdlInversedColor textarea, .cdlInversedColor select").blur();
+    jQuery(".cdlInversedColor").removeClass("cdlInversedColor");
 
-    jQuery('div.cdlAllPageContainer').animate({scrollTop: 0}, 500);
+    jQuery("div.cdlAllPageContainer").animate({scrollTop: 0}, 500);
 
     // Réinitialise l'indice
     currentIndice = 0;
@@ -58,73 +65,76 @@ function stopLecture() {
 }
 
 function updateLecteur(mode) {
+    "use strict";
     switch (mode) {
-    case 'play':
-        cdlAudioPlayPause.removeClass('cdlAudioPlay').addClass('cdlAudioPause');
+    case "play":
+        cdlAudioPlayPause.removeClass("cdlAudioPlay").addClass("cdlAudioPause");
         if (currentIndice > 0) {
-            cdlAudioPrev.removeClass('cdlDisabled');
+            cdlAudioPrev.removeClass("cdlDisabled");
         } else {
-            cdlAudioPrev.addClass('cdlDisabled');
+            cdlAudioPrev.addClass("cdlDisabled");
         }
         if (currentIndice < pageParts.length - 1) {
-            cdlAudioNext.removeClass('cdlDisabled');
+            cdlAudioNext.removeClass("cdlDisabled");
         } else {
-            cdlAudioNext.addClass('cdlDisabled');
+            cdlAudioNext.addClass("cdlDisabled");
         }
-        cdlAudioStop.removeClass('cdlDisabled');
+        cdlAudioStop.removeClass("cdlDisabled");
         break;
-    case 'pause':
-        cdlAudioPlayPause.removeClass('cdlAudioPause').addClass('cdlAudioPlay');
-        cdlAudioStop.removeClass('cdlDisabled');
+    case "pause":
+        cdlAudioPlayPause.removeClass("cdlAudioPause").addClass("cdlAudioPlay");
+        cdlAudioStop.removeClass("cdlDisabled");
         break;
-    case 'stop':
-        cdlAudioPlayPause.removeClass('cdlAudioPause').addClass('cdlAudioPlay');
+    case "stop":
+        cdlAudioPlayPause.removeClass("cdlAudioPause").addClass("cdlAudioPlay");
         if (currentIndice > 0) {
-            cdlAudioPrev.removeClass('cdlDisabled');
+            cdlAudioPrev.removeClass("cdlDisabled");
         } else {
-            cdlAudioPrev.addClass('cdlDisabled');
+            cdlAudioPrev.addClass("cdlDisabled");
         }
         if (currentIndice < pageParts.length - 1) {
-            cdlAudioNext.removeClass('cdlDisabled');
+            cdlAudioNext.removeClass("cdlDisabled");
         } else {
-            cdlAudioNext.addClass('cdlDisabled');
+            cdlAudioNext.addClass("cdlDisabled");
         }
-        cdlAudioStop.addClass('cdlDisabled');
+        cdlAudioStop.addClass("cdlDisabled");
         break;
     default:
-        cdlAudioPlayPause.removeClass('cdlAudioPause').addClass('cdlAudioPlay');
-        cdlAudioPrev.addClass('cdlDisabled');
-        cdlAudioStop.addClass('cdlDisabled');
-        break;
+        cdlAudioPlayPause.removeClass("cdlAudioPause").addClass("cdlAudioPlay");
+        cdlAudioPrev.addClass("cdlDisabled");
+        cdlAudioStop.addClass("cdlDisabled");
     }
 }
 
 function cdlLit(text, playDirectionParam, playModeParam) {
+    "use strict";
     playDirection = playDirectionParam;
     playMode = playModeParam;
 
     if (text) {
-        updateLecteur('play');
+        updateLecteur("play");
 
         lecteurAudioHTML5.src = (window.cdlEmbeddedURL || "") + "/audio-text/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(text);
         lecteurAudioHTML5.currentTime = pausePosition;
         lecteurAudioHTML5.play();
         pausePosition = 0;
     } else {
-        updateLecteur('stop');
+        updateLecteur("stop");
     }
 }
 
 function cdlPauseIt() {
+    "use strict";
     pausePosition = lecteurAudioHTML5.currentTime;
 
     lecteurAudioHTML5.pause();
 
     estPretEnPause();
-    updateLecteur('pause');
+    updateLecteur("pause");
 }
 
 function cdlStopIt(initPausePos) {
+    "use strict";
     lecteurAudioHTML5.pause();
     lecteurAudioHTML5.currentTime = 0;
 
@@ -132,18 +142,19 @@ function cdlStopIt(initPausePos) {
         pausePosition = 0;
     }
 
-    updateLecteur('stop');
+    updateLecteur("stop");
 }
 
 // Vérifie le statut de lecture
 // -> si la lecture est en cours, on la stoppe et  on repositionne le status à faux
 // -> puis on la repasse  en mode lecture
 function initLecture() {
+    "use strict";
     if (isReading || isPaused) {
         if (lecteurAudioHTML5 && lecteurAudioHTML5.pause) {
             cdlStopIt(false);
-        } else if (thisMovie("lecteurCDL") && thisMovie("lecteurCDL").stopIt) {
-            thisMovie("lecteurCDL").stopIt();
+        } else if (window.thisMovie("lecteurCDL") && window.thisMovie("lecteurCDL").stopIt) {
+            window.thisMovie("lecteurCDL").stopIt();
         }
     }
     isReading = true;
@@ -152,44 +163,57 @@ function initLecture() {
 }
 
 function cdlPlayIt() {
-    updateLecteur('play');
+    "use strict";
+    updateLecteur("play");
 
     initLecture();
-    timer = window.setTimeout("lectureMorceau(currentIndice, 'down', 'auto')", 0);
+    timer = window.setTimeout(function () {
+        window.lectureMorceau(currentIndice, "down", "auto");
+    }, 0);
 }
 
 function cdlStopItDefinitely() {
+    "use strict";
     cdlStopIt(true);
     currentIndice = 0;
 }
 
-function getIndice() {
-    return currentIndice;
-}
-
-
 //Permet de passer au morceau précédent
 function backward() {
+    "use strict";
     initLecture();
     currentIndice -= 1;
-    timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + (isInProtectedField && playMode !== "manual" ? "auto" : "manual") + "')", 0);
+    timer = window.setTimeout(function () {
+        window.lectureMorceau(currentIndice, "down", (isInProtectedField && playMode !== "manual")
+            ? "auto"
+            : "manual");
+    }, 0);
     return false;
 }
 function backward2() {
+    "use strict";
     initLecture();
     currentIndice -= 1;
-    timer = window.setTimeout("lectureMorceau(currentIndice,'down','manual')", 0);
+    timer = window.setTimeout(function () {
+        window.lectureMorceau(currentIndice, "down", "manual");
+    }, 0);
     return false;
 }
 
 // Permet de passer au morceau suivant
 function forward() {
+    "use strict";
     initLecture();
     currentIndice += 1;
-    timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + (isInProtectedField && playMode !== "manual" ? "auto" : "manual") + "')", 0);
+    timer = window.setTimeout(function () {
+        window.lectureMorceau(currentIndice, "down", (isInProtectedField && playMode !== "manual")
+            ? "auto"
+            : "manual");
+    }, 0);
     return false;
 }
 function forward2() {
+    "use strict";
     initLecture();
     currentIndice += 1;
     timer = window.setTimeout("lectureMorceau(currentIndice,'down','manual')", 0);
@@ -197,6 +221,7 @@ function forward2() {
 }
 
 function getPreviousBloc() {
+    "use strict";
     initLecture();
     if (currentFirstCadreElementIndice > 0) {
         currentFirstCadreElementIndice -= 1;
@@ -207,6 +232,7 @@ function getPreviousBloc() {
 }
 
 function getNextBloc() {
+    "use strict";
     initLecture();
     if (currentFirstCadreElementIndice + 1 < firstCadreElementsIndexes.length) {
         currentFirstCadreElementIndice += 1;
@@ -217,7 +243,9 @@ function getNextBloc() {
 }
 
 function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
-    var foundIndice, playModeTmp;
+    "use strict";
+    var foundIndice;
+    var playModeTmp;
 
     if (!isStopped) {
         if (arguments.length > 1) {
@@ -242,47 +270,47 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
             stopLecture();
 
             // Scroll vers le haut de la page
-            jQuery('div.cdlAllPageContainer').animate({scrollTop: 0}, 500);
+            jQuery("div.cdlAllPageContainer").animate({scrollTop: 0}, 500);
         } else {
             if (isNaN(index)) {
                 content = index;
-                playModeTmp = 'manual';
+                playModeTmp = "manual";
             } else {
                 content = pageParts[index].outer();
                 jQuery("input", pageParts[index]).each(function () {
-                    if (!jQuery(this).attr('type') || !jQuery(this).attr('type').match(new RegExp('^(submit|button|reset|hidden|image)$', "i"))) {
-                        if (!jQuery(this).attr('type') || !jQuery(this).attr('type').match(new RegExp('^(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)$', "i"))) {
+                    if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(submit|button|reset|hidden|image)$", "i"))) {
+                        if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)$", "i"))) {
                             content = content.replace(/value="([^"]*)"/, "");
                             if (jQuery(this).val()) {
                                 content = content.replace(/<input/, "<input value=\"" + jQuery(this).val() + "\"");
                             }
                         }
-                        content = jQuery('label[for="' + jQuery(this).attr('id') + '"]').outer() + content;
-                        if (!jQuery(this).attr('type') || !jQuery(this).attr('type').match(new RegExp('^(radio|checkbox)$', "i"))) {
+                        content = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").outer() + content;
+                        if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(radio|checkbox)$", "i"))) {
                             if (playMode !== "manual") {
                                 isInProtectedField = true;
                             }
-                            playModeTmp = 'manual';
+                            playModeTmp = "manual";
                         }
                     }
                 });
                 jQuery("select, textarea", pageParts[index]).each(function () {
                     if (jQuery(this).is("textarea")) {
                         if (jQuery(this).val() !== "") {
-                            content = content.replace(/<textarea ([^>]*)>(.*?)<\/textarea>/, "<" + "textarea $1>" + jQuery(this).val() + "</textarea>");
+                            content = content.replace(/<textarea\s([^>]*)>(.*?)<\/textarea>/, "<" + "textarea $1>" + jQuery(this).val() + "</textarea>");
                         }
                     }
                     if (jQuery(this).is("select")) {
-                        content = content.replace(/ selected/, "");
+                        content = content.replace(/\sselected/, "");
                         if (jQuery(this).val()) {
                             content = content.replace(" value=\"" + jQuery(this).val() + "\"", " value=\"" + jQuery(this).val() + "\" selected");
                         }
                     }
-                    content = jQuery('label[for="' + jQuery(this).attr('id') + '"]').outer() + content;
+                    content = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").outer() + content;
                     if (playMode !== "manual") {
                         isInProtectedField = true;
                     }
-                    playModeTmp = 'manual';
+                    playModeTmp = "manual";
                 });
 
                 // Synchronise les indices actions scripts et js
@@ -298,7 +326,9 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
                 }
 
                 // Ne fait un highlight que si on est en cours de lecture
-                window.setTimeout("highlighterMain(" + index + ")", duree);
+                window.setTimeout(function () {
+                    window.highlighterMain(index);
+                }, duree);
             }
         }
 
@@ -309,17 +339,18 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
             } else {
                 cdlLit(content);
             }
-        } else if (thisMovie("lecteurCDL") && thisMovie("lecteurCDL").lit) {
+        } else if (window.thisMovie("lecteurCDL") && window.thisMovie("lecteurCDL").lit) {
             if (arguments.length > 1) {
-                thisMovie("lecteurCDL").lit(content, playDirection, playModeTmp);
+                window.thisMovie("lecteurCDL").lit(content, playDirection, playModeTmp);
             } else {
-                thisMovie("lecteurCDL").lit(content);
+                window.thisMovie("lecteurCDL").lit(content);
             }
         }
     }
 }
 
 function thisMovie(movieName) {
+    "use strict";
     if (window[movieName]) {
         return window[movieName];
     }
@@ -330,6 +361,7 @@ function thisMovie(movieName) {
     return null;
 }
 function parentMovie(movieName) {
+    "use strict";
     try {
         if (window.opener) {
             if (window.opener[movieName]) {
@@ -347,6 +379,7 @@ function parentMovie(movieName) {
 }
 
 function detectKeyDown(e) {
+    "use strict";
     var kc;
 
     e = e || window.event;
@@ -380,9 +413,6 @@ function detectKeyDown(e) {
             }
             stopLecture();
             return;
-        // autres
-        default:
-            break;
         }
     }
 
@@ -403,9 +433,6 @@ function detectKeyDown(e) {
             // page down
             case 34:
                 return getNextBloc();
-            // autres
-            default:
-                break;
             }
         }
         switch (kc) {
@@ -419,10 +446,14 @@ function detectKeyDown(e) {
             initLecture();
             if (shiftKeyPressed) {
                 currentIndice -= 1;
-                timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + playMode + "')", 0);
+                timer = window.setTimeout(function () {
+                    lectureMorceau(currentIndice, "down", playMode);
+                }, 0);
             } else {
                 currentIndice += 1;
-                timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + playMode + "')", 0);
+                timer = window.setTimeout(function () {
+                    lectureMorceau(currentIndice, "down", playMode);
+                }, 0);
             }
             return;
         // autres
@@ -433,6 +464,7 @@ function detectKeyDown(e) {
 }
 
 function detectKeyUp(e) {
+    "use strict";
     var kc;
 
     if (!isStopped) {
@@ -452,17 +484,21 @@ function detectKeyUp(e) {
                     focusedSelect.blur();
                     initLecture();
                     currentIndice += 1;
-                    timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + playMode + "')", 0);
+                    timer = window.setTimeout(function () {
+                        lectureMorceau(currentIndice, "down", playMode);
+                    }, 0);
                 }
             }
             break;
         default:
             if (kc !== 9) {
-                if (focusedSelect && focusedSelect.size() > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop('selectedIndex'))) {
+                if (focusedSelect && focusedSelect.size() > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop("selectedIndex"))) {
                     if (!isStopped) {
-                        focusedSelectedIndex = focusedSelect.prop('selectedIndex');
+                        focusedSelectedIndex = focusedSelect.prop("selectedIndex");
                         initLecture();
-                        timer = window.setTimeout("lectureMorceau('<select id=\"cdlGhostSelect\">'+jQuery('option',focusedSelect).eq(focusedSelectedIndex).outer()+'</select>',playDirection,playMode)", 0);
+                        timer = window.setTimeout(function () {
+                            lectureMorceau("<select id=\"cdlGhostSelect\">" + jQuery("option", focusedSelect).eq(focusedSelectedIndex).outer() + "</select>", playDirection, playMode);
+                        }, 0);
                     }
                 }
             }
@@ -472,7 +508,10 @@ function detectKeyUp(e) {
 }
 
 function detectKeyDownForFocusable(e) {
-    var kc, char;
+    "use strict";
+    var kc;
+    var char;
+    var lecteurChar;
 
     if (!isStopped) {
         e = e || window.event;
@@ -487,13 +526,17 @@ function detectKeyDownForFocusable(e) {
                 if (currentFocusableIndice > 0) {
                     currentFocusableIndice -= 1;
                     currentIndice = focusablesIndexes[currentFocusableIndice];
-                    timer = window.setTimeout("lectureMorceau(currentIndice,'down','manual')", 0);
+                    timer = window.setTimeout(function () {
+                        lectureMorceau(currentIndice, "down", "manual");
+                    }, 0);
                 }
             } else {
                 if (currentFocusableIndice < focusablesIndexes.length - 1) {
                     currentFocusableIndice += 1;
                     currentIndice = focusablesIndexes[currentFocusableIndice];
-                    timer = window.setTimeout("lectureMorceau(currentIndice,'down','manual')", 0);
+                    timer = window.setTimeout(function () {
+                        lectureMorceau(currentIndice, "down", "manual");
+                    }, 0);
                 }
             }
             return;
@@ -501,12 +544,207 @@ function detectKeyDownForFocusable(e) {
         case 16:
             shiftKeyPressed = true;
             return;
+        // ctrl
+        case 17:
+            return;
+        // alt
+        case 18:
+            return;
+        // windows
+        case 91:
+            return;
+        // windows
+        case 92:
+            return;
+        // select/menu key
+        case 93:
+            return;
+        // enter
+        case 13:
+            return;
         // autres
         default:
-            if (jQuery(this).is('input[type="text"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="range"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], input[type="password"], textarea') && ((kc >= 48 && kc <= 90) || (kc >= 96 && kc <= 111) || (kc >= 186 && kc <= 222))) {
-                char = String.fromCharCode(kc);
+            if (jQuery(this).is("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea")) {
+                if (kc >= 65 && kc <= 90) {
+                    if (e.altKey && e.ctrlKey && !e.shiftKey && kc === 69) {
+                        char = "euro";
+                    } else if (!e.altKey && !e.ctrlKey) {
+                        char = String.fromCharCode(kc);
+                    }
+                }
+                if (kc >= 96 && kc <= 105 && !e.altKey && !e.ctrlKey && !e.shiftKey) {
+                    char = kc - 96;
+                    char = char.toString();
+                }
+                if (kc >= 48 && kc <= 57) {
+                    if (!e.altKey && !e.ctrlKey && e.shiftKey) {
+                        char = kc - 48;
+                        char = char.toString();
+                    } else if (e.altKey && e.ctrlKey && !e.shiftKey) {
+                        switch (kc) {
+                        case 48:
+                            char = "arobase";
+                            break;
+                        case 50:
+                            char = "tilde";
+                            break;
+                        case 51:
+                            char = "diese";
+                            break;
+                        case 52:
+                            char = "acollade_ouvrante";
+                            break;
+                        case 53:
+                            char = "crochet_ouvrant";
+                            break;
+                        case 54:
+                            char = "barre_verticale";
+                            break;
+                        case 55:
+                            char = "accent_grave";
+                            break;
+                        case 56:
+                            char = "anti_slash";
+                            break;
+                        case 57:
+                            char = "accent_circonflexe";
+                            break;
+                        }
+                    } else if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                        switch (kc) {
+                        case 48:
+                            char = "a_accent_grave";
+                            break;
+                        case 49:
+                            char = "et_commercial";
+                            break;
+                        case 50:
+                            char = "e_accent_aigu";
+                            break;
+                        case 51:
+                            char = "guillemet";
+                            break;
+                        case 52:
+                            char = "apostrophe";
+                            break;
+                        case 53:
+                            char = "parenthese_ouvrante";
+                            break;
+                        case 54:
+                            char = "tiret";
+                            break;
+                        case 55:
+                            char = "e_accent_grave";
+                            break;
+                        case 56:
+                            char = "souligne";
+                            break;
+                        case 57:
+                            char = "c_cedille";
+                            break;
+                        }
+                    }
+                }
+                switch (kc) {
+                case 222:
+                    if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                        char = "exposant_2";
+                    }
+                    break;
+                case 219:
+                    if (!e.altKey && !e.ctrlKey && e.shiftKey) {
+                        char = "degre";
+                    } else if (e.altKey && e.ctrlKey && !e.shiftKey) {
+                        char = "crochet_fermant";
+                    } else if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                        char = "parenthese_fermante";
+                    }
+                    break;
+                case 187:
+                    if (!e.altKey && !e.ctrlKey && e.shiftKey) {
+                        char = "pluss";
+                    } else if (e.altKey && e.ctrlKey && !e.shiftKey) {
+                        char = "acollade_fermante";
+                    } else if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                        char = "egal";
+                    }
+                    break;
+                case 186:
+                    if (!e.altKey && !e.ctrlKey && e.shiftKey) {
+                        char = "livre_sterling";
+                    } else if (e.altKey && e.ctrlKey && !e.shiftKey) {
+                        char = "symbole_monetaire";
+                    } else if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                        char = "dollar";
+                    }
+                    break;
+                }
+                if (!e.altKey && !e.ctrlKey) {
+                    switch (kc) {
+                    case 221:
+                        char = e.shiftKey
+                            ? "trema"
+                            : "accent_circonflexe";
+                        break;
+                    case 192:
+                        char = e.shiftKey
+                            ? "pourcent"
+                            : "u_accent_grave";
+                        break;
+                    case 220:
+                        char = e.shiftKey
+                            ? "mu"
+                            : "etoile";
+                        break;
+                    case 223:
+                        char = e.shiftKey
+                            ? "signe_section"
+                            : "point_dexclamation";
+                        break;
+                    case 191:
+                        char = e.shiftKey
+                            ? "slash"
+                            : "deux_points";
+                        break;
+                    case 190:
+                        char = e.shiftKey
+                            ? "point"
+                            : "point_virgule";
+                        break;
+                    case 188:
+                        char = e.shiftKey
+                            ? "point_dinterrogation"
+                            : "virgule";
+                        break;
+                    case 226:
+                        char = e.shiftKey
+                            ? "chevron_fermant"
+                            : "chevron_ouvrant";
+                        break;
+                    case 32:
+                        char = "espace";
+                        break;
+                    case 106:
+                        char = "multiplie_par";
+                        break;
+                    case 107:
+                        char = "pluss";
+                        break;
+                    case 109:
+                        char = "moins";
+                        break;
+                    case 111:
+                        char = "divise_par";
+                        break;
+                    }
+                }
                 if (char) {
-                    timer = window.setTimeout("cdlLit('" + char.toLowerCase().replace(/'/, "\\'") + "',playDirection,playMode)", duree);
+                    lecteurChar = document.getElementById("lecteurAudioCDL_" + char.toLowerCase());
+                    if (lecteurChar) {
+                        lecteurChar.pause();
+                        lecteurChar.currentTime = 0;
+                        lecteurChar.play();
+                    }
                 }
             }
             return;
@@ -514,27 +752,29 @@ function detectKeyDownForFocusable(e) {
     }
 }
 function trim(myString) {
-    return myString.replace(/^\s+/g, '').replace(/\s+$/g, '');
+    "use strict";
+    return myString.replace(/^\s+/g, "").replace(/\s+$/g, "");
 }
 
 var isFirstElementInCadre;
 var currentFocusableIndiceForInit = 0;
 var isFirstField = true;
 function highlightedElements(theElement) {
+    "use strict";
     theElement.children(":not(script,noscript)").each(function () {
         if (jQuery("div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,address,blockquote,ins,del,form,fieldset,legend,span.cdlInputText,span.cdlOtherInput,span.cdlButtons,table,caption,thead,tbody,th,td,span.cdlPartOfText,a,span.cdlSelectInput,textarea,br,hr,img,label,noscript", jQuery(this)).size() === 0 || jQuery(this).is("a") || jQuery(this).is("span.cdlButtons")) {
             var elementContent = trim(jQuery(this).text());
-            if ((elementContent && elementContent.match(new RegExp("[^-\\!\"'\\(\\),\\.\/:;<>\\?\\[\\\\\\]\\^_`\\{\\|\\}~‘’¡¤¦§¨ª«¬­¯´¶·¸¹»¿• " + String.fromCharCode(160) + "\t\n]", "i"))) || jQuery(this).is('span.cdlInputText, span.cdlOtherInput, span.cdlButtons, span.cdlSelectInput, textarea') || (jQuery(this).is('img') && (jQuery(this).attr('alt') || jQuery(this).attr('title'))) || (jQuery(this).is("a") && jQuery('img', jQuery(this)).size() > 0)) {
-                if (!jQuery(this).is('label')) {
+            if ((elementContent && elementContent.match(new RegExp("[^-\\!\"'\\(\\),\\.\/:;<>\\?\\[\\\\\\]\\^_`\\{\\|\\}~‘’¡¤¦§¨ª«¬¯´¶·¸¹»¿• " + String.fromCharCode(160) + "\t\n]", "i"))) || jQuery(this).is("span.cdlInputText, span.cdlOtherInput, span.cdlButtons, span.cdlSelectInput, textarea") || (jQuery(this).is("img") && (jQuery(this).attr("alt") || jQuery(this).attr("title"))) || (jQuery(this).is("a") && jQuery("img", jQuery(this)).size() > 0)) {
+                if (!jQuery(this).is("label")) {
                     if (isFirstElementInCadre) {
                         firstCadreElementsIndexes.push(i);
                         currentFocusableIndiceForInit = i;
                         isFirstElementInCadre = false;
                     }
-                    if (jQuery(this).children('input[type!="hidden"],button').size() === 1 || jQuery(this).is('span.cdlSelectInput,textarea')) {
+                    if (jQuery(this).children("input[type!=\"hidden\"],button").size() === 1 || jQuery(this).is("span.cdlSelectInput,textarea")) {
                         jQuery(this).wrap("<span class=\"cdlFormFieldsHighlighted\"></span>");
                         pageParts.push(jQuery(this).parent());
-                        jQuery(this).parent().addClass('cdlToRead' + i);
+                        jQuery(this).parent().addClass("cdlToRead" + i);
                         pageFirstPartsRelated.push(currentFocusableIndiceForInit);
                         focusablesIndexes.push(i);
                         if (isFirstField) {
@@ -543,11 +783,11 @@ function highlightedElements(theElement) {
                         }
                     } else {
                         pageParts.push(jQuery(this));
-                        jQuery(this).addClass('cdlToRead' + i);
+                        jQuery(this).addClass("cdlToRead" + i);
                         pageFirstPartsRelated.push(currentFocusableIndiceForInit);
                     }
 
-                    if (jQuery(this).is('a')) {
+                    if (jQuery(this).is("a")) {
                         focusablesIndexes.push(i);
                     }
                     i += 1;
@@ -560,6 +800,7 @@ function highlightedElements(theElement) {
 }
 
 function ds_gettop(el) {
+    "use strict";
     var tmp = el.offsetTop;
     el = el.offsetParent;
     while (el) {
@@ -569,26 +810,27 @@ function ds_gettop(el) {
     return tmp;
 }
 function highlighterMain(index) {
+    "use strict";
     if (!isStopped) {
-        jQuery('.cdlInversedColor input[type="text"], .cdlInversedColor input[type="color"], .cdlInversedColor input[type="date"], .cdlInversedColor input[type="datetime"], .cdlInversedColor input[type="datetime-local"], .cdlInversedColor input[type="email"], .cdlInversedColor input[type="month"], .cdlInversedColor input[type="number"], .cdlInversedColor input[type="range"], .cdlInversedColor input[type="search"], .cdlInversedColor input[type="tel"], .cdlInversedColor input[type="time"], .cdlInversedColor input[type="url"], .cdlInversedColor input[type="week"], .cdlInversedColor input[type="password"], .cdlInversedColor textarea, .cdlInversedColor select').blur();
-        jQuery('.cdlInversedColor').removeClass('cdlInversedColor');
+        jQuery(".cdlInversedColor input[type=\"text\"], .cdlInversedColor input[type=\"color\"], .cdlInversedColor input[type=\"date\"], .cdlInversedColor input[type=\"datetime\"], .cdlInversedColor input[type=\"datetime-local\"], .cdlInversedColor input[type=\"email\"], .cdlInversedColor input[type=\"month\"], .cdlInversedColor input[type=\"number\"], .cdlInversedColor input[type=\"range\"], .cdlInversedColor input[type=\"search\"], .cdlInversedColor input[type=\"tel\"], .cdlInversedColor input[type=\"time\"], .cdlInversedColor input[type=\"url\"], .cdlInversedColor input[type=\"week\"], .cdlInversedColor input[type=\"password\"], .cdlInversedColor textarea, .cdlInversedColor select").blur();
+        jQuery(".cdlInversedColor").removeClass("cdlInversedColor");
         if (pageParts[index]) {
             myScrollTop = ds_gettop(pageParts[index].get(0));
             jQuery("input, select, textarea", pageParts[index]).each(function () {
-                var cdlFieldLabel = jQuery('label[for="' + jQuery(this).attr('id') + '"]');
-                if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week', "i")) && cdlFieldLabel.size() > 0) {
+                var cdlFieldLabel = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]");
+                if (jQuery(this).attr("type") && jQuery(this).attr("type").match(new RegExp("text|password|radio|checkbox|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week", "i")) && cdlFieldLabel.size() > 0) {
                     myScrollTop = Math.min(myScrollTop, ds_gettop(cdlFieldLabel.get(0)));
                 }
             });
 
-            jQuery('div.cdlAllPageContainer').animate({scrollTop: myScrollTop - 300 - jQuery('div.cdlUtilLinksContainer').get(0).offsetHeight - 7}, duree);
+            jQuery("div.cdlAllPageContainer").animate({scrollTop: myScrollTop - 300 - jQuery("div.cdlUtilLinksContainer").get(0).offsetHeight - 7}, duree);
 
-            pageParts[index].addClass('cdlInversedColor');
+            pageParts[index].addClass("cdlInversedColor");
             pageParts[index].focus();
 
             jQuery("input", pageParts[index]).each(function () {
-                if (jQuery(this).attr('type') && jQuery(this).attr('type').match(new RegExp('text|password|radio|checkbox|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week', "i"))) {
-                    jQuery('label[for="' + jQuery(this).attr('id') + '"]').addClass('cdlInversedColor');
+                if (jQuery(this).attr("type") && jQuery(this).attr("type").match(new RegExp("text|password|radio|checkbox|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week", "i"))) {
+                    jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").addClass("cdlInversedColor");
                 }
                 jQuery(this).focus();
             });
@@ -596,93 +838,217 @@ function highlighterMain(index) {
                 jQuery(this).focus();
             });
             jQuery("select, textarea", pageParts[index]).each(function () {
-                jQuery('label[for="' + jQuery(this).attr('id') + '"]').addClass('cdlInversedColor');
+                jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").addClass("cdlInversedColor");
                 jQuery(this).focus();
             });
         }
 
         if (index === pageParts.length) {
-            jQuery('div.cdlAllPageContainer').animate({scrollTop: 0}, 500);
+            jQuery("div.cdlAllPageContainer").animate({scrollTop: 0}, 500);
         }
     }
 }
 
-if (jQuery('div.cdlTopPage').size()) {
-    jQuery('div.cdlTopPage div.cdlCadre').each(function () {
+if (jQuery("div.cdlTopPage").size()) {
+    jQuery("div.cdlTopPage div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.cdlPageContent').size()) {
-    jQuery('div.cdlPageContent div.cdlCadre').each(function () {
+if (jQuery("div.cdlPageContent").size()) {
+    jQuery("div.cdlPageContent div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.cdlPageNavigation').size()) {
-    jQuery('div.cdlPageNavigation div.cdlCadre').each(function () {
+if (jQuery("div.cdlPageNavigation").size()) {
+    jQuery("div.cdlPageNavigation div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.cdlBottomPage').size()) {
-    jQuery('div.cdlBottomPage div.cdlCadre').each(function () {
+if (jQuery("div.cdlBottomPage").size()) {
+    jQuery("div.cdlBottomPage div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.cdlBackHome').size()) {
-    jQuery('div.cdlBackHome div.cdlCadre').each(function () {
+if (jQuery("div.cdlBackHome").size()) {
+    jQuery("div.cdlBackHome div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.documentContent').size()) {
-    jQuery('div.documentContent div.cdlCadre').each(function () {
+if (jQuery("div.documentContent").size()) {
+    jQuery("div.documentContent div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.protectedPageLoginContent').size()) {
-    jQuery('div.protectedPageLoginContent div.cdlCadre').each(function () {
+if (jQuery("div.protectedPageLoginContent").size()) {
+    jQuery("div.protectedPageLoginContent div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.exitContent').size()) {
-    jQuery('div.exitContent div.cdlCadre').each(function () {
+if (jQuery("div.exitContent").size()) {
+    jQuery("div.exitContent div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery('div.errorContent').size()) {
-    jQuery('div.errorContent div.cdlCadre').each(function () {
+if (jQuery("div.errorContent").size()) {
+    jQuery("div.errorContent div.cdlCadre").each(function () {
+        "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-var pCdlCopyright = jQuery('p.cdlCopyright');
+var pCdlCopyright = jQuery("p.cdlCopyright");
 if (pCdlCopyright.size()) {
     pageParts.push(pCdlCopyright);
-    pCdlCopyright.addClass('cdlToRead' + i);
+    pCdlCopyright.addClass("cdlToRead" + i);
     pageFirstPartsRelated.push(i);
     i += 1;
 }
 
-jQuery('input[type="text"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="range"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], input[type="password"], textarea, select').on('focus', function () {
+jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select").on("paste", function () {
+    "use strict";
+    var element = this;
+    window.setTimeout(function () {
+        var value = "Contenu du champ après coller : " + jQuery(element).val();
+        var lecteurAudioCDLPaste = document.getElementById("lecteurAudioCDL_paste");
+        if (!lecteurAudioCDLPaste) {
+            jQuery(".lecteursAudioCDL").append("<audio controls autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
+        } else {
+            jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value);
+            lecteurAudioCDLPaste.pause();
+            lecteurAudioCDLPaste.currentTime = 0;
+            lecteurAudioCDLPaste.play();
+        }
+    }, 100);
+}).on("focus", function () {
+    "use strict";
     focusOnAField = true;
-    if (jQuery(this).is('select')) {
-        focusedSelect = jQuery(this);
-        focusedSelectedIndex = focusedSelect.prop('selectedIndex');
+    if (jQuery(this).is("input")) {
+        if (!preloadedChars) {
+            window.setTimeout(function () {
+                var chars = {
+                    k_0: "0",
+                    k_1: "1",
+                    k_2: "2",
+                    k_3: "3",
+                    k_4: "4",
+                    k_5: "5",
+                    k_6: "6",
+                    k_7: "7",
+                    k_8: "8",
+                    k_9: "9",
+                    k_a_accent_grave: "à",
+                    k_accent_circonflexe: "accent_circonflexe",
+                    k_accent_grave: "accent_grave",
+                    k_acollade_fermante: "acollade_fermante",
+                    k_acollade_ouvrante: "acollade_ouvrante",
+                    k_anti_slash: "anti_slash",
+                    k_apostrophe: "apostrophe",
+                    k_arobase: "arobase",
+                    k_a: "a",
+                    k_barre_verticale: "barre_verticale",
+                    k_b: "b",
+                    k_c_cedille: "ç",
+                    k_chevron_fermant: "chevron_fermant",
+                    k_chevron_ouvrant: "chevron_ouvrant",
+                    k_crochet_fermant: "crochet_fermant",
+                    k_crochet_ouvrant: "crochet_ouvrant",
+                    k_c: "c",
+                    k_degre: "degré",
+                    k_deux_points: "deux_points",
+                    k_diese: "dièse",
+                    k_divise_par: "divisé_par",
+                    k_dollar: "dollar",
+                    k_d: "d",
+                    k_e_accent_aigu: "é",
+                    k_e_accent_grave: "è",
+                    k_egal: "égal",
+                    k_espace: "espace",
+                    k_et_commercial: "et_commercial",
+                    k_etoile: "étoile",
+                    k_euro: "euro",
+                    k_e: "e",
+                    k_exposant_2: "²",
+                    k_f: "f",
+                    k_guillemet: "guillemet",
+                    k_g: "g",
+                    k_h: "h",
+                    k_i: "i",
+                    k_j: "j",
+                    k_k: "k",
+                    k_livre_sterling: "livre_sterling",
+                    k_l: "l",
+                    k_moins: "moins",
+                    k_multiplie_par: "multiplié_par",
+                    k_mu: "mu",
+                    k_m: "m",
+                    k_n: "n",
+                    k_o: "o",
+                    k_parenthese_fermante: "parenthèse_fermante",
+                    k_parenthese_ouvrante: "parenthèse_ouvrante",
+                    k_pluss: "pluss",
+                    k_point_dexclamation: "point_dexclamation",
+                    k_point_dinterrogation: "point_dinterrogation",
+                    k_point: "point",
+                    k_point_virgule: "point_virgule",
+                    k_pourcent: "pourcent",
+                    k_p: "p",
+                    k_q: "q",
+                    k_r: "r",
+                    k_signe_section: "signe_section",
+                    k_slash: "slash",
+                    k_souligne: "souligné",
+                    k_s: "s",
+                    k_symbole_monetaire: "symbole_monétaire",
+                    k_tilde: "tilde",
+                    k_tiret: "tiret",
+                    k_trema: "tréma",
+                    k_t: "t",
+                    k_u_accent_grave: "ù",
+                    k_u: "u",
+                    k_virgule: "virgule",
+                    k_v: "v",
+                    k_w: "w",
+                    k_x: "x",
+                    k_y: "y",
+                    k_z: "z"
+                };
+                jQuery.each(chars, function (key, value) {
+                    jQuery(".lecteursAudioCDL").append("<audio controls preload=\"none\" src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_" + key.substring(2) + "\"></audio>");
+                });
+            }, 100);
+            preloadedChars = true;
+        }
     }
-}).on('blur', function () {
+    if (jQuery(this).is("select")) {
+        focusedSelect = jQuery(this);
+        focusedSelectedIndex = focusedSelect.prop("selectedIndex");
+    }
+}).on("blur", function () {
+    "use strict";
     focusOnAField = false;
     focusedSelect = null;
     focusedSelectedIndex = null;
 });
 
 
-jQuery('.cdlCadre a, button, input[type="submit"], input[type="button"]').on('click', function () {
+jQuery(".cdlCadre a, button, input[type=\"submit\"], input[type=\"button\"], input[type=\"reset\"]").on("click", function () {
+    "use strict";
     if (isReading) {
         if (lecteurAudioHTML5 && lecteurAudioHTML5.pause) {
             cdlPauseIt();
@@ -693,92 +1059,107 @@ jQuery('.cdlCadre a, button, input[type="submit"], input[type="button"]').on('cl
 });
 
 
-jQuery('html').on('keydown', detectKeyDown).on('keyup', detectKeyUp);
+jQuery("html").on("keydown", detectKeyDown).on("keyup", detectKeyUp);
 
-jQuery('input, select, textarea, button, a').on('keydown', detectKeyDownForFocusable);
+jQuery("input, select, textarea, button, a").on("keydown", detectKeyDownForFocusable);
 
-jQuery('select').on('click', function () {
+jQuery("select").on("click", function () {
+    "use strict";
     if (!isStopped) {
-        if (jQuery(this).is('.cdlInversedColor select')) {
-            if (focusedSelect && focusedSelect.size() > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop('selectedIndex'))) {
-                focusedSelectedIndex = focusedSelect.prop('selectedIndex');
+        if (jQuery(this).is(".cdlInversedColor select")) {
+            if (focusedSelect && focusedSelect.size() > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop("selectedIndex"))) {
+                focusedSelectedIndex = focusedSelect.prop("selectedIndex");
                 initLecture();
-                timer = window.setTimeout("lectureMorceau('<select id=\"cdlGhostSelect\">'+jQuery('option',focusedSelect).eq(focusedSelectedIndex).outer()+'</select>',playDirection,playMode)", duree);
+                timer = window.setTimeout(function () {
+                    lectureMorceau("<select id=\"cdlGhostSelect\">" + jQuery("option", focusedSelect).eq(focusedSelectedIndex).outer() + "</select>", playDirection, playMode);
+                }, duree);
             }
         }
     }
 });
 
-jQuery('object#lecteurCDL').on('mouseout', function () {
+jQuery("object#lecteurCDL").on("mouseout", function () {
+    "use strict";
     if (thisMovie("lecteurCDL") && thisMovie("lecteurCDL").hideCursor) {
         thisMovie("lecteurCDL").hideCursor();
     }
 });
 
-lecteurAudioHTML5.addEventListener('play', function () {
-    updateLecteur('play');
+lecteurAudioHTML5.addEventListener("play", function () {
+    "use strict";
+    updateLecteur("play");
 });
 
-lecteurAudioHTML5.addEventListener('pause', function () {
-    updateLecteur('pause');
+lecteurAudioHTML5.addEventListener("pause", function () {
+    "use strict";
+    updateLecteur("pause");
 });
 
-lecteurAudioHTML5.addEventListener('ended', function () {
+lecteurAudioHTML5.addEventListener("ended", function () {
+    "use strict";
     if (playMode === "manual") {
         estPret();
-        updateLecteur('stop');
+        updateLecteur("stop");
     } else {
-        timer = window.setTimeout("lectureMorceau(currentIndice" + (playDirection === "up" ? "-" : "+") + "1,playDirection,playMode)", 0);
+        timer = window.setTimeout(function () {
+            var upOrDown = (playDirection === "up")
+                ? -1
+                : 1;
+            lectureMorceau(currentIndice + upOrDown, playDirection, playMode);
+        }, 0);
     }
 });
 
-jQuery('.cdlAudioControls a').on('click', function () {
+jQuery(".cdlAudioControls a").on("click", function () {
+    "use strict";
     var lienAudio = jQuery(this);
 
-    if (!lienAudio.hasClass('cdlDisabled')) {
-        if (lienAudio.hasClass('cdlAudioPause')) {
+    if (!lienAudio.hasClass("cdlDisabled")) {
+        if (lienAudio.hasClass("cdlAudioPause")) {
             cdlPauseIt();
-        } else if (lienAudio.hasClass('cdlAudioPlay')) {
+        } else if (lienAudio.hasClass("cdlAudioPlay")) {
             cdlPlayIt();
-        } else if (lienAudio.hasClass('cdlAudioStop')) {
+        } else if (lienAudio.hasClass("cdlAudioStop")) {
             cdlStopIt(true);
-        } else if (lienAudio.hasClass('cdlAudioPrevLine')) {
+        } else if (lienAudio.hasClass("cdlAudioPrevLine")) {
             backward();
-            updateLecteur('play');
-        } else if (lienAudio.hasClass('cdlAudioNextLine')) {
+            updateLecteur("play");
+        } else if (lienAudio.hasClass("cdlAudioNextLine")) {
             forward();
-            updateLecteur('play');
-        } else if (lienAudio.hasClass('cdlAudioPrevBloc')) {
+            updateLecteur("play");
+        } else if (lienAudio.hasClass("cdlAudioPrevBloc")) {
             getPreviousBloc();
-            updateLecteur('play');
-        } else if (lienAudio.hasClass('cdlAudioNextBloc')) {
+            updateLecteur("play");
+        } else if (lienAudio.hasClass("cdlAudioNextBloc")) {
             getNextBloc();
-            updateLecteur('play');
+            updateLecteur("play");
         }
     }
     return false;
 });
 
 function initAnchorLinks() {
+    "use strict";
     if (jQuery.address) {
         jQuery.address.change(function (event) {
-            if (event.value !== '/') {
-                jQuery('[name="' + event.value + '"]:first, #' + event.value).each(function () {
-                    var cdlToReadClassName, anchorRelated;
-                    if (jQuery(this).is('[class*="cdlToRead"]')) {
-                        cdlToReadClassName = jQuery(this).attr('class');
+            if (event.value !== "/") {
+                jQuery("[name=\"" + event.value + "\"]:first, #" + event.value).each(function () {
+                    var cdlToReadClassName;
+                    var anchorRelated;
+                    if (jQuery(this).is("[class*=\"cdlToRead\"]")) {
+                        cdlToReadClassName = jQuery(this).attr("class");
                     } else {
-                        anchorRelated = jQuery('[class*="cdlToRead"]:first', jQuery(this));
+                        anchorRelated = jQuery("[class*=\"cdlToRead\"]:first", jQuery(this));
                         if (anchorRelated.size() > 0) {
-                            cdlToReadClassName = anchorRelated.attr('class');
+                            cdlToReadClassName = anchorRelated.attr("class");
                         } else {
-                            anchorRelated = jQuery(this).nextAll('[class*="cdlToRead"]:first');
+                            anchorRelated = jQuery(this).nextAll("[class*=\"cdlToRead\"]:first");
                             if (anchorRelated.size() > 0) {
-                                cdlToReadClassName = anchorRelated.attr('class');
+                                cdlToReadClassName = anchorRelated.attr("class");
                             } else {
-                                anchorRelated = jQuery('[class*="cdlToRead"]:first', jQuery(this).nextAll());
+                                anchorRelated = jQuery("[class*=\"cdlToRead\"]:first", jQuery(this).nextAll());
                                 if (anchorRelated.size() > 0) {
-                                    cdlToReadClassName = anchorRelated.attr('class');
+                                    cdlToReadClassName = anchorRelated.attr("class");
                                 } else {
                                     cdlToReadClassName = "cdlToRead0";
                                 }
@@ -788,7 +1169,9 @@ function initAnchorLinks() {
                     cdlToReadClassName = cdlToReadClassName.replace(/.*?cdlToRead(\d+).*?/, "$1");
                     initLecture();
                     currentIndice = cdlToReadClassName;
-                    timer = window.setTimeout("lectureMorceau(currentIndice,'down','" + playMode + "')", 0);
+                    timer = window.setTimeout(function () {
+                        lectureMorceau(currentIndice, "down", playMode);
+                    }, 0);
                 });
             }
             return false;
