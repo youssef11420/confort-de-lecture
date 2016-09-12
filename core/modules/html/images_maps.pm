@@ -95,12 +95,13 @@ sub parseImages #($htmlCode, $siteRootUrl, $pagePath, $displayImages)
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-sub parseMapAreaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseMapAreaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames)
 {
-	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl) = @_;
+	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
 
 	# Transformer l'URL pour passer par le script CDL principal
-	$tagAttributes =~ s/( (href))=(\"|\')(.*?)\3/$1."=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get').$3/segi;
+	$tagAttributes =~ s/( (href))=(\"|\')(.*?)\3/$1."=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames).$3/segi;
 
 	# Retourner les attributs du area en parsant l'URL dans le href
 	return $tagAttributes;
@@ -115,13 +116,14 @@ sub parseMapAreaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl)
 #	$displayImages - booléen indiquant si l'affichage des images est activé
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-sub parseMapAreas #($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseMapAreas #($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl, $trustedDomainNames)
 {
-	my ($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl) = @_;
+	my ($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
 
 	# Si l'affichage des images est activé, on traite les URLs dans les attributs href des balises area pour passer par le script CDL principal, sinon, en remplace les maps par des listes à puce : en mettant comme intutilé du lien la valaur de l'attribut alt du area et comme lien le script CDL avec les paramètres id du site et url de la page à parser
 	if ($displayImages) {
-		$htmlCode =~ s/(<area)( [^>]*?)(>)/$1.parseMapAreaAttributes($2, $pagePath, $siteId).$3/segi;
+		$htmlCode =~ s/(<area)( [^>]*?)(>)/$1.parseMapAreaAttributes($2, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames).$3/segi;
 	} else {
 		# Remplacer les balises map par des balises ul
 		$htmlCode =~ s/(<map( [^>]*?)?>)/<ul>/sgi;
@@ -130,11 +132,11 @@ sub parseMapAreas #($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl)
 		# Remplacer la balise area par la balise li contenant un lien vers la destination du area
 		# Traitement des 3 cas, où l'attribut href est avant alt, et inversement, puis le cas où il n'y a pas de alt
 		$htmlCode =~ s/<area( [^>]*?)? (href)=(\"|\')(.*?)\3( [^>]*?)? (alt)=(\"|\')(.*?)\7.*?>/
-			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get').$3.">".$8."<\/a><\/li>"/segi;
+			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames).$3.">".$8."<\/a><\/li>"/segi;
 		$htmlCode =~ s/<area( [^>]*?)? (alt)=(\"|\')(.*?)\3( [^>]*?)? (href)=(\"|\')(.*?)\7.*?>/
-			"<li><a href=".$7.getUriFromUrl($8, $pagePath, $siteId, $siteRootUrl, 'get').$7.">".$4."<\/a><\/li>"/segi;
+			"<li><a href=".$7.getUriFromUrl($8, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames).$7.">".$4."<\/a><\/li>"/segi;
 		$htmlCode =~ s/<area( [^>]*?)? (href)=(\"|\')(.*?)\3.*?>/
-			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get').$3.">".(length($4) > 100 ? substr($4, 0, 97)."..." : $4)."<\/a><\/li>"/segi;
+			"<li><a href=".$3.getUriFromUrl($4, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames).$3.">".(length($4) > 100 ? substr($4, 0, 97)."..." : $4)."<\/a><\/li>"/segi;
 	}
 
 	# Retourner le code HTML avec les balise map/area parsées

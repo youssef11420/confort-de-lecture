@@ -164,11 +164,12 @@ sub parseLinks #($htmlCode, $siteRootUrl, $pagePath)
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-sub cleanRedirectUrl #($url, $pagePath, $siteId, $siteRootUrl)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub cleanRedirectUrl #($url, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames)
 {
-	my ($url, $pagePath, $siteId, $siteRootUrl) = @_;
+	my ($url, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
 
-	my $parsedUrl = getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl);
+	my $parsedUrl = getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames);
 	if ($parsedUrl !~ m/^\/(cdl\/f|le\-filtre)/si) {
 		$parsedUrl = ($embeddedMode ne "" ? $embeddedMode."/f".($siteRootUrl =~ m/^https:\/\//si ? "s" : "") : "/le-filtre".($siteRootUrl =~ m/^https:\/\//si ? "-https" : "")."/".$siteId)."/".$parsedUrl;
 	}
@@ -185,13 +186,14 @@ sub cleanRedirectUrl #($url, $pagePath, $siteId, $siteRootUrl)
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-sub parseMetaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseMetaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames)
 {
-	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl) = @_;
+	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
 
 	# Transformation de l'URL de redirection dans l'attribut content
 	$tagAttributes =~ s/ content=((\"|\').*?[\s;]+)URL=(.*?)\s*\2/
-		" content=".$1." URL=".cleanRedirectUrl($3, $pagePath, $siteId, $siteRootUrl).$2/segi;
+		" content=".$1." URL=".cleanRedirectUrl($3, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames).$2/segi;
 
 	# Retourner les attributs avec la valeur de l'URL de redictection transformée
 	return $tagAttributes;
@@ -206,9 +208,10 @@ sub parseMetaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$contentType - encodage transmis dans l'entête de la réponse HTTP
-sub parseMetas #($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseMetas #($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType, $trustedDomainNames)
 {
-	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType) = @_;
+	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType, $trustedDomainNames) = @_;
 
 	# Chaîne qui contiendra tous les métas
 	my $allMetas = "";
@@ -217,7 +220,7 @@ sub parseMetas #($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType)
 
 	# Transformation des URL de redirection de toutes les balises meta dont l'attribut http-equiv="Refresh"
 	$htmlCode =~ s/<meta( [^>]*?)?( http-equiv=(\"|\')Refresh\3)([^>]*)>/
-		"<meta".parseMetaAttributes($1, $pagePath, $siteId, $siteRootUrl).$2.parseMetaAttributes($4, $pagePath, $siteId, $siteRootUrl).">"/segi;
+		"<meta".parseMetaAttributes($1, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames).$2.parseMetaAttributes($4, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames).">"/segi;
 
 	# Récupération de tous les métas
 	$htmlCode =~ s/(<meta( [^>]*)?>)/$allMetas .= $1."\n"; ""/segi;

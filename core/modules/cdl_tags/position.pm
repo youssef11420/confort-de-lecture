@@ -56,7 +56,8 @@ sub positionTagExists #($htmlCode)
 #	$cadreTemplateString - chaîne template où remplir le fil d'Ariane en haut de page
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
-sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $entirePageTemplateString, $cadreTemplateString, $siteId, $pageUri)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $entirePageTemplateString, $cadreTemplateString, $siteId, $pageUri, $trustedDomainNames)
 {
 	# Extraction des arguments dans une variable locale :
 	# - code HTML à parcourir
@@ -74,7 +75,7 @@ sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $pa
 	# - chaîne template où remplir le fil d'Ariane en haut de page
 	# - identifiant du site parsé
 	# - URI de la page en cours
-	my ($htmlCode, $siteRootUrl, $pagePath, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $entirePageTemplateString, $cadreTemplateString, $siteId, $pageUri) = @_;
+	my ($htmlCode, $siteRootUrl, $pagePath, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $entirePageTemplateString, $cadreTemplateString, $siteId, $pageUri, $trustedDomainNames) = @_;
 
 	# Chaîne de caractères où sera stockée le contenu du fil d'Ariane
 	my $positionContent = "";
@@ -88,11 +89,11 @@ sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $pa
 	# Remplir la première partie par défaut
 	if (@cdlTagsInfos > 0) {
 		# Récupération du contenu HTML nettoyé de la balise exclure
-		$positionContent .= parseAllHtml($cdlTagsInfos[0]->{'content'}, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri);
+		$positionContent .= parseAllHtml($cdlTagsInfos[0]->{'content'}, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames);
 
 		# Remplir le reste des parties de cdlPosition
 		for (my $j = 1; $j < @cdlTagsInfos; $j++) {
-			$positionContent .= "&nbsp;&gt;&nbsp;".parseAllHtml($cdlTagsInfos[$j]->{'content'}, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri);
+			$positionContent .= "&nbsp;&gt;&nbsp;".parseAllHtml($cdlTagsInfos[$j]->{'content'}, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames);
 		}
 	}
 

@@ -177,12 +177,13 @@ sub insertCdlTagOccurence #($cdlTagInfosHash, $tmp)
 #	$activateFrames - option indiquant si on garde les frames/iframes du site parsé en version CDL
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	$entirePageTemplateString - chaîne de la template générale de page où remplir la zone des navs/blocs
 #	$cadreTemplateString - chaîne template où remplir un bloc
 #	$cdlTag - nom de la balise CDL à parser
 #	$templateMarker - marqueur à remplir
 #	%sortAttributes - attributs CDL sur lesquels trier (et pour chaque attribut, 1 pour dire qu'on scinde les occurences qui ont la même valeur de cet attribut)
-sub parseAllNavsBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $entirePageTemplateString, $cadreTemplateString, $cdlTag, $templateMarker, %sortAttributes)
+sub parseAllNavsBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString, $cdlTag, $templateMarker, %sortAttributes)
 {
 	# Extraction des arguments dans une variable locale :
 	# - code HTML à parcourir
@@ -202,7 +203,7 @@ sub parseAllNavsBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript,
 	# - nom de la balise CDL à parser
 	# - marqueur à remplir
 	# - attributs CDL sur lesquels trier (et pour chaque attribut, 1 pour dire qu'on scinde les occurences qui ont la même valeur de cet attribut)
-	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $entirePageTemplateString, $cadreTemplateString, $cdlTag, $templateMarker, %sortAttributes) = @_;
+	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString, $cdlTag, $templateMarker, %sortAttributes) = @_;
 
 	# Chaîne de caractères où sera stockée tous les navs/blocs
 	my $contents = "";
@@ -230,7 +231,7 @@ sub parseAllNavsBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript,
 			}
 
 			if (!$existEqualAttributes) {
-				$content = parseAllHtml($content, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri);
+				$content = parseAllHtml($content, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames);
 				if ($content and $content !~ m/^\s*$/sgi) {
 					$contents .= setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', $content)."\n";
 				}
@@ -241,7 +242,7 @@ sub parseAllNavsBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript,
 			}
 		}
 
-		$content = parseAllHtml($content, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri);
+		$content = parseAllHtml($content, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames);
 		if ($content and $content !~ m/^\s*$/sgi) {
 			$contents .= setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', $content)."\n";
 		}

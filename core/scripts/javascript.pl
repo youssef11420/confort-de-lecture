@@ -121,5 +121,6 @@ my $contentType = $response->header('Content-type');
 
 # Si le code retour est OK (200) on traite le code javascript
 if ($response->code eq "200" and $contentType =~ m/javascript/si) {
-	print parseJavascriptCode($response->content, $siteId, $pagePath, $siteRootUrl);
+	my @allConfigs = getAllConfigs($session, $siteId);
+	print parseJavascriptCode($response->content, $siteId, $pagePath, $siteRootUrl, $allConfigs[13]);
 }

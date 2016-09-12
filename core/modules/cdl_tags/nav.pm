@@ -33,9 +33,10 @@
 #	$activateFrames - option indiquant si on garde les frames/iframes du site parsé en version CDL
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	$entirePageTemplateString - chaîne de la template générale de page où remplir la zone des navs
 #	$cadreTemplateString - chaîne template où remplir un bloc de navigation
-sub parseAllNavs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $entirePageTemplateString, $cadreTemplateString)
+sub parseAllNavs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString)
 {
 	# Extraction des arguments dans une variable locale :
 	# - code HTML à parcourir
@@ -52,10 +53,10 @@ sub parseAllNavs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $par
 	# - URI de la page en cours
 	# - chaîne de la template générale de page où remplir la zone des navs
 	# - chaîne template où remplir un bloc de navigation
-	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $entirePageTemplateString, $cadreTemplateString) = @_;
+	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString) = @_;
 
 	# Retourner le code HTML restant à parser ainsi que la template générale mise à jour
-	return parseAllNavsBlocs($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $entirePageTemplateString, $cadreTemplateString, 'cdlNav', 'NAVS', ('ordre' => 1, 'partie' => 0));
+	return parseAllNavsBlocs($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString, 'cdlNav', 'NAVS', ('ordre' => 1, 'partie' => 0));
 }
 
 # Pour dire au pl que le pm s'est bien exécuté, il faut lui faire retourner vrai (donc 1 par ex)

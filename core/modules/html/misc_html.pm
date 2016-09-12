@@ -116,7 +116,7 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 			$url = ($embeddedMode ne "" ? "" : $domainName).$uri;
 			$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs/" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f/" : "/le-filtre/".$siteId)."/")).$url;
 		} else {
-			if ($url !~ m/^https?:\/\/($trustedDomainNames)/si) {
+			if (!$trustedDomainNames || $url !~ m/^https?:\/\/($trustedDomainNames)/si) {
 				$url =~ s/^http(s)?:\/\///sgi;
 				$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
 			}
@@ -277,9 +277,10 @@ sub cleanHtml #($htmlCode)
 #	$activateJavascript - option indiquant si on garde le javascript du site parsé en version CDL
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
 #	$siteId - identifiant du site parsé
-sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath, $contentType, $activateJavascript, $parseJavascript, $siteId)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath, $contentType, $activateJavascript, $parseJavascript, $siteId, $trustedDomainNames)
 {
-	my ($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath, $contentType, $activateJavascript, $parseJavascript, $siteId) = @_;
+	my ($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath, $contentType, $activateJavascript, $parseJavascript, $siteId, $trustedDomainNames) = @_;
 
 	$htmlCode = cleanHtml($htmlCode);
 
@@ -291,7 +292,7 @@ sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath
 	my $allMetas;
 
 	($htmlCode, $allLinks) = parseLinks($htmlCode, $siteRootUrl, $pagePath);
-	($htmlCode, $allMetas) = parseMetas($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType);
+	($htmlCode, $allMetas) = parseMetas($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType, $trustedDomainNames);
 
 	if ($allLinks !~ m/rel=(\"|\')shortcut\s*icon\1/si) {
 		$allLinks .= "<link href=\"".$siteRootUrl."/favicon.ico\" rel=\"shortcut icon\">\n"
@@ -330,13 +331,14 @@ sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath
 #	$activateFrames - option indiquant si on garde les frames/iframes du site parsé en version CDL
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
-sub parseAllHtml #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseAllHtml #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames)
 {
-	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri) = @_;
+	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames) = @_;
 
-	$htmlCode = parseLinkHref($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri);
+	$htmlCode = parseLinkHref($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames);
 
-	$htmlCode = parseForms($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri);
+	$htmlCode = parseForms($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames);
 
 	$htmlCode = prepareForHighlighting($htmlCode);
 
@@ -356,7 +358,7 @@ sub parseAllHtml #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $par
 		$htmlCode = replaceImageWithAlt($htmlCode);
 	}
 
-	$htmlCode = parseMapAreas($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl);
+	$htmlCode = parseMapAreas($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl, $trustedDomainNames);
 
 	if ($displayObjects) {
 		$htmlCode = parseObjects($htmlCode, $siteRootUrl, $pagePath);
@@ -416,10 +418,14 @@ sub getDocumentLanguage #($htmlCode, $siteDefaultLanguage)
 #
 # Paramètres:
 #	$htmlCode - code HTML où chercher les attributs de la balise body
+#	$siteId - identifiant su site parsé
+#	$pagePath - chemin vers la page en cours de traitement
+#	$siteRootUrl - URL racine du site
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
-sub getBodyAttributesInHash #($tagAttributes, $parseJavascript)
+sub getBodyAttributesInHash #($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript)
 {
-	my ($tagAttributes, $parseJavascript) = @_;
+	my ($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript) = @_;
 
 	my $attributesString = "";
 
@@ -427,7 +433,7 @@ sub getBodyAttributesInHash #($tagAttributes, $parseJavascript)
 	my $attributesRegExpString = join("|", @eventListeners);
 
 	# Récupérer les bons attributs javascript
-	$tagAttributes =~ s/ ($attributesRegExpString)=((\"|\')(.*?)\3)/$attributesString .= " ".($parseJavascript ? parseJavascriptCode($1) : $1)."=".$2;/segi;
+	$tagAttributes =~ s/ ($attributesRegExpString)=((\"|\')(.*?)\3)/$attributesString .= " ".($parseJavascript ? parseJavascriptCode($1, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, 1) : $1)."=".$2;/segi;
 
 	# Récupérer les attributs génériques
 	$tagAttributes =~ s/ (id|class)=((\"|\')(.*?)\3)/$attributesString .= " ".$1."=".$2;/segi;
@@ -441,15 +447,19 @@ sub getBodyAttributesInHash #($tagAttributes, $parseJavascript)
 #
 # Paramètres:
 #	$htmlCode - code HTML où chercher les attributs de la balise body
+#	$siteId - identifiant su site parsé
+#	$pagePath - chemin vers la page en cours de traitement
+#	$siteRootUrl - URL racine du site
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
-sub getBodyAttributes #($htmlCode)
+sub getBodyAttributes #($htmlCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript)
 {
-	my ($htmlCode) = @_;
+	my ($htmlCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript) = @_;
 
 	my $attributesString = "";
 
 	# Rechercher la balise body et appeler la fonction <getBodyAttributesInHash> qui récupère les bons attributs
-	$htmlCode =~ s/<body( [^>]*?)>/$attributesString = getBodyAttributesInHash($1);/segi;
+	$htmlCode =~ s/<body( [^>]*?)>/$attributesString = getBodyAttributesInHash($1, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript);/segi;
 
 	# Retourner la chaîne des attributs à intégrer à la balise body finale
 	return $attributesString;

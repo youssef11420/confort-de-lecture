@@ -25,15 +25,16 @@
 #	$siteId - identifiant du site en cours de traitement
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
-sub parseEventListenersAttributes  #($tagAttributes, $siteId, $pagePath, $siteRootUrl)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseEventListenersAttributes  #($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames)
 {
-	my ($tagAttributes, $siteId, $pagePath, $siteRootUrl) = @_;
+	my ($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames) = @_;
 
 	# Génération de la chaîne des choix pour l'expression régulière :
 	# onclick|onunload|onload|onmouseover|onmouseout|onfocus|onblur|onchange|onselect|onsubmit ...
 	my $eventListenersRegExpString = join("|", @eventListeners);
 
-	$tagAttributes =~ s/ ($eventListenersRegExpString)=(\"|\')(.*?)\2/" ".$1."=".$2.parseJavascriptCode($3, $siteId, $pagePath, $siteRootUrl, 1).$2/segi;
+	$tagAttributes =~ s/ ($eventListenersRegExpString)=(\"|\')(.*?)\2/" ".$1."=".$2.parseJavascriptCode($3, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, 1).$2/segi;
 
 	return $tagAttributes;
 }
@@ -47,9 +48,10 @@ sub parseEventListenersAttributes  #($tagAttributes, $siteId, $pagePath, $siteRo
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site en cours de traitement
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé (en passant par <javascript.pl> ou le garder tel quel
-sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript, $trustedDomainNames)
 {
-	my ($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript) = @_;
+	my ($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript, $trustedDomainNames) = @_;
 
 	# Si on a choisit de parser le javascript dans la configuration, on passe par le script <javascript.pl>
 	# Sinon on traite l'URL pour la transformer en absolue
@@ -67,9 +69,9 @@ sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript
 
 	if ($parseJavascript) {
 		# Transformation du javascript dans les balises script
-		$htmlCode =~ s/((<(script)( [^>]*)?>)(.*?)(<\/\3>))/$allScripts .= $2."\n\/\/<!--\n".parseJavascriptCode($5, $siteId, $pagePath, $siteRootUrl, 0)."\n\/\/-->\n".$6."\n"; $2."\n\/\/<!--\n".parseJavascriptCode($5, $siteId, $pagePath, $siteRootUrl, 0)."\n\/\/-->\n".$6/segi;
+		$htmlCode =~ s/((<(script)( [^>]*)?>)(.*?)(<\/\3>))/$allScripts .= $2."\n\/\/<!--\n".parseJavascriptCode($5, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, 0)."\n\/\/-->\n".$6."\n"; $2."\n\/\/<!--\n".parseJavascriptCode($5, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, 0)."\n\/\/-->\n".$6/segi;
 		# Transformation du javascript dans les attributs 
-		$htmlCode =~ s/(<([\w\d]+))( [^>]*)?>/$1.parseEventListenersAttributes($3, $siteId, $pagePath, $siteRootUrl).">"/segi;
+		$htmlCode =~ s/(<([\w\d]+))( [^>]*)?>/$1.parseEventListenersAttributes($3, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames).">"/segi;
 	} else {
 		# Récupération de tous les scripts du code HTML
 		$htmlCode =~ s/((<(script)( [^>]*)?>)(.*?)(<\/\3>))/$allScripts .= $1."\n"; $1/segi;
@@ -178,10 +180,11 @@ sub generateJavascriptForCompletingPageVariable #($startUrl, $jsVariable, $curre
 #	$siteId - identifiant su site parsé
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	$isInAttribute - booléen indiquant si le code se trouve dans un attribut listener
-sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAttribute)
+sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute)
 {
-	my ($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAttribute) = @_;
+	my ($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute) = @_;
 
 	# Suppression des instructions qui mettent à jour des styles
 	$jsCode =~ s/\.style\.(position|display|visibility|zIndex)\s*=\s*/._cdl_style.$1=/sgi;
@@ -198,16 +201,16 @@ sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAt
 	}
 
 	# Transformer l'URL dans l'instruction de redirection pour passer par le script principal
-	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*(\"|\'|&\#39;)(.*?)\4/$1."=".$4.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl, 'get')).$4/segi;
+	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*(\"|\'|&\#39;)(.*?)\4/$1."=".$4.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames)).$4/segi;
 	$jsCode =~ s/((\.location)(\.href)?)\s*=\s*([\w\d_]+)\s*/$1."=".generateJavascriptForCompletingPageVariable(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId), $currentServerName, $4, $isInAttribute)/segi;
 
 	# Transformer l'URL dans l'instruction d'ouverture dans une nouvelle fenêtre pour passer par le script principal
-	$jsCode =~ s/(window\.open\s*\()\s*(\"|\'|&\#39;)(.*?)\2(\s*(,|\)))/$1.$2.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl, 'get')).$2.$4/segi;
+	$jsCode =~ s/(window\.open\s*\()\s*(\"|\'|&\#39;)(.*?)\2(\s*(,|\)))/$1.$2.cleanJavascriptRedirectUrl(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId.$currentServerName), getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames)).$2.$4/segi;
 	$jsCode =~ s/(window\.open\s*\()\s*([\w\d_]+)(\s*(,|\)))/$1.generateJavascriptForCompletingPageVariable(($embeddedMode ne $embeddedMode."\/f" ? "" : "\/le\-filtre".$siteId), $currentServerName, $2, $isInAttribute).$3/segi;
 
-	$jsCode =~ s/(\.autocomplete)\s*\(\s*(\"|\'|&\#39;)(.*?)\2/$1."\(".$2.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl, 'get')).$2/segi;
+	$jsCode =~ s/(\.autocomplete)\s*\(\s*(\"|\'|&\#39;)(.*?)\2/$1."\(".$2.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($3, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames)).$2/segi;
 
-	$jsCode =~ s/((^|\s)(url|progress|review|saveMethod|failure)\s*:\s*)(\"|\'|&\#39;)(.*?)\4/$1.$4.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl, 'get')).$4/segi;
+	$jsCode =~ s/((^|\s)(url|progress|review|saveMethod|failure)\s*:\s*)(\"|\'|&\#39;)(.*?)\4/$1.$4.cleanJavascriptRedirectUrl($embeddedMode."\/le\-filtre-pour-ajax"."\/".$siteId.$currentServerName, getUriFromUrl($5, $pagePath, $siteId, $siteRootUrl, 'get', $trustedDomainNames)).$4/segi;
 
 	# Retourner le code javascript sans les instructions de styles et avec les URLs de redirection parsées
 	return $jsCode;
@@ -221,13 +224,14 @@ sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAt
 #	$siteId - identifiant su site parsé
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
+#	$trustedDomainNames - noms de domaine configuré de confiance
 #	$isInAttribute - booléen indiquant si le code se trouve dans un attribut listener
-sub parseJavascriptCode #($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAttribute)
+sub parseJavascriptCode #($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute)
 {
-	my ($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAttribute) = @_;
+	my ($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute) = @_;
 
 	# Parser chaque ligne
-	$jsCode = parseJavascriptCodeLine($jsCode, $siteId, $pagePath, $siteRootUrl, $isInAttribute);
+	$jsCode = parseJavascriptCodeLine($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute);
 
 	# Retourner le code javascript sans les instructions de styles et les Url sont parsés
 	return $jsCode;

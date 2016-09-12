@@ -65,9 +65,10 @@ sub addBorderForTextInputWithoutTypeAttribute #($tagHtmlCode)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
-sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames)
 {
-	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri) = @_;
+	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames) = @_;
 
 	# Traitement du code des formulaires :
 
@@ -76,7 +77,7 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
 	$htmlCode =~ s/(<form( [^>]*)? method=(\"|\'))(.*?)(\3([^>]*)>)/$method = $4; $1.$4.$5/segi;
 
 	# Modification de la valeur de l'attribut action pour rester sur CDL
-	$htmlCode =~ s/(<form( [^>]*)? action=(\"|\'))(.*?)(\3([^>]*)>)/$1.parseLinkHrefAttribute($4, $pagePath, $siteId, $siteRootUrl, $pageUri, $method).$5/segi;
+	$htmlCode =~ s/(<form( [^>]*)? action=(\"|\'))(.*?)(\3([^>]*)>)/$1.parseLinkHrefAttribute($4, $pagePath, $siteId, $siteRootUrl, $pageUri, $method, $trustedDomainNames).$5/segi;
 
 	# Entourer les champs textuels de formulaire par un span de classe cdlInputText
 	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)\3[^>]*>)/<span class=cdlInputText>$1<\/span>/sgi;

@@ -362,15 +362,16 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 #	$pageUri - URI de la page en cours
 #	$pagePath - chemin vers la page en cours de traitement
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
-sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure, $trustedDomainNames)
 {
-	my ($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure) = @_;
+	my ($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure, $trustedDomainNames) = @_;
 
 	# On récupère l'url vers laquelle on redirige dans l'entête Location
 	my $redirectUrl = $response->header("Location");
 
 	# Transformation de l'URL pour rester dans CDL
-	$redirectUrl = parseLinkHrefAttribute($redirectUrl, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get');
+	$redirectUrl = parseLinkHrefAttribute($redirectUrl, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get', $trustedDomainNames);
 
 	$siteRootUrl =~ s/^https?:\/\///sgi;
 	if ($redirectUrl !~ m/^\/(cdl\/fs?|\/le\-filtre(\-https)?\/$siteId)/si and $redirectUrl !~ m/^https?:\/\//si) {
@@ -1320,6 +1321,20 @@ sub addSpaceToAcronym #($acronym)
 
 	# On retourne le résultat final après le traitement
 	return $acronym;
+}
+
+# Function: escapeDoubleQuoteForHtml
+#	Transformation des guillemets en &quot;
+#
+# Paramètres:
+#	$string - chaîne de caractères à échapper
+sub escapeDoubleQuoteForHtml #($string)
+{
+	my ($string) = @_;
+
+	$string =~ s/\"/&quot;/sgi;
+
+	return $string;
 }
 
 # Pour dire au pl que le pm s'est bien exécuté, il faut lui renvoyer une valeur vraie (donc 1 par ex)

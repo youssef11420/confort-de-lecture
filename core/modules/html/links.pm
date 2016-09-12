@@ -27,9 +27,10 @@
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
 #	$method - Méthode d'appel de l'URL (dans le cas des formulaires)
-sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method, $trustedDomainNames)
 {
-	my ($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method) = @_;
+	my ($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method, $trustedDomainNames) = @_;
 
 	$url =~ s/\s+$//sgi;
 
@@ -46,11 +47,11 @@ sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $
 
 	# Si l'URL contient un # au milieu, c'est un lien vers une page, mais avec un ancre sur un emplacement dans la page destination : on traite l'URL et on rajoute l'ancre à la fin non encodée pour qu'elle soit prise en compte dans la version filtrée
 	if ($url =~ m/(.*?)(\#.*)/si) {
-		$url =~ s/(.*?)(\#.*)/return getUriFromUrl($1, $pagePath, $siteId, $siteRootUrl, $method).$2;/segi;
+		$url =~ s/(.*?)(\#.*)/return getUriFromUrl($1, $pagePath, $siteId, $siteRootUrl, $method, $trustedDomainNames).$2;/segi;
 	}
 
 	# Sinon traiter l'URL en entier
-	return getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl, $method);
+	return getUriFromUrl($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDomainNames);
 }
 
 # Function: encodeSpaces
@@ -78,12 +79,13 @@ sub encodeSpaces #($url)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
-sub parseLinkHref #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub parseLinkHref #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames)
 {
-	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri) = @_;
+	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames) = @_;
 
 	# Transformation du href en mettant le script CDL principal en intermédiaire
-	$htmlCode =~ s/(<a( [^>]*?)? (href))=(\"|\')(.*?)\4/$1."=".$4.encodeSpaces(parseLinkHrefAttribute($5, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get')).$4/segi;
+	$htmlCode =~ s/(<a( [^>]*?)? (href))=(\"|\')(.*?)\4/$1."=".$4.encodeSpaces(parseLinkHrefAttribute($5, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get', $trustedDomainNames)).$4/segi;
 
 	# Retourner de code HTML parsé
 	return $htmlCode;
