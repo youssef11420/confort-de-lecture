@@ -88,7 +88,7 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 :root .cdlInput_checkbox:after{width:76% !important;height:76%;margin:12%}
 :root input[type="checkbox"]:checked + .cdlInput_checkbox:after{content:"✔";line-height:.7;font-size:130%}
 .cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box;border-width:1px;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
-.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.5em .1em .1em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.3em .1em .3em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:5px}

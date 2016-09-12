@@ -39,6 +39,7 @@ sub createSiteConfig #($siteId)
 	$configString .= "[UrlsAndUris]\n";
 	$configString .= "siteDomainNames = \n";
 	$configString .= "homePageUris = \n";
+	$configString .= "trustedDomainNames = \n";
 	$configString .= "\n";
 	$configString .= "[Fil d'ariane]\n";
 	$configString .= "positionLocation = 1\n";

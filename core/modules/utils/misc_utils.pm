@@ -232,10 +232,14 @@ sub getAllConfigs #($session, $siteId)
 	my $siteDomainNames = getConfig($siteConfiguration, 'siteDomainNames');
 	$siteDomainNames =~ s/\s+/\|/sgi;
 
+	# Récupérer la liste de tous les noms de domaine du site
+	my $trustedDomainNames = getConfig($siteConfiguration, 'trustedDomainNames');
+	$trustedDomainNames =~ s/\s+/\|/sgi;
+
 	my $homePageUri = getConfig($siteConfiguration, 'homePageUris');
 	$homePageUri =~ s/([^\s]*)\s+.*/$1/sgi;
 
-	return ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry, $ttsMode);
+	return ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry, $ttsMode);
 }
 
 # Function: buildUrlToParse
@@ -328,10 +332,15 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 		}
 	}
 
-	$urlToParse =~ s/^https?:\/\///sgi;
+	my $redirectUrl;
+	if ($urlToParse =~ m/^https?:\/\/($trustedDomainNames)/si) {
+		$redirectUrl = $urlToParse;
+	} else {
+		$urlToParse =~ s/^https?:\/\///sgi;
 
-	# On redirige vers la page de sortie de CDL vers un autre site
-	my $redirectUrl = "/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteDefaultLanguage."/".$requestMethod."/".$urlToParse;
+		# On redirige vers la page de sortie de CDL vers un autre site
+		$redirectUrl = "/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteDefaultLanguage."/".$requestMethod."/".$urlToParse;
+	}
 
 	if ($requestMethod =~ m/post/si) {
 		editInSession($session, 'cdl_post_parameters_to_exit', encode_json(\%requestParameters));

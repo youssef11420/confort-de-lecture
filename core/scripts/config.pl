@@ -398,7 +398,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 	my $siteConfig = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
 
 	# Mise à jour des valeurs de configuration spécifiées par l'administrateur
-	if (param('valider') or param('ajouterSiteDomainNames') or param('ajouterHomePageUris')) {
+	if (param('valider') or param('ajouterSiteDomainNames') or param('ajouterTrustedDomainNames') or param('ajouterHomePageUris')) {
 		if ($requestParameters{'positionLocation'}[0] ne "") {
 			$siteConfig = setConfig($siteConfig, 'positionLocation', $requestParameters{'positionLocation'}[0]);
 		}
@@ -456,6 +456,9 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 
 		# Vu qu'il n'y a pas encore d'URI de page d'accueil spécifié, on peut directement mettre celle passée en paramètre
 		$siteConfig = setConfig($siteConfig, 'homePageUris', $requestParameters{'homePageUri'}[0]);
+
+		# Vu qu'il n'y a pas encore de nom de domaine spécifié, on peut directement mettre celui passé en paramètre
+		$siteConfig = setConfig($siteConfig, 'trustedDomainNames', $requestParameters{'trustedDomainName'}[0]);
 
 		# Vu qu'il n'y a pas encore de page en no cache, on peut directement mettre celle passée en paramètre
 		$siteConfig = setConfig($siteConfig, 'pagesNoCache', $requestParameters{'pagesNoCache'}[0]);
@@ -535,6 +538,21 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 
 	# Afficher dans la template la liste des URIs de la page d'accueil récupérée du fichier de config du site
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'HOME_PAGE_URIS_LIST', $homePageUrisListString);
+
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TRUSTED_DOMAIN_NAME', $requestParameters{'trustedDomainName'}[0]);
+	# Lister les valeurs des noms de domaine de confiance
+	@domaineNameArray = split(/\t+/, getConfig($siteConfig, 'trustedDomainNames'));
+
+	# Génération de la liste à puce des noms de domaine de confiance
+	$domaineNamesListString = @domaineNameArray ? "<ul>" : "";
+
+	foreach my $domainName (@domaineNameArray) {
+		$domaineNamesListString .= "<li>".$domainName."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/trustedDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine de confiance : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine de confiance : ".$domainName."\"></a></li>";
+	}
+	$domaineNamesListString .= @domaineNameArray ? "</ul>" : "";
+
+	# Afficher dans la template la liste des noms de domaine de confiance récupérée du fichier de config du site
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TRUSTED_DOMAINE_NAMES_LIST', $domaineNamesListString);
 
 	# Récupération de la configuration de la position du fil d'Ariane
 	my $positionLocation = getConfig($siteConfig, 'positionLocation');
@@ -737,7 +755,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 	my $siteConfig = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
 
 	# Mise à jour des valeurs de configuration spécifiées par l'administrateur
-	if (param('valider') or param('ajouterSiteDomainNames') or param('ajouterHomePageUris')) {
+	if (param('valider') or param('ajouterSiteDomainNames') or param('ajouterTrustedDomainNames') or param('ajouterHomePageUris')) {
 		if ($requestParameters{'positionLocation'}[0] ne "") {
 			$siteConfig = setConfig($siteConfig, 'positionLocation', $requestParameters{'positionLocation'}[0]);
 		}
@@ -847,6 +865,35 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 
 			# Mise à jour dans la chaîne contenant configuration du site, du paramètre homePageUris
 			$siteConfig = setConfig($siteConfig, 'homePageUris', $homePageUris);
+		}
+
+		# Lister les valeurs du nom du domaine de confiance
+		my $trustedDomaineNames = getConfig($siteConfig, 'trustedDomainNames');
+
+		# Récupération du nom de domaine en paramètre
+		my $trustedDomainName = $requestParameters{'trustedDomainName'}[0];
+
+		if ($trustedDomainName) {
+			# Echappement des caractères spéciaux d'expression régulière
+			$trustedDomainName =~ s/(\?|\/)/\\$1/sgi;
+			# Suppression du nom de domaine s'il existe déjà
+			$trustedDomaineNames =~ s/(^|\t+)$trustedDomainName(\t+|$)/$1.$2/segi;
+
+			# Suppression des éventuelles tabulations en début et en fin de chaîne
+			$trustedDomaineNames =~ s/^\t*//sgi;
+			$trustedDomaineNames =~ s/\t*$//sgi;
+
+			# Suppression du caractère d'échappement \ pour insertion
+			$trustedDomainName =~ s/\\(\?|\/)/$1/sgi;
+			# Insertion du nouveau nom de domaine dans la chaîne des noms de domaine
+			if (!$trustedDomaineNames) {
+				$trustedDomaineNames = $trustedDomainName;
+			} else {
+				$trustedDomaineNames .= "\t".$trustedDomainName;
+			}
+
+			# Mise à jour dans la chaîne contenant configuration du site, du paramètre trustedDomainNames
+			$siteConfig = setConfig($siteConfig, 'trustedDomainNames', $trustedDomaineNames);
 		}
 
 		# Lister les pages sans cache du site

@@ -92,9 +92,10 @@ sub makeUrlAbsoluteWithoutProtocol #($url, $siteRootUrl, $pagePath)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$method - Méthode d'appel de l'URL (dans le cas des formulaires)
-sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method)
+#	$trustedDomainNames - noms de domaine configuré de confiance
+sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDomainNames)
 {
-	my ($url, $pagePath, $siteId, $siteRootUrl, $method) = @_;
+	my ($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDomainNames) = @_;
 
 	# Si l'URL est vide, on va vers la page d'accueil
 	if ($url eq "") {
@@ -115,8 +116,10 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method)
 			$url = ($embeddedMode ne "" ? "" : $domainName).$uri;
 			$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs/" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f/" : "/le-filtre/".$siteId)."/")).$url;
 		} else {
-			$url =~ s/^http(s)?:\/\///sgi;
-			$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
+			if ($url !~ m/^https?:\/\/($trustedDomainNames)/si) {
+				$url =~ s/^http(s)?:\/\///sgi;
+				$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
+			}
 		}
 	}
 
