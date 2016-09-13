@@ -494,7 +494,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 			close(WRITER);
 		}
 
-		$pageContent = setValueInTemplateString($pageContent, 'LETTERS_PLAYERS_FILE', "/cache/audio/".$lettersHtmlCacheFile);
+		$pageContent = setValueInTemplateString($pageContent, 'LETTERS_PLAYERS_FILE', $embeddedMode."/cache/audio/".$lettersHtmlCacheFile);
 	} else {
 		$pageContent = setValueInTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE', "");
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO', "");
