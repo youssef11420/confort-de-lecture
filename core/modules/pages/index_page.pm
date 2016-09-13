@@ -230,7 +230,7 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $ttsMode,
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_WIDTH', 250+3.4*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
-		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "recette.cdl.lnet.fr" : $ENV{'SERVER_NAME'}.$embeddedMode);
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', $ENV{'SERVER_NAME'}.$embeddedMode);
 		my $voice = loadFromSession($session, 'voice');
 		if (!$voice) {
 			$voice = "";
@@ -484,7 +484,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		$pageContent = setValueInTemplateString($pageContent, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$pageContent = setValueInTemplateString($pageContent, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "recette.cdl.lnet.fr" : $ENV{'SERVER_NAME'}.$embeddedMode);
+		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', $ENV{'SERVER_NAME'}.$embeddedMode);
 
 		my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 		my $voice = loadFromSession($session, 'voice');

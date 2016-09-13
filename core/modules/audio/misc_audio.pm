@@ -276,17 +276,7 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 		$ttsRateParamName = getConfig($defaultConfiguration, 'ttsRateParamName');
 	}
 
-	if ($ttsMode eq "vaas" or $embeddedMode ne "") {
-		if ($ttsMode eq "sdk" && $embeddedMode ne "") {
-			$ttsServerName = "recette.cdl.lnet.fr";
-			$ttsPort = "80";
-			$ttsUri = "/audio-text/".($siteId ne "" ? $siteId : "default")."/";
-			$ttsDefaultQueryString = "";
-			$ttsTextParamName = "cdltext";
-			$ttsVoiceParamName = "cdlvoice";
-			$ttsRateParamName = "cdlspeed";
-		}
-
+	if ($ttsMode eq "vaas") {
 		use Socket;
 
 		socket(SOCK, PF_INET, SOCK_STREAM, getprotobyname('tcp'));

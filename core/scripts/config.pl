@@ -675,6 +675,15 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'VOICE_CHOICE_NO', " checked");
 	}
 
+	my $ttsMode = getConfig($siteConfig, 'ttsMode');
+	if ($ttsMode eq "sdk") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_SDK', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_VAAS', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_VAAS', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_MODE_SDK', "");
+	}
+
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_SERVER_NAME', escapeDoubleQuoteForHtml(getConfig($siteConfig, 'ttsServerName')));
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_PORT', escapeDoubleQuoteForHtml(getConfig($siteConfig, 'ttsPort')));
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_URI', escapeDoubleQuoteForHtml(getConfig($siteConfig, 'ttsUri')));

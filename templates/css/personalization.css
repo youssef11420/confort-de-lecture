@@ -96,15 +96,6 @@
 .cdlUtilLinks input,.cdlUtilLinks span{display:block;overflow:hidden}
 .audioHelpIntro ul{padding-top:20px;padding-bottom:5px}
 .audioHelpIntro li{padding-bottom:20px}
-:root .cdlInput_radio,:root .cdlInput_checkbox{border:9px solid #FFFFFF;width:58px !important;height:58px;margin-left:-58px}
-:root .cdlInput_radio,:root .cdlInput_checkbox,:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{border-radius:58px;-moz-border-radius:58px;-WebKit-border-radius:58px;-khtml-border-radius:58px}
-:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{content:"";border-color:#000000}
-:root .cdlInput_checkbox{border-radius:9px;-moz-border-radius:9px;-WebKit-border-radius:9px;-khtml-border-radius:9px}
-:root .cdlInput_checkbox:after{border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
-:root input[type="radio"]:checked + .cdlInput_radio:after,:root input[type="checkbox"]:checked + .cdlInput_checkbox:after{background-color:#FFFFFF}
-:root input[type="radio"],:root input[type="checkbox"]{width:58px !important;height:58px}
-.cdlSelectInput span{background-color:#000000}
-.cdlSelectInput span:after{border-top-color:#FFFFFF}
 :root .cdlContrasted .cdlInput_radio,:root .cdlContrasted .cdlInput_checkbox{border-color:#000000}
 :root .cdlContrasted .cdlInput_radio:after,:root .cdlContrasted .cdlInput_checkbox:after{border-color:#FFFFFF}
 :root .cdlContrasted input[type="radio"]:checked + .cdlInput_radio:after,:root .cdlContrasted input[type="checkbox"]:checked + .cdlInput_checkbox:after{background-color:#000000}
