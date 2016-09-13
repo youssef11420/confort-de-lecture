@@ -277,35 +277,25 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 	}
 
 	if ($ttsMode eq "vaas") {
-		use Socket;
-
-		socket(SOCK, PF_INET, SOCK_STREAM, getprotobyname('tcp'));
-		my $sin = sockaddr_in($ttsPort, inet_aton($ttsServerName));
-		connect(SOCK, $sin) or die "Connect failed: $!\n";
-
-		my $oldFh = select(SOCK);
-		$| = 1;
-		select($oldFh);
-
 		my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? "&".$ttsRateParamName."=".($speed ? $speed : $defaultSpeed) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
 
-		print SOCK "POST ".$ttsUri." HTTP/1.0\nHost: $ttsServerName:$ttsPort\nUser-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\nContent-Length: ".length($audioParametersTextString)."\nContent-Type: application/x-www-form-urlencoded\nTransfer-Encoding: chunked\n\n".$audioParametersTextString."\n";
-		my $header = <SOCK>;
+		my $ua = LWP::UserAgent->new;
+		$ua->agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.89 Safari/537.36');
 
-		if ($header !~ m/200|OK/) {
-			$audioContent = get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
+		my $req = HTTP::Request->new(POST => $ttsServerName.":".$ttsPort.$ttsUri);
+		$req->header('Content-Type' => 'application/x-www-form-urlencoded');
+		$req->header('Content-Length' => length($audioParametersTextString));
+		$req->header('Transfer-Encoding' => 'chunked');
+
+		$req->content($audioParametersTextString);
+
+		my $resp = $ua->request($req);
+
+		if ($resp->is_success) {
+			$audioContent = $resp->decoded_content;
 		} else {
-			while($header = <SOCK>) {
-				chomp;
-				last unless(m/\S/);
-			}
-
-			my $content;
-			while(read(SOCK, $content, 512)) {
-				$audioContent = $content;
-			}
+			$audioContent = get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
 		}
-		close SOCK;
 	} elsif ($ttsMode eq "sdk") {
 		# Création du fichier texte, contenant toutes les informations nécessaires à la synthèse vocale :
 		# - serveur de synthèse vocale, où seront traités les textes et où le son audio sera généré
