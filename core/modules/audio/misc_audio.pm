@@ -276,36 +276,37 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 		$ttsRateParamName = getConfig($defaultConfiguration, 'ttsRateParamName');
 	}
 
-	if ($ttsMode eq "vaas") {
-		my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? "&".$ttsRateParamName."=".($speed ? $speed : $defaultSpeed) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
 
-		my $ua = LWP::UserAgent->new;
-		$ua->agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.89 Safari/537.36');
+	# Création du fichier texte, contenant toutes les informations nécessaires à la synthèse vocale :
+	# - serveur de synthèse vocale, où seront traités les textes et où le son audio sera généré
+	# - la voix avec laquelle lire le contenu (soit choisi par l'utilisateur soit la voix définir par défaut dans : <constants.pm>
+	# - Contenu SSML à lire
+	my $fileAudio = $cdlAudioCachePath."sound_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3";
+	my $fileSize = -s $fileAudio;
+	if (-e $fileAudio and $fileSize > 626) {
+		$audioContent = readpipe("cat ".$fileAudio);
+	} else {
+		if ($ttsMode eq "vaas") {
+			my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? "&".$ttsRateParamName."=".($speed ? $speed : $defaultSpeed) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
 
-		my $req = HTTP::Request->new(POST => $ttsServerName.":".$ttsPort.$ttsUri);
-		$req->header('Content-Type' => 'application/x-www-form-urlencoded');
-		$req->header('Content-Length' => length($audioParametersTextString));
-		$req->header('Transfer-Encoding' => 'chunked');
+			my $ua = LWP::UserAgent->new;
+			$ua->agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.89 Safari/537.36');
 
-		$req->content($audioParametersTextString);
+			my $req = HTTP::Request->new(POST => $ttsServerName.":".$ttsPort.$ttsUri);
+			$req->header('Content-Type' => 'application/x-www-form-urlencoded');
+			$req->header('Content-Length' => length($audioParametersTextString));
+			$req->header('Transfer-Encoding' => 'chunked');
 
-		my $resp = $ua->request($req);
+			$req->content($audioParametersTextString);
 
-		if ($resp->is_success) {
-			$audioContent = $resp->decoded_content;
-		} else {
-			$audioContent = get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
-		}
-	} elsif ($ttsMode eq "sdk") {
-		# Création du fichier texte, contenant toutes les informations nécessaires à la synthèse vocale :
-		# - serveur de synthèse vocale, où seront traités les textes et où le son audio sera généré
-		# - la voix avec laquelle lire le contenu (soit choisi par l'utilisateur soit la voix définir par défaut dans : <constants.pm>
-		# - Contenu SSML à lire
-		my $fileAudio = $cdlAudioCachePath."sound_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3";
-		my $fileSize = -s $fileAudio;
-		if (-e $fileAudio and $fileSize > 626) {
-			$audioContent = readpipe("cat ".$fileAudio);
-		} else {
+			my $resp = $ua->request($req);
+
+			if ($resp->is_success) {
+				$audioContent = $resp->decoded_content;
+			} else {
+				$audioContent = get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
+			}
+		} elsif ($ttsMode eq "sdk") {
 			open(WRITER, ">", $cdlAudioCachePath."infos_".$fileName.".txt") || die "Erreur d'ouverture du fichier : infos_".$fileName.".txt.\n";
 			print WRITER ($audioTextTemplateString);
 			close(WRITER);
