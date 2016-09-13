@@ -306,6 +306,10 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 			} else {
 				$audioContent = get("http://".$ttsServerName.$ttsUri."?".$audioParametersTextString);
 			}
+
+			open(WRITER, ">", $fileAudio) || die "Erreur d'ouverture du fichier : ".$fileAudio.".\n";
+			print WRITER ($audioContent);
+			close(WRITER);
 		} elsif ($ttsMode eq "sdk") {
 			open(WRITER, ">", $cdlAudioCachePath."infos_".$fileName.".txt") || die "Erreur d'ouverture du fichier : infos_".$fileName.".txt.\n";
 			print WRITER ($audioTextTemplateString);
