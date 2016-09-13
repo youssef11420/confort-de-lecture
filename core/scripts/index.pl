@@ -33,6 +33,7 @@ use JSON;
 
 use Digest::SHA::PurePerl qw(sha1_hex);
 
+use LWP::Simple qw/get/;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
 %HTML::Tagset::optionalEndTag = map {; $_ => 1}
@@ -97,6 +98,9 @@ use change_replace;
 use exclure;
 use nav;
 use position;
+
+use lib '../modules/audio';
+use misc_audio;
 
 use lib '../modules/pages';
 use index_page;

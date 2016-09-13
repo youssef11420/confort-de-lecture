@@ -927,9 +927,9 @@ jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input
         var value = "Contenu du champ après coller : " + jQuery(element).val();
         var lecteurAudioCDLPaste = document.getElementById("lecteurAudioCDL_paste");
         if (!lecteurAudioCDLPaste) {
-            jQuery(".lecteursAudioCDL").append("<audio autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
+            jQuery(".lecteursAudioCDL").append("<audio autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value) + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
         } else {
-            jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value);
+            jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value));
             lecteurAudioCDLPaste.pause();
             lecteurAudioCDLPaste.currentTime = 0;
             lecteurAudioCDLPaste.play();
@@ -938,103 +938,6 @@ jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input
 }).on("focus", function () {
     "use strict";
     focusOnAField = true;
-    if (jQuery(this).is("input")) {
-        if (!preloadedChars) {
-            window.setTimeout(function () {
-                var chars = {
-                    k_0: "0",
-                    k_1: "1",
-                    k_2: "2",
-                    k_3: "3",
-                    k_4: "4",
-                    k_5: "5",
-                    k_6: "6",
-                    k_7: "7",
-                    k_8: "8",
-                    k_9: "9",
-                    k_a_accent_grave: "à",
-                    k_accent_circonflexe: "accent_circonflexe",
-                    k_accent_grave: "accent_grave",
-                    k_acollade_fermante: "acollade_fermante",
-                    k_acollade_ouvrante: "acollade_ouvrante",
-                    k_anti_slash: "anti_slash",
-                    k_apostrophe: "apostrophe",
-                    k_arobase: "arobase",
-                    k_a: "a",
-                    k_barre_verticale: "barre_verticale",
-                    k_b: "b",
-                    k_c_cedille: "ç",
-                    k_chevron_fermant: "chevron_fermant",
-                    k_chevron_ouvrant: "chevron_ouvrant",
-                    k_crochet_fermant: "crochet_fermant",
-                    k_crochet_ouvrant: "crochet_ouvrant",
-                    k_c: "c",
-                    k_degre: "degré",
-                    k_deux_points: "deux_points",
-                    k_diese: "dièse",
-                    k_divise_par: "divisé_par",
-                    k_dollar: "dollar",
-                    k_d: "d",
-                    k_e_accent_aigu: "é",
-                    k_e_accent_grave: "è",
-                    k_egal: "égal",
-                    k_espace: "espace",
-                    k_et_commercial: "et_commercial",
-                    k_etoile: "étoile",
-                    k_euro: "euro",
-                    k_e: "e",
-                    k_exposant_2: "²",
-                    k_f: "f",
-                    k_guillemet: "guillemet",
-                    k_g: "g",
-                    k_h: "h",
-                    k_i: "i",
-                    k_j: "j",
-                    k_k: "k",
-                    k_livre_sterling: "livre_sterling",
-                    k_l: "l",
-                    k_moins: "moins",
-                    k_multiplie_par: "multiplié_par",
-                    k_mu: "mu",
-                    k_m: "m",
-                    k_n: "n",
-                    k_o: "o",
-                    k_parenthese_fermante: "parenthèse_fermante",
-                    k_parenthese_ouvrante: "parenthèse_ouvrante",
-                    k_pluss: "pluss",
-                    k_point_dexclamation: "point_dexclamation",
-                    k_point_dinterrogation: "point_dinterrogation",
-                    k_point: "point",
-                    k_point_virgule: "point_virgule",
-                    k_pourcent: "pourcent",
-                    k_p: "p",
-                    k_q: "q",
-                    k_r: "r",
-                    k_signe_section: "signe_section",
-                    k_slash: "slash",
-                    k_souligne: "souligné",
-                    k_s: "s",
-                    k_symbole_monetaire: "symbole_monétaire",
-                    k_tilde: "tilde",
-                    k_tiret: "tiret",
-                    k_trema: "tréma",
-                    k_t: "t",
-                    k_u_accent_grave: "ù",
-                    k_u: "u",
-                    k_virgule: "virgule",
-                    k_v: "v",
-                    k_w: "w",
-                    k_x: "x",
-                    k_y: "y",
-                    k_z: "z"
-                };
-                jQuery.each(chars, function (key, value) {
-                    jQuery(".lecteursAudioCDL").append("<audio preload=\"auto\" src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + value + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_" + key.substring(2) + "\"></audio>");
-                });
-            }, 100);
-            preloadedChars = true;
-        }
-    }
     if (jQuery(this).is("select")) {
         focusedSelect = jQuery(this);
         focusedSelectedIndex = focusedSelect.prop("selectedIndex");
@@ -1057,6 +960,14 @@ jQuery(".cdlCadre a, button, input[type=\"submit\"], input[type=\"button\"], inp
         }
     }
 });
+
+if (jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select").size() > 0) {
+    var cdlLecteursAudioCDL = jQuery(".lecteursAudioCDL");
+    jQuery.get(cdlLecteursAudioCDL.data("loadplayers"), function (data) {
+        "use strict";
+        cdlLecteursAudioCDL.html(data);
+    });
+}
 
 
 jQuery("html").on("keydown", detectKeyDown).on("keyup", detectKeyUp);

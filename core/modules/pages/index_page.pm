@@ -470,6 +470,31 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		$pageContent = setValueInTemplateString($pageContent, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		# Mettre le nom de domaine pour complèter les URLs absolues
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "recette.cdl.lnet.fr" : $ENV{'SERVER_NAME'}.$embeddedMode);
+
+		my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
+		my $voice = loadFromSession($session, 'voice');
+		if ($voice and !exists($unordoredVoices{$voice})) {
+			$voice = $defaultVoice;
+			editInSession($session, 'voice', $voice);
+		}
+		my $speed = loadFromSession($session, 'speed');
+
+		use Digest::SHA::PurePerl qw(sha1_hex);
+		use MIME::Base64;
+
+		my $lettersPlayers = "";
+		my $lettersHtmlCacheFile = "letters_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".html";
+		if (!-e $cdlAudioCachePath.$lettersHtmlCacheFile) {
+			foreach my $letterKey (keys(%lettersToSpell)) {
+				my $fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$lettersToSpell{$letterKey});
+				$lettersPlayers .= "<audio preload=\"auto\" src=\"data:audio/mpeg;base64,".encode_base64(vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $lettersToSpell{$letterKey}))."\" class=\"cdlHidden\" id=\"lecteurAudioCDL_".$letterKey."\"></audio>\n";
+			}
+			open(WRITER, ">", $cdlAudioCachePath.$lettersHtmlCacheFile) || die "Erreur d'ouverture du fichier : ".$cdlAudioCachePath.$lettersHtmlCacheFile.".\n";
+			print WRITER ($lettersPlayers);
+			close(WRITER);
+		}
+
+		$pageContent = setValueInTemplateString($pageContent, 'LETTERS_PLAYERS_FILE', "/cache/audio/".$lettersHtmlCacheFile);
 	} else {
 		$pageContent = setValueInTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE', "");
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO', "");
