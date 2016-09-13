@@ -82,11 +82,11 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 <div class="cdlLineDiv">
 <div class="cdlLabelDiv">###_DICO_PARAMETRES_AVANCES_FIL_ARIANE###&nbsp;:&nbsp;</div>
-<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="filAriane1" name="cdlariane" value="1"###ARIANE_TOP###><strong class="cdlInput_radio"></strong></span><label for="filAriane1">###_DICO_PARAMETRES_AVANCES_HAUT_PAGE###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="filAriane2" name="cdlariane" value="2"###ARIANE_BOTTOM###><strong class="cdlInput_radio"></strong></span><label for="filAriane2">###_DICO_PARAMETRES_AVANCES_BAS_PAGE###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="filAriane3" name="cdlariane" value="3"###ARIANE_TOP_AND_BOTTOM###><strong class="cdlInput_radio"></strong></span><label for="filAriane2">###_DICO_PARAMETRES_AVANCES_HAUT_ET_BAS_PAGE###</label></div>
+<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="checkbox" id="filAriane1" name="cdlariane[]" value="1"###ARIANE_TOP###><strong class="cdlInput_checkbox"></strong></span><label for="filAriane1">###_DICO_PARAMETRES_AVANCES_HAUT_PAGE###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="checkbox" id="filAriane2" name="cdlariane[]" value="2"###ARIANE_BOTTOM###><strong class="cdlInput_checkbox"></strong></span><label for="filAriane2">###_DICO_PARAMETRES_AVANCES_BAS_PAGE###</label></div>
 </div>
 <div class="cdlLineDiv">
 <div class="cdlLabelDiv"><span class="cdlPartOfText">###_DICO_PARAMETRES_AVANCES_IMG###</span>&nbsp;:&nbsp;<br><span class="cdlPartOfText cdlInfo">###_DICO_PARAMETRES_AVANCES_IMG_INFO###</span></div>
-<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="displayImages1" name="cdlimg" value="1"###IMG_YES###><strong class="cdlInput_radio"></strong></span><label for="displayImages1">###_DICO_OUI###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="displayImages0" name="cdlimg" value="0"###IMG_NO###><strong class="cdlInput_radio"></strong></span><label for="displayImages0">###_DICO_NON###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="displayImages2" name="cdlimg" value="2"###IMG_ONLY_WITH_ALT###><strong class="cdlInput_radio"></strong></span><label for="displayImages2">###_DICO_ONLY_WITH_ALT###</label></div>
+<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="displayImages1" name="cdlimg" value="1"###IMG_YES###><strong class="cdlInput_radio"></strong></span><label for="displayImages1">###_DICO_OUI###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="displayImages0" name="cdlimg" value="0"###IMG_NO###><strong class="cdlInput_radio"></strong></span><label for="displayImages0">###_DICO_NON###</label></div>
 </div>
 <div class="cdlLineDiv">
 <div class="cdlLabelDiv"><span class="cdlPartOfText">###_DICO_PARAMETRES_AVANCES_OBJECT###</span>&nbsp;:&nbsp;<br><span class="cdlPartOfText cdlInfo">###_DICO_PARAMETRES_AVANCES_OBJECT_INFO###</span></div>
@@ -95,10 +95,6 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <div class="cdlLineDiv">
 <div class="cdlLabelDiv"><span class="cdlPartOfText">###_DICO_PARAMETRES_AVANCES_TABLE###</span>&nbsp;:&nbsp;<br><span class="cdlPartOfText cdlInfo">###_DICO_PARAMETRES_AVANCES_TABLE_INFO###</span></div>
 <div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="parseTablesToList1" name="cdltable" value="1"###TABLE_YES###><strong class="cdlInput_radio"></strong></span><label for="parseTablesToList1">###_DICO_OUI###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="parseTablesToList0" name="cdltable" value="0"###TABLE_NO###><strong class="cdlInput_radio"></strong></span><label for="parseTablesToList0">###_DICO_NON###</label></div>
-</div>
-<div class="cdlLineDiv">
-<div class="cdlLabelDiv"><span class="cdlPartOfText">###_DICO_PARAMETRES_AVANCES_JS###</span>&nbsp;:&nbsp;<br><span class="cdlPartOfText cdlInfo">###_DICO_PARAMETRES_AVANCES_JS_INFO###</span></div>
-<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="activateJavascript1" name="cdljs" value="1"###JS_YES###><strong class="cdlInput_radio"></strong></span><label for="activateJavascript1">###_DICO_OUI###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="activateJavascript0" name="cdljs" value="0"###JS_NO###><strong class="cdlInput_radio"></strong></span><label for="activateJavascript0">###_DICO_NON###</label></div>
 </div>
 <br>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidateadvanced" value="###_DICO_BOUTON_VALIDER###"></span>

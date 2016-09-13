@@ -221,9 +221,8 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_2', $lineHeight eq "2" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT2_3', $lineHeight eq "3" ? " checked" : "");
 
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP_AND_BOTTOM', $positionLocation eq "3" ? " checked" : "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP', (!$positionLocation or $positionLocation eq "1") ? " checked" : "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_BOTTOM', $positionLocation eq "2" ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_TOP', (!$positionLocation or $positionLocation eq "1" or $positionLocation eq "3") ? " checked" : "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ARIANE_BOTTOM', ($positionLocation eq "2" or $positionLocation eq "3") ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'IMG_YES', $displayImages eq "1" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'IMG_NO', $displayImages eq "1" ? "" : " checked");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'OBJECT_YES', $displayObjects eq "1" ? " checked" : "");
@@ -324,8 +323,10 @@ if ($action =~ m/^affichage$/si) {
 	if (param('cdllh') ne "") {
 		editInSession($session, 'lineHeight', param('cdllh'));
 	}
-	if (param('cdlariane') ne "") {
-		editInSession($session, 'positionLocation', param('cdlariane'));
+	my @positionLocation = param('cdlariane[]');
+	my $positionLocationLength = scalar @positionLocation;
+	if ($positionLocationLength > 0) {
+		editInSession($session, 'positionLocation', $positionLocationLength eq 2 ? "3" : $positionLocation[0]);
 	}
 	if (param('cdljs') ne "") {
 		editInSession($session, 'activateJavascript', param('cdljs'));
