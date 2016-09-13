@@ -162,12 +162,19 @@ my $audioTemplateString = loadConfig($cdlTemplatesPath."xml/audio.xml");
 my $audioTextTemplateString = loadConfig($cdlTemplatesPath."xml/audio.txt");
 
 # Chargement des paramétres utilisateur
-my $voice = loadFromSession($session, 'voice');
+my $voice = param('cdlvoice');
+if (!$voice) {
+	$voice = loadFromSession($session, 'voice');
+}
 if ($voice and !exists($unordoredVoices{$voice})) {
 	$voice = $defaultVoice;
 	editInSession($session, 'voice', $voice);
 }
-my $speed = loadFromSession($session, 'speed');
+
+my $speed = param('cdlspeed');
+if (!$speed) {
+	$speed = loadFromSession($session, 'speed');
+}
 
 my $parametersString = "";
 

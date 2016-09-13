@@ -231,6 +231,21 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $ttsMode,
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', ($ttsMode eq "sdk" and $embeddedMode ne "") ? "recette.cdl.lnet.fr" : $ENV{'SERVER_NAME'}.$embeddedMode);
+		my $voice = loadFromSession($session, 'voice');
+		if (!$voice) {
+			$voice = "";
+		}
+		if ($voice and !exists($unordoredVoices{$voice})) {
+			$voice = $defaultVoice;
+			editInSession($session, 'voice', $voice);
+		}
+
+		my $speed = loadFromSession($session, 'speed');
+		if (!$speed) {
+			$speed = "";
+		}
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'VOICE', $voice);
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'SPEED', $speed);
 	} else {
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'JS_AUDIO_FILE_INCLUDE', "");
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO', "");
@@ -473,11 +488,20 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 
 		my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 		my $voice = loadFromSession($session, 'voice');
+		if (!$voice) {
+			$voice = "";
+		}
 		if ($voice and !exists($unordoredVoices{$voice})) {
 			$voice = $defaultVoice;
 			editInSession($session, 'voice', $voice);
 		}
+
 		my $speed = loadFromSession($session, 'speed');
+		if (!$speed) {
+			$speed = "";
+		}
+		$pageContent = setValueInTemplateString($pageContent, 'VOICE', $voice);
+		$pageContent = setValueInTemplateString($pageContent, 'SPEED', $speed);
 
 		use Digest::SHA::PurePerl qw(sha1_hex);
 		use MIME::Base64;

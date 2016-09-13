@@ -283,7 +283,8 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 			$ttsUri = "/audio-text/".($siteId ne "" ? $siteId : "default")."/";
 			$ttsDefaultQueryString = "";
 			$ttsTextParamName = "cdltext";
-			$ttsVoiceParamName = "";
+			$ttsVoiceParamName = "cdlvoice";
+			$ttsRateParamName = "cdlspeed";
 		}
 
 		use Socket;
@@ -296,7 +297,7 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 		$| = 1;
 		select($oldFh);
 
-		my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
+		my $audioParametersTextString = $ttsDefaultQueryString.($ttsVoiceParamName ? "&".$ttsVoiceParamName."=".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? "&".$ttsRateParamName."=".($speed ? $speed : $defaultSpeed) : "")."&".$ttsTextParamName."=".urlEncode($audioTextTemplateString);
 
 		print SOCK "POST ".$ttsUri." HTTP/1.0\nHost: $ttsServerName:$ttsPort\nUser-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30\nContent-Length: ".length($audioParametersTextString)."\nContent-Type: application/x-www-form-urlencoded\nTransfer-Encoding: chunked\n\n".$audioParametersTextString."\n";
 		my $header = <SOCK>;

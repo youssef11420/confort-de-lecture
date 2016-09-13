@@ -114,7 +114,15 @@ function cdlLit(text, playDirectionParam, playModeParam) {
     if (text) {
         updateLecteur("play");
 
-        lecteurAudioHTML5.src = (window.cdlEmbeddedURL || "") + "/audio-text/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(text);
+        lecteurAudioHTML5.src = (window.cdlEmbeddedURL || "") + "/audio-text/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(text) + (
+            window.cdlVoice
+                ? "&cdlvoice=" + encodeURIComponent(window.cdlVoice)
+                : ""
+        ) + (
+            window.cdlSpeed
+                ? "&cdlspeed=" + encodeURIComponent(window.cdlSpeed)
+                : ""
+        );
         lecteurAudioHTML5.currentTime = pausePosition;
         lecteurAudioHTML5.play();
         pausePosition = 0;
@@ -927,9 +935,25 @@ jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input
         var value = "Contenu du champ après coller : " + jQuery(element).val();
         var lecteurAudioCDLPaste = document.getElementById("lecteurAudioCDL_paste");
         if (!lecteurAudioCDLPaste) {
-            jQuery(".lecteursAudioCDL").append("<audio autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value) + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
+            jQuery(".lecteursAudioCDL").append("<audio autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value) + (
+                window.cdlVoice
+                    ? "&cdlvoice=" + encodeURIComponent(window.cdlVoice)
+                    : ""
+            ) + (
+                window.cdlSpeed
+                    ? "&cdlspeed=" + encodeURIComponent(window.cdlSpeed)
+                    : ""
+            ) + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
         } else {
-            jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value));
+            jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value) + (
+                window.cdlVoice
+                    ? "&cdlvoice=" + encodeURIComponent(window.cdlVoice)
+                    : ""
+            ) + (
+                window.cdlSpeed
+                    ? "&cdlspeed=" + encodeURIComponent(window.cdlSpeed)
+                    : ""
+            ));
             lecteurAudioCDLPaste.pause();
             lecteurAudioCDLPaste.currentTime = 0;
             lecteurAudioCDLPaste.play();
@@ -963,10 +987,12 @@ jQuery(".cdlCadre a, button, input[type=\"submit\"], input[type=\"button\"], inp
 
 if (jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select").size() > 0) {
     var cdlLecteursAudioCDL = jQuery(".lecteursAudioCDL");
-    jQuery.get(cdlLecteursAudioCDL.data("loadplayers"), function (data) {
-        "use strict";
-        cdlLecteursAudioCDL.html(data);
-    });
+    if (cdlLecteursAudioCDL.size() > 0 && cdlLecteursAudioCDL.data("loadplayers")) {
+        jQuery.get(cdlLecteursAudioCDL.data("loadplayers"), function (data) {
+            "use strict";
+            cdlLecteursAudioCDL.html(data);
+        });
+    }
 }
 
 
