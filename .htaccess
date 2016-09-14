@@ -14,7 +14,7 @@ AddHandler cgi-script .pl
 	RewriteRule ^styles/print\.css$ design/css/print.css [L]
 	RewriteRule ^admin/config\.css$ design/css/config.css [L]
 
-	RewriteRule ^javascript/title_(.*)_([1-5])\.js$ core/scripts/title.pl?cdlid=$1&cdls=$2 [L]
+	RewriteRule ^javascript/title_(.*)_([0-9]+)\.js$ core/scripts/title.pl?cdlid=$1&cdls=$2 [L]
 
 	RewriteRule ^javascript(-https)?/.*$ core/scripts/javascript.pl [L]
 

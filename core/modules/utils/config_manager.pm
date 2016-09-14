@@ -95,7 +95,7 @@ sub createSiteConfig #($siteId)
 
 	chmod(0777, $cdlSitesConfigPath.$siteId."/override");
 
-	open(SITE_PM, ">", $cdlSitesConfigPath.$siteId."/override/main.pm") || die "Erreur d'ouverture du fichier : override/main.pm.\n";
+	open(SITE_PM, ">", $cdlSitesConfigPath.$siteId."/override/main.pm") or die "Erreur d'ouverture du fichier : override/main.pm.\n";
 
 	# Initialisation de la chaîne contenant le code perl spécifique au site à créer
 	my $pmString = "# Override begin\n\n# Override end\n\n# pour dire au pl que le pm s'est bien exécuté, il faut lui faire retourner vrai (donc 1 par ex)\n1;";

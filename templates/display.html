@@ -56,7 +56,7 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 </div>
 </div><!--/###AUDIO###-->
 </div>
-<div class="cdlAllPageContainer"><div class="cdlAllPage">
+<div class="cdlAllPageContainer" style="padding-top:###PAGE_MARGIN_TOP###px !important"><div class="cdlAllPage">
 <div class="cdlGlobalPage">
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">
@@ -68,6 +68,7 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <p class="cdlLittleArrow"><strong>###_DICO_EXPLICATION_CONFIG###</strong><br>
 <div class="cdlDisplayParametersForm">
 <div class="cdlConfigChoices">
+<div class="cdlConfigChoicesGroup">
 <div class="cdlConfigChoice"><ul>
 <li id="cdlBackgroundConfigBlack"###B_COLOR_000000###><a id="cdlBackgroundConfigBlackAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigBlackAnchor"###B_COLOR2_000000###><span>###_DICO_LABEL_FOND_NOIR###</span></a>
 <li id="cdlBackgroundConfigWhite"###B_COLOR_FFFFFF###><a id="cdlBackgroundConfigWhiteAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigWhiteAnchor"###B_COLOR2_FFFFFF###><span>###_DICO_LABEL_FOND_BLANC###</span></a>
@@ -76,29 +77,34 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <li id="cdlBackgroundConfigBlue"###B_COLOR_0000FF###><a id="cdlBackgroundConfigBlueAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigBlueAnchor"###B_COLOR2_0000FF###><span>###_DICO_LABEL_FOND_BLEU###</span></a>
 <li id="cdlBackgroundConfigRed"###B_COLOR_FF0033###><a id="cdlBackgroundConfigRedAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlbc=FF0033&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlBackgroundConfigRedAnchor"###B_COLOR2_0000FF###><span>###_DICO_LABEL_FOND_ROUGE###</span></a>
 </ul><span class="cdlButtons"><input type="submit" name="morebackgroundcolors" value="###_DICO_BOUTON_PLUS_DE_COULEURS###" title="###_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_FOND###"></span></div>
-<div class="cdlConfigChoice"><ul>
+<div class="cdlConfigChoice" id="cdlConfigChoiceTextSize"><ul>
 <li id="cdlTextSizeConfig1"###F_SIZE_1###><a id="cdlTextSizeConfig1Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=1&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig1Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_TRES_PETITE###</span></a>
-<li id="cdlTextSizeConfig2"###F_SIZE_2###><a id="cdlTextSizeConfig2Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=2&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig2Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_PETITE###</span></a>
-<li id="cdlTextSizeConfig3"###F_SIZE_3###><a id="cdlTextSizeConfig3Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=3&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig3Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_MOYENNE###</span></a>
-<li id="cdlTextSizeConfig4"###F_SIZE_4###><a id="cdlTextSizeConfig4Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=4&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig4Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_GRANDE###</span></a>
-<li id="cdlTextSizeConfig5"###F_SIZE_5###><a id="cdlTextSizeConfig5Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=5&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig5Anchor"###F_SIZE2_1###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
-</ul></div>
-<div class="cdlConfigChoice"><ul>
+<li id="cdlTextSizeConfig2"###F_SIZE_2###><a id="cdlTextSizeConfig2Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=2&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig2Anchor"###F_SIZE2_2###><span>###_DICO_LABEL_PETITE###</span></a>
+<li id="cdlTextSizeConfig3"###F_SIZE_3###><a id="cdlTextSizeConfig3Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=3&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig3Anchor"###F_SIZE2_3###><span>###_DICO_LABEL_MOYENNE###</span></a>
+<li id="cdlTextSizeConfig4"###F_SIZE_4###><a id="cdlTextSizeConfig4Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=4&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig4Anchor"###F_SIZE2_4###><span>###_DICO_LABEL_GRANDE###</span></a>
+<li id="cdlTextSizeConfig5"###F_SIZE_5###><a id="cdlTextSizeConfig5Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=5&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig5Anchor"###F_SIZE2_5###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
+<li id="cdlTextSizeConfig6"###F_SIZE_6###><a id="cdlTextSizeConfig6Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=6&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig6Anchor"###F_SIZE2_6###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
+</ul><span class="cdlButtons"><input type="submit" name="moretextsizes" value="###_DICO_BOUTON_PLUS_DE_TAILLES###" title="###_DICO_TITLE_BOUTON_PLUS_DE_TAILLES###"></span></div>
+</div>
+<div class="cdlConfigChoicesGroup">
+<div class="cdlConfigChoice" id="cdlConfigChoiceFontColor"><ul>
 <li id="cdlFontColorConfigBlack"###F_COLOR_000000###><a id="cdlFontColorConfigBlackAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigBlackAnchor"###F_COLOR2_000000###><span>###_DICO_LABEL_TEXTE_NOIR###</span></a>
 <li id="cdlFontColorConfigWhite"###F_COLOR_FFFFFF###><a id="cdlFontColorConfigWhiteAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigWhiteAnchor"###F_COLOR2_FFFFFF###><span>###_DICO_LABEL_TEXTE_BLANC###</span></a>
 <li id="cdlFontColorConfigGreen"###F_COLOR_009900###><a id="cdlFontColorConfigGreenAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigGreenAnchor"###F_COLOR2_009900###><span>###_DICO_LABEL_TEXTE_VERT###</span></a>
 <li id="cdlFontColorConfigYellow"###F_COLOR_FFFF00###><a id="cdlFontColorConfigYellowAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigYellowAnchor"###F_COLOR2_FFFF00###><span>###_DICO_LABEL_TEXTE_JAUNE###</span></a>
 <li id="cdlFontColorConfigBlue"###F_COLOR_0000FF###><a id="cdlFontColorConfigBlueAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigBlueAnchor"###F_COLOR2_0000FF###><span>###_DICO_LABEL_TEXTE_BLEU###</span></a>
+<li id="cdlFontColorConfigRed"###F_COLOR_FF0033###><a id="cdlFontColorConfigRedAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfc=FF0033&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlFontColorConfigRedAnchor"###F_COLOR2_0000FF###><span>###_DICO_LABEL_TEXTE_ROUGE###</span></a>
 </ul><span class="cdlButtons"><input type="submit" name="morefontcolors" value="###_DICO_BOUTON_PLUS_DE_COULEURS###" title="###_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_TEXTE###"></span></div>
-<div class="cdlConfigChoice"><ul>
+<div class="cdlConfigChoice" id="cdlConfigChoiceLinkColor"><ul>
 <li id="cdlLinkColorConfigBlack"###L_COLOR_000000###><a id="cdlLinkColorConfigBlackAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=000000&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigBlackAnchor"###L_COLOR2_000000###><span>###_DICO_LABEL_LIEN_NOIR###</span></a>
 <li id="cdlLinkColorConfigWhite"###L_COLOR_FFFFFF###><a id="cdlLinkColorConfigWhiteAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=FFFFFF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigWhiteAnchor"###L_COLOR2_FFFFFF###><span>###_DICO_LABEL_LIEN_BLANC###</span></a>
 <li id="cdlLinkColorConfigGreen"###L_COLOR_009900###><a id="cdlLinkColorConfigGreenAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=009900&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigGreenAnchor"###L_COLOR2_009900###><span>###_DICO_LABEL_LIEN_VERT###</span></a>
 <li id="cdlLinkColorConfigYellow"###L_COLOR_FFFF00###><a id="cdlLinkColorConfigYellowAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=FFFF00&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigYellowAnchor"###L_COLOR2_FFFF00###><span>###_DICO_LABEL_LIEN_JAUNE###</span></a>
 <li id="cdlLinkColorConfigBlue"###L_COLOR_0000FF###><a id="cdlLinkColorConfigBlueAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=0000FF&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigBlueAnchor"###L_COLOR2_0000FF###><span>###_DICO_LABEL_LIEN_BLEU###</span></a>
+<li id="cdlLinkColorConfigRed"###L_COLOR_FF0033###><a id="cdlLinkColorConfigRedAnchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdllc=FF0033&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlLinkColorConfigRedAnchor"###L_COLOR2_0000FF###><span>###_DICO_LABEL_LIEN_ROUGE###</span></a>
 </ul><span class="cdlButtons"><input type="submit" name="morelinkcolors" value="###_DICO_BOUTON_PLUS_DE_COULEURS###" title="###_DICO_TITLE_BOUTON_PLUS_DE_COULEURS_LIEN###"></span></div>
 </div>
-<br>
+</div>
 <span class="cdlButtons cdlAdvancedParameters"><input type="submit" name="cdladvancedparameters" value="###_DICO_PARAMETRES_AVANCES###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER###"></span>
 </div>
@@ -157,6 +163,7 @@ jQuery('.cdlConfigChoice li a').bind('click',function () {
 	case "cdlTextSizeConfig3":fontSize="3";break;
 	case "cdlTextSizeConfig4":fontSize="4";break;
 	case "cdlTextSizeConfig5":fontSize="5";break;
+    case "cdlTextSizeConfig6":fontSize="6";break;
 	default: break;
 	}
 	jQuery('input[name="cdlbc"]').attr('value', backgroundColor);
@@ -169,18 +176,6 @@ jQuery('.cdlConfigChoice li a').bind('click',function () {
 	jQuery('.cdlAudioObjectContent').height(iconSize);
 
 	jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
-
-	htmlElt.niceScroll().remove();
-	window.setTimeout(function () {
-		htmlElt.niceScroll({
-			cursorwidth: 25,
-			background: "transparent",
-			cursorborder: "2px solid " + (window.cdlBackgroundColor || ""),
-			cursorcolor: window.cdlFontColor || "",
-			autohidemode: false,
-			zindex: 114200
-		});
-	}, 100);
 
 	return false;
 });

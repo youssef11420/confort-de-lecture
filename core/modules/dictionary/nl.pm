@@ -42,12 +42,14 @@ $dictionary{'LABEL_PETITE'} = "Taille de texte petite";
 $dictionary{'LABEL_MOYENNE'} = "Taille de texte moyenne";
 $dictionary{'LABEL_GRANDE'} = "Taille de texte grande";
 $dictionary{'LABEL_TRES_GRANDE'} = "Taille de texte très grande";
+$dictionary{'TITLE_BOUTON_PLUS_DE_TAILLES'} = "Choisir d'autres tailles pour le texte";
 
 $dictionary{'LABEL_TEXTE_NOIR'} = "Couleur de texte noire";
 $dictionary{'LABEL_TEXTE_BLANC'} = "Couleur de texte blanche";
 $dictionary{'LABEL_TEXTE_VERT'} = "Couleur de texte verte";
 $dictionary{'LABEL_TEXTE_JAUNE'} = "Couleur de texte jaune";
 $dictionary{'LABEL_TEXTE_BLEU'} = "Couleur de texte bleue";
+$dictionary{'LABEL_TEXTE_ROUGE'} = "Couleur de texte rouge";
 $dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_TEXTE'} = "Choisir d'autres couleurs pour le texte";
 
 $dictionary{'LABEL_LIEN_NOIR'} = "Couleur de liens noire";
@@ -55,9 +57,11 @@ $dictionary{'LABEL_LIEN_BLANC'} = "Couleur de liens blanche";
 $dictionary{'LABEL_LIEN_VERT'} = "Couleur de liens verte";
 $dictionary{'LABEL_LIEN_JAUNE'} = "Couleur de liens jaune";
 $dictionary{'LABEL_LIEN_BLEU'} = "Couleur de liens bleue";
+$dictionary{'LABEL_LIEN_ROUGE'} = "Couleur de liens rouge";
 $dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_LIEN'} = "Choisir d'autres couleurs pour les liens";
 
-$dictionary{'BOUTON_PLUS_DE_COULEURS'} = "Plus de couleurs";
+$dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de couleurs";
+$dictionary{'BOUTON_PLUS_DE_TAILLES'} = "de tailles";
 
 $dictionary{'BOUTON_APERCU'} = "<span>a</span><span>p</span><span>e</span><span>r</span><span>ç</span><span>u</span><br><a href='#' title='aperçu du lien'><span>l</span><span>i</span><span>e</span><span>n</span></a>";
 

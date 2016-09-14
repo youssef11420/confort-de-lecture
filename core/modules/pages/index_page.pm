@@ -513,7 +513,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 				my $fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$lettersToSpell{$letterKey});
 				$lettersPlayers .= "<audio preload=\"auto\" src=\"data:audio/mpeg;base64,".encode_base64(vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $lettersToSpell{$letterKey}))."\" class=\"cdlHidden\" id=\"lecteurAudioCDL_".$letterKey."\"></audio>\n";
 			}
-			open(WRITER, ">", $cdlAudioCachePath.$lettersHtmlCacheFile) || die "Erreur d'ouverture du fichier : ".$cdlAudioCachePath.$lettersHtmlCacheFile.".\n";
+			open(WRITER, ">", $cdlAudioCachePath.$lettersHtmlCacheFile) or die "Erreur d'ouverture du fichier : ".$cdlAudioCachePath.$lettersHtmlCacheFile.".\n";
 			print WRITER ($lettersPlayers);
 			close(WRITER);
 		}

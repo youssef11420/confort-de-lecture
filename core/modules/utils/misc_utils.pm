@@ -1297,7 +1297,7 @@ sub getGlossaryItems #($siteId)
 
 	# Chargement du fichier texte de glossaire
 	my $glossaryContent = "";
-	my $glossaryDir = $siteId ? $cdlSitesConfigPath.$siteId : $cdlGlossaryConfigPath;
+	my $glossaryDir = $siteId ? $cdlSitesConfigPath.$siteId."/" : $cdlGlossaryConfigPath;
 
 	if (-f $glossaryDir."pronunciation_corrections.txt") {
 		$glossaryContent = loadConfig($glossaryDir."pronunciation_corrections.txt");

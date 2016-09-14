@@ -11,8 +11,7 @@
 <link href="###EMBEDDED_URL###/styles/print.css" rel="stylesheet" media="print">
 <!--[if IE]>
 <link href="###EMBEDDED_URL###/styles/ie.css" rel="stylesheet">
-<![endif]--><!--###CONTRAST_CSS###-->
-<style>*{background-color:#FFFFFF;color:#000000;border-color:#000000}</style><!--/###CONTRAST_CSS###-->
+<![endif]-->
 <body###CONTRAST_BODY_STYLE###>
 <form action="###EMBEDDED_URL###/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden">
 <div class="cdlUtilLinksContainer">
@@ -69,18 +68,17 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <p class="cdlLittleArrow audioIntro">###_DICO_INTRO_AUDIO###
 <div class="cdlAudioForm">
 <div class="cdlLineDiv">
-<div class="cdlLabelDiv" style="padding-top:.5em">###_DICO_PARAMETRES_ACTIVER_AUDIO###&nbsp;:&nbsp;</div>
-<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="activateAudio1" name="cdlaudio" value="1"###ACTIVATE_AUDIO_YES###><strong class="cdlInput_radio"></strong></span><label for="activateAudio1">###_DICO_OUI###</label>&nbsp;&nbsp;<span class="cdlOtherInput"><input type="radio" id="activateAudio0" name="cdlaudio" value="0"###ACTIVATE_AUDIO_NO###><strong class="cdlInput_radio"></strong></span><label for="activateAudio0">###_DICO_NON###</label></div>
+<div class="cdlLabelDiv">###_DICO_PARAMETRES_ACTIVER_AUDIO###&nbsp;:</div>
+<div class="cdlFieldDiv"><span class="cdlOtherInput"><input type="radio" id="activateAudio1" name="cdlaudio" value="1"###ACTIVATE_AUDIO_YES###><strong class="cdlInput_radio"></strong></span>&nbsp;<label for="activateAudio1">###_DICO_OUI###</label> <span class="cdlOtherInput"><input type="radio" id="activateAudio0" name="cdlaudio" value="0"###ACTIVATE_AUDIO_NO###><strong class="cdlInput_radio"></strong></span>&nbsp;<label for="activateAudio0">###_DICO_NON###</label></div>
 </div><!--###VOICE_CHOICE###-->
 <div class="cdlLineDiv">
-<div class="cdlLabelDiv"><label for="voice">###_DICO_PARAMETRES_AUDIO_VOIX###&nbsp;:&nbsp;</label></div>
+<div class="cdlLabelDiv"><label for="voice">###_DICO_PARAMETRES_AUDIO_VOIX###&nbsp;:</label></div>
 <div class="cdlFieldDiv"><strong class="cdlSelectInput"><select id="voice" name="cdlvoice">###AUDIO_VOICE_CHOICES###</select><span></span></strong></div>
 </div><!--/###VOICE_CHOICE###-->
 <div class="cdlLineDiv">
-<div class="cdlLabelDiv"><label for="speed">###_DICO_PARAMETRES_AUDIO_VITESSE###&nbsp;:&nbsp;</label></div>
+<div class="cdlLabelDiv"><label for="speed">###_DICO_PARAMETRES_AUDIO_VITESSE###&nbsp;:</label></div>
 <div class="cdlFieldDiv"><strong class="cdlSelectInput"><select id="speed" name="cdlspeed">###AUDIO_SPEED_CHOICES###</select><span></span></strong></div>
 </div>
-<br>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER###"></span>
 </div>
 </div>

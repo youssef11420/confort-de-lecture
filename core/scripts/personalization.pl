@@ -147,7 +147,7 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR_[0-9a-fA-F]{6}', "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_[1-5]', "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE_\d+', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR2_'.$backgroundColor, " class=\"linkChoiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR2_'.$fontColor, " class=\"linkChoiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR2_'.$linkColor, " class=\"linkChoiceSelected\"");
@@ -155,7 +155,7 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR2_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR2_[0-9a-fA-F]{6}', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR2_[0-9a-fA-F]{6}', "");
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE2_[1-5]', "");
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_SIZE2_\d+', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR', $backgroundColor);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR', $fontColor);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR', $linkColor);
@@ -426,6 +426,8 @@ $personalizationTemplateString = setValueInTemplateString($personalizationTempla
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'W_SPACING', $wordSpacing);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_HEIGHT', $lineHeight);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'ICON_SIZE', 40+0.7*(($fontSize - 1)*20));
+my $pageMarginTop = $fontSize eq "" ? "86" : "".58+0.7*(($fontSize - 1)*20);
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'PAGE_MARGIN_TOP', $pageMarginTop);
 
 if ($enableAudio eq "1") {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_ACTIONS', getPartOfTemplateString($personalizationTemplateString, 'AUDIO_ACTIONS'));

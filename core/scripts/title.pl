@@ -63,6 +63,8 @@ my $titleString = loadConfig($cdlTemplatesPath."js/title.js");
 
 my $fontSize = param('cdls');
 
+$fontSize = $fontSize gt 5 ? 5 : $fontSize;
+
 $titleString = setValueInTemplateString($titleString, 'CURSOR_SIZE', isBigCursorNotAllowed() ? "32" : $cursorSizes{$fontSize});
 
 print $session->header('Content-type' => "text/javascript; charset=UTF-8", 'Last-Modified' => "Fri, 06 Jan 1984 17:15:30 GMT");
