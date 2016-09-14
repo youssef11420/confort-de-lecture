@@ -29,7 +29,7 @@ $dictionary{'TITLE_PERSONNALISER_AFFICHAGE'} = "Personnaliser vos paramètres d'
 $dictionary{'TITLE_PERSONNALISER_AUDIO'} = "Personnaliser vos paramètres audio";
 $dictionary{'TITLE_AIDE_AUDIO'} = "Aide audio";
 
-$dictionary{'EXPLICATION_CONFIG'} = "Choisissez la taille, et la couleur des caractères et de l'écran, adaptées à votre vision et à vos pages imprimées.";
+$dictionary{'EXPLICATION_CONFIG'} = "Sélectionnez une couleur, un contraste et la taille des caractères.";
 $dictionary{'LABEL_FOND_NOIR'} = "Couleur de fond noire";
 $dictionary{'LABEL_FOND_BLANC'} = "Couleur de fond blanche";
 $dictionary{'LABEL_FOND_VERT'} = "Couleur de fond verte";
@@ -77,17 +77,17 @@ $dictionary{'INTRO_PALETTE'} = "Vous disposez d'une palette de 216 couleurs";
 $dictionary{'LABEL_COULEUR'} = "Couleur";
 
 $dictionary{'LABEL_ESPACEMENT_LETTRE'} = "Espacement entre les lettres";
-$dictionary{'LABEL_ESPACEMENT_LETTRE_NORMAL'} = "Normal";
-$dictionary{'LABEL_ESPACEMENT_LETTRE_GRAND'} = "Grand";
-$dictionary{'LABEL_ESPACEMENT_LETTRE_IMPORTANT'} = "Très grand";
+$dictionary{'LABEL_ESPACEMENT_LETTRE_NORMAL'} = "normal";
+$dictionary{'LABEL_ESPACEMENT_LETTRE_GRAND'} = "grand";
+$dictionary{'LABEL_ESPACEMENT_LETTRE_IMPORTANT'} = "très grand";
 $dictionary{'LABEL_ESPACEMENT_MOT'} = "Espacement entre les mots";
-$dictionary{'LABEL_ESPACEMENT_MOT_NORMAL'} = "Normal";
-$dictionary{'LABEL_ESPACEMENT_MOT_GRAND'} = "Grand";
-$dictionary{'LABEL_ESPACEMENT_MOT_IMPORTANT'} = "Très grand";
+$dictionary{'LABEL_ESPACEMENT_MOT_NORMAL'} = "normal";
+$dictionary{'LABEL_ESPACEMENT_MOT_GRAND'} = "grand";
+$dictionary{'LABEL_ESPACEMENT_MOT_IMPORTANT'} = "très grand";
 $dictionary{'LABEL_ESPACEMENT_LIGNE'} = "Espacement entre les lignes";
-$dictionary{'LABEL_ESPACEMENT_LIGNE_NORMAL'} = "Normal";
-$dictionary{'LABEL_ESPACEMENT_LIGNE_GRAND'} = "Grand";
-$dictionary{'LABEL_ESPACEMENT_LIGNE_IMPORTANT'} = "Très grand";
+$dictionary{'LABEL_ESPACEMENT_LIGNE_NORMAL'} = "normal";
+$dictionary{'LABEL_ESPACEMENT_LIGNE_GRAND'} = "grand";
+$dictionary{'LABEL_ESPACEMENT_LIGNE_IMPORTANT'} = "très grand";
 
 $dictionary{'PARAMETRES_AVANCES_FIL_ARIANE'} = "Choisir la position du fil d'Ariane";
 $dictionary{'PARAMETRES_AVANCES_IMG'} = "Afficher les images";
