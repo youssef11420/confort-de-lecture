@@ -93,7 +93,7 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.3em .1em .3em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
-.cdlAudioControls{overflow:hidden}
+.cdlAudioControls{overflow:hidden;padding:0}
 .cdlAudioControls li{list-style:none;float:left;padding-right:16px;position:relative}
 .cdlAudioControls li:after{content:"";display:block;width:6px;height:6px;position:absolute;right:5px;top:50%;margin-top:-3px;z-index:11420;border-radius:100px;-moz-border-radius:100px;-WebKit-border-radius:100px;-khtml-border-radius:100px}
 .cdlAudioControls li:last-child{padding-right:0}
