@@ -30,7 +30,6 @@ var cdlAudioPlayPause = jQuery(".cdlAudioPlayPause");
 var cdlAudioStop = jQuery(".cdlAudioStop");
 var cdlAudioNext = jQuery(".cdlAudioNextBloc,.cdlAudioNextLine");
 var pausePosition = 0;
-var preloadedChars = false;
 
 jQuery.fn.outer = function () {
     "use strict";
@@ -928,7 +927,8 @@ if (pCdlCopyright.size()) {
     i += 1;
 }
 
-jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select").on("paste", function () {
+var textFields = jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select");
+textFields.on("paste", function () {
     "use strict";
     var element = this;
     window.setTimeout(function () {
@@ -985,7 +985,7 @@ jQuery(".cdlCadre a, button, input[type=\"submit\"], input[type=\"button\"], inp
     }
 });
 
-if (jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select").size() > 0) {
+if (textFields.size() > 0) {
     var cdlLecteursAudioCDL = jQuery(".lecteursAudioCDL");
     if (cdlLecteursAudioCDL.size() > 0 && cdlLecteursAudioCDL.data("loadplayers")) {
         jQuery.get(cdlLecteursAudioCDL.data("loadplayers"), function (data) {

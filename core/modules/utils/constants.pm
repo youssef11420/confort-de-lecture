@@ -80,7 +80,7 @@ $agentNameToSend = 'Confort de lecture [Lnet - aYaline]';
 
 # Hash: %fontSizes
 # La liste des tailles de police
-%fontSizes = ('1' => '90', '2' => '115', '3' => '170', '4' => '220', '5' => '300', '6' => '400');
+%fontSizes = ('1' => '90', '2' => '115', '3' => '170', '4' => '220', '5' => '300', '6' => '400', '7' => '500', '8' => '600', '9' => '700');
 
 # Hash: %letterSpacings
 # La liste des espacements de lettres

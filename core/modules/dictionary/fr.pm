@@ -63,18 +63,25 @@ $dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_LIEN'} = "Choisir d'autres couleurs p
 $dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de couleurs";
 $dictionary{'BOUTON_PLUS_DE_TAILLES'} = "de tailles";
 
-$dictionary{'BOUTON_APERCU'} = "<span>a</span><span>p</span><span>e</span><span>r</span><span>ç</span><span>u</span><br><a href='#' title='aperçu du lien'><span>l</span><span>i</span><span>e</span><span>n</span></a>";
+$dictionary{'TITRE_PREVISUALISATION'} = "Zone de prévisualisation";
+$dictionary{'TEXTE_PREVISUALISATION'} = "Confort de lecture vous permet de choisir la couleur de fond, la taille des caractères, la couleur de texte et la couleur des liens, adaptés à votre vision et à vos pages imprimées";
 
 $dictionary{'PARAMETRES_AVANCES'} = "Paramètres avancés";
 $dictionary{'TITLE_PARAMETRES_AVANCES'} = "Personnaliser vos paramètres avancés d'affichage";
 
 $dictionary{'BOUTON_VALIDER'} = "Valider";
+$dictionary{'BOUTON_VALIDER_ET_ACCEDER'} = "Valider et accéder";
 $dictionary{'BOUTON_RETOUR'} = "Retour";
 
 $dictionary{'TITLE_PALETTE'} = "Palette de couleurs";
 $dictionary{'EXPLICATION_PALETTE'} = "Sélectionnez une couleur puis validez en bas";
 $dictionary{'INTRO_PALETTE'} = "Vous disposez d'une palette de 216 couleurs";
 $dictionary{'LABEL_COULEUR'} = "Couleur";
+
+$dictionary{'TITLE_TAILLES_TEXTE'} = "Plus de tailles de texte";
+$dictionary{'EXPLICATION_TAILLES_TEXTE'} = "Sélectionnez une taille de texte";
+$dictionary{'LABEL_TAILLE'} = "Taille";
+$dictionary{'TEXTE_SOIT'} = "Soit&nbsp;: ";
 
 $dictionary{'LABEL_ESPACEMENT_LETTRE'} = "Espacement entre les lettres";
 $dictionary{'LABEL_ESPACEMENT_LETTRE_NORMAL'} = "normal";

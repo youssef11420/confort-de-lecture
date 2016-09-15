@@ -21,16 +21,16 @@ function _closeWindow() {
 <body>
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<a href="###EMBEDDED_URL###/personnalisation-affichage/###PERSONALIZATION_URL###" accesskey="l" title="Personnaliser vos paramètres d'affichage"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/display_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres d'affichage">###DISPLAY_ICON###</a><!--###AUDIO_ACTIONS###-->
-<a href="###EMBEDDED_URL###/personnalisation-audio/###PERSONALIZATION_URL###" accesskey="m" title="Personnaliser vos paramètres audio"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/audio_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres audio">###AUDIO_ICON###</a>
-<a href="###EMBEDDED_URL###/personnalisation-aide-audio/###PERSONALIZATION_URL###" accesskey="m" title="Aide audio"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/help_picto_###F_SIZE###.png" alt="Aide audio">###AUDIO_HELP_ICON###</a>
+<a href="###EMBEDDED_URL###/personnalisation-affichage/###PERSONALIZATION_URL###" accesskey="l" title="Personnaliser vos paramètres d'affichage">###DISPLAY_ICON###</a><!--###AUDIO_ACTIONS###-->
+<a href="###EMBEDDED_URL###/personnalisation-audio/###PERSONALIZATION_URL###" accesskey="m" title="Personnaliser vos paramètres audio">###AUDIO_ICON###</a>
+<a href="###EMBEDDED_URL###/personnalisation-aide-audio/###PERSONALIZATION_URL###" accesskey="m" title="Aide audio">###AUDIO_HELP_ICON###</a>
 <!-- <a href="###EMBEDDED_URL###/audio-document/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlDownloadAudioLink" accesskey="t"><img src="###EMBEDDED_URL###/design/images/util_links_pictos/mp3_picto_###F_SIZE###.png" alt="Télécharger la page en MP3" title="Télécharger la page en MP3"></a> --><!--/###AUDIO_ACTIONS###-->
 </div>
 <!--###AUDIO###--><div class="cdlAudioContent">
 <div class="cdlAudioObject">
 <div class="cdlAudioObjectContent" style="height:###DIV_MP3_PLAYER_HEIGHT###px">
 <div id="containerLecteurAudioCDL"></div>
-<audio controls src="###EMBEDDED_URL###/audio-document/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlHidden" id="lecteurAudioCDL">
+<audio controls src="###EMBEDDED_URL###/audio-document/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" id="lecteurAudioCDL">
 <object type="application/x-shockwave-flash" data="###EMBEDDED_URL###/design/player/cdl_player_###F_SIZE###.swf" width="###MP3_PLAYER_WIDTH###" height="###MP3_PLAYER_HEIGHT###" id="lecteurCDL" style="width:###MP3_PLAYER_WIDTH###px !important">
 <param name="movie" value="###EMBEDDED_URL###/design/player/cdl_player_###F_SIZE###.swf">
 <param name="wmode" value="transparent">
@@ -39,8 +39,10 @@ function _closeWindow() {
 </object>
 </audio>
 <script>
-if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecteurAudioCDL').play) {
-	document.getElementById('lecteurAudioCDL').src = "";
+var lecteurAudioCDL = document.getElementById('lecteurAudioCDL');
+if (lecteurAudioCDL && lecteurAudioCDL.play) {
+	lecteurAudioCDL.style.display = 'none';
+	lecteurAudioCDL.src = "";
 	document.getElementById('containerLecteurAudioCDL').innerHTML = '<ul class="cdlAudioControls"><li><a href="#" class="cdlAudioPrevBloc cdlDisabled" title="###_DICO_BLOC_PRECEDENT###"><span>###_DICO_BLOC_PRECEDENT###</span></a><li><a href="#" class="cdlAudioPrevLine cdlDisabled" title="###_DICO_PHRASE_PRECEDENTE###"><span>###_DICO_PHRASE_PRECEDENTE###</span></a><li><a href="#" class="cdlAudioPlayPause cdlAudioPlay" title="###_DICO_LECTURE_PAUSE###"><span>###_DICO_LECTURE_PAUSE###</span></a><li><a href="#" class="cdlAudioStop cdlDisabled" title="###_DICO_STOPPER_LA_LECTURE###"><span>###_DICO_STOP###</span></a><li><a href="#" class="cdlAudioNextLine" title="###_DICO_PHRASE_SUIVANTE###"><span>###_DICO_PHRASE_SUIVANTE###</span></a><li><a href="#" class="cdlAudioNextBloc" title="###_DICO_BLOC_SUIVANT###"><span>###_DICO_BLOC_SUIVANT###</span></a></ul>';
 }
 </script>

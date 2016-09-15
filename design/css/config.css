@@ -10,7 +10,7 @@ input.text{width:75%;border:1px solid black;padding:1px 3px;border-radius:5px;-m
 .rightForm{float:left;width:50%}
 .rightForm .add{font-weight:bold}
 .hidden{display:none}
-img{border:none;vertical-align:middle}
+img{border:0;vertical-align:middle}
 .center{text-align:center}
 .submit{padding:2px 5px;font-weight:bold;font-size:110%}
 fieldset{margin-bottom:2px;overflow:hidden;border:2px solid #006;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}

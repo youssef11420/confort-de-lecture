@@ -2,7 +2,7 @@
 <html lang="###LANGUAGE###">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>###_DICO_TITLE_PALETTE### &bull; Confort de lecture</title>
+<title>###_DICO_TITLE_TAILLES_TEXTE### &bull; Confort de lecture</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="###EMBEDDED_URL###/favicon.png" rel="shortcut icon">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -14,7 +14,7 @@
 <link href="###EMBEDDED_URL###/styles/ie.css" rel="stylesheet" type="text/css">
 <![endif]-->
 <body###CONTRAST_BODY_STYLE###>
-<form action="###EMBEDDED_URL###/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden"><input type="hidden" name="cdl###PARAM_TO_SET###c" value="###COLOR_CHOSEN###" class="cdlHidden">
+<form action="###EMBEDDED_URL###/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden"><input type="hidden" name="cdlfs" value="###SIZE_CHOSEN###" class="cdlHidden">
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
 <div class="cdlChangeDisplayButton" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###DISPLAY_ICON###<input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="1" accesskey="a"></div><!--###AUDIO_ACTIONS###-->
@@ -45,7 +45,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 </div>
 </div><!--/###AUDIO###-->
 </div>
-<div class="cdlAllPageContainer"><div class="cdlAllPage">
+<div class="cdlAllPageContainer" style="padding-top:###PAGE_MARGIN_TOP###px !important"><div class="cdlAllPage">
 <div class="cdlGlobalPage">
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">
@@ -54,13 +54,17 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 </div>
 <div class="cdlCadreContainer">
 <div class="cdlCadre">
-<p class="cdlLittleArrow audioIntro"><strong>###_DICO_EXPLICATION_PALETTE###&nbsp;:</strong><br>###_DICO_INTRO_PALETTE###
-<div class="cdlColorsForm">
-<ul class="cdlColors">###COLOR_LIST###</ul>
+<p class="cdlLittleArrow audioIntro"><strong>###_DICO_EXPLICATION_TAILLES_TEXTE###&nbsp;:</strong>
+<div class="cdlSizesForm">
+<ul class="cdlSizes">###SIZE_LIST###</ul>
 <br>
 <div class="cdlActions">
 <span class="cdlButtons cdlValidate"><input type="submit" id="cdlchangedisplay2" name="cdlchangedisplay" value="###_DICO_BOUTON_VALIDER###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
+</div>
+<div class="cdlPreview">
+<p><strong>###_DICO_TITRE_PREVISUALISATION###</strong></p>
+<p>###_DICO_TEXTE_PREVISUALISATION###</p>
 </div>
 </div>
 </div>
@@ -81,39 +85,33 @@ cdlFontColor = '####F_COLOR###';
 cdlLinkColor = '####L_COLOR###';
 cdlEmbeddedURL = 'http://###AUDIO_SERVER_NAME###';
 cdlSiteId = '###SITE_ID###';
-cdlParamToSet = '###PARAM_TO_SET###';
-jQuery('.cdlColors li a').bind('click',function () {
-	var color = jQuery('.cdlSpanHidden span', jQuery(this)).html(), htmlElt = jQuery('html');
+jQuery('.cdlSizes li a').bind('click',function () {
+	var iconSize, size = jQuery('.cdlSpanHidden span', jQuery(this)).html(), htmlElt = jQuery('html');
 
-	jQuery('.cdlColors .choiceSelected').removeClass('choiceSelected');
+	jQuery('.cdlSizes .choiceSelected').removeClass('choiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');
-	jQuery('input[name="cdl###PARAM_TO_SET###c"]').attr('value', color);
-	switch (cdlParamToSet) {
-	case "f":
-		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_' + color + '_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
-		break;
-	case "l":
-		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_' + color + '_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
-		break;
-	case "b":
-		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + color + '_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
-		break;
-	}
-	jQuery('.cdlUtilLinks svg').attr('fill', "#" + (cdlParamToSet === "f" ? color : cdlFontColor));
+	jQuery('input[name="cdlfs"]').attr('value', size);
 
-	htmlElt.niceScroll().remove();
-	htmlElt.niceScroll({
-		cursorwidth: 25,
-		background: "transparent",
-		cursorborder: "2px solid #" + backgroundColor,
-		cursorcolor: "#" + fontColor,
-		autohidemode: false,
-		zindex: 114200
-	});
+	jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###L_COLOR###_' + size + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+    iconSize = 40+0.7*((size - 1)*20);
+    jQuery('.cdlUtilLinks svg').width(iconSize).height(iconSize);
+    jQuery('.cdlAudioObjectContent').height(iconSize);
+
+	window.setTimeout(function () {
+		htmlElt.niceScroll().remove();
+		htmlElt.niceScroll({
+			cursorwidth: 25,
+			background: "transparent",
+			cursorborder: "2px solid #" + cdlBackgroundColor,
+			cursorcolor: "#" + cdlFontColor,
+			autohidemode: false,
+			zindex: 114200
+		});
+	}, 300);
 
 	return false;
 }).bind('dblclick',function () {
-	jQuery('.cdlColors .choiceSelected').removeClass('choiceSelected');
+	jQuery('.cdlSizes .choiceSelected').removeClass('choiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');
 	jQuery('.cdlValidate input').click();
 	return false;

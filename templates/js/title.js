@@ -93,7 +93,7 @@ jQuery(document).ready(function () {
         jQuery(".cdlUtilLinksContainer").css("margin", "0 0 10px 0").css("padding", "2px 0 2px 0").css("border-width", "2px").css("left", "0").appendTo(".cdlGlobalPage");
     }
 
-    htmlElt.niceScroll({
+    bodyElt.niceScroll({
         cursorwidth: 25,
         background: "transparent",
         cursorborder: "2px solid " + (window.cdlBackgroundColor || ""),

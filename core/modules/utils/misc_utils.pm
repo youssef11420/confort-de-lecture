@@ -868,6 +868,14 @@ sub redirectDownload #($action, $requestMethod, $url, $session, $siteId, %reques
 	# Initialisation de la requête HTTP
 	my $request = initRequest($requestMethod, $url, $cdlAccept, getReferer(param('cdlreferer'), $siteRootUrl), %requestParameters);
 
+	# Initialisation de l'authentification au site distant, s'il y a besoin (i.e. s'il y a des codes d'accès sont présents en session)
+	my ($userLogin, $passwd, $realm) = (loadFromSession($session, 'cdl_'.$siteId.'_login'), loadFromSession($session, 'cdl_'.$siteId.'_passwd'), loadFromSession($session, 'cdl_'.$siteId.'_realm'));
+
+	if ($userLogin) {
+		my $uri = $request->uri;
+		$userAgent->credentials($uri->host_port, $realm, $userLogin, $passwd);
+	}
+
 	if ($requestMethod =~ m/^post$/si) {
 		$request->content_type("application/x-www-form-urlencoded");
 	}

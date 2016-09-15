@@ -26,7 +26,7 @@
 <div class="cdlAudioObject">
 <div class="cdlAudioObjectContent" style="height:###DIV_MP3_PLAYER_HEIGHT###px">
 <div id="containerLecteurAudioCDL"></div>
-<audio controls src="###EMBEDDED_URL###/audio-download/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" class="cdlHidden" id="lecteurAudioCDL">
+<audio controls src="###EMBEDDED_URL###/audio-download/###SITE_ID###/###CONTENT_TO_READ_WITH_ACAPELA###" id="lecteurAudioCDL">
 <object type="application/x-shockwave-flash" data="###EMBEDDED_URL###/design/player/cdl_player_###F_SIZE###.swf" width="###MP3_PLAYER_WIDTH###" height="###MP3_PLAYER_HEIGHT###" id="lecteurCDL" style="width:###MP3_PLAYER_WIDTH###px !important">
 <param name="movie" value="###EMBEDDED_URL###/design/player/cdl_player_###F_SIZE###.swf">
 <param name="wmode" value="transparent">
@@ -35,8 +35,10 @@
 </object>
 </audio>
 <script>
-if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecteurAudioCDL').play) {
-	document.getElementById('lecteurAudioCDL').src = "";
+var lecteurAudioCDL = document.getElementById('lecteurAudioCDL');
+if (lecteurAudioCDL && lecteurAudioCDL.play) {
+	lecteurAudioCDL.style.display = 'none';
+	lecteurAudioCDL.src = "";
 	document.getElementById('containerLecteurAudioCDL').innerHTML = '<ul class="cdlAudioControls"><li><a href="#" class="cdlAudioPrevBloc cdlDisabled" title="###_DICO_BLOC_PRECEDENT###"><span>###_DICO_BLOC_PRECEDENT###</span></a><li><a href="#" class="cdlAudioPrevLine cdlDisabled" title="###_DICO_PHRASE_PRECEDENTE###"><span>###_DICO_PHRASE_PRECEDENTE###</span></a><li><a href="#" class="cdlAudioPlayPause cdlAudioPlay" title="###_DICO_LECTURE_PAUSE###"><span>###_DICO_LECTURE_PAUSE###</span></a><li><a href="#" class="cdlAudioStop cdlDisabled" title="###_DICO_STOPPER_LA_LECTURE###"><span>###_DICO_STOP###</span></a><li><a href="#" class="cdlAudioNextLine" title="###_DICO_PHRASE_SUIVANTE###"><span>###_DICO_PHRASE_SUIVANTE###</span></a><li><a href="#" class="cdlAudioNextBloc" title="###_DICO_BLOC_SUIVANT###"><span>###_DICO_BLOC_SUIVANT###</span></a></ul>';
 }
 </script>

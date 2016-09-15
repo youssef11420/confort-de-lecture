@@ -295,6 +295,19 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'COLOR_LIST', $colorChoices);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'PARAM_TO_SET', $paramToSet);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'COLOR_CHOSEN', $color);
+} elsif ($action =~ m/^tailles-texte$/si) {
+	$personalizationTemplateString = loadConfig($cdlTemplatesPath."more_sizes.html");
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
+
+	my $size = loadFromSession($session, 'fontSize');
+
+	my $sizeChoices = "";
+	foreach my $sizeItem (sort keys(%fontSizes)) {
+		$sizeChoices .= "<li id=\"cdlSizeConfig".$sizeItem."\"".($sizeItem eq $size ? " class=\"choiceSelected\"" : "")."><a href=\"".$embeddedMode."/personnalisation?moretextsizes=1&amp;cdlfs=".$sizeItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlSizeConfig".$sizeItem."\"><span class=\"cdlTransPix\" style=\"font-size:".$fontSizes{$sizeItem}."%\"></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_TAILLE### <span>".$sizeItem."</span>, ###_DICO_TEXTE_SOIT###".$fontSizes{$sizeItem}."% (".($fontSizes{$sizeItem} * 16 / 100)." pixels)</span></a>";
+	}
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SIZE_LIST', $sizeChoices);
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SIZE_CHOSEN', $size);
 } else {
 	$language = loadFromSession($session, 'language');
 	$language = $language ? $language : "fr";
@@ -395,6 +408,10 @@ if ($action =~ m/^affichage$/si) {
 		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-palette-couleurs-b".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
 	}
+	if (param('moretextsizes')) {
+		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-tailles-texte".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
+		exit;
+	}
 	if (param('morefontcolors')) {
 		print $cgi->header(-status=>"302 Moved", -location=>$embeddedMode."/personnalisation-palette-couleurs-f".$secure."/".$language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".$urlToParse, -cookie=>$cookie);
 		exit;
@@ -416,6 +433,19 @@ if ($action =~ m/^affichage$/si) {
 		exit;
 	}
 }
+
+my $iconContent;
+open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
+$iconContent = do { local $/; <ICON_FILE> };
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'DISPLAY_ICON', $iconContent);
+
+open ICON_FILE, "< ".$cdlRootPath."/design/images/audio.svg";
+$iconContent = do { local $/; <ICON_FILE> };
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_ICON', $iconContent);
+
+open ICON_FILE, "< ".$cdlRootPath."/design/images/audio_help.svg";
+$iconContent = do { local $/; <ICON_FILE> };
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_HELP_ICON', $iconContent);
 
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR', $backgroundColor);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR', $fontColor);
