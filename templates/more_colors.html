@@ -85,16 +85,28 @@ if (document.getElementById('lecteurAudioCDL') && document.getElementById('lecte
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script>
 jQuery.noConflict();
-var bodyContrasted = jQuery('body').hasClass('cdlContrasted');
-cdlBackgroundColor = '#' + (bodyContrasted ? 'FFFFFF' : '000000');
-cdlFontColor = '#' + (bodyContrasted ? '000000' : 'FFFFFF');
-cdlLinkColor = cdlFontColor;
+cdlBackgroundColor = '####B_COLOR###';
+cdlFontColor = '####F_COLOR###';
+cdlLinkColor = '####L_COLOR###';
 cdlEmbeddedURL = 'http://###AUDIO_SERVER_NAME###';
 cdlSiteId = '###SITE_ID###';
+cdlParamToSet = '###PARAM_TO_SET###';
 jQuery('.cdlColors li a').bind('click',function () {
 	jQuery('.cdlColors .choiceSelected').removeClass('choiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');
-	jQuery('input[name="cdl###PARAM_TO_SET###c"]').attr('value', jQuery('.cdlSpanHidden span', jQuery(this)).html());
+    var color = jQuery('.cdlSpanHidden span', jQuery(this)).html();
+	jQuery('input[name="cdl###PARAM_TO_SET###c"]').attr('value', color);
+    switch (cdlParamToSet) {
+    case "f":
+        jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_' + color + '_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+        break;
+    case "l":
+        jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_' + color + '_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+        break;
+    case "b":
+        jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + color + '_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+        break;
+    }
 	return false;
 }).bind('dblclick',function () {
 	jQuery('.cdlColors .choiceSelected').removeClass('choiceSelected');

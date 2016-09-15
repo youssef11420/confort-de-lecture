@@ -76,18 +76,12 @@
 .cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
 .cdlContrasted .cdlInversedColor{background-color:#000000 !important;color:#FFFFFF !important}
 .cdlContrasted .cdlInversedColor *{background-color:#000000 !important;color:#FFFFFF !important;border-color:#FFFFFF !important}
-.cdlColors{padding:0;margin:0;overflow:hidden}
-.cdlColors li{list-style:none;display:block;float:left;text-align:center;box-sizing: border-box;width:6.25% !important;padding:0.1%;min-width:25px}
-.cdlColors li a{display:block;overflow:hidden;color:#000000;padding:5%}
-.cdlContrasted .cdlColors li a{color:#FFFFFF}
-.cdlColors li a:hover,.cdlColors li a:focus{border:2px solid #FFFFFF;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
-.cdlContrasted .cdlColors li a:hover,.cdlContrasted .cdlColors li a:focus{border-color:#000000}
-.cdlColors li a img{display:block;float:left;width:100% !important;min-width:0 !important}
-.cdlColors li a .cdlTransPix{display:block}
+.cdlColors{padding:15px;margin:0;overflow:hidden;background-color:#333333}
+.cdlColors li{list-style:none;display:block;float:left;text-align:center;box-sizing:border-box;width:100px !important;padding:2px;background-color:transparent}
+.cdlColors li a{display:block;overflow:hidden;color:#000000;padding:3px;background-color:transparent;border:2px solid transparent}
+.cdlColors li a .cdlTransPix{display:block;height:90px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 .cdlColors li a .cdlSpanHidden{position:absolute;top:-3000px;left:-3000px}
-.cdlColors .choiceSelected a{border:2px solid #FFFFFF;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
-.cdlContrasted .cdlColors .choiceSelected a{border-color:#000000}
-.cdlColors .choiceSelected a .cdlTransPix,.cdlColors li a:hover .cdlTransPix,.cdlColors li a:focus .cdlTransPix{border:none !important}
+.cdlColors .choiceSelected a,.cdlColors li a:hover,.cdlColors li a:focus{border-color:#FFFFFF;border-radius:9px;-moz-border-radius:9px;-WebKit-border-radius:9px;-khtml-border-radius:9px}
 .cdlColorsForm{padding-bottom:10px}
 .cdlUtilLinksContainer{margin-top:-5px}
 .cdlUtilLinks input,.cdlUtilLinks span{display:block;overflow:hidden}
