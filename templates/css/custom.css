@@ -49,3 +49,4 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 .cdlAudioNextLine{border-right-width:###INPUT_BORDER###px}
 .cdlFormExitFromCdl input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
 .cdlSizes li a,.cdlSizes li a *{color:####FONT_COLOR###}
+.cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-color:####FONT_COLOR###}
