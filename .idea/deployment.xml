@@ -61,6 +61,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="lsdo">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="ots">
         <serverdata>
           <mappings>

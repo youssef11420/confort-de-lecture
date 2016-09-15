@@ -107,11 +107,11 @@ jQuery('.cdlColors li a').bind('click',function () {
         jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + color + '_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
         break;
     }
+    jQuery('.cdlUtilLinks svg').attr('fill', "#" + (cdlParamToSet === "f" ? color : cdlFontColor));
 	return false;
 }).bind('dblclick',function () {
 	jQuery('.cdlColors .choiceSelected').removeClass('choiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');
-	jQuery('input[name="cdl###PARAM_TO_SET###c"]').attr('value', jQuery('.cdlSpanHidden span', jQuery(this)).html());
 	jQuery('.cdlValidate input').click();
 	return false;
 });
