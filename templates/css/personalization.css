@@ -18,7 +18,7 @@
 .cdlButtons input{border-width:2px;font-size:40px;line-height:40px}
 .cdlConfigChoice .cdlButtons input{display:block;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
 .cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 50px;position:absolute;top:5px;width:calc(100% - 40px);min-height:46px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
-.cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;line-height:40px;padding:3px 10px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;line-height:40px;padding:5px 8px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;color:#FFFFFF;background-color:#333333;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 #cdlBackgroundConfigBlack a{background-color:#000000}
 #cdlBackgroundConfigWhite a{background-color:#FFFFFF}
 #cdlBackgroundConfigGreen a{background-color:#009900}
