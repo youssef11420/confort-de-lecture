@@ -80,7 +80,7 @@
 #cdlSizeConfig2 a,#cdlSizeConfig2 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_2.cur), pointer}
 #cdlSizeConfig3 a,#cdlSizeConfig3 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_3.cur), pointer}
 #cdlSizeConfig4 a,#cdlSizeConfig4 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_4.cur), pointer}
-.cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-color:#FFFFFF;border-radius:9px;-moz-border-radius:9px;-WebKit-border-radius:9px;-khtml-border-radius:9px}
+.cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-radius:9px;-moz-border-radius:9px;-WebKit-border-radius:9px;-khtml-border-radius:9px}
 .cdlUtilLinksContainer{margin-top:-5px}
 .cdlUtilLinks input,.cdlUtilLinks span{display:block;overflow:hidden}
 .audioHelpIntro ul{padding-top:20px;padding-bottom:5px}
