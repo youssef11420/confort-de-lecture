@@ -462,7 +462,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	$pageUriForHtml =~ s/&amp;/&/sgi;
 	$pageUriForHtml =~ s/&/&amp;/sgi;
 
-	$pageContent = setValueInTemplateString($pageContent, 'ORIGINAL_URL', "http".$secure."://".($embeddedMode ne "" ? $ENV{'SERVER_NAME'} : "").$pageUri);
+	$pageContent = setValueInTemplateString($pageContent, 'ORIGINAL_URL', "http".$secure."://".($embeddedMode ne "" ? $ENV{'SERVER_NAME'} : "").($pageUri !~ m/^\//si ? "/" : "").$pageUri);
 
 	$pageContent = setValueInTemplateString($pageContent, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
 
