@@ -438,7 +438,7 @@ sub redirectToDocumentPage #($cgi, $session, $siteId, $siteDefaultLanguage, $req
 
 	# On redirige vers la page proposition de téléchargement du document
 	$contentType =~ s/(\+)/_/segi;
-	my $redirectUrl = $embeddedMode."/document".($secure eq "s" ? "-https" : "")."/".$siteId."/".$contentType."/".lc($requestMethod)."/".$siteDefaultLanguage."/cdl-url/".$urlToParse;
+	my $redirectUrl = $embeddedMode."/document".($secure eq "s" ? "-https" : "").($contentType =~ m/^image\-(jpeg|png|gif)/si ? "/ouvrir" : "")."/".$siteId."/".$contentType."/".lc($requestMethod)."/".$siteDefaultLanguage."/cdl-url/".$urlToParse;
 
 	# Ajout des paramètres éventuels
 	if ($requestMethod =~ m/post/si) {
