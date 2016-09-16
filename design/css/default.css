@@ -3,16 +3,16 @@ abbr,acronym{border-bottom:1px dotted;display:inline-block}
 abbr abbr,abbr acronym,acronym abbr,acronym acronym{border-bottom:0}
 a{text-decoration:underline;cursor:pointer;display:inline-block;max-width:100%}
 a *{text-decoration:underline;cursor:pointer}
-fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
 img{display:block;padding-bottom:2px;max-width:100%}
 fieldset,button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{border-width:.1em}
 .cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:pointer}
 button{cursor:pointer;background:none}
-button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 input{vertical-align:middle;margin:0 3px}
 input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-ms-clear{display:none}
-input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"],textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
+input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"],textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px}
 select{border-width:.1em;margin-bottom:5px}
 input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"]{border-width:.1em;margin:2px 0 3px;width:50% !important;vertical-align:middle}
 textarea{overflow:auto;width:98.95% !important;margin:3px 0;border-width:.1em}
@@ -44,7 +44,7 @@ p{padding-bottom:.3em}
 .cdlAudioObjectContent object{float:left;margin-top:-5px;background-color:transparent !important}
 .cdlDownloadAudioLink{display:block;white-space:nowrap;margin-right:7px}
 .cdlCadreContainer{padding-bottom:7px}
-.cdlCadre{border-width:3px;padding:5px;margin-right:29px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlCadre{border-width:3px;padding:5px;margin-right:29px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 .cdlCadre hr{color:inherit;border:0;margin:5px 0;display:block;height:2px !important;overflow:hidden}
 .cdlHidden{display:none}
 .cdlFoot{margin:-2px 0 5px;padding:0 5px;overflow:hidden}
@@ -62,12 +62,12 @@ p{padding-bottom:.3em}
 .cdlTableCaption{padding-bottom:1em}
 .cdlTableCell{margin-bottom:1em}
 .cdlInvisibleLink{position:absolute;bottom:0;left:0;width:20px !important;height:20px;display:block;background:transparent}
-.cdlUtilLinks{float:left;margin:6px 0 6px 7px;padding:0 7px;background-color:black;overflow:hidden;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlUtilLinks{float:left;margin:6px 0 6px 7px;padding:0 7px;background-color:black;overflow:hidden;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 .cdlUtilLinks *{background-color:black}
 .cdlUtilLinks img{padding-bottom:0}
 .cdlUtilLinks a,.cdlUtilLinks input,.cdlUtilLinks div{display:block;float:left;margin-right:5px;position:relative}
 .cdlUtilLinks input{cursor:pointer}
-.cdlUtilLinksContainer{position:fixed;overflow:hidden;width:calc(100% - 47px) !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 47px 0 0;border-width:0 2px 2px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlUtilLinksContainer{position:fixed;overflow:hidden;width:calc(100% - 47px) !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 47px 0 0;border-width:0 2px 2px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 .cdlUtilLinksContainer *{position:relative;z-index:86000}
 .cdlAllPage{padding:0 7px 1px}
 .protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
@@ -90,13 +90,13 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 :root .cdlInput_checkbox{line-height:1 !important;font-size:200%;text-align:center}
 :root .cdlInput_checkbox:after{width:100% !important;height:100%;margin:0}
 :root input[type="checkbox"]:checked + .cdlInput_checkbox:after{content:"✔"}
-.cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box;border-width:.1em;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
-.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.3em .1em .3em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}
+.cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box;border-width:.1em;border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.3em .1em .3em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:0}
 .cdlAudioControls li{list-style:none;float:left;padding-right:16px;position:relative}
-.cdlAudioControls li:after{content:"";display:block;width:6px;height:6px;position:absolute;right:5px;top:50%;margin-top:-3px;z-index:11420;border-radius:100px;-moz-border-radius:100px;-WebKit-border-radius:100px;-khtml-border-radius:100px}
+.cdlAudioControls li:after{content:"";display:block;width:6px;height:6px;position:absolute;right:5px;top:50%;margin-top:-3px;z-index:11420;border-radius:100px;-moz-border-radius:100px;-WebKit-border-radius:100px}
 .cdlAudioControls li:last-child{padding-right:0}
 .cdlAudioControls li a{display:block;position:relative}
 .cdlAudioControls li a.cdlDisabled{opacity:.5}

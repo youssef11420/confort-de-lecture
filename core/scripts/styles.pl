@@ -97,6 +97,13 @@ $backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 $fontColor = $fontColor ? $fontColor : 'FFFFFF';
 $linkColor = $linkColor ? $linkColor : $linkColor;
 
+$styleString = setValueInTemplateString($styleString, 'F_COLOR', $fontColor);
+$styleString = setValueInTemplateString($styleString, 'L_COLOR', $linkColor);
+$styleString = setValueInTemplateString($styleString, 'B_COLOR', $backgroundColor);
+$styleString = setValueInTemplateString($styleString, 'L_SPACING', $letterSpacing);
+$styleString = setValueInTemplateString($styleString, 'W_SPACING', $wordSpacing);
+$styleString = setValueInTemplateString($styleString, 'L_HEIGHT', $lineHeight);
+
 $fontSize = $fontSizes{$fontSize};
 
 $letterSpacing = $letterSpacings{$letterSpacing};
