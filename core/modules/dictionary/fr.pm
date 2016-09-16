@@ -189,6 +189,7 @@ $dictionary{'AIDE_AUDIO_SUITE'} = "Les paramètres audio vous donnent accès au 
 	"k", "k",
 	"livre_sterling", "livre_sterling",
 	"l", "l",
+	"majuscule", "majuscule",
 	"moins", "moins",
 	"multiplie_par", "multiplié_par",
 	"mu", "mu",

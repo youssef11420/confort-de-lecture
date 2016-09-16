@@ -519,6 +519,8 @@ function detectKeyDownForFocusable(e) {
     var kc;
     var char;
     var lecteurChar;
+    var majuscule;
+    var lecteurCharMaj;
 
     if (!isStopped) {
         e = e || window.event;
@@ -577,6 +579,7 @@ function detectKeyDownForFocusable(e) {
                         char = "euro";
                     } else if (!e.altKey && !e.ctrlKey) {
                         char = String.fromCharCode(kc);
+                        majuscule = e.shiftKey;
                     }
                 }
                 if (kc >= 96 && kc <= 105 && !e.altKey && !e.ctrlKey && !e.shiftKey) {
@@ -743,6 +746,9 @@ function detectKeyDownForFocusable(e) {
                     case 111:
                         char = "divise_par";
                         break;
+                    case 110:
+                        char = "point";
+                        break;
                     }
                 }
                 if (char) {
@@ -750,6 +756,18 @@ function detectKeyDownForFocusable(e) {
                     if (lecteurChar) {
                         lecteurChar.pause();
                         lecteurChar.currentTime = 0;
+                        lecteurCharMaj = document.getElementById("lecteurAudioCDL_majuscule");
+                        if (lecteurCharMaj) {
+                            lecteurCharMaj.pause();
+                            lecteurCharMaj.currentTime = 0;
+                        }
+                        if (majuscule) {
+                            jQuery(lecteurChar).bind("ended", function () {
+                                lecteurCharMaj.play();
+                            });
+                        } else {
+                            jQuery(lecteurChar).unbind("ended");
+                        }
                         lecteurChar.play();
                     }
                 }
