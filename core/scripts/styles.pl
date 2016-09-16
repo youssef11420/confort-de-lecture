@@ -96,6 +96,9 @@ $styleString = setValueInTemplateString($styleString, 'FONT_SIZE_BROWSER_DEPENDS
 $backgroundColor = $backgroundColor ? $backgroundColor : '000000';
 $fontColor = $fontColor ? $fontColor : 'FFFFFF';
 $linkColor = $linkColor ? $linkColor : $linkColor;
+$letterSpacing = $letterSpacing ? $letterSpacing : 1;
+$wordSpacing = $wordSpacing ? $wordSpacing : 1;
+$lineHeight = $lineHeight ? $lineHeight : 1;
 
 $styleString = setValueInTemplateString($styleString, 'F_COLOR', $fontColor);
 $styleString = setValueInTemplateString($styleString, 'L_COLOR', $linkColor);
