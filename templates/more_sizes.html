@@ -80,9 +80,9 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script>
 jQuery.noConflict();
-cdlBackgroundColor = '###B_COLOR###';
-cdlFontColor = '###F_COLOR###';
-cdlLinkColor = '###L_COLOR###';
+cdlBackgroundColor = '####B_COLOR###';
+cdlFontColor = '####F_COLOR###';
+cdlLinkColor = '####L_COLOR###';
 cdlEmbeddedURL = 'http://###AUDIO_SERVER_NAME###';
 cdlSiteId = '###SITE_ID###';
 cdlAllPageContainer = jQuery('.cdlAllPageContainer');
@@ -113,8 +113,8 @@ jQuery('.cdlSizes li a').bind('click',function () {
 		htmlElt.niceScroll({
 			cursorwidth: 25,
 			background: "transparent",
-			cursorborder: "2px solid #" + cdlBackgroundColor,
-			cursorcolor: "#" + cdlFontColor,
+			cursorborder: "2px solid " + cdlBackgroundColor,
+			cursorcolor: cdlFontColor,
 			autohidemode: false,
 			zindex: 114200
 		});

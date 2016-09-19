@@ -101,15 +101,17 @@ jQuery('.cdlColors li a').bind('click',function () {
 	}
 	jQuery('.cdlUtilLinks svg').attr('fill', "#" + (cdlParamToSet === "f" ? color : cdlFontColor));
 
-	htmlElt.niceScroll().remove();
-	htmlElt.niceScroll({
-		cursorwidth: 25,
-		background: "transparent",
-		cursorborder: "2px solid #" + backgroundColor,
-		cursorcolor: "#" + fontColor,
-		autohidemode: false,
-		zindex: 114200
-	});
+    window.setTimeout(function () {
+        htmlElt.niceScroll().remove();
+        htmlElt.niceScroll({
+            cursorwidth: 25,
+            background: "transparent",
+            cursorborder: "2px solid " + cdlBackgroundColor,
+            cursorcolor: cdlFontColor,
+            autohidemode: false,
+            zindex: 114200
+        });
+    }, 300);
 
 	return false;
 }).bind('dblclick',function () {
