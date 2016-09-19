@@ -54,7 +54,7 @@ function stopLecture() {
     jQuery(".cdlInversedColor input[type=\"text\"], .cdlInversedColor input[type=\"color\"], .cdlInversedColor input[type=\"date\"], .cdlInversedColor input[type=\"datetime\"], .cdlInversedColor input[type=\"datetime-local\"], .cdlInversedColor input[type=\"email\"], .cdlInversedColor input[type=\"month\"], .cdlInversedColor input[type=\"number\"], .cdlInversedColor input[type=\"range\"], .cdlInversedColor input[type=\"search\"], .cdlInversedColor input[type=\"tel\"], .cdlInversedColor input[type=\"time\"], .cdlInversedColor input[type=\"url\"], .cdlInversedColor input[type=\"week\"], .cdlInversedColor input[type=\"password\"], .cdlInversedColor textarea, .cdlInversedColor select").blur();
     jQuery(".cdlInversedColor").removeClass("cdlInversedColor");
 
-    jQuery("div.cdlAllPageContainer").animate({scrollTop: 0}, 500);
+    jQuery(body).animate({scrollTop: 0}, 500);
 
     // Réinitialise l'indice
     currentIndice = 0;
@@ -277,7 +277,7 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
             stopLecture();
 
             // Scroll vers le haut de la page
-            jQuery("div.cdlAllPageContainer").animate({scrollTop: 0}, 500);
+            jQuery("body").animate({scrollTop: 0}, 500);
         } else {
             if (isNaN(index)) {
                 content = index;
@@ -848,7 +848,7 @@ function highlighterMain(index) {
                 }
             });
 
-            jQuery("div.cdlAllPageContainer").animate({scrollTop: myScrollTop - 300 - jQuery("div.cdlUtilLinksContainer").get(0).offsetHeight - 7}, duree);
+            jQuery("body").animate({scrollTop: myScrollTop - 300 - jQuery("div.cdlUtilLinksContainer").get(0).offsetHeight - 7}, duree);
 
             pageParts[index].addClass("cdlInversedColor");
             pageParts[index].focus();
@@ -869,7 +869,7 @@ function highlighterMain(index) {
         }
 
         if (index === pageParts.length) {
-            jQuery("div.cdlAllPageContainer").animate({scrollTop: 0}, 500);
+            jQuery("body").animate({scrollTop: 0}, 500);
         }
     }
 }

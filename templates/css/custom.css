@@ -42,11 +42,16 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 .cdlAudioControls li a{width:###INPUT_SIZE###px;height:###INPUT_SIZE###px}
 .cdlAudioPrevBloc:before,.cdlAudioPrevBloc:after{border-width:###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px 0;border-right-color:####FONT_COLOR###}
 .cdlAudioPrevLine{border-left-width:###INPUT_BORDER###px}
-.cdlAudioPrevLine:after{border-width:###INPUT_HALF_SIZE###px ###INPUT_SIZE###px ###INPUT_HALF_SIZE###px 0;border-right-color:####FONT_COLOR###}
+.cdlAudioPrevLine:after{border-width:###INPUT_HALF_SIZE###px ###INPUT_SIZE_WITHOUT_BORDER###px ###INPUT_HALF_SIZE###px 0;border-right-color:####FONT_COLOR###}
 .cdlAudioPlay:after,.cdlAudioNextLine:after{border-width:###INPUT_HALF_SIZE###px 0 ###INPUT_HALF_SIZE###px ###INPUT_SIZE###px;border-left-color:####FONT_COLOR###}
+.cdlAudioNextLine:after{border-left-width:###INPUT_SIZE_WITHOUT_BORDER###px}
 .cdlAudioStop,.cdlAudioPause:before,.cdlAudioPause:after{background-color:####FONT_COLOR###}
 .cdlAudioNextBloc:before,.cdlAudioNextBloc:after{border-width:###INPUT_HALF_SIZE###px 0 ###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px;border-left-color:####FONT_COLOR###}
 .cdlAudioNextLine{border-right-width:###INPUT_BORDER###px}
 .cdlFormExitFromCdl input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
 .cdlSizes li a,.cdlSizes li a *{color:####FONT_COLOR###}
 .cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-color:####FONT_COLOR###}
+@media all and (max-width: ###MEDIA_QUERY_SIZE###px) {
+.cdlUtilLinksContainer{position:relative}
+.cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding-top:0 !important}
+}

@@ -65,6 +65,12 @@ my $cgi = CGI->new();
 # Création de la session et récupération de l'objet de gestion de la session
 my $session = createOrGetSession($cgi);
 
+# Chargement de la configuration par défaut
+my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
+
+# Chargement de la configuration du site
+my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+
 # Chargement de la template de style CDL
 my $styleToLoad = param('cdln');
 if ($styleToLoad eq "") {
@@ -75,6 +81,9 @@ my $styleString = loadConfig($cdlTemplatesPath."css/".$styleToLoad.".css");
 $styleString = setValueInTemplateString($styleString, 'EMBEDDED_URL', $embeddedMode);
 $styleString = setValueInTemplateString($styleString, 'SITE_ID', $siteId);
 
+my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
+$enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
+
 my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight);
 
 if ($styleToLoad eq "all") {
@@ -83,12 +92,13 @@ if ($styleToLoad eq "all") {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
 }
 
-my $pagePaddingTop = $fontSize eq "" ? "94" : "".66+0.7*(($fontSize - 1)*20);
-my $pageMarginTop = $fontSize eq "" ? "86" : "".58+0.7*(($fontSize - 1)*20);
-my $inputSize = $fontSize eq "" ? "58" : "".40+0.7*(($fontSize - 1)*20);
-my $inputBorder = $fontSize eq "" ? "9" : "".5+0.1*(($fontSize - 1)*20);
+$fontSize = $fontSize ? $fontSize : '4';
 
-$fontSize = $fontSize ? $fontSize : '3';
+my $pagePaddingTop = "".66+0.7*(($fontSize - 1)*20);
+my $pageMarginTop = "".58+0.7*(($fontSize - 1)*20);
+my $inputSize = "".40+0.7*(($fontSize - 1)*20);
+my $inputBorder = "".5+0.1*(($fontSize - 1)*20);
+
 $styleString = setValueInTemplateString($styleString, 'F_SIZE_INDEX', $fontSize);
 $styleString = setValueInTemplateString($styleString, 'CURSOR_SIZE', isBigCursorNotAllowed() ? 1 : ($fontSize > 5 ? 5 : $fontSize));
 $styleString = setValueInTemplateString($styleString, 'FONT_SIZE_BROWSER_DEPENDS', isBigCursorNotAllowed() ? 1 : 3);
@@ -127,11 +137,30 @@ $styleString = setValueInTemplateString($styleString, 'LINE_HEIGHT', $lineHeight
 $styleString = setValueInTemplateString($styleString, 'PAGE_PADDING_TOP', $pagePaddingTop);
 $styleString = setValueInTemplateString($styleString, 'PAGE_MARGIN_TOP', $pageMarginTop);
 $styleString = setValueInTemplateString($styleString, 'INPUT_SIZE', $inputSize);
+$styleString = setValueInTemplateString($styleString, 'INPUT_SIZE_WITHOUT_BORDER', $inputSize - $inputBorder);
 $styleString = setValueInTemplateString($styleString, 'INPUT_HALF_SIZE', $inputSize / 2);
 $styleString = setValueInTemplateString($styleString, 'INPUT_BORDER', $inputBorder);
 $styleString = setValueInTemplateString($styleString, 'SELECT_ARROW_SIZE', $selectArrowSize);
 $styleString = setValueInTemplateString($styleString, 'SELECT_DOUBLE_ARROW_SIZE', $selectArrowSize * 4);
 $styleString = setValueInTemplateString($styleString, 'SELECT_HALF_ARROW_SIZE', $selectArrowSize / 2);
+
+my $mediaQuerySize = 1;
+my $mediaQuerySizePersonalization = 1;
+if ($enableAudio eq "1") {
+	$mediaQuerySize = ($inputSize + 2 + 5) * 3 + 21;
+	$mediaQuerySizePersonalization = $mediaQuerySize;
+
+	# Récupération de la session de la variable indiquant si l'audio est activé
+	my $activateAudio = loadFromSession($session, 'activateAudio');
+	if ($activateAudio eq "1") {
+		$mediaQuerySize += ($inputSize + 16) * 6 - 16 + 9 + 6;
+	}
+	$mediaQuerySizePersonalization += ($inputSize + 16) * 6 - 16 + 9 + 6 + 47 - 1;
+	$mediaQuerySize += 47 - 1;
+}
+
+$styleString = setValueInTemplateString($styleString, 'MEDIA_QUERY_SIZE', $mediaQuerySize);
+$styleString = setValueInTemplateString($styleString, 'MEDIA_QUERY_SIZE_PERSONALIZATION', $mediaQuerySizePersonalization);
 
 print $session->header('Content-type' => "text/css; charset=UTF-8");
 print $styleString;

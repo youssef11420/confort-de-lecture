@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <link href="###EMBEDDED_URL###/styles/default.css" rel="stylesheet">
 <link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink">
-<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_###F_SIZE_INDEX###.css" rel="stylesheet" id="cdlPersonalizationCssLink">
 <link href="###EMBEDDED_URL###/styles/print.css" rel="stylesheet" media="print">
 <!--[if IE]>
 <link href="###EMBEDDED_URL###/styles/ie.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
-<div class="cdlAudioObjectContent" style="height:###ICON_SIZE###px">
+<div class="cdlAudioObjectContent">
 <div id="containerLecteurAudioCDL"></div>
 <audio controls id="lecteurAudioCDL">
 <object type="application/x-shockwave-flash" data="###EMBEDDED_URL###/design/player/cdl_player_3.swf" width="386" height="78" id="lecteurCDL" style="width:386px !important">
@@ -168,10 +168,17 @@ jQuery('.cdlConfigChoice li a').bind('click',function () {
 
 	iconSize = 40+0.7*((fontSize - 1)*20);
 	jQuery('.cdlUtilLinks svg').width(iconSize).height(iconSize).attr('fill', "#" + fontColor);
-	jQuery('.cdlAudioObjectContent').height(iconSize);
 
-	jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
-
+    jQuery('#cdlCustomCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink2"/>');
+    window.setTimeout(function () {
+        jQuery('#cdlCustomCssLink').remove();
+        jQuery('#cdlCustomCssLink2').attr('id', 'cdlCustomCssLink');
+    }, 300);
+    jQuery('#cdlPersonalizationCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + fontSize + '.css" rel="stylesheet" id="cdlPersonalizationCssLink2"/>');
+    window.setTimeout(function () {
+        jQuery('#cdlPersonalizationCssLink').remove();
+        jQuery('#cdlPersonalizationCssLink2').attr('id', 'cdlPersonalizationCssLink');
+    }, 300);
 
 	window.setTimeout(function () {
 		htmlElt.niceScroll().remove();
@@ -184,6 +191,9 @@ jQuery('.cdlConfigChoice li a').bind('click',function () {
 			zindex: 114200
 		});
 	}, 300);
+    var scrollTop = ds_gettop(jQuery(this).get(0));
+
+
 
 	return false;
 });
