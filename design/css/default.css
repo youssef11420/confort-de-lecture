@@ -13,7 +13,7 @@ button,button *{word-wrap:break-word;max-width:100%}
 button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 input{vertical-align:middle;margin:0 3px}
 input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-ms-clear{display:none}
-.cdlInputText{display:inline-block;max-width:100%}
+.cdlInputText{display:inline-block;max-width:100%;min-width:40%;box-sizing:border-box}
 input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"],textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px}
 select{border-width:.1em;margin-bottom:5px}
 input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"]{border-width:.1em;margin:2px 0 3px;vertical-align:middle;max-width:calc(100% - .2em)}
