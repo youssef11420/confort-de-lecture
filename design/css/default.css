@@ -20,7 +20,7 @@ input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],in
 textarea{overflow:auto;width:98.95% !important;margin:3px 0;border-width:.1em}
 option{padding-bottom:1px}
 optgroup option{padding-left:1em}
-label{vertical-align:middle;padding:calc(4px + .1em) 0 calc(3px + .1em);background-color:transparent !important}
+label{vertical-align:middle;padding:calc(3px + .1em) 0;display:inline-block}
 ol,ul{padding:5px 0 5px 1.2em}
 ol{counter-reset:item;padding-left:0}
 ol>li{display:block}
