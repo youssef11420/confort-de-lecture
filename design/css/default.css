@@ -7,7 +7,7 @@ fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebK
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}
 img{display:block;padding-bottom:2px;max-width:100%}
 fieldset,button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{border-width:.1em}
-.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:pointer}
+.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:pointer;white-space:normal}
 button{cursor:pointer;background:none}
 button,button *{word-wrap:break-word;max-width:100%}
 button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
