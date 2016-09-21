@@ -8,10 +8,10 @@
 .cdlConfigChoices{overflow:hidden;margin-bottom:20px}
 .cdlConfigChoicesGroup{float:left;width:50%;min-width:280px}
 .cdlConfigChoice{float:left;width:50%;min-width:280px;padding:20px 15px 0;box-sizing:border-box;text-align:center}
-.cdlConfigChoice ul{padding:0 15px 15px 0;overflow:hidden;background-color:#333333;float:left}
+.cdlConfigChoice ul{padding:0 15px 15px 0;overflow:hidden;background-color:#333333;float:left;border-radius:15px;-moz-border-radius:15px;-WebKit-border-radius:15px}
 .cdlConfigChoice ul li{list-style:none;display:block;float:left;margin:15px 0 0 15px;padding:4px;background-color:#333333}
 .cdlConfigChoice ul li:nth-child(2n+1){clear:left}
-.cdlConfigChoice ul li a{position:relative;display:block;float:left;width:86px !important;height:86px;line-height:86px;overflow:hidden;color:#FFFFFF;background-color:transparent;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
+.cdlConfigChoice ul li a{position:relative;display:block;float:left;width:86px !important;height:86px;line-height:86px;overflow:hidden;color:#FFFFFF;background-color:transparent;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px}
 .cdlConfigChoice ul li a:hover,.cdlConfigChoice ul li a:focus{border-color:#FFFFFF !important}
 .cdlConfigChoice ul li a span{position:absolute;top:-3000px;left:-3000px}
 .cdlConfigChoice .cdlButtons{display:block;line-height:40px;clear:both;padding-top:10px;position:relative;float:left}
