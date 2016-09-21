@@ -11,7 +11,7 @@ fieldset,button,.cdlButtons input,input[type="submit"],input[type="reset"],input
 .cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:pointer;white-space:normal}
 button{cursor:pointer;background:none}
 button,button *{word-wrap:break-word;max-width:100%}
-button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
+button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{padding:.1em 5px;display:block;margin:5px 0;font-weight:bold;white-space:normal;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 input{vertical-align:middle;margin:0 3px}
 input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-ms-clear{display:none}
 .cdlInputText{display:inline-block;max-width:100%;min-width:40%;box-sizing:border-box}
