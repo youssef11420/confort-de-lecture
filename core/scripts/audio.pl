@@ -138,7 +138,7 @@ if (-e "../modules/dictionary/".$language.".pm") {
 # Chargement de la configuration par défaut
 my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 
-my ($enableGlossary, $utf8DecodeContent) = ("", "", "", "", "", "", "", "", "", "");
+my ($enableGlossary, $utf8DecodeContent) = ("", "");
 
 if ($siteId ne "") {
 	my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
