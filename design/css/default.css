@@ -2,6 +2,7 @@
 abbr,acronym{border-bottom:1px dotted;display:inline-block}
 abbr abbr,abbr acronym,acronym abbr,acronym acronym{border-bottom:0}
 a{text-decoration:underline;cursor:pointer;display:inline-block;max-width:100%}
+li a{vertical-align:top}
 a *{text-decoration:underline;cursor:pointer}
 fieldset{padding:5px;margin:5px 0;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
 legend{padding:0 5px;margin-left:5px;white-space:normal;font-weight:bold}

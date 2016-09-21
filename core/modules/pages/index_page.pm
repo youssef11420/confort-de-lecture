@@ -99,6 +99,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 		}
 		$pageContent = $pageContent."\n<div class=\"cdlPageCached\"></div>";
 		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
+		exit;
 	}
 
 	if (($siteDomainNames and $urlToParse =~ m/^https?:\/\/($siteDomainNames)/si) or ($embeddedMode ne "" and $ENV{'SERVER_NAME'} =~ m/($siteDomainNames)/si)) {
