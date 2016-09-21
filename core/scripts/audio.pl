@@ -128,7 +128,7 @@ if ($siteId ne "") {
 }
 
 # Gestion des langues
-my $language = loadFromSession($session, "language");
+my $language = loadFromSession($session, 'language');
 if (-e "../modules/dictionary/".$language.".pm") {
 	require("../modules/dictionary/".$language.".pm");
 } else {
@@ -206,7 +206,7 @@ if (param('cdltext') ne "") {
 		}
 		$pageContent =~ s/^<html><head><\/head><body><select( [^>]*)? id=\"cdlGhostSelect\"[^>]*><option([^>]*)>(.*?)<\/option><\/select><\/body><\/html>$/
 			my %optionAttributes = getTagAttributes($2);
-			($deleteOptionTitle ne 1 ? " Option de liste".($optionAttributes{'selected'} eq "selected" ? " sélectionnée" : "")." : " : "").($3 ? (length($optionAttributes{'title'}) > length($3) ? $optionAttributes{'title'} : $3) : "vide")."\n"
+			($deleteOptionTitle ne 1 ? " ".$dictionary{'LABEL_OPTION_DE_LISTE'}.($optionAttributes{'selected'} eq "selected" ? " ".$dictionary{'LABEL_SELECTIONNEE'} : "")." : " : "").($3 ? (length($optionAttributes{'title'}) > length($3) ? $optionAttributes{'title'} : $3) : $dictionary{'LABEL_VIDE'})."\n"
 			/segi;
 	}
 } else {
@@ -320,6 +320,6 @@ $audioTextTemplateString =~ s/([\?!:\.,;])\s*\./$1/sgi;
 #print $audioTextTemplateString;exit;
 print "Content-type:audio/mpeg\n\n";
 
-print vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString);
+print vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language ? $language : 'fr');
 
 exit;

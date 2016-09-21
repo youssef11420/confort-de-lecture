@@ -153,6 +153,45 @@ $dictionary{'PHRASE_REESSAYER'} = "Vous pouvez réessayer en cliquant ici";
 $dictionary{'PHRASE_ACCEDER_PAGE_EXTERNE'} = "Vous allez accéder à une page qui ne prend pas en compte Confort de lecture.";
 $dictionary{'PHRASE_CONFIRMATION_ACCEDER_PAGE_EXTERNE'} = "Voulez vous vraiment accéder à la page suivante ?";
 
+$dictionary{'LABEL_OPTION_DE_LISTE'} = "Option de liste";
+$dictionary{'LABEL_SELECTIONNEE'} = "sélectionnée";
+$dictionary{'LABEL_VIDE'} = "vide";
+$dictionary{'LABEL_LIEN'} = "Lien";
+$dictionary{'LABEL_BOUTON'} = "Bouton";
+$dictionary{'LABEL_REINITIALISATION'} = "réinitialisation";
+$dictionary{'LABEL_VALIDATION'} = "validation";
+$dictionary{'LABEL_CASE_A_COCHER'} = "Case à cocher";
+$dictionary{'LABEL_COCHEE'} = "cochée";
+$dictionary{'LABEL_BOUTON_RADIO'} = "Bouton radio";
+$dictionary{'LABEL_COCHE'} = "coché";
+$dictionary{'LABEL_CHAMP'} = "Champ";
+$dictionary{'LABEL_CHAMP_EDITION'} = "Champ d'édition";
+$dictionary{'LABEL_FICHIER'} = "fichier";
+$dictionary{'LABEL_CRYPTE'} = "crypté";
+$dictionary{'LABEL_COULEUR'} = "couleur";
+$dictionary{'LABEL_DATE'} = "date";
+$dictionary{'LABEL_DATE_ET_HEURE'} = "date et heure";
+$dictionary{'LABEL_DATE_ET_HEURE_LOCALE'} = "date et heure locale";
+$dictionary{'LABEL_EMAIL'} = "email";
+$dictionary{'LABEL_MOIS'} = "mois";
+$dictionary{'LABEL_NOMBRE'} = "nombre";
+$dictionary{'LABEL_INTERVALLE'} = "intervalle";
+$dictionary{'LABEL_DE_RECHERCHE'} = "de recherche";
+$dictionary{'LABEL_TELEPHONE'} = "téléphone";
+$dictionary{'LABEL_HEURE'} = "heure";
+$dictionary{'LABEL_LIEN'} = "lien";
+$dictionary{'LABEL_SEMAINE'} = "semaine";
+$dictionary{'LABEL_MULTILIGNE'} = "multiligne";
+$dictionary{'PHRASE_SORTIR_DU_CHAMP'} = "Pour sortir de ce champ, utilisez la touche échappe.";
+$dictionary{'LABEL_LISTE_DEROULANTE'} = "Liste déroulante";
+$dictionary{'LABEL_LEGENDE'} = "Légende";
+$dictionary{'LABEL_TERME_DEFINI'} = "Terme défini";
+$dictionary{'LABEL_DEFINITION_TERME'} = "Définition terme";
+$dictionary{'LABEL_ZONE_DE_CODE'} = "Zone de code";
+$dictionary{'LABEL_CITATION'} = "Citation";
+$dictionary{'LABEL_CELLULE'} = "Cellule";
+$dictionary{'LABEL_ENTETE_DE_CELLULE'} = "Entête de cellule";
+
 # Hash: %lettersToSpell
 # La liste des lettres correspondant aux touches du clavier
 %lettersToSpell = (

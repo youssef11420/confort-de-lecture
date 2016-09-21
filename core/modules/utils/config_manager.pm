@@ -266,13 +266,6 @@ sub existConfigDirectory #($directoryName)
 	return 0;
 }
 
-
-
-
-
-
-
-
 # Function: setValueInTemplateString
 #	Remplir dans une chaîne template, du contenu à la place le marqueur en argument
 #
@@ -289,8 +282,8 @@ sub setValueInTemplateString #($templateString, $marker, $replacementString)
 	my ($templateString, $marker, $replacementString) = @_;
 
 	# On remplace dans la chaîne template le marqueur (ainsi que son contenu au cas d'un marqueur commentaire) par le contenu de remplacement.
-	$templateString =~ s/<!--(\#\#\#$marker\#\#\#)-->.*?<!--\/\1-->/$replacementString/segi;
-	$templateString =~ s/\#\#\#$marker\#\#\#/$replacementString/segi;
+	$templateString =~ s/<!--(\#\#\#$marker\#\#\#)-->.*?<!--\/\1-->/$replacementString/seg;
+	$templateString =~ s/\#\#\#$marker\#\#\#/$replacementString/seg;
 
 	# Retourner la valeur ainsi modifiée
 	return $templateString;
@@ -312,7 +305,7 @@ sub getPartOfTemplateString #($templateString, $marker)
 	my $innerMarkerString = "";
 
 	# Si le marqueur est sous forme de commentaire, on ne garde que la chaîne dans le marqueur, et on retourne cette chaîne
-	$templateString =~ s/<!--(\#\#\#$marker\#\#\#)-->(.*?)<!--\/\1-->/$innerMarkerString = $2;/segi;
+	$templateString =~ s/<!--(\#\#\#$marker\#\#\#)-->(.*?)<!--\/\1-->/$innerMarkerString = $2;/seg;
 
 	# Retourner la chaîne vide si le marqueur n'a pas été fermé
 	return $innerMarkerString;
