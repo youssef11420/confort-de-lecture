@@ -6,8 +6,8 @@
 .cdlLittleArrow{margin-bottom:0;padding-bottom:0;line-height:1.2em;font-size:30px}
 .cdlPreview{padding:5px;border-width:.1em;margin:20px 10px 0 15px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlConfigChoices{overflow:hidden;margin-bottom:20px}
-.cdlConfigChoicesGroup{float:left;width:50%;min-width:270px}
-.cdlConfigChoice{float:left;width:50%;min-width:270px;padding:20px 15px 0;box-sizing:border-box;text-align:center}
+.cdlConfigChoicesGroup{float:left;width:50%;min-width:280px}
+.cdlConfigChoice{float:left;width:50%;min-width:280px;padding:20px 15px 0;box-sizing:border-box;text-align:center}
 .cdlConfigChoice ul{padding:0 15px 15px 0;overflow:hidden;background-color:#333333;float:left}
 .cdlConfigChoice ul li{list-style:none;display:block;float:left;margin:15px 0 0 15px;padding:4px;background-color:#333333}
 .cdlConfigChoice ul li:nth-child(2n+1){clear:left}
@@ -17,7 +17,7 @@
 .cdlConfigChoice .cdlButtons{display:block;line-height:40px;clear:both;padding-top:10px;position:relative;float:left}
 .cdlButtons input{border-width:2px;font-size:40px;line-height:40px}
 .cdlConfigChoice .cdlButtons input{display:block;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
-.cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 50px;position:absolute;top:5px;width:calc(100% - 40px);min-height:46px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
+.cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 50px;position:absolute;top:5px;width:calc(100% - 40px);height:calc(100% - 15px);border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 .cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;line-height:40px;padding:5px 8px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;color:#FFFFFF;background-color:#333333;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px;-khtml-border-radius:7px}
 #cdlBackgroundConfigBlack a{background-color:#000000}
 #cdlBackgroundConfigWhite a{background-color:#FFFFFF}
