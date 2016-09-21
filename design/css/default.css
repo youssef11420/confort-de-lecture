@@ -57,7 +57,7 @@ p{padding-bottom:.3em}
 .cdlCopyright{float:right;padding:0 20px 0 10px}
 .cdlLineDiv{overflow:hidden}
 .cdlLabelDiv,.cdlFieldDiv{float:left;width:50% !important}
-.cdlLabelDiv{text-align:right;padding-top:.15em}
+.cdlLabelDiv{text-align:right}
 .cdlBoldLink{font-weight:bold}
 .cdlExitFromCdlLinks{display:block;padding-top:5px}
 .cdlTable{margin:1em 0}
