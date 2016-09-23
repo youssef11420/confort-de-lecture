@@ -16,7 +16,7 @@
 <div class="cdlUtilLinks">
 <div class="cdlChangeDisplayButton"><span>###DISPLAY_ICON###</span></div><!--###AUDIO_ACTIONS###-->
 <div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###">###AUDIO_ICON###<input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="1" alt="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="a"></div>
-<div class="cdlChangeAudioHelpButton">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioHelpButton" title="###_DICO_TITLE_AIDE_AUDIO###">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
@@ -69,7 +69,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <li id="cdlTextSizeConfig3"###F_SIZE_3###><a id="cdlTextSizeConfig3Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=3&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig3Anchor"###F_SIZE2_3###><span>###_DICO_LABEL_MOYENNE###</span></a>
 <li id="cdlTextSizeConfig4"###F_SIZE_4###><a id="cdlTextSizeConfig4Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=4&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig4Anchor"###F_SIZE2_4###><span>###_DICO_LABEL_GRANDE###</span></a>
 <li id="cdlTextSizeConfig5"###F_SIZE_5###><a id="cdlTextSizeConfig5Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=5&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig5Anchor"###F_SIZE2_5###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
-<li id="cdlTextSizeConfig6"###F_SIZE_6###><a id="cdlTextSizeConfig6Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=6&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig6Anchor"###F_SIZE2_6###><span>###_DICO_LABEL_TRES_GRANDE###</span></a>
+<li id="cdlTextSizeConfig6"###F_SIZE_6###><a id="cdlTextSizeConfig6Anchor" href="###EMBEDDED_URL###/personnalisation?cdlchangedisplay=1&amp;cdlfs=6&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlTextSizeConfig6Anchor"###F_SIZE2_6###><span>###_DICO_LABEL_TRES_TRES_GRANDE###</span></a>
 </ul><span class="cdlButtons"><input type="submit" name="moretextsizes" value="###_DICO_BOUTON_PLUS_DE_TAILLES###" title="###_DICO_TITLE_BOUTON_PLUS_DE_TAILLES###"></span></div>
 </div>
 <div class="cdlConfigChoicesGroup">
@@ -166,16 +166,16 @@ jQuery('.cdlConfigChoice li a').bind('click',function () {
 	iconSize = 40+0.7*((fontSize - 1)*20);
 	jQuery('.cdlUtilLinks svg').width(iconSize).height(iconSize).attr('fill', "#" + fontColor);
 
-    jQuery('#cdlCustomCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink2"/>');
-    window.setTimeout(function () {
-        jQuery('#cdlCustomCssLink').remove();
-        jQuery('#cdlCustomCssLink2').attr('id', 'cdlCustomCssLink');
-    }, 300);
-    jQuery('#cdlPersonalizationCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + fontSize + '.css" rel="stylesheet" id="cdlPersonalizationCssLink2"/>');
-    window.setTimeout(function () {
-        jQuery('#cdlPersonalizationCssLink').remove();
-        jQuery('#cdlPersonalizationCssLink2').attr('id', 'cdlPersonalizationCssLink');
-    }, 300);
+	jQuery('#cdlCustomCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink2"/>');
+	window.setTimeout(function () {
+		jQuery('#cdlCustomCssLink').remove();
+		jQuery('#cdlCustomCssLink2').attr('id', 'cdlCustomCssLink');
+	}, 300);
+	jQuery('#cdlPersonalizationCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + fontSize + '.css" rel="stylesheet" id="cdlPersonalizationCssLink2"/>');
+	window.setTimeout(function () {
+		jQuery('#cdlPersonalizationCssLink').remove();
+		jQuery('#cdlPersonalizationCssLink2').attr('id', 'cdlPersonalizationCssLink');
+	}, 300);
 
 	window.setTimeout(function () {
 		htmlElt.niceScroll().remove();

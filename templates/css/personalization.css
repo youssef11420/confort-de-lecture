@@ -17,7 +17,7 @@
 .cdlConfigChoice .cdlButtons{display:block;line-height:40px;clear:both;padding-top:10px;position:relative;float:left}
 .cdlButtons input{border-width:2px;font-size:40px;line-height:40px}
 .cdlConfigChoice .cdlButtons input{display:block;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
-.cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 48px;position:absolute;top:5px;width:calc(100% - 40px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
+.cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 50px;position:absolute;top:5px;width:calc(100% - 40px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
 .cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;line-height:40px;padding:5px 8px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
 #cdlBackgroundConfigBlack a{background-color:#000000}
 #cdlBackgroundConfigWhite a{background-color:#FFFFFF}
@@ -54,12 +54,12 @@
 .cdlDisplayParametersForm{padding:10px 0 10px 0}
 .cdlConfigChoice .cdlFormFieldsHighlighted{display:block;line-height:40px}
 .cdlLabelDiv,.cdlFieldDiv{padding:.15em 0 10px .2em;box-sizing:border-box;float:none;display:inline-block;width:49% !important}
-.cdlLabelDiv{padding-top:.3em}
+.cdlLabelDiv{padding-top:calc(3px + .1em)}
+.cdlLabelDiv label{padding-top:0}
 .cdlFieldDiv .cdlInput_radio,.cdlFieldDiv .cdlInput_checkbox{margin-right:0}
-.cdlFieldDiv .cdlOtherInput{white-space:nowrap}
-.cdlFieldDiv label{margin-right:.5em}
+.cdlFieldDiv .cdlOtherInput{white-space:nowrap;display:inline}
+.cdlFieldDiv label{margin-right:.5em;white-space:normal;max-width:calc(100% - ###INPUT_SIZE###px)}
 .cdlAdvancedForm .cdlLabelDiv,.cdlAdvancedForm .cdlFieldDiv{padding-bottom:20px}
-.cdlAdvancedForm .cdlLabelDiv{padding-top:.5em}
 .cdlInfo{font-size:80%;float:right;font-style:italic}
 .cdlInversedColor{background-color:#FFFFFF !important;color:#000000 !important}
 .cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
@@ -86,15 +86,15 @@
 .cdlUtilLinks input,.cdlUtilLinks span{display:block;overflow:hidden}
 .audioHelpIntro ul{padding-top:20px;padding-bottom:5px}
 .audioHelpIntro li{padding-bottom:20px}
-.cdlCadre>div>div>.cdlFormFieldsHighlighted{display:inline-block;text-align:right;overflow:hidden}
 .cdlAdvancedParameters,.cdlValidate{display:block;line-height:40px;padding-right:20px}
-.cdlCadre>div>div>.cdlFormFieldsHighlighted .cdlButtons{display:block;line-height:40px;clear:both;padding-top:10px;position:relative;float:right}
-.cdlCadre>div>div>.cdlFormFieldsHighlighted input{display:block;white-space:normal;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
-.cdlCadre>div>div>.cdlFormFieldsHighlighted .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 48px;position:absolute;top:5px;width:calc(100% - 60px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
-.cdlCadre>div>div>.cdlFormFieldsHighlighted .cdlButtons:before{content:"✔";vertical-align:middle;line-height:40px;padding:3px 10px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
-.cdlCadre>div>div>.cdlFormFieldsHighlighted .cdlValidate:before{color:#009900}
-.cdlActions{text-align:right}
-@media all and (max-width: ###MEDIA_QUERY_SIZE_PERSONALIZATION###px) {
+.cdlActions .cdlButtons{display:inline-block;line-height:40px;clear:both;padding-top:10px;position:relative}
+.cdlActions input{display:block;white-space:normal;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
+.cdlActions .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 48px;position:absolute;top:5px;width:calc(100% - 60px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
+.cdlActions .cdlButtons:before{content:"✔";text-align:center;width:1.45em;vertical-align:middle;line-height:40px;padding:3px 0;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
+.cdlActions .cdlValidate:before{color:#009900}
+.cdlActions{text-align:right;overflow:hidden;font-size:30px}
+.cdlFormFieldsHighlighted{display:inline-block}
+@media all and (max-width:###MEDIA_QUERY_SIZE_PERSONALIZATION###px) {
 .cdlUtilLinksContainer{position:relative}
 .cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding-top:0 !important;margin-top:-###PAGE_MARGIN_TOP###px}
 }

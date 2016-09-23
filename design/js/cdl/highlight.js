@@ -688,6 +688,14 @@ function detectKeyDownForFocusable(e) {
                         char = "dollar";
                     }
                     break;
+                case 8:
+                    char = "retour";
+                    break;
+                case 46:
+                    if (!e.shiftKey) {
+                        char = "supprimer";
+                    }
+                    break;
                 }
                 if (!e.altKey && !e.ctrlKey) {
                     switch (kc) {

@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <link href="###EMBEDDED_URL###/styles/default.css" rel="stylesheet">
 <link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink">
-<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization.css" rel="stylesheet">
+<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_###F_SIZE_INDEX###.css" rel="stylesheet">
 <link href="###EMBEDDED_URL###/styles/print.css" rel="stylesheet" media="print">
 <body###CONTRAST_BODY_STYLE###>
 <form action="###EMBEDDED_URL###/personnalisation" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden">
@@ -16,7 +16,7 @@
 <div class="cdlUtilLinks">
 <div class="cdlChangeDisplayButton" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###DISPLAY_ICON###<input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="1" accesskey="a"></div><!--###AUDIO_ACTIONS###-->
 <div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###">###AUDIO_ICON###<input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="1" alt="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="a"></div>
-<div class="cdlChangeAudioHelpButton">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioHelpButton" title="###_DICO_TITLE_AIDE_AUDIO###">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
@@ -42,7 +42,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 </div>
 </div><!--/###AUDIO###-->
 </div>
-<div class="cdlAllPageContainer"><div class="cdlAllPage">
+<div class="cdlAllPageContainer" style="padding-top:###PAGE_MARGIN_TOP###px !important"><div class="cdlAllPage">
 <div class="cdlGlobalPage">
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">

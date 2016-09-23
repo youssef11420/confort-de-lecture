@@ -16,7 +16,7 @@
 <div class="cdlUtilLinks">
 <div class="cdlChangeDisplayButton" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###DISPLAY_ICON###<input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="1" accesskey="a"></div><!--###AUDIO_ACTIONS###-->
 <div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###">###AUDIO_ICON###<input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="1" alt="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="a"></div>
-<div class="cdlChangeAudioHelpButton">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioHelpButton" title="###_DICO_TITLE_AIDE_AUDIO###">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
@@ -42,7 +42,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 </div>
 </div><!--/###AUDIO###-->
 </div>
-<div class="cdlAllPageContainer"><div class="cdlAllPage">
+<div class="cdlAllPageContainer" style="padding-top:###PAGE_MARGIN_TOP###px !important"><div class="cdlAllPage">
 <div class="cdlGlobalPage">
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">
@@ -54,7 +54,6 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <p class="cdlLittleArrow audioIntro"><strong>###_DICO_EXPLICATION_PALETTE###&nbsp;:</strong><br>###_DICO_INTRO_PALETTE###
 <div class="cdlColorsForm">
 <ul class="cdlColors">###COLOR_LIST###</ul>
-<br>
 <div class="cdlActions">
 <span class="cdlButtons cdlValidate"><input type="submit" id="cdlchangedisplay2" name="cdlchangedisplay" value="###_DICO_BOUTON_VALIDER###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
@@ -98,17 +97,17 @@ jQuery('.cdlColors li a').bind('click',function () {
 	}
 	jQuery('.cdlUtilLinks svg').attr('fill', "#" + (cdlParamToSet === "f" ? color : cdlFontColor));
 
-    window.setTimeout(function () {
-        htmlElt.niceScroll().remove();
-        htmlElt.niceScroll({
-            cursorwidth: 25,
-            background: "transparent",
-            cursorborder: "2px solid " + cdlBackgroundColor,
-            cursorcolor: cdlFontColor,
-            autohidemode: false,
-            zindex: 114200
-        });
-    }, 300);
+	window.setTimeout(function () {
+		htmlElt.niceScroll().remove();
+		htmlElt.niceScroll({
+			cursorwidth: 25,
+			background: "transparent",
+			cursorborder: "2px solid " + cdlBackgroundColor,
+			cursorcolor: cdlFontColor,
+			autohidemode: false,
+			zindex: 114200
+		});
+	}, 300);
 
 	return false;
 }).bind('dblclick',function () {

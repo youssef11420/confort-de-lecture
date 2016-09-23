@@ -16,7 +16,7 @@
 <div class="cdlUtilLinks">
 <div class="cdlChangeDisplayButton" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###DISPLAY_ICON###<input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="1" accesskey="a"></div><!--###AUDIO_ACTIONS###-->
 <div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###">###AUDIO_ICON###<input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="1" alt="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="a"></div>
-<div class="cdlChangeAudioHelpButton">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioHelpButton" title="###_DICO_TITLE_AIDE_AUDIO###">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
@@ -54,7 +54,6 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <p class="cdlLittleArrow audioIntro"><strong>###_DICO_EXPLICATION_TAILLES_TEXTE###&nbsp;:</strong>
 <div class="cdlSizesForm">
 <ul class="cdlSizes">###SIZE_LIST###</ul>
-<br>
 <div class="cdlActions">
 <span class="cdlButtons cdlValidate"><input type="submit" id="cdlchangedisplay2" name="cdlchangedisplay" value="###_DICO_BOUTON_VALIDER###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
@@ -91,19 +90,19 @@ jQuery('.cdlSizes li a').bind('click',function () {
 	jQuery(this).parent().addClass('choiceSelected');
 	jQuery('input[name="cdlfs"]').attr('value', size);
 
-    jQuery('#cdlCustomCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###L_COLOR###_' + size + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink2"/>');
-    window.setTimeout(function () {
-        jQuery('#cdlCustomCssLink').remove();
-        jQuery('#cdlCustomCssLink2').attr('id', 'cdlCustomCssLink');
-    }, 300);
-    jQuery('#cdlPersonalizationCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + size + '.css" rel="stylesheet" id="cdlPersonalizationCssLink2"/>');
-    window.setTimeout(function () {
-        jQuery('#cdlPersonalizationCssLink').remove();
-        jQuery('#cdlPersonalizationCssLink2').attr('id', 'cdlPersonalizationCssLink');
-    }, 300);
+	jQuery('#cdlCustomCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_###L_COLOR###_' + size + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink2"/>');
+	window.setTimeout(function () {
+		jQuery('#cdlCustomCssLink').remove();
+		jQuery('#cdlCustomCssLink2').attr('id', 'cdlCustomCssLink');
+	}, 300);
+	jQuery('#cdlPersonalizationCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + size + '.css" rel="stylesheet" id="cdlPersonalizationCssLink2"/>');
+	window.setTimeout(function () {
+		jQuery('#cdlPersonalizationCssLink').remove();
+		jQuery('#cdlPersonalizationCssLink2').attr('id', 'cdlPersonalizationCssLink');
+	}, 300);
 
-    iconSize = 40+0.7*((size - 1)*20);
-    jQuery('.cdlUtilLinks svg').width(iconSize).height(iconSize);
+	iconSize = 40+0.7*((size - 1)*20);
+	jQuery('.cdlUtilLinks svg').width(iconSize).height(iconSize);
 
 	window.setTimeout(function () {
 		htmlElt.niceScroll().remove();
@@ -117,7 +116,7 @@ jQuery('.cdlSizes li a').bind('click',function () {
 		});
 	}, 300);
 
-    return false;
+	return false;
 }).bind('dblclick',function () {
 	jQuery('.cdlSizes .choiceSelected').removeClass('choiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');

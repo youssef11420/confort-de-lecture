@@ -25,82 +25,83 @@ $defaultLanguage = "fr-FR";
 # Le tableau des termes à traduire
 %dictionary = ();
 
-$dictionary{'TITLE_PERSONNALISER_AFFICHAGE'} = "Personnaliser vos paramètres d'affichage";
-$dictionary{'TITLE_PERSONNALISER_AUDIO'} = "Personnaliser vos paramètres audio";
-$dictionary{'TITLE_AIDE_AUDIO'} = "Aide audio";
+$dictionary{'TITLE_PERSONNALISER_AFFICHAGE'} = "personnaliser vos paramètres d'affichage";
+$dictionary{'TITLE_PERSONNALISER_AUDIO'} = "personnaliser vos paramètres audio";
+$dictionary{'TITLE_AIDE_AUDIO'} = "aide audio";
 
-$dictionary{'EXPLICATION_CONFIG'} = "Sélectionnez une couleur, un contraste et la taille des caractères.";
-$dictionary{'LABEL_FOND_NOIR'} = "Couleur de fond noire";
-$dictionary{'LABEL_FOND_BLANC'} = "Couleur de fond blanche";
-$dictionary{'LABEL_FOND_VERT'} = "Couleur de fond verte";
-$dictionary{'LABEL_FOND_JAUNE'} = "Couleur de fond jaune";
-$dictionary{'LABEL_FOND_BLEU'} = "Couleur de fond bleue";
-$dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_FOND'} = "Choisir d'autres couleurs pour le fond";
+$dictionary{'EXPLICATION_CONFIG'} = "sélectionnez une couleur, un contraste et la taille des caractères.";
+$dictionary{'LABEL_FOND_NOIR'} = "couleur de fond noire";
+$dictionary{'LABEL_FOND_BLANC'} = "couleur de fond blanche";
+$dictionary{'LABEL_FOND_VERT'} = "couleur de fond verte";
+$dictionary{'LABEL_FOND_JAUNE'} = "couleur de fond jaune";
+$dictionary{'LABEL_FOND_BLEU'} = "couleur de fond bleue";
+$dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_FOND'} = "choisir d'autres couleurs pour le fond";
 
-$dictionary{'LABEL_TRES_PETITE'} = "Taille de texte très petite";
-$dictionary{'LABEL_PETITE'} = "Taille de texte petite";
-$dictionary{'LABEL_MOYENNE'} = "Taille de texte moyenne";
-$dictionary{'LABEL_GRANDE'} = "Taille de texte grande";
-$dictionary{'LABEL_TRES_GRANDE'} = "Taille de texte très grande";
-$dictionary{'TITLE_BOUTON_PLUS_DE_TAILLES'} = "Choisir d'autres tailles pour le texte";
+$dictionary{'LABEL_TRES_PETITE'} = "taille de texte très petite";
+$dictionary{'LABEL_PETITE'} = "taille de texte petite";
+$dictionary{'LABEL_MOYENNE'} = "taille de texte moyenne";
+$dictionary{'LABEL_GRANDE'} = "taille de texte grande";
+$dictionary{'LABEL_TRES_GRANDE'} = "taille de texte très grande";
+$dictionary{'LABEL_TRES_TRES_GRANDE'} = "taille de texte très très grande";
+$dictionary{'TITLE_BOUTON_PLUS_DE_TAILLES'} = "choisir d'autres tailles pour le texte";
 
-$dictionary{'LABEL_TEXTE_NOIR'} = "Couleur de texte noire";
-$dictionary{'LABEL_TEXTE_BLANC'} = "Couleur de texte blanche";
-$dictionary{'LABEL_TEXTE_VERT'} = "Couleur de texte verte";
-$dictionary{'LABEL_TEXTE_JAUNE'} = "Couleur de texte jaune";
-$dictionary{'LABEL_TEXTE_BLEU'} = "Couleur de texte bleue";
-$dictionary{'LABEL_TEXTE_ROUGE'} = "Couleur de texte rouge";
-$dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_TEXTE'} = "Choisir d'autres couleurs pour le texte";
+$dictionary{'LABEL_TEXTE_NOIR'} = "couleur de texte noire";
+$dictionary{'LABEL_TEXTE_BLANC'} = "couleur de texte blanche";
+$dictionary{'LABEL_TEXTE_VERT'} = "couleur de texte verte";
+$dictionary{'LABEL_TEXTE_JAUNE'} = "couleur de texte jaune";
+$dictionary{'LABEL_TEXTE_BLEU'} = "couleur de texte bleue";
+$dictionary{'LABEL_TEXTE_ROUGE'} = "couleur de texte rouge";
+$dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_TEXTE'} = "choisir d'autres couleurs pour le texte";
 
-$dictionary{'LABEL_LIEN_NOIR'} = "Couleur de liens noire";
-$dictionary{'LABEL_LIEN_BLANC'} = "Couleur de liens blanche";
-$dictionary{'LABEL_LIEN_VERT'} = "Couleur de liens verte";
-$dictionary{'LABEL_LIEN_JAUNE'} = "Couleur de liens jaune";
-$dictionary{'LABEL_LIEN_BLEU'} = "Couleur de liens bleue";
-$dictionary{'LABEL_LIEN_ROUGE'} = "Couleur de liens rouge";
-$dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_LIEN'} = "Choisir d'autres couleurs pour les liens";
+$dictionary{'LABEL_LIEN_NOIR'} = "couleur de liens noire";
+$dictionary{'LABEL_LIEN_BLANC'} = "couleur de liens blanche";
+$dictionary{'LABEL_LIEN_VERT'} = "couleur de liens verte";
+$dictionary{'LABEL_LIEN_JAUNE'} = "couleur de liens jaune";
+$dictionary{'LABEL_LIEN_BLEU'} = "couleur de liens bleue";
+$dictionary{'LABEL_LIEN_ROUGE'} = "couleur de liens rouge";
+$dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_LIEN'} = "choisir d'autres couleurs pour les liens";
 
 $dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de couleurs";
 $dictionary{'BOUTON_PLUS_DE_TAILLES'} = "de tailles";
 
-$dictionary{'TITRE_PREVISUALISATION'} = "Zone de prévisualisation";
+$dictionary{'TITRE_PREVISUALISATION'} = "zone de prévisualisation";
 $dictionary{'TEXTE_PREVISUALISATION'} = "<a href=\"http://www.confortdelecture.org\" target=\"_blank\">Confort de lecture</a> vous permet de choisir la couleur de fond, la taille des caractères, la couleur de texte et la couleur des liens, adaptés à votre vision et à vos pages imprimées.";
 
-$dictionary{'PARAMETRES_AVANCES'} = "Paramètres avancés";
-$dictionary{'TITLE_PARAMETRES_AVANCES'} = "Personnaliser vos paramètres avancés d'affichage";
+$dictionary{'PARAMETRES_AVANCES'} = "paramètres avancés";
+$dictionary{'TITLE_PARAMETRES_AVANCES'} = "personnaliser vos paramètres avancés d'affichage";
 
-$dictionary{'BOUTON_VALIDER'} = "Valider";
-$dictionary{'BOUTON_VALIDER_ET_ACCEDER'} = "Valider et accéder";
-$dictionary{'BOUTON_RETOUR'} = "Retour";
+$dictionary{'BOUTON_VALIDER'} = "valider";
+$dictionary{'BOUTON_VALIDER_ET_ACCEDER'} = "valider et accéder";
+$dictionary{'BOUTON_RETOUR'} = "retour";
 
-$dictionary{'TITLE_PALETTE'} = "Palette de couleurs";
-$dictionary{'EXPLICATION_PALETTE'} = "Sélectionnez une couleur puis validez en bas";
-$dictionary{'INTRO_PALETTE'} = "Vous disposez d'une palette de 216 couleurs";
-$dictionary{'LABEL_COULEUR'} = "Couleur";
+$dictionary{'TITLE_PALETTE'} = "palette de couleurs";
+$dictionary{'EXPLICATION_PALETTE'} = "sélectionnez une couleur puis validez en bas";
+$dictionary{'INTRO_PALETTE'} = "vous disposez d'une palette de 216 couleurs";
+$dictionary{'LABEL_COULEUR'} = "couleur";
 
-$dictionary{'TITLE_TAILLES_TEXTE'} = "Plus de tailles de texte";
-$dictionary{'EXPLICATION_TAILLES_TEXTE'} = "Sélectionnez une taille de texte";
-$dictionary{'LABEL_TAILLE'} = "Taille";
-$dictionary{'TEXTE_SOIT'} = "Soit&nbsp;: ";
+$dictionary{'TITLE_TAILLES_TEXTE'} = "plus de tailles de texte";
+$dictionary{'EXPLICATION_TAILLES_TEXTE'} = "sélectionnez une taille de texte";
+$dictionary{'LABEL_TAILLE'} = "taille";
+$dictionary{'TEXTE_SOIT'} = "soit&nbsp;: ";
 
-$dictionary{'LABEL_ESPACEMENT_LETTRE'} = "Espacement entre les lettres";
+$dictionary{'LABEL_ESPACEMENT_LETTRE'} = "espacement entre les lettres";
 $dictionary{'LABEL_ESPACEMENT_LETTRE_NORMAL'} = "normal";
 $dictionary{'LABEL_ESPACEMENT_LETTRE_GRAND'} = "grand";
 $dictionary{'LABEL_ESPACEMENT_LETTRE_IMPORTANT'} = "très grand";
-$dictionary{'LABEL_ESPACEMENT_MOT'} = "Espacement entre les mots";
+$dictionary{'LABEL_ESPACEMENT_MOT'} = "espacement entre les mots";
 $dictionary{'LABEL_ESPACEMENT_MOT_NORMAL'} = "normal";
 $dictionary{'LABEL_ESPACEMENT_MOT_GRAND'} = "grand";
 $dictionary{'LABEL_ESPACEMENT_MOT_IMPORTANT'} = "très grand";
-$dictionary{'LABEL_ESPACEMENT_LIGNE'} = "Espacement entre les lignes";
+$dictionary{'LABEL_ESPACEMENT_LIGNE'} = "espacement entre les lignes";
 $dictionary{'LABEL_ESPACEMENT_LIGNE_NORMAL'} = "normal";
 $dictionary{'LABEL_ESPACEMENT_LIGNE_GRAND'} = "grand";
 $dictionary{'LABEL_ESPACEMENT_LIGNE_IMPORTANT'} = "très grand";
 
-$dictionary{'PARAMETRES_AVANCES_FIL_ARIANE'} = "Choisir la position du fil d'Ariane";
-$dictionary{'PARAMETRES_AVANCES_IMG'} = "Afficher les images";
-$dictionary{'PARAMETRES_AVANCES_OBJECT'} = "Afficher les contenus animations, audios et vidéos";
-$dictionary{'PARAMETRES_AVANCES_TABLE'} = "Linéariser les tableaux";
-$dictionary{'PARAMETRES_AVANCES_JS'} = "Activer les scripts";
+$dictionary{'PARAMETRES_AVANCES_FIL_ARIANE'} = "choisir la position du fil d'Ariane";
+$dictionary{'PARAMETRES_AVANCES_IMG'} = "afficher les images";
+$dictionary{'PARAMETRES_AVANCES_OBJECT'} = "afficher les contenus animations, audios et vidéos";
+$dictionary{'PARAMETRES_AVANCES_TABLE'} = "linéariser les tableaux";
+$dictionary{'PARAMETRES_AVANCES_JS'} = "activer les scripts";
 $dictionary{'PARAMETRES_AVANCES_JS_INFO'} = "(si 'non' est coché, le fonctionnement alternatif est activé)";
 $dictionary{'PARAMETRES_AVANCES_IMG_INFO'} = "(si 'non' est coché, le contenu alternatif est affiché)";
 $dictionary{'PARAMETRES_AVANCES_OBJECT_INFO'} = "(si 'non' est coché, le contenu alternatif est affiché)";
@@ -112,60 +113,60 @@ $dictionary{'PARAMETRES_AVANCES_HAUT_PAGE'} = "en haut de page";
 $dictionary{'PARAMETRES_AVANCES_BAS_PAGE'} = "en bas de page";
 $dictionary{'PARAMETRES_AVANCES_HAUT_ET_BAS_PAGE'} = "en haut et en bas de page";
 
-$dictionary{'INTRO_AUDIO'} = "<strong class=\"cdlWarning\">Attention : si vous utilisez une synthèse vocale et/ou une revue d'écran, veuillez les désactiver puis,</strong> pour démarrer la lecture vocale de cette page, veuillez appuyer sur la touche <strong>P</strong> de votre clavier ou cliquez sur le bouton <strong>Lecture</strong> du lecteur audio ci-dessus.";
-$dictionary{'PARAMETRES_ACTIVER_AUDIO'} = "Activer l'audio";
-$dictionary{'PARAMETRES_AUDIO_VOIX'} = "Voix";
+$dictionary{'INTRO_AUDIO'} = "<strong class=\"cdlWarning\">Attention : si vous utilisez une synthèse vocale et/ou une revue d'écran, veuillez les désactiver puis,</strong> pour démarrer la lecture vocale de cette page, veuillez appuyer sur la touche <strong>P</strong> de votre clavier ou cliquez sur le bouton <strong>lecture</strong> du lecteur audio ci-dessus.";
+$dictionary{'PARAMETRES_ACTIVER_AUDIO'} = "activer l'audio";
+$dictionary{'PARAMETRES_AUDIO_VOIX'} = "voix";
 $dictionary{'PARAMETRES_AUDIO_VITESSE'} = "Vitesse de lecture des pages";
 $dictionary{'JE_M_APPELLE'} = "Je m'appelle";
-$dictionary{'VITESSE_DE_LECTURE'} = "Vitesse de lecture";
-$dictionary{'TRES_LENTE'} = "Très lente";
-$dictionary{'LENTE'} = "Lente";
-$dictionary{'STANDARD'} = "Standard";
-$dictionary{'RAPIDE'} = "Rapide";
-$dictionary{'TRES_RAPIDE'} = "Très rapide";
+$dictionary{'VITESSE_DE_LECTURE'} = "vitesse de lecture";
+$dictionary{'TRES_LENTE'} = "très lente";
+$dictionary{'LENTE'} = "lente";
+$dictionary{'STANDARD'} = "standard";
+$dictionary{'RAPIDE'} = "rapide";
+$dictionary{'TRES_RAPIDE'} = "très rapide";
 
-$dictionary{'BLOC_PRECEDENT'} = "Bloc précédent";
-$dictionary{'PHRASE_PRECEDENTE'} = "Phrase précédente";
-$dictionary{'LECTURE_PAUSE'} = "Lecture / Pause";
-$dictionary{'STOPPER_LA_LECTURE'} = "Stopper la lecture";
-$dictionary{'STOP'} = "Stop";
-$dictionary{'PHRASE_SUIVANTE'} = "Phrase suivante";
-$dictionary{'BLOC_SUIVANT'} = "Bloc suivant";
+$dictionary{'BLOC_PRECEDENT'} = "bloc précédent";
+$dictionary{'PHRASE_PRECEDENTE'} = "phrase précédente";
+$dictionary{'LECTURE_PAUSE'} = "lecture / Pause";
+$dictionary{'STOPPER_LA_LECTURE'} = "stopper la lecture";
+$dictionary{'STOP'} = "stop";
+$dictionary{'PHRASE_SUIVANTE'} = "phrase suivante";
+$dictionary{'BLOC_SUIVANT'} = "bloc suivant";
 
-$dictionary{'AIDE_AUDIO'} = "<p><h1>Comment naviguer avec « Confort de lecture audio » ?</h1></p><br><p>« Confort de lecture audio » propose deux modes de lecture : le mode automatique et le mode manuel.</p><br><ol><li><h2>Le mode automatique</h2><br><p>Dès la page d’accueil d’un site en mode « Confort de lecture audio », la lecture vocale s’active automatiquement en utilisant un des 3 profils de voix suivants :</p><ul><li>Un profil par défaut si vous n’avez jamais configuré de voix « Confort de lecture audio » sur ce poste informatique.<br></li><li>Le profil de voix que vous venez de configurer pour la première fois sur ce poste.</li><li>Le dernier profil que vous avez configuré sur ce poste si les cookies de votre navigateur n’ont pas été supprimés depuis.</li></ul><br><p>Si aucune action de la souris ou du clavier n’est détectée par le « lecteur audio », la lecture se fera sans interruption jusqu’au bas de la page avec un temps d’arrêt après chaque lien, chaque champ de saisie ou liste déroulante. Ces arrêts vous permettent d’agir sereinement sur ces propositions si vous le souhaitez.</p><br><p>Toute intervention de votre part sur le « lecteur audio », arrête le « mode automatique ». Vous pouvez alors continuer votre lecture en « mode manuel » ou redémarrer le « mode automatique » en cliquant sur la touche « play » du lecteur en haut de votre écran ou avec la touche « P » du clavier.</p></li><li><h2>Le Mode manuel</h2><br><p><h3>2.1 Mode manuel avec souris</h3><br>Dans l’environnement « Confort de lecture audio » toutes les fonctionnalités normales de votre souris sont opérationnelles. Avec le navigateur Firefox, Google Chrome, Safari et Opéra, le pointeur de votre souris est optimisé en fonction de la taille de caractères choisis.</p><br><h4>Utilisation du lecteur audio</h4><br><ul><li>Bouton « Pause » et bouton « Play » du lecteur audio.<br>La synthèse suspend la lecture mais la phrase en cours reste surlignée.</li><li>Bouton « Play » du lecteur audio.<br>À la reprise de la lecture la synthèse reprend toujours en automatique là où elle s'était arrêtée dans le bloc.</li><li>Bouton « Suivant » du lecteur audio.<br>Interruption de la lecture en cours et passage à la lecture de la phrase suivante, puis arrêt. En cliquant un nombre de fois sur « suivant » la phrase lue sera celle correspondant à ce même nombre ( ex : 3 clics = 3ème phrase après celle déjà lue).</li><li>Bouton « Précédent » du lecteur audio.<br>Interruption de la lecture en cours et passage à la lecture de la phrase précédente, puis arrêt. En cliquant un nombre de fois sur « précédent » la phrase lue sera celle correspondant à ce même nombre ( ex : 3 clics = 3ème phrase avant celle déjà lue).</li><li>Bouton « Avance rapide » du lecteur audio.<br>Interruption de la lecture en cours et passage à la lecture du cadre suivant, puis arrêt. En cliquant un nombre de fois sur « Avance rapide » le cadre lu sera celui correspondant à ce même nombre (ex : 3 clics = 3ème cadre après celui déjà lu).</li><li>Bouton « Retour rapide » du lecteur audio.<br>Interruption de la lecture en cours et retour à la lecture du cadre précédent, puis arrêt. En cliquant un nombre de fois sur « Retour rapide » le cadre lu sera celui correspondant à ce même nombre (ex : 3 clics = 3ème cadre avant celui déjà lu).</li><li>Bouton « Stop » du lecteur audio.<br>Stoppe la lecture de la page. Le sur-lignage de la phrase en cours de lecture disparait. L’écran remonte en haut de page.</li></ul><br><h3>2.2 Mode manuel avec clavier : les fonctionnalités spécifiques de « Confort de lecture audio »</h3><br><ul><li>La lettre « P » sert à la fois à activer la lecture automatique et à la mettre en pause.</li><li>La lettre « S » stoppe la lecture. Dans ce cas, la lecture reprendra au redémarrage en début de page.</li><li>La touche de direction « bas » permet de passer à la lecture du bloc phrase suivant ou du lien suivant. Elle permet aussi dans un bloc de texte important de trouver rapidement un lien.</li><li>La touche de direction« haut » permet de passer à la lecture du bloc phrase précédent ou du lien précédent.</li><li>La touche « page suivante » permet de passer au bloc cadre suivant.</li><li>La touche « page précédente » permet de passer au bloc cadre précédent.</li><li>La touche « Entrée » permet d'ouvrir le lien qui vient d'être énoncé, de valider un champ texte rempli ou une option choisie d’une boite déroulante.</li><li>La touche « tabulation » agit normalement. Elle permet entre autres de naviguer de lien en lien, d'accéder au champ de formulaire suivant, etc.</li><li>La touche « Echap » permet de sortir d’un champ de saisie non rempli ou d’une liste déroulante pour aller sur la ligne suivante (ou le champ de saisie suivant).</li><li>La combinaison des touches «shift + Echap » permet de sortir d’un champ de saisie non rempli ou d’une liste déroulante pour aller sur la ligne précédente (ou le champ de saisie précédant).</li><li>Tous les <strong>raccourcis clavier (ou accesskeys) utilisés sous Windows, Linux et Mac Intoch fonctionnent avec « Confort de lecture audio ».</strong></li></ul></li></ol>";
+$dictionary{'AIDE_AUDIO'} = "<p><h1>Comment naviguer avec \"Confort de lecture audio\" ?</h1></p><br><p>\"Confort de lecture audio\" propose deux modes de lecture : le mode automatique et le mode manuel.</p><br><h2>1. Le mode automatique</h2><br><p>Dès la page d’accueil d’un site en mode \"Confort de lecture audio\", la lecture vocale s’active automatiquement en utilisant un des 3 profils de voix suivants :</p><ul><li>Un profil par défaut si vous n’avez jamais configuré de voix \"Confort de lecture audio\" sur ce poste informatique.<br></li><li>Le profil de voix que vous venez de configurer pour la première fois sur ce poste.</li><li>Le dernier profil que vous avez configuré sur ce poste si les cookies de votre navigateur n’ont pas été supprimés depuis.</li></ul><br><p>Si aucune action de la souris ou du clavier n’est détectée par le \"lecteur audio\", la lecture se fera sans interruption jusqu’au bas de la page avec un temps d’arrêt après chaque lien, chaque champ de saisie ou liste déroulante. Ces arrêts vous permettent d’agir sereinement sur ces propositions si vous le souhaitez.</p><br><p>Toute intervention de votre part sur le \"lecteur audio\", arrête le \"mode automatique\". Vous pouvez alors continuer votre lecture en \"mode manuel\" ou redémarrer le \"mode automatique\" en cliquant sur la touche \"play\" du lecteur en haut de votre écran ou avec la touche \"P\" du clavier.</p><br><br><h2>2. Le Mode manuel</h2><br><p><h3>2.1 Mode manuel avec souris</h3><br>Dans l’environnement \"Confort de lecture audio\" toutes les fonctionnalités normales de votre souris sont opérationnelles. Le pointeur de votre souris est optimisé en fonction de la taille de caractères choisis.</p><br><h4>Utilisation du lecteur audio</h4><ul><li>Bouton \"pause\" et bouton \"play\" du lecteur audio.<br>La synthèse suspend la lecture mais la phrase en cours reste surlignée.</li><li>Bouton \"play\" du lecteur audio.<br>À la reprise de la lecture la synthèse reprend toujours en automatique là où elle s'était arrêtée dans le bloc.</li><li>Bouton \"suivant\" du lecteur audio.<br>Interruption de la lecture en cours et passage à la lecture de la phrase suivante, puis arrêt. En cliquant un nombre de fois sur \"suivant\" la phrase lue sera celle correspondant à ce même nombre ( ex : 3 clics = 3ème phrase après celle déjà lue).</li><li>Bouton \"précédent\" du lecteur audio.<br>Interruption de la lecture en cours et passage à la lecture de la phrase précédente, puis arrêt. En cliquant un nombre de fois sur \"précédent\" la phrase lue sera celle correspondant à ce même nombre ( ex : 3 clics = 3ème phrase avant celle déjà lue).</li><li>Bouton \"avance rapide\" du lecteur audio.<br>Interruption de la lecture en cours et passage à la lecture du cadre suivant, puis arrêt. En cliquant un nombre de fois sur \"avance rapide\" le cadre lu sera celui correspondant à ce même nombre (ex : 3 clics = 3ème cadre après celui déjà lu).</li><li>Bouton \"retour rapide\" du lecteur audio.<br>Interruption de la lecture en cours et retour à la lecture du cadre précédent, puis arrêt. En cliquant un nombre de fois sur \"retour rapide\" le cadre lu sera celui correspondant à ce même nombre (ex : 3 clics = 3ème cadre avant celui déjà lu).</li><li>Bouton \"stop\" du lecteur audio.<br>Stoppe la lecture de la page. Le sur-lignage de la phrase en cours de lecture disparait. L’écran remonte en haut de page.</li></ul><br><h3>2.2 Mode manuel avec clavier : les fonctionnalités spécifiques de \"Confort de lecture audio\"</h3><ul><li>La lettre \"P\" sert à la fois à activer la lecture automatique et à la mettre en pause.</li><li>La lettre \"S\" stoppe la lecture. Dans ce cas, la lecture reprendra au redémarrage en début de page.</li><li>La touche de direction \"bas\" permet de passer à la lecture du bloc phrase suivant ou du lien suivant. Elle permet aussi dans un bloc de texte important de trouver rapidement un lien.</li><li>La touche de direction\"haut\" permet de passer à la lecture du bloc phrase précédent ou du lien précédent.</li><li>La touche \"page suivante\" permet de passer au bloc cadre suivant.</li><li>La touche \"page précédente\" permet de passer au bloc cadre précédent.</li><li>La touche \"entrée\" permet d'ouvrir le lien qui vient d'être énoncé, de valider un champ texte rempli ou une option choisie d’une boite déroulante.</li><li>La touche \"tabulation\" agit normalement. Elle permet entre autres de naviguer de lien en lien, d'accéder au champ de formulaire suivant, etc.</li><li>La touche \"échap\" permet de sortir d’un champ de saisie non rempli ou d’une liste déroulante pour aller sur la ligne suivante (ou le champ de saisie suivant).</li><li>La combinaison des touches \"shift + échap\" permet de sortir d’un champ de saisie non rempli ou d’une liste déroulante pour aller sur la ligne précédente (ou le champ de saisie précédant).</li><li>Tous les <strong>raccourcis clavier (ou accesskeys) utilisés sous Windows, Linux et Mac Intoch fonctionnent avec \"Confort de lecture audio\".</strong></li></ul></li></ol>";
 $dictionary{'AIDE_AUDIO_SUITE'} = "Les paramètres audio vous donnent accès au choix d'une voix parmi les cinq qui vous sont proposées. Vous pouvez également sélectionner la vitesse d'élocution de la voix choisie.";
 
 $dictionary{'PHRASE_ACCES_PAGE_PROTEGEE'} = "Vous allez accéder à une page qui est protégée. Veuillez saisir votre identifiant et votre mot de passe.";
-$dictionary{'LABEL_NOM_UTILISATEUR'} = "Nom d'utilisateur&nbsp;:";
-$dictionary{'LABEL_MOT_DE_PASSE'} = "Mot de passe&nbsp;:";
+$dictionary{'LABEL_NOM_UTILISATEUR'} = "nom d'utilisateur&nbsp;:";
+$dictionary{'LABEL_MOT_DE_PASSE'} = "mot de passe&nbsp;:";
 
 $dictionary{'RETOUR_ACCUEIL'} = "retour à l'accueil";
 
-$dictionary{'PHRASE_ACCES_DOCUMENT'} = "Vous allez accéder à un document de type :";
-$dictionary{'LIEN_OUVRIR_DOCUMENT'} = "Ouvrir le document";
-$dictionary{'LIEN_TELECHARGER_DOCUMENT'} = "Télécharger le document";
-$dictionary{'LIEN_ANNULER_ET_RETOURNER'} = "Annuler et retourner à la page précédente";
+$dictionary{'PHRASE_ACCES_DOCUMENT'} = "vous allez accéder à un document de type :";
+$dictionary{'LIEN_OUVRIR_DOCUMENT'} = "ouvrir le document";
+$dictionary{'LIEN_TELECHARGER_DOCUMENT'} = "télécharger le document";
+$dictionary{'LIEN_ANNULER_ET_RETOURNER'} = "annuler et retourner à la page précédente";
 
-$dictionary{'ERREUR'} = "Erreur";
+$dictionary{'ERREUR'} = "erreur";
 $dictionary{'PHRASE_SUR_LA_PAGE'} = "sur la page :";
-$dictionary{'PHRASE_REESSAYER'} = "Vous pouvez réessayer en cliquant ici";
+$dictionary{'PHRASE_REESSAYER'} = "vous pouvez réessayer en cliquant ici";
 
-$dictionary{'PHRASE_ACCEDER_PAGE_EXTERNE'} = "Vous allez accéder à une page qui ne prend pas en compte Confort de lecture.";
-$dictionary{'PHRASE_CONFIRMATION_ACCEDER_PAGE_EXTERNE'} = "Voulez vous vraiment accéder à la page suivante ?";
+$dictionary{'PHRASE_ACCEDER_PAGE_EXTERNE'} = "vous allez accéder à une page qui ne prend pas en compte Confort de lecture.";
+$dictionary{'PHRASE_CONFIRMATION_ACCEDER_PAGE_EXTERNE'} = "voulez vous vraiment accéder à la page suivante ?";
 
-$dictionary{'LABEL_OPTION_DE_LISTE'} = "Option de liste";
+$dictionary{'LABEL_OPTION_DE_LISTE'} = "option de liste";
 $dictionary{'LABEL_SELECTIONNEE'} = "sélectionnée";
 $dictionary{'LABEL_VIDE'} = "vide";
-$dictionary{'LABEL_LIEN'} = "Lien";
-$dictionary{'LABEL_BOUTON'} = "Bouton";
+$dictionary{'LABEL_LIEN'} = "lien";
+$dictionary{'LABEL_BOUTON'} = "bouton";
 $dictionary{'LABEL_REINITIALISATION'} = "réinitialisation";
 $dictionary{'LABEL_VALIDATION'} = "validation";
-$dictionary{'LABEL_CASE_A_COCHER'} = "Case à cocher";
+$dictionary{'LABEL_CASE_A_COCHER'} = "case à cocher";
 $dictionary{'LABEL_COCHEE'} = "cochée";
-$dictionary{'LABEL_BOUTON_RADIO'} = "Bouton radio";
+$dictionary{'LABEL_BOUTON_RADIO'} = "bouton radio";
 $dictionary{'LABEL_COCHE'} = "coché";
-$dictionary{'LABEL_CHAMP'} = "Champ";
-$dictionary{'LABEL_CHAMP_EDITION'} = "Champ d'édition";
+$dictionary{'LABEL_CHAMP'} = "champ";
+$dictionary{'LABEL_CHAMP_EDITION'} = "champ d'édition";
 $dictionary{'LABEL_FICHIER'} = "fichier";
 $dictionary{'LABEL_CRYPTE'} = "crypté";
 $dictionary{'LABEL_COULEUR'} = "couleur";
@@ -182,15 +183,15 @@ $dictionary{'LABEL_HEURE'} = "heure";
 $dictionary{'LABEL_LIEN'} = "lien";
 $dictionary{'LABEL_SEMAINE'} = "semaine";
 $dictionary{'LABEL_MULTILIGNE'} = "multiligne";
-$dictionary{'PHRASE_SORTIR_DU_CHAMP'} = "Pour sortir de ce champ, utilisez la touche échappe.";
-$dictionary{'LABEL_LISTE_DEROULANTE'} = "Liste déroulante";
-$dictionary{'LABEL_LEGENDE'} = "Légende";
-$dictionary{'LABEL_TERME_DEFINI'} = "Terme défini";
-$dictionary{'LABEL_DEFINITION_TERME'} = "Définition terme";
-$dictionary{'LABEL_ZONE_DE_CODE'} = "Zone de code";
-$dictionary{'LABEL_CITATION'} = "Citation";
-$dictionary{'LABEL_CELLULE'} = "Cellule";
-$dictionary{'LABEL_ENTETE_DE_CELLULE'} = "Entête de cellule";
+$dictionary{'PHRASE_SORTIR_DU_CHAMP'} = "pour sortir de ce champ, utilisez la touche échappe.";
+$dictionary{'LABEL_LISTE_DEROULANTE'} = "liste déroulante";
+$dictionary{'LABEL_LEGENDE'} = "légende";
+$dictionary{'LABEL_TERME_DEFINI'} = "terme défini";
+$dictionary{'LABEL_DEFINITION_TERME'} = "définition terme";
+$dictionary{'LABEL_ZONE_DE_CODE'} = "zone de code";
+$dictionary{'LABEL_CITATION'} = "citation";
+$dictionary{'LABEL_CELLULE'} = "cellule";
+$dictionary{'LABEL_ENTETE_DE_CELLULE'} = "entête de cellule";
 
 # Hash: %lettersToSpell
 # La liste des lettres correspondant aux touches du clavier
@@ -263,10 +264,12 @@ $dictionary{'LABEL_ENTETE_DE_CELLULE'} = "Entête de cellule";
 	"pourcent", "pourcent",
 	"p", "p",
 	"q", "q",
+	"retour", "retour_arrière",
 	"r", "r",
 	"signe_section", "signe_section",
 	"slash", "slash",
 	"souligne", "souligné",
+	"supprimer", "supprimer",
 	"s", "s",
 	"symbole_monetaire", "symbole_monétaire",
 	"tilde", "tilde",

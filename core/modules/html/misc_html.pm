@@ -404,6 +404,8 @@ sub getDocumentLanguage #($htmlCode, $siteDefaultLanguage)
 	# Récupération de la langue dans la balise html
 	$htmlCode =~ s/<html( [^>]*)? (lang)=(\"|\')(.*?)\3/$pageLanguage = $4;/segi;
 
+	$pageLanguage =~ s/(\-.+)$//sgi;
+
 	# Si la langue n'a pas été spécifiée dans le document d'origine, on met celle par défaut du site, sinon celle par défaut de l'application
 	if (!$pageLanguage) {
 		return $siteDefaultLanguage;

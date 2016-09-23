@@ -127,7 +127,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			redirectToProtectedAccessLogin($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 		} else {
 			# Affichage de la page de signelement d'une erreur au niveau de la requête HTTP vers le site distant
-			renderErrorPage($session, $siteId, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
+			renderErrorPage($session, $siteId, $enableAudio, $activateAudio, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 		}
 	} else {
 		accessAnotherSite($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, $trustedDomainNames, %requestParameters);
@@ -142,15 +142,14 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 #	$siteId - Identifiant du site parsé
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
 #	enableAudio - booléen indiquant si l'option audio activé pour ce site
-#	$ttsMode - mode de vocalisation (VaaS, SDK, etc.)
 #	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
 #	$response - objet réponse HTTP d'où le code et l'intitulé de l'erreur
 #	$urlToParse - URL de la page en erreur
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
 #	%requestParameters - paramètres à coller à l'URL
-sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, $secure, %requestParameters)
+sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $requestMethod, $response, $urlToParse, $secure, %requestParameters)
 {
-	my ($session, $siteId, $enableAudio, $activateAudio, $ttsMode, $requestMethod, $response, $urlToParse, $secure, %requestParameters) = @_;
+	my ($session, $siteId, $enableAudio, $activateAudio, $requestMethod, $response, $urlToParse, $secure, %requestParameters) = @_;
 
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
@@ -172,8 +171,8 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $ttsMode,
 	my $errorPageTemplateString = loadConfig($cdlTemplatesPath."error_page.html");
 
 	# Gestion des langues
-	if (-e "../modules/dictionary/".$pageLanguage.".pm") {
-		require("../modules/dictionary/".$pageLanguage.".pm");
+	if (-e "../modules/dictionary/".$language.".pm") {
+		require("../modules/dictionary/".$language.".pm");
 	} else {
 		require("../modules/dictionary/fr.pm");
 	}
@@ -341,14 +340,14 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	# Langue de la page
 	my $pageLanguage = getDocumentLanguage($htmlCode, $siteDefaultLanguage);
 
+	editInSession($session, 'language', $pageLanguage);
+
 	# Gestion des langues
 	if (-e "../modules/dictionary/".$pageLanguage.".pm") {
 		require("../modules/dictionary/".$pageLanguage.".pm");
 	} else {
 		require("../modules/dictionary/fr.pm");
 	}
-
-	$entirePageTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;
 
 	# Récupération de l'URL de base d'où extraire le chemin des liens relatifs de la page
 	my $baseHref = getBaseHref($htmlCode);
@@ -395,6 +394,8 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'PAGE_BOTTOM', "");
 		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', "");
 	}
+
+	$entirePageTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;
 
 	# Parse et remplissage des navs
 	($htmlCode, $entirePageTemplateString) = parseAllNavs($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString);

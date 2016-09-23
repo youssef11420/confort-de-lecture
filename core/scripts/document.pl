@@ -123,6 +123,15 @@ if ($action) {
 	$language = $language ? $language : ($defaultLanguage ? $defaultLanguage : "fr");
 	$contrast = $contrast ? $contrast : "bn";
 
+	# Gestion des langues
+	if (-e "../modules/dictionary/".$language.".pm") {
+		require("../modules/dictionary/".$language.".pm");
+	} else {
+		require("../modules/dictionary/fr.pm");
+	}
+
+	$documentPageTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;
+
 	my $pageUriForHtml = $urlToParse;
 	$pageUriForHtml =~ s/&amp;/&/sgi;
 	$pageUriForHtml =~ s/&/&amp;/sgi;

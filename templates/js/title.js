@@ -31,7 +31,7 @@ jQuery(document).ready(function () {
                     aAppliquer = true;
                 } else {
                     elementCourantTitreClassName = elementCourantTitre.attr("class").replace(/^([^\s]*)\s(.*)/, "$1");
-                    if (elementCourant2.is("." + elementCourantTitreClassName + " ." + elementCourant2)) {
+                    if (elementCourant2.is("." + elementCourantTitreClassName + " ." + thisClassName)) {
                         aAppliquer = true;
                     }
                 }

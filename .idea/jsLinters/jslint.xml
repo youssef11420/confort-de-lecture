@@ -2,7 +2,5 @@
 <project version="4">
   <component name="JSLintConfiguration">
     <option maxerr="500" />
-    <option globals="window,document,jQuery" />
-    <option this="true" />
   </component>
 </project>
