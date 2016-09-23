@@ -46,7 +46,7 @@ th,td{border-width:0 .1em .1em 0;padding:5px}
 p{padding-bottom:.3em}
 .cdlLoginForm .cdlButtons{text-align:center}
 .cdlAudioContent{padding:0 9px 0 0;float:right}
-.cdlAudioObject{float:left;padding:1px 3px;position:relative;z-index:86000}
+.cdlAudioObject{float:left;padding:0 3px;position:relative;z-index:86000}
 .cdlAudioObjectContent{float:left;overflow:hidden}
 .cdlAudioObjectContent object{float:left;margin-top:-5px;background-color:transparent !important}
 .cdlDownloadAudioLink{display:block;white-space:nowrap;margin-right:7px}
