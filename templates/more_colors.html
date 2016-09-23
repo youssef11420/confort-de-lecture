@@ -53,7 +53,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <div class="cdlCadre">
 <p class="cdlLittleArrow audioIntro"><strong>###_DICO_EXPLICATION_PALETTE###&nbsp;:</strong><br>###_DICO_INTRO_PALETTE###
 <div class="cdlColorsForm">
-<ul class="cdlColors">###COLOR_LIST###</ul>
+###COLOR_LIST###
 <div class="cdlActions">
 <span class="cdlButtons cdlValidate"><input type="submit" id="cdlchangedisplay2" name="cdlchangedisplay" value="###_DICO_BOUTON_VALIDER###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
@@ -95,7 +95,7 @@ jQuery('.cdlColors li a').bind('click',function () {
 		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + color + '_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
 		break;
 	}
-	jQuery('.cdlUtilLinks svg').attr('fill', "#" + (cdlParamToSet === "f" ? color : cdlFontColor));
+	jQuery('.cdlUtilLinks svg').attr('fill', (cdlParamToSet === "f" ? "#" + color : cdlFontColor));
 
 	window.setTimeout(function () {
 		htmlElt.niceScroll().remove();

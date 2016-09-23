@@ -18,7 +18,7 @@
 .cdlButtons input{border-width:2px;font-size:40px;line-height:40px}
 .cdlConfigChoice .cdlButtons input{display:block;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
 .cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 50px;position:absolute;top:5px;width:calc(100% - 40px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
-.cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;line-height:40px;padding:5px 8px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
+.cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;line-height:1.4;padding:5px 8px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;height:calc(100% - 21px);color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
 #cdlBackgroundConfigBlack a{background-color:#000000}
 #cdlBackgroundConfigWhite a{background-color:#FFFFFF}
 #cdlBackgroundConfigGreen a{background-color:#009900}
@@ -63,7 +63,9 @@
 .cdlInfo{font-size:80%;float:right;font-style:italic}
 .cdlInversedColor{background-color:#FFFFFF !important;color:#000000 !important}
 .cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
-.cdlColors{padding:15px;margin:0;overflow:hidden;background-color:#333333}
+.cdlColors{float:left;width:calc(50% - 30px);margin:15px;min-width:230px}
+.cdlColors:nth-child(2n+1){text-align:right}
+.cdlColors ul{padding:15px;overflow:hidden;background-color:#333333;box-sizing:border-box;max-width:430px;margin:auto;display:inline-block}
 .cdlColors li{list-style:none;display:block;float:left;text-align:center;box-sizing:border-box;width:100px !important;padding:2px;background-color:transparent}
 .cdlColors li a{display:block;overflow:hidden;color:#000000;padding:3px;background-color:transparent;border:2px solid transparent}
 .cdlColors li a .cdlTransPix{display:block;height:90px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px}
@@ -90,9 +92,9 @@
 .cdlActions .cdlButtons{display:inline-block;line-height:40px;clear:both;padding-top:10px;position:relative}
 .cdlActions input{display:block;white-space:normal;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
 .cdlActions .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 48px;position:absolute;top:5px;width:calc(100% - 60px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
-.cdlActions .cdlButtons:before{content:"✔";text-align:center;width:1.45em;vertical-align:middle;line-height:40px;padding:3px 0;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
+.cdlActions .cdlButtons:before{content:"✔";text-align:center;width:1.45em;height:calc(100% - 21px);vertical-align:middle;line-height:1.4;padding:3px 0;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
 .cdlActions .cdlValidate:before{color:#009900}
-.cdlActions{text-align:right;overflow:hidden;font-size:30px}
+.cdlActions{text-align:right;overflow:hidden;font-size:30px;clear:both}
 .cdlFormFieldsHighlighted{display:inline-block}
 @media all and (max-width:###MEDIA_QUERY_SIZE_PERSONALIZATION###px) {
 .cdlUtilLinksContainer{position:relative}

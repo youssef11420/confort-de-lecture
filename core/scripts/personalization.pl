@@ -289,8 +289,13 @@ if ($action =~ m/^affichage$/si) {
 	}
 
 	my $colorChoices = "";
-	foreach my $colorItem (@allColors) {
-		$colorChoices .= "<li id=\"cdlColorConfig".$colorItem."\"".($colorItem eq $color ? " class=\"choiceSelected\"" : "")."><a href=\"".$embeddedMode."/personnalisation?more".($paramToSet eq "b" ? "background" : ($paramToSet eq "f" ? "font" : ($paramToSet eq "l" ? "link" : "")))."colors=1&amp;cdl###PARAM_TO_SET###c=".$colorItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlColorConfig".$colorItem."\"><span class=\"cdlTransPix\" style=\"background-color:#".$colorItem."\"></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_COULEUR### #<span>".$colorItem."</span></span></a>";
+	foreach my $colorGroup (@allColors) {
+		my @colorsGroup = split(/,/, $colorGroup);
+		$colorChoices .= "<div class=\"cdlColors\"><ul>";
+		foreach my $colorItem (@colorsGroup) {
+			$colorChoices .= "<li id=\"cdlColorConfig".$colorItem."\"".($colorItem eq $color ? " class=\"choiceSelected\"" : "")."><a href=\"".$embeddedMode."/personnalisation?more".($paramToSet eq "b" ? "background" : ($paramToSet eq "f" ? "font" : ($paramToSet eq "l" ? "link" : "")))."colors=1&amp;cdl###PARAM_TO_SET###c=".$colorItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlColorConfig".$colorItem."\"><span class=\"cdlTransPix\" style=\"background-color:#".$colorItem."\"></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_COULEUR### #<span>".$colorItem."</span></span></a>";
+		}
+		$colorChoices .= "</ul></div>";
 	}
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'COLOR_LIST', $colorChoices);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'PARAM_TO_SET', $paramToSet);
