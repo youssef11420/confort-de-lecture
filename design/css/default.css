@@ -88,7 +88,6 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 :root .cdlUtilLinks,:root .cdlUtilLinks *{background-color:transparent}
 :root .cdlUtilLinks img{display:none}
 :root .cdlUtilLinks input[type="submit"]{position:absolute;opacity:0;top:0;left:0;width:100%;height:100%}
-:root .cdlUtilLinks a{padding:1px}
 :root .cdlUtilLinks svg{display:block;float:left}
 :root input[type="radio"],:root input[type="checkbox"]{opacity:0;margin:0}
 .cdlInput_radio,.cdlInput_checkbox{margin:5px .3em 5px 0;line-height:normal !important}
