@@ -73,6 +73,7 @@ if (not -e $cdlRootPath."/install_ok") {
 		print $cgi->redirect($embeddedMode."/install");
 	} else {
 		print "Content-type: text/html; charset=utf-8\n\n";
+		print "<link href=\"//fonts.googleapis.com/css?family=Montserrat\" rel=\"stylesheet\">";
 		print "<link href=\"".$embeddedMode."/design/css/config.css\" rel=\"stylesheet\">";
 		print "<br>";
 
