@@ -313,6 +313,8 @@ if ($action =~ m/^affichage$/si) {
 	}
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SIZE_LIST', $sizeChoices);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SIZE_CHOSEN', $size);
+} elsif ($action =~ m/^picto$/si) {
+	$personalizationTemplateString = loadConfig($cdlRootPath."/design/images/profile_icon.svg");
 } else {
 	$language = loadFromSession($session, 'language');
 	$language = $language ? $language : "fr";
