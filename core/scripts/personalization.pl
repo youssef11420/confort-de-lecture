@@ -509,5 +509,10 @@ $personalizationTemplateString = setValueInTemplateString($personalizationTempla
 
 $personalizationTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/segi;
 
-print $session->header('Content-type' => "text/html; charset=UTF-8");
+my $typeMime = "text/html; charset=UTF-8";
+if ($action =~ m/^picto$/si) {
+	$typeMime = "image/svg+xml";
+}
+
+print $session->header('Content-type' => $typeMime);
 print $personalizationTemplateString;
