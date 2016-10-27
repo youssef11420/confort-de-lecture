@@ -25,11 +25,11 @@ $defaultLanguage = "fr-FR";
 # Le tableau des termes à traduire
 %dictionary = ();
 
-$dictionary{'TITLE_PERSONNALISER_AFFICHAGE'} = "personnaliser vos paramètres d'affichage";
-$dictionary{'TITLE_PERSONNALISER_AUDIO'} = "personnaliser vos paramètres audio";
+$dictionary{'TITLE_PERSONNALISER_AFFICHAGE'} = "personnalisez vos paramètres d'affichage";
+$dictionary{'TITLE_PERSONNALISER_AUDIO'} = "personnalisez vos paramètres audio";
 $dictionary{'TITLE_AIDE_AUDIO'} = "aide audio";
 
-$dictionary{'EXPLICATION_CONFIG'} = "sélectionnez une couleur, un contraste et la taille des caractères.";
+$dictionary{'EXPLICATION_CONFIG'} = "sélectionnez une couleur de fond, la taille et le contraste des caractères, et la couleur des liens";
 $dictionary{'LABEL_FOND_NOIR'} = "couleur de fond noire";
 $dictionary{'LABEL_FOND_BLANC'} = "couleur de fond blanche";
 $dictionary{'LABEL_FOND_VERT'} = "couleur de fond verte";
@@ -61,25 +61,25 @@ $dictionary{'LABEL_LIEN_BLEU'} = "couleur de liens bleue";
 $dictionary{'LABEL_LIEN_ROUGE'} = "couleur de liens rouge";
 $dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_LIEN'} = "choisir d'autres couleurs pour les liens";
 
-$dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de couleurs";
+$dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de contraste";
 $dictionary{'BOUTON_PLUS_DE_TAILLES'} = "de tailles";
 
 $dictionary{'TITRE_PREVISUALISATION'} = "zone de prévisualisation";
-$dictionary{'TEXTE_PREVISUALISATION'} = "<a href=\"http://www.confortdelecture.org\" target=\"_blank\">Confort de lecture</a> vous permet de choisir la couleur de fond, la taille des caractères, la couleur de texte et la couleur des liens, adaptés à votre vision et à vos pages imprimées.";
+$dictionary{'TEXTE_PREVISUALISATION'} = "<a href=\"http://www.confortdelecture.org\" target=\"_blank\">Confort de lecture</a> vous permet de choisir la couleur de fond, la taille et la couleur des caractères, et la couleur des liens, adaptés à votre vision et à vos pages imprimées.";
 
 $dictionary{'PARAMETRES_AVANCES'} = "paramètres avancés";
-$dictionary{'TITLE_PARAMETRES_AVANCES'} = "personnaliser vos paramètres avancés d'affichage";
+$dictionary{'TITLE_PARAMETRES_AVANCES'} = "personnalisez vos paramètres avancés";
 
 $dictionary{'BOUTON_VALIDER'} = "valider";
 $dictionary{'BOUTON_VALIDER_ET_ACCEDER'} = "valider et accéder";
 $dictionary{'BOUTON_RETOUR'} = "retour";
 
-$dictionary{'TITLE_PALETTE'} = "palette de couleurs";
-$dictionary{'EXPLICATION_PALETTE'} = "sélectionnez une couleur puis validez en bas";
-$dictionary{'INTRO_PALETTE'} = "vous disposez d'une palette de 216 couleurs";
+$dictionary{'TITLE_PALETTE'} = "choisissez une couleur";
+$dictionary{'EXPLICATION_PALETTE'} = "sélectionnez une couleur parmi les 64 disponibles";
+$dictionary{'INTRO_PALETTE'} = "";
 $dictionary{'LABEL_COULEUR'} = "couleur";
 
-$dictionary{'TITLE_TAILLES_TEXTE'} = "plus de tailles de texte";
+$dictionary{'TITLE_TAILLES_TEXTE'} = "sélectionnez une taille de texte";
 $dictionary{'EXPLICATION_TAILLES_TEXTE'} = "sélectionnez une taille de texte";
 $dictionary{'LABEL_TAILLE'} = "taille";
 $dictionary{'TEXTE_SOIT'} = "soit&nbsp;: ";
@@ -113,10 +113,10 @@ $dictionary{'PARAMETRES_AVANCES_HAUT_PAGE'} = "en haut de page";
 $dictionary{'PARAMETRES_AVANCES_BAS_PAGE'} = "en bas de page";
 $dictionary{'PARAMETRES_AVANCES_HAUT_ET_BAS_PAGE'} = "en haut et en bas de page";
 
-$dictionary{'INTRO_AUDIO'} = "<strong class=\"cdlWarning\">Attention : si vous utilisez une synthèse vocale et/ou une revue d'écran, veuillez les désactiver puis,</strong> pour démarrer la lecture vocale de cette page, veuillez appuyer sur la touche <strong>P</strong> de votre clavier ou cliquez sur le bouton <strong>lecture</strong> du lecteur audio ci-dessus.";
+$dictionary{'INTRO_AUDIO'} = "<strong class=\"cdlWarning\">attention : si vous utilisez une synthèse vocale et/ou une revue d'écran, veuillez les désactiver puis,</strong> pour démarrer la lecture vocale de cette page, veuillez appuyer sur la touche <strong>P</strong> de votre clavier ou cliquez sur le bouton <strong>lecture</strong> du lecteur audio ci-dessus.";
 $dictionary{'PARAMETRES_ACTIVER_AUDIO'} = "activer l'audio";
 $dictionary{'PARAMETRES_AUDIO_VOIX'} = "voix";
-$dictionary{'PARAMETRES_AUDIO_VITESSE'} = "Vitesse de lecture des pages";
+$dictionary{'PARAMETRES_AUDIO_VITESSE'} = "vitesse de lecture des pages";
 $dictionary{'JE_M_APPELLE'} = "Je m'appelle";
 $dictionary{'VITESSE_DE_LECTURE'} = "vitesse de lecture";
 $dictionary{'TRES_LENTE'} = "très lente";
@@ -232,6 +232,7 @@ $dictionary{'LABEL_ENTETE_DE_CELLULE'} = "entête de cellule";
 	"e_accent_aigu", "é",
 	"e_accent_grave", "è",
 	"egal", "égal",
+	"entree", "entrée",
 	"espace", "espace",
 	"et_commercial", "et_commercial",
 	"etoile", "étoile",
@@ -247,7 +248,7 @@ $dictionary{'LABEL_ENTETE_DE_CELLULE'} = "entête de cellule";
 	"k", "k",
 	"livre_sterling", "livre_sterling",
 	"l", "l",
-	"majuscule", "majuscule",
+	"majuscule", "grand",
 	"moins", "moins",
 	"multiplie_par", "multiplié_par",
 	"mu", "mu",
@@ -264,12 +265,12 @@ $dictionary{'LABEL_ENTETE_DE_CELLULE'} = "entête de cellule";
 	"pourcent", "pourcent",
 	"p", "p",
 	"q", "q",
-	"retour", "retour_arrière",
+	"retour", "retour",
 	"r", "r",
 	"signe_section", "signe_section",
 	"slash", "slash",
 	"souligne", "souligné",
-	"supprimer", "supprimer",
+	"supprimer", "suppression",
 	"s", "s",
 	"symbole_monetaire", "symbole_monétaire",
 	"tilde", "tilde",
