@@ -770,13 +770,13 @@ function detectKeyDownForFocusable(e) {
                             lecteurCharMaj.currentTime = 0;
                         }
                         if (majuscule) {
-                            jQuery(lecteurChar).bind("ended", function () {
-                                lecteurCharMaj.play();
+                            jQuery(lecteurCharMaj).bind("ended", function () {
+                                lecteurChar.play();
                             });
+                            lecteurCharMaj.play();
                         } else {
-                            jQuery(lecteurChar).unbind("ended");
+                            lecteurChar.play();
                         }
-                        lecteurChar.play();
                     }
                 }
             }

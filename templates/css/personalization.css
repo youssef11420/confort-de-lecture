@@ -4,21 +4,23 @@
 .cdlLogoCdl{float:right}
 .cdlLittleArrow,.cdlConfigChoice{margin-bottom:10px}
 .cdlLittleArrow{margin-bottom:0;padding-bottom:0;line-height:1.2em;font-size:30px}
-.cdlPreview{padding:5px;border-width:.1em;margin:20px 10px 0 15px;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
+.cdlPreview{padding:5px;border-width:.1em;margin:20px 10px 0 15px;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
 .cdlConfigChoices{overflow:hidden;margin-bottom:20px}
 .cdlConfigChoicesGroup{float:left;width:50%;min-width:280px}
+.cdlConfigChoicesGroup *{letter-spacing:normal;word-spacing:normal;line-height:normal}
 .cdlConfigChoice{float:left;width:50%;min-width:280px;padding:20px 15px 0;box-sizing:border-box;text-align:center}
-.cdlConfigChoice ul{padding:0 15px 15px 0;overflow:hidden;background-color:#333333;float:left;border-radius:15px;-moz-border-radius:15px;-WebKit-border-radius:15px}
+.cdlConfigChoice ul{padding:0 15px 15px 0;overflow:hidden;background-color:#333333;float:left;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px}
 .cdlConfigChoice ul li{list-style:none;display:block;float:left;margin:15px 0 0 15px;padding:4px;background-color:#333333}
 .cdlConfigChoice ul li:nth-child(2n+1){clear:left}
-.cdlConfigChoice ul li a{position:relative;display:block;float:left;width:86px !important;height:86px;line-height:86px;overflow:hidden;color:#FFFFFF;background-color:transparent;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px}
+.cdlConfigChoice ul li a{position:relative;display:block;float:left;width:86px !important;height:86px;line-height:86px;overflow:hidden;color:#FFFFFF;background-color:transparent;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px}
 .cdlConfigChoice ul li a:hover,.cdlConfigChoice ul li a:focus{border-color:#FFFFFF !important}
 .cdlConfigChoice ul li a span{position:absolute;top:-3000px;left:-3000px}
-.cdlConfigChoice .cdlButtons{display:block;line-height:40px;clear:both;padding-top:10px;position:relative;float:left}
+.cdlConfigChoice .cdlButtons{display:block;line-height:40px;clear:both;padding-top:10px;position:relative;float:left;min-width:233px}
+.cdlButtons *{letter-spacing:normal;word-spacing:normal;line-height:normal}
 .cdlButtons input{border-width:2px;font-size:40px;line-height:40px}
-.cdlConfigChoice .cdlButtons input{display:block;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
-.cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 50px;position:absolute;top:5px;width:calc(100% - 40px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
-.cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;padding:5px 8px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;height:calc(100% - 21px);color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
+.cdlConfigChoice .cdlButtons input{display:block;font-size:27px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 3px 1px 50px;position:relative;z-index:3;text-align:left;width:100%}
+.cdlConfigChoice .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 46px;position:absolute;top:5px;width:calc(100% - 45px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-webkit-border-radius:0 7px 7px 0}
+.cdlConfigChoice .cdlButtons:before{content:"+";vertical-align:middle;padding:5px 6px 1px;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:52px;width:30px;height:calc(100% - 21px);text-align:center;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-webkit-border-radius:7px 0 0 7px}
 #cdlBackgroundConfigBlack a{background-color:#000000}
 #cdlBackgroundConfigWhite a{background-color:#FFFFFF}
 #cdlBackgroundConfigGreen a{background-color:#009900}
@@ -47,17 +49,18 @@
 #cdlLinkColorConfigYellow a{color:#FFFF00}
 #cdlLinkColorConfigBlue a{color:#0000FF}
 #cdlLinkColorConfigRed a{color:#FF0033}
-.cdlConfigChoice ul .choiceSelected{padding:2px !important;border:2px solid #FFFFFF;border-radius:7px;-moz-border-radius:7px;-WebKit-border-radius:7px}
+.cdlConfigChoice ul .choiceSelected{padding:2px !important;border:2px solid #FFFFFF;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
 .cdlConfigChoice ul .choiceSelected a:hover,.cdlConfigChoice ul .choiceSelected a:focus{border-color:#000000 !important}
 .cdlConfigChoice ul .choiceSelected a{border-color:#000000 !important}
 .cdlLoginForm,.cdlAudioForm,.cdlAdvancedForm,.audioIntro{padding-bottom:10px}
 .cdlDisplayParametersForm{padding:10px 0 10px 0}
 .cdlConfigChoice .cdlFormFieldsHighlighted{display:block;line-height:40px}
 .cdlLabelDiv,.cdlFieldDiv{padding:.15em 0 10px .2em;box-sizing:border-box;float:none;display:inline-block;width:49% !important}
+.cdlLineDiv{word-spacing:normal;letter-spacing:normal}
 .cdlLabelDiv{padding-top:calc(3px + .1em)}
 .cdlLabelDiv label{padding-top:0}
 .cdlFieldDiv .cdlInput_radio,.cdlFieldDiv .cdlInput_checkbox{margin-right:0}
-.cdlFieldDiv .cdlOtherInput{white-space:nowrap;display:inline}
+.cdlFieldDiv .cdlOtherInput{white-space:nowrap;display:inline-block}
 .cdlFieldDiv label{margin-right:.5em;white-space:normal;max-width:calc(100% - ###INPUT_SIZE###px)}
 .cdlAdvancedForm .cdlLabelDiv,.cdlAdvancedForm .cdlFieldDiv{padding-bottom:20px}
 .cdlInfo{font-size:80%;float:right;font-style:italic}
@@ -65,37 +68,43 @@
 .cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
 .cdlColors{float:left;width:calc(50% - 30px);margin:15px;min-width:230px}
 .cdlColors:nth-child(2n+1){text-align:right}
-.cdlColors ul{padding:15px;overflow:hidden;background-color:#333333;box-sizing:border-box;max-width:430px;margin:auto;display:inline-block}
+.cdlColors ul{padding:15px;overflow:hidden;background-color:#333333;box-sizing:border-box;max-width:430px;margin:auto;display:inline-block;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px}
 .cdlColors li{list-style:none;display:block;float:left;text-align:center;box-sizing:border-box;width:100px !important;padding:2px;background-color:transparent}
-.cdlColors li a{display:block;overflow:hidden;color:#000000;padding:3px;background-color:transparent;border:2px solid transparent}
-.cdlColors li a .cdlTransPix{display:block;height:90px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px}
+.cdlColors li a{display:block;overflow:hidden;color:#000000;padding:3px;background-color:transparent;border:2px solid transparent;position:relative}
+.cdlColors li a>span:first-child{display:block;text-decoration:none;font-size:35px;position:absolute;text-align:center;top:0;left:0;width:100%;height:100%;background-color:transparent;letter-spacing:normal;word-spacing:normal;line-height:normal;padding:5px 0;box-sizing:border-box}
+.cdlColors li a>span:first-child span{display:block;text-decoration:none;background-color:transparent;letter-spacing:normal;word-spacing:normal;line-height:normal;height:50%}
+.cdlColors li a>span:first-child span:first-child{color:#FFFFFF}
+.cdlColors li a>span:first-child span:last-child{color:#000000}
+.cdlColors li a .cdlTransPix{display:block;height:90px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px}
 .cdlColors li a .cdlSpanHidden{position:absolute;top:-3000px;left:-3000px}
-.cdlColors .choiceSelected a,.cdlColors li a:hover,.cdlColors li a:focus{border-color:#FFFFFF;border-radius:9px;-moz-border-radius:9px;-WebKit-border-radius:9px}
+.cdlColors .choiceSelected a,.cdlColors li a:hover,.cdlColors li a:focus{border-color:#FFFFFF;border-radius:9px;-moz-border-radius:9px;-webkit-border-radius:9px}
 .cdlColorsForm,.cdlSizesForm{padding-bottom:10px}
 .cdlSizes{padding:15px;margin:0;overflow:hidden;font-size:16px}
 .cdlSizes li{list-style:none;display:inline-block;padding:2px;background-color:transparent;vertical-align:baseline}
 .cdlSizes li a{position:relative;display:table-cell;vertical-align:bottom;width:120px;height:120px;padding:3px;box-sizing:border-box;background-color:transparent;border:2px solid transparent;font-weight:bold;text-decoration:none}
 .cdlSizes li a,.cdlSizes li a *,#cdlConfigChoiceTextSize a,#cdlConfigChoiceTextSize a *{text-decoration:none;cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_5.cur), pointer}
-.cdlSizes li a .cdlTransPix{width:100%;text-align:center;display:block;border-radius:8px;-moz-border-radius:8px;-WebKit-border-radius:8px}
+.cdlSizes li a .cdlTransPix{width:100%;text-align:center;display:block;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px}
 .cdlSizes li a .cdlTransPix:after{content:"A";display:block;line-height:1}
 .cdlSizes li a .cdlSpanHidden{position:absolute;top:-3000px;left:-3000px}
 #cdlSizeConfig1 a,#cdlSizeConfig1 a *,#cdlTextSizeConfig1 a,#cdlTextSizeConfig1 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_1.cur), pointer}
 #cdlSizeConfig2 a,#cdlSizeConfig2 a *,#cdlTextSizeConfig2 a,#cdlTextSizeConfig2 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_2.cur), pointer}
 #cdlSizeConfig3 a,#cdlSizeConfig3 a *,#cdlTextSizeConfig3 a,#cdlTextSizeConfig3 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_3.cur), pointer}
 #cdlSizeConfig4 a,#cdlSizeConfig4 a *,#cdlTextSizeConfig4 a,#cdlTextSizeConfig4 a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_4.cur), pointer}
-.cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-radius:9px;-moz-border-radius:9px;-WebKit-border-radius:9px}
+.cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-radius:9px;-moz-border-radius:9px;-webkit-border-radius:9px}
 .cdlUtilLinksContainer{margin-top:-5px}
 .cdlUtilLinks input,.cdlUtilLinks span{display:block;overflow:hidden}
 .audioHelpIntro ul{padding-top:20px;padding-bottom:5px}
 .audioHelpIntro li{padding-bottom:20px}
 .cdlAdvancedParameters,.cdlValidate{display:block;line-height:40px;padding-right:20px}
 .cdlActions .cdlButtons{display:inline-block;line-height:40px;clear:both;padding-top:10px;position:relative}
-.cdlActions input{display:block;white-space:normal;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 65px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
-.cdlActions .cdlButtons:after{content:"";display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 48px;position:absolute;top:5px;width:calc(100% - 60px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-WebKit-border-radius:0 7px 7px 0}
-.cdlActions .cdlButtons:before{content:"✔";text-align:center;width:1.45em;height:calc(100% - 21px);vertical-align:middle;line-height:1.4;padding:3px 0;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-WebKit-border-radius:7px 0 0 7px}
+.cdlActions input{display:block;white-space:normal;font-size:30px;background-color:transparent;border-color:transparent;color:#FFFFFF;margin-top:0;padding:1px 5px 1px 60px;position:relative;z-index:3;text-align:left;width:calc(100% + 10px)}
+.cdlActions .cdlButtons:after{content:"";letter-spacing:normal;word-spacing:normal;line-height:normal;display:block;background-color:#333333;border-color:transparent;color:#FFFFFF;margin:5px 5px 0 48px;position:absolute;top:5px;width:calc(100% - 60px);height:calc(100% - 15px);border-radius:0 7px 7px 0;-moz-border-radius:0 7px 7px 0;-webkit-border-radius:0 7px 7px 0}
+.cdlActions .cdlButtons:before{content:"✔";letter-spacing:normal;word-spacing:normal;line-height:normal;text-align:center;width:1.45em;height:calc(100% - 21px);vertical-align:middle;line-height:1.4;padding:3px 0;margin:5px 5px 5px 0;position:absolute;top:5px;left:0;display:block;font-weight:bold;font-size:30px;color:#FFFFFF;background-color:#333333;border-radius:7px 0 0 7px;-moz-border-radius:7px 0 0 7px;-webkit-border-radius:7px 0 0 7px}
 .cdlActions .cdlValidate:before{color:#009900}
+.cdlActions .cdlAdvancedParameters:before{content:"+";font-size:52px;padding:5px 7px 1px;width:auto;line-height:40px}
 .cdlActions{text-align:right;overflow:hidden;font-size:30px;clear:both}
 .cdlFormFieldsHighlighted{display:inline-block}
+.cdlButtons:hover:before,.cdlButtons:hover:after{background-color:#666666}
 @media all and (max-width:###MEDIA_QUERY_SIZE_PERSONALIZATION###px) {
 .cdlUtilLinksContainer{position:relative}
 .cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding-top:0 !important;margin-top:-###PAGE_MARGIN_TOP###px}
