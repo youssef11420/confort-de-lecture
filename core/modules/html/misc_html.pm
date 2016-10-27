@@ -165,6 +165,9 @@ sub getCleanedPageContent #($response, $contentType)
 	# Gestion des balises CDL exclure
 	$htmlCode = parseExclure($htmlCode);
 
+	# Gestion des balises CDL contraste
+	$htmlCode = parseContraste($htmlCode);
+
 	# Gestion des balises CDL change/replace
 	$htmlCode = parseChanges($htmlCode);
 	# Gestion des balises CDL replace seules (raccourcis pour éviter les balises CDL change vides)

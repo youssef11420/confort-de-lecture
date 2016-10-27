@@ -95,6 +95,7 @@ use lib '../modules/cdl_tags';
 use bloc;
 use cdl_tag;
 use change_replace;
+use contraste;
 use exclure;
 use nav;
 use position;

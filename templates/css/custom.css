@@ -28,10 +28,10 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 .cdlInversedColor *{background-color:####FONT_COLOR### !important;color:####BACKGROUND_COLOR### !important;border-color:####BACKGROUND_COLOR### !important}
 .cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{margin-top:10px;padding-top:###PAGE_MARGIN_TOP###px !important}
 :root .cdlInput_radio,:root .cdlInput_checkbox{border-color:####FONT_COLOR###;border-width:###INPUT_BORDER###px;width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px;margin-left:-###INPUT_SIZE###px}
-:root .cdlInput_radio,:root .cdlInput_checkbox,:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{border-radius:###INPUT_SIZE###px;-moz-border-radius:###INPUT_SIZE###px;-WebKit-border-radius:###INPUT_SIZE###px;-khtml-border-radius:###INPUT_SIZE###px}
+:root .cdlInput_radio,:root .cdlInput_checkbox,:root .cdlInput_radio:after,:root .cdlInput_checkbox:after{border-radius:###INPUT_SIZE###px;-moz-border-radius:###INPUT_SIZE###px;-webkit-border-radius:###INPUT_SIZE###px;-khtml-border-radius:###INPUT_SIZE###px}
 :root .cdlInput_radio:after,:root .cdlInput_checkbox:after{border-color:####BACKGROUND_COLOR###}
-:root .cdlInput_checkbox{font-size:calc(###INPUT_SIZE###px * 0.72);border-radius:###INPUT_BORDER###px;-moz-border-radius:###INPUT_BORDER###px;-WebKit-border-radius:###INPUT_BORDER###px;-khtml-border-radius:###INPUT_BORDER###px}
-:root .cdlInput_checkbox:after{border-radius:3px;-moz-border-radius:3px;-WebKit-border-radius:3px;-khtml-border-radius:3px}
+:root .cdlInput_checkbox{font-size:calc(###INPUT_SIZE###px * 0.72);border-radius:###INPUT_BORDER###px;-moz-border-radius:###INPUT_BORDER###px;-webkit-border-radius:###INPUT_BORDER###px;-khtml-border-radius:###INPUT_BORDER###px}
+:root .cdlInput_checkbox:after{border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;-khtml-border-radius:3px}
 :root input[type="radio"]:checked + .cdlInput_radio:after{background-color:####FONT_COLOR###}
 :root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px}
 .cdlSelectInput select{right:-###SELECT_DOUBLE_ARROW_SIZE###px;margin-left:-###SELECT_DOUBLE_ARROW_SIZE###px}
@@ -51,6 +51,7 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 .cdlFormExitFromCdl input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
 .cdlSizes li a,.cdlSizes li a *{color:####FONT_COLOR###}
 .cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-color:####FONT_COLOR###}
+.cdlContraste,.cdlContraste *{background-color:####FONT_COLOR###;color:####BACKGROUND_COLOR###;border-color:####BACKGROUND_COLOR###}
 @media all and (max-width: ###MEDIA_QUERY_SIZE###px) {
 .cdlUtilLinksContainer{position:relative}
 .cdlAllPageContainer,.protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding-top:0 !important}
