@@ -26,7 +26,7 @@ label{vertical-align:middle;padding:calc(3px + .1em) 0;display:inline-block}
 ol,ul{padding:5px 0 5px 1.2em}
 ol{counter-reset:item;padding-left:0}
 ol>li{display:block;padding-left:2em}
-ol>li:before{content:counter(item) ". ";counter-increment:item;text-align:right;float:left;width:1.5em;padding-right:.3em;margin-left:-2em;height:1.4em;line-height:1}
+ol>li:before{content:counter(item) ". ";counter-increment:item;text-align:right;float:left;width:1.5em;padding-right:.3em;margin-left:-2em;height:1.4em;line-height:1;top:.6em;position:relative}
 ul>li{display:list-item;list-style-type:disc}
 ul ul>li{list-style-type:circle}
 ul ul ul>li{list-style-type:square}
