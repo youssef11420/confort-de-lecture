@@ -41,7 +41,6 @@ sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $
 
 	# Si l'URL commence par un #, c'est un lien ancre : on y touche pas
 	if ($url =~ m/^\#/si) {
-		$pageUri =~ s/([^\/]*?)\/(.*)/$2/sgi;
 		return $pageUri.$url;
 	}
 
