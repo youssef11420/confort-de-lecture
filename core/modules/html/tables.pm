@@ -69,7 +69,6 @@ sub getTableCellHeaders #($tdAttributes, $tdNumber, %theadersHash)
 
 	$tdHeadersContent =~ s/ \| $//sgi;
 	$tdHeadersContent =~ s/&nbsp;//sgi;
-	$tdHeadersContent =~ s/(<\/?([\w\d]+))( [^>]*?)?>//sgi;
 
 	# Récupérer le colspan du td
 	$tdAttributes =~ s/ (colspan)=(\"|\')(.*?)\2/$nextTdNumber = $3;/segi;
@@ -102,7 +101,7 @@ sub parseTableCellsToSubItems #($trHtmlCode, %theadersHash)
 	my $tdHeadersContent = "";
 	$trHtmlCode =~ s/<td( [^>]*?)?>(.*?)(?=(<t(r|h|d)( [^>]*?)?>|$))/
 		$tdHeadersContent = getTableCellHeaders($1, $numCell++, %theadersHash);
-		"<li class=\"cdlTableCell\"".getTableTagId($1).">".($tdHeadersContent ? "<div><strong>".$tdHeadersContent."&nbsp;:<\/strong><\/div> " : "").$2."<\/li>";/segi;
+		"<li class=\"cdlTableCell\"".getTableTagId($1).">".($tdHeadersContent ? "<div>".$tdHeadersContent."&nbsp;:<\/div> " : "").$2."<\/li>";/segi;
 
 	$trHtmlCode =~ s/(.*)<hr>(.*?)$/$1$2/sgi;
 
