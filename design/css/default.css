@@ -68,6 +68,8 @@ p{padding-bottom:.3em}
 .cdlTable ul li .cdlTableRow{padding-bottom:.6em}
 .cdlTableCaption{padding-bottom:1em}
 .cdlTableCell{margin-bottom:1em}
+.cdlTableCell>.cdlTableCellHeader *{display:inline-block}
+.cdlTableCell>.cdlTableCellHeader:after{content:" :"}
 .cdlInvisibleLink{position:absolute;bottom:0;left:0;width:20px !important;height:20px;display:block;background:transparent}
 .cdlUtilLinks{float:left;margin:6px 0 6px 7px;padding:0 7px;background-color:black;overflow:hidden;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
 .cdlUtilLinks *{background-color:black}
