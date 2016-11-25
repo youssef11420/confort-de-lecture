@@ -44,6 +44,7 @@ hr{display:none}
 table{border-width:.1em 0 0 .1em;width:100% !important}
 th,td{border-width:0 .1em .1em 0;padding:5px}
 p{padding-bottom:.3em}
+i,cite,em,var,address,dfn{font-style:italic}
 .cdlLoginForm .cdlButtons{text-align:center}
 .cdlAudioContent{padding:0 9px 0 0;float:right}
 .cdlAudioObject{float:left;padding:0 3px;position:relative;z-index:86000}
