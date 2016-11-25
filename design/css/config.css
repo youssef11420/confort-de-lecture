@@ -1,11 +1,10 @@
 *{font-family:"Montserrat","Lucida Sans","Lucida Sans Unicode",sans-serif}
-body{font-size:90%}
 .formLine{margin-bottom:.2em;overflow:hidden}
 a{font-weight:bold;color:#006666}
 label{display:block}
 .leftForm{float:left;width:50%;text-align:right}
 .leftForm label{padding-top:.2em}
-input{vertical-align:middle}
+input{vertical-align:middle;font-size:100%}
 input.text{width:75%;border:1px solid black;padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-WebKit-border-radius:5px;-khtml-border-radius:5px}
 .rightForm{float:left;width:50%}
 .rightForm .add{font-weight:bold}

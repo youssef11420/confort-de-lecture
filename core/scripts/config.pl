@@ -174,6 +174,18 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	# Aucun URI de page d'accueil au départ => liste vide
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGES_NO_CACHE_LIST', "");
 
+	my $cdlUrl = $requestParameters{'cdlUrl'}[0];
+	$cdlUrl =~ s/\"/&quot;/sgi;
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'CDL_URL', $cdlUrl);
+
+	if ($requestParameters{'embeddedMode'}[0] eq "1") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_NO', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_YES', "");
+	}
+
 	# Pour chacun des paramètres de configuration suivants, on teste si on revient du formulaire à cause d'une erreur, on met la bonne valeur de configuration
 	if (!$requestParameters{'positionLocation'}[0] or $requestParameters{'positionLocation'}[0] eq "1") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', " checked");
@@ -467,6 +479,12 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create\-action(\?m=\d&|\?|&)?(.*?)$/si) {
 		# Vu qu'il n'y a pas encore de page en no cache, on peut directement mettre celle passée en paramètre
 		$siteConfig = setConfig($siteConfig, 'pagesNoCache', $requestParameters{'pagesNoCache'}[0]);
 
+		$siteConfig = setConfig($siteConfig, 'cdlUrl', $requestParameters{'cdlUrl'}[0]);
+
+		if ($requestParameters{'embeddedMode'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'embeddedMode', $requestParameters{'embeddedMode'}[0]);
+		}
+
 		# On sauvegarde la configuration ainsi mise à jour
 		saveConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini", $siteConfig);
 
@@ -557,6 +575,17 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 
 	# Afficher dans la template la liste des noms de domaine de confiance récupérée du fichier de config du site
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'TRUSTED_DOMAINE_NAMES_LIST', $domaineNamesListString);
+
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'CDL_URL', escapeDoubleQuoteForHtml(getConfig($siteConfig, 'cdlUrl')));
+
+	my $embeddedModeConfig = getConfig($siteConfig, 'embeddedMode');
+	if ($embeddedModeConfig eq "1") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_YES', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_NO', "");
+	} else {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_NO', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'EMBEDDED_MODE_YES', "");
+	}
 
 	# Récupération de la configuration de la position du fil d'Ariane
 	my $positionLocation = getConfig($siteConfig, 'positionLocation');
@@ -904,10 +933,9 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 			} else {
 				$trustedDomaineNames .= "\t".$trustedDomainName;
 			}
-
-			# Mise à jour dans la chaîne contenant configuration du site, du paramètre trustedDomainNames
-			$siteConfig = setConfig($siteConfig, 'trustedDomainNames', $trustedDomaineNames);
 		}
+		# Mise à jour dans la chaîne contenant configuration du site, du paramètre trustedDomainNames
+		$siteConfig = setConfig($siteConfig, 'trustedDomainNames', $trustedDomaineNames);
 
 		# Lister les pages sans cache du site
 		my $pagesNoCache = getConfig($siteConfig, 'pagesNoCache');
@@ -936,6 +964,12 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\-action\/(.*?)(\?.*)?$/si) {
 
 			# Mise à jour dans la chaîne contenant configuration du site, du paramètre pagesNoCache
 			$siteConfig = setConfig($siteConfig, 'pagesNoCache', $pagesNoCache);
+		}
+
+		$siteConfig = setConfig($siteConfig, 'cdlUrl', $requestParameters{'cdlUrl'}[0]);
+
+		if ($requestParameters{'embeddedMode'}[0] ne "") {
+			$siteConfig = setConfig($siteConfig, 'embeddedMode', $requestParameters{'embeddedMode'}[0]);
 		}
 
 		# Sauvegarder la config dans le fichier .ini

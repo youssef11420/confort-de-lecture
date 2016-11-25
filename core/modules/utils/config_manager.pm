@@ -22,6 +22,58 @@
 #
 # Paramètres:
 #	$siteId - identifiant du site à créer
+
+# Initialisation de la chaîne des paramètres de configuration
+my $defaultConfigString = "";
+
+$defaultConfigString .= "[UrlsAndUris]\n";
+$defaultConfigString .= "siteDomainNames = \n";
+$defaultConfigString .= "homePageUris = \n";
+$defaultConfigString .= "trustedDomainNames = \n";
+$defaultConfigString .= "cdlUrl = \n";
+$defaultConfigString .= "embeddedMode = \n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Fil d'ariane]\n";
+$defaultConfigString .= "positionLocation = 1\n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Javascript]\n";
+$defaultConfigString .= "activateJavascript = 0\n";
+$defaultConfigString .= "parseJavascript = 0\n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Frames]\n";
+$defaultConfigString .= "activateFrames = 0\n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Medias]\n";
+$defaultConfigString .= "displayImages = 1\n";
+$defaultConfigString .= "displayObjects = 0\n";
+$defaultConfigString .= "displayApplets = 0\n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Tables]\n";
+$defaultConfigString .= "parseTablesToList = 1\n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[TitlesAndDefaultStrings]\n";
+$defaultConfigString .= "siteLabel = \n";
+$defaultConfigString .= "defaultLanguage = \n";
+$defaultConfigString .= "logo = \n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Audio]\n";
+$defaultConfigString .= "enableAudio = \n";
+$defaultConfigString .= "voiceChoice = \n";
+$defaultConfigString .= "ttsMode = \n";
+$defaultConfigString .= "ttsServerName = \n";
+$defaultConfigString .= "ttsPort = \n";
+$defaultConfigString .= "ttsUri = \n";
+$defaultConfigString .= "ttsDefaultQueryString = \n";
+$defaultConfigString .= "ttsVoiceParamName = \n";
+$defaultConfigString .= "ttsRateParamName = \n";
+$defaultConfigString .= "ttsTextParamName = \n";
+$defaultConfigString .= "enableGlossary = \n";
+$defaultConfigString .= "utf8DecodeContent = \n";
+$defaultConfigString .= "\n";
+$defaultConfigString .= "[Cache]\n";
+$defaultConfigString .= "cacheExpiry = \n";
+$defaultConfigString .= "pagesNoCache = \n";
+
 sub createSiteConfig #($siteId)
 {
 	my ($siteId) = @_;
@@ -33,57 +85,8 @@ sub createSiteConfig #($siteId)
 	# Création et ouverture du fichier de configuration .ini
 	open(SITE_INI, ">:encoding(utf-8)", $cdlSitesConfigPath.$siteId."/".$siteId.".ini") or die "Erreur d'ouverture du fichier : ".$siteId.".ini.\n";
 
-	# Initialisation de la chaîne des paramètres de configuration
-	my $configString = "";
-
-	$configString .= "[UrlsAndUris]\n";
-	$configString .= "siteDomainNames = \n";
-	$configString .= "homePageUris = \n";
-	$configString .= "trustedDomainNames = \n";
-	$configString .= "\n";
-	$configString .= "[Fil d'ariane]\n";
-	$configString .= "positionLocation = 1\n";
-	$configString .= "\n";
-	$configString .= "[Javascript]\n";
-	$configString .= "activateJavascript = 0\n";
-	$configString .= "parseJavascript = 0\n";
-	$configString .= "\n";
-	$configString .= "[Frames]\n";
-	$configString .= "activateFrames = 0\n";
-	$configString .= "\n";
-	$configString .= "[Medias]\n";
-	$configString .= "displayImages = 1\n";
-	$configString .= "displayObjects = 0\n";
-	$configString .= "displayApplets = 0\n";
-	$configString .= "\n";
-	$configString .= "[Tables]\n";
-	$configString .= "parseTablesToList = 1\n";
-	$configString .= "\n";
-	$configString .= "[TitlesAndDefaultStrings]\n";
-	$configString .= "siteLabel = \n";
-	$configString .= "defaultLanguage = \n";
-	$configString .= "logo = \n";
-	$configString .= "\n";
-	$configString .= "[Audio]\n";
-	$configString .= "enableAudio = \n";
-	$configString .= "voiceChoice = \n";
-	$configString .= "ttsMode = \n";
-	$configString .= "ttsServerName = \n";
-	$configString .= "ttsPort = \n";
-	$configString .= "ttsUri = \n";
-	$configString .= "ttsDefaultQueryString = \n";
-	$configString .= "ttsVoiceParamName = \n";
-	$configString .= "ttsRateParamName = \n";
-	$configString .= "ttsTextParamName = \n";
-	$configString .= "enableGlossary = \n";
-	$configString .= "utf8DecodeContent = \n";
-	$configString .= "\n";
-	$configString .= "[Cache]\n";
-	$configString .= "cacheExpiry = \n";
-	$configString .= "pagesNoCache = \n";
-
 	# Ecriture de la chaîne iniale de configuration dans le fichier
-	print SITE_INI $configString;
+	print SITE_INI $defaultConfigString;
 
 	# Fermeture du fichier de configuration
 	close(SITE_INI);
@@ -183,7 +186,13 @@ sub setConfig #($configString, $configKey, $configValue)
 {
 	my ($configString, $configKey, $configValue) = @_;
 
-	$configString =~ s/((^|\n)$configKey *= *)(.*?)(\n|$)/$1.$configValue.$4/segi;
+	if ($configString !~ /$configKey/si) {
+		my $prevConfig = "";
+		$defaultConfigString =~ s/(([^\n]+?)( *= *[^\n]*?)?\n$configKey)/$prevConfig = $2; $1/segi;
+		$configString =~ s/($prevConfig( *= *.*?)?\n)/$1.$configKey." = ".$configValue."\n"/segi;
+	} else {
+		$configString =~ s/((^|\n)$configKey *= *)(.*?)(\n|$)/$1.$configValue.$4/segi;
+	}
 
 	return $configString;
 }

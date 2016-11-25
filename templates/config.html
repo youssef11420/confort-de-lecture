@@ -68,6 +68,15 @@ jQuery.noConflict();
 <div class="rightForm"><input class="text" type="text" id="trustedDomainName" name="trustedDomainName" value="###TRUSTED_DOMAIN_NAME###">&nbsp;<input type="submit" name="ajouterTrustedDomainNames" class="add" value="ajouter" title="ajouter le nom de domaine de confiance">
 ###TRUSTED_DOMAINE_NAMES_LIST###</div>
 </div>
+<hr>
+<div class="formLine">
+<div class="leftForm"><label for="cdlUrl">URL de Confort de lecture :&nbsp;</label></div>
+<div class="rightForm"><input class="text" type="text" id="cdlUrl" name="cdlUrl" value="###CDL_URL###"></div>
+</div>
+<div class="formLine">
+<div class="leftForm">Mode intégré :&nbsp;</div>
+<div class="rightForm"><span class="radio"><input type="radio" id="embeddedMode1" name="embeddedMode" value="1"###EMBEDDED_MODE_YES###><label for="embeddedMode1">oui</label>&nbsp;&nbsp;<input type="radio" id="embeddedMode0" name="embeddedMode" value="0"###EMBEDDED_MODE_NO###><label for="embeddedMode0">non</label></span></div>
+</div>
 </fieldset>
 <fieldset>
 <legend>Fil d'Ariane</legend>
@@ -238,76 +247,76 @@ jQuery.noConflict();
 <div>
 <br><input type="submit" name="save" value="Sauvegarder" class="submit">
 </div>
-</form><!--/###GLOSSARY_FORM###-->
-<br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a>
-</div>
-<div>
-<br><p>&copy; ###CURRENT_YEAR### &mdash; confort de lecture
-</div>
+</form>
 <script>
 //<![CDATA[
-jQuery(document).on('click', '.deleteLines', function () {
-	jQuery('.deleteRow:checked').parent().parent().remove();
-	jQuery('.deleteNewRow:checked').parent().parent().remove();
-	jQuery('.deleteAllRows').attr('checked', false);
-	jQuery('.deleteAllNewRows').attr('checked', false);
-	return false;
-});
-jQuery(document).on('change', '.deleteAllRows', function () {
-	if (jQuery(this).attr('checked')) {
-		jQuery('.deleteRow').attr('checked', true);
-	} else {
-		jQuery('.deleteRow').attr('checked', false);
-	}
-});
-jQuery(document).on('change', '.deleteAllNewRows', function () {
-	if (jQuery(this).attr('checked')) {
-		jQuery('.deleteNewRow').attr('checked', true);
-	} else {
-		jQuery('.deleteNewRow').attr('checked', false);
-	}
-});
-jQuery(document).on('click', '.addLineLink', function () {
-	var count = jQuery('#rowsToAdd').val(), i;
+	jQuery(document).on('click', '.deleteLines', function () {
+		jQuery('.deleteRow:checked').parent().parent().remove();
+		jQuery('.deleteNewRow:checked').parent().parent().remove();
+		jQuery('.deleteAllRows').attr('checked', false);
+		jQuery('.deleteAllNewRows').attr('checked', false);
+		return false;
+	});
+	jQuery(document).on('change', '.deleteAllRows', function () {
+		if (jQuery(this).attr('checked')) {
+			jQuery('.deleteRow').attr('checked', true);
+		} else {
+			jQuery('.deleteRow').attr('checked', false);
+		}
+	});
+	jQuery(document).on('change', '.deleteAllNewRows', function () {
+		if (jQuery(this).attr('checked')) {
+			jQuery('.deleteNewRow').attr('checked', true);
+		} else {
+			jQuery('.deleteNewRow').attr('checked', false);
+		}
+	});
+	jQuery(document).on('click', '.addLineLink', function () {
+		var count = jQuery('#rowsToAdd').val(), i;
 
-	for (i = 0; i < count; i++) {
-		jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="###EMBEDDED_URL###/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
-	}
-	return false;
-});
-jQuery(document).on('click', '.deleteLineLink', function () {
-	jQuery(this).parent().parent().remove();
-	return false;
-});
-nbChampsErreur = 0;
-jQuery(document).on('click', 'input:submit', function () {
-	var erreurs = false, premierChampEnErreur = null;
+		for (i = 0; i < count; i++) {
+			jQuery(this).parent().parent().after('<tr><td><input type="checkbox" name="deleteNewRow" class="deleteNewRow"><td><input type="text" name="pattern" value="" class="text"><td><input type="text" name="replacement" value=\'\' class="text"><td><select name="icase"><option value="1" selected>Oui<option value="0">Non</select><td><select name="sepl"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><select name="sepr"><option value="0">Indifférent<option value="1" selected>Non alphanumérique<option value="2">Non alphabétique</select><td><a href="#" class="deleteLineLink"><img src="###EMBEDDED_URL###/design/images/delete.png" alt="Supprimer la ligne du glossaire"></a>');
+		}
+		return false;
+	});
+	jQuery(document).on('click', '.deleteLineLink', function () {
+		jQuery(this).parent().parent().remove();
+		return false;
+	});
+	nbChampsErreur = 0;
+	jQuery(document).on('click', 'input:submit', function () {
+		var erreurs = false, premierChampEnErreur = null;
+		jQuery('input[name="pattern"]').each(function () {
+			try {
+				new RegExp(jQuery(this).val());
+				jQuery(this).css('background-color', 'white').css('border-color', 'black');
+			} catch (e) {
+				jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');
+				if (premierChampEnErreur === null) {
+					premierChampEnErreur = jQuery(this);
+				}
+				erreurs = true;
+			}
+		});
+
+		if (erreurs) {
+			premierChampEnErreur.focus();
+		}
+		return !erreurs;
+	});
+
 	jQuery('input[name="pattern"]').each(function () {
 		try {
 			new RegExp(jQuery(this).val());
 			jQuery(this).css('background-color', 'white').css('border-color', 'black');
 		} catch (e) {
 			jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');
-			if (premierChampEnErreur === null) {
-				premierChampEnErreur = jQuery(this);
-			}
-			erreurs = true;
 		}
 	});
-
-	if (erreurs) {
-		premierChampEnErreur.focus();
-	}
-	return !erreurs;
-});
-
-jQuery('input[name="pattern"]').each(function () {
-	try {
-		new RegExp(jQuery(this).val());
-		jQuery(this).css('background-color', 'white').css('border-color', 'black');
-	} catch (e) {
-		jQuery(this).css('background-color', '#f9e9ea').css('border-color', '#c1272d');
-	}
-});
 //]]>
-</script>
+</script><!--/###GLOSSARY_FORM###-->
+<br><p><a href="###EMBEDDED_URL###/admin" class="black">Retour à l'accueil</a>
+</div>
+<div>
+<br><p>&copy; ###CURRENT_YEAR### &mdash; confort de lecture
+</div>
