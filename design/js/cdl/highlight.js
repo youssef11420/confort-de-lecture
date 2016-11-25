@@ -795,7 +795,7 @@ var isFirstField = true;
 function highlightedElements(theElement) {
     "use strict";
     theElement.children(":not(script,noscript)").each(function () {
-        if (jQuery("div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,address,blockquote,ins,del,form,fieldset,legend,span.cdlInputText,span.cdlOtherInput,span.cdlButtons,table,caption,thead,tbody,th,td,span.cdlPartOfText,a,strong.cdlSelectInput,textarea,br,hr,img,label,noscript", jQuery(this)).size() === 0 || jQuery(this).is("a") || jQuery(this).is("span.cdlButtons")) {
+        if (jQuery("div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,address,blockquote,ins,del,form,fieldset,legend,span.cdlInputText,span.cdlOtherInput,span.cdlButtons,table,caption,thead,tbody,th,td,span.cdlPartOfText,a,strong.cdlSelectInput,textarea,br,hr,img,noscript", jQuery(this)).size() === 0 || jQuery(this).is("a") || jQuery(this).is("span.cdlButtons")) {
             var elementContent = trim(jQuery(this).text());
             if ((elementContent && elementContent.match(new RegExp("[^-\\!\"'\\(\\),\\.\/:;<>\\?\\[\\\\\\]\\^_`\\{\\|\\}~‘’¡¤¦§¨ª«¬¯´¶·¸¹»¿• " + String.fromCharCode(160) + "\t\n]", "i"))) || jQuery(this).is("span.cdlInputText, span.cdlOtherInput, span.cdlButtons, strong.cdlSelectInput, textarea") || (jQuery(this).is("img") && (jQuery(this).attr("alt") || jQuery(this).attr("title"))) || (jQuery(this).is("a") && jQuery("img", jQuery(this)).size() > 0)) {
                 if (!jQuery(this).is("label")) {

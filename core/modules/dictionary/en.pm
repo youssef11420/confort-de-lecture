@@ -35,6 +35,7 @@ $dictionary{'LABEL_FOND_BLANC'} = "couleur de fond blanche";
 $dictionary{'LABEL_FOND_VERT'} = "couleur de fond verte";
 $dictionary{'LABEL_FOND_JAUNE'} = "couleur de fond jaune";
 $dictionary{'LABEL_FOND_BLEU'} = "couleur de fond bleue";
+$dictionary{'LABEL_FOND_ROUGE'} = "couleur de fond rouge";
 $dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_FOND'} = "choisir d'autres couleurs pour le fond";
 
 $dictionary{'LABEL_TRES_PETITE'} = "taille de texte très petite";
@@ -65,7 +66,7 @@ $dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de contraste";
 $dictionary{'BOUTON_PLUS_DE_TAILLES'} = "de tailles";
 
 $dictionary{'TITRE_PREVISUALISATION'} = "zone de prévisualisation";
-$dictionary{'TEXTE_PREVISUALISATION'} = "<a href=\"http://www.confortdelecture.org\" target=\"_blank\">Confort de lecture</a> vous permet de choisir la couleur de fond, la taille et la couleur des caractères, et la couleur des liens, adaptés à votre vision et à vos pages imprimées.";
+$dictionary{'TEXTE_PREVISUALISATION'} = "<a href=\"http://www.confortdelecture.org\" target=\"_blank\">Confort de lecture</a> <span class=\"cdlPartOfText\">vous permet de choisir la couleur de fond, la taille et la couleur des caractères, et la couleur des liens, adaptés à votre vision et à vos pages imprimées.</span>";
 
 $dictionary{'PARAMETRES_AVANCES'} = "paramètres avancés";
 $dictionary{'TITLE_PARAMETRES_AVANCES'} = "personnalisez vos paramètres avancés";
@@ -102,9 +103,9 @@ $dictionary{'PARAMETRES_AVANCES_IMG'} = "afficher les images";
 $dictionary{'PARAMETRES_AVANCES_OBJECT'} = "afficher les contenus animations, audios et vidéos";
 $dictionary{'PARAMETRES_AVANCES_TABLE'} = "linéariser les tableaux";
 $dictionary{'PARAMETRES_AVANCES_JS'} = "activer les scripts";
-$dictionary{'PARAMETRES_AVANCES_JS_INFO'} = "(si 'non' est coché, le fonctionnement alternatif est activé)";
-$dictionary{'PARAMETRES_AVANCES_IMG_INFO'} = "(si 'non' est coché, le contenu alternatif est affiché)";
-$dictionary{'PARAMETRES_AVANCES_OBJECT_INFO'} = "(si 'non' est coché, le contenu alternatif est affiché)";
+$dictionary{'PARAMETRES_AVANCES_JS_INFO'} = "(si \"non\" est coché, le fonctionnement alternatif est activé)";
+$dictionary{'PARAMETRES_AVANCES_IMG_INFO'} = "(si \"non\" est coché, le contenu alternatif est affiché)";
+$dictionary{'PARAMETRES_AVANCES_OBJECT_INFO'} = "(si \"non\" est coché, le contenu alternatif est affiché)";
 $dictionary{'PARAMETRES_AVANCES_TABLE_INFO'} = "(les transformer en listes à puces)";
 $dictionary{'OUI'} = "oui";
 $dictionary{'NON'} = "non";
