@@ -166,6 +166,10 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	# Aucun URI de page d'accueil au départ => liste vide
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'HOME_PAGE_URIS_LIST', "");
 
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TRUSTED_DOMAIN_NAME', $requestParameters{'trustedDomainName'}[0]);
+	# Aucun URI de page d'accueil au départ => liste vide
+	$formTemplateString = setValueInTemplateString($formTemplateString, 'TRUSTED_DOMAINE_NAMES_LIST', "");
+
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGE_NO_CACHE', $requestParameters{'pageNoCache'}[0]);
 	# Aucun URI de page d'accueil au départ => liste vide
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'PAGES_NO_CACHE_LIST', "");
