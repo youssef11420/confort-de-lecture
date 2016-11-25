@@ -77,9 +77,9 @@ sub htmlToTts #($pageContent, $deleteOptionTitle)
 		elsif ($inputAttributes{'type'} eq "submit") {" ".$dictionary{'LABEL_BOUTON'}." ".$dictionary{'LABEL_VALIDATION'}." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
 		elsif ($inputAttributes{'type'} eq "image") {" ".$dictionary{'LABEL_BOUTON'}." ".$dictionary{'LABEL_VALIDATION'}." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'alt'}) ? $inputAttributes{'title'} : $inputAttributes{'alt'}).".__cdl_brk500__"}
 		# Transformation des cases é cocher par le texte "Case à cocher : {intitulé récupéré dans le label}, {en indiquant si la case est précochée}"
-		elsif ($inputAttributes{'type'} eq "checkbox") {" ".$dictionary{'LABEL_CASE_A_COCHER'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? $dictionary{'LABEL_COCHEE'} : "").".__cdl_brk500__"}
+		elsif ($inputAttributes{'type'} eq "checkbox") {" ".$dictionary{'LABEL_CASE_A_COCHER'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".(($inputAttributes{'checked'} eq "" or $inputAttributes{'checked'} eq "checked") ? $dictionary{'LABEL_COCHEE'} : "").".__cdl_brk500__"}
 		# Transformation des boutons radio par le texte "Bouton radio : {intitulé récupéré dans le label}, {en indiquant si le bouton radio est précoché}"
-		elsif ($inputAttributes{'type'} eq "radio") {" ".$dictionary{'LABEL_BOUTON_RADIO'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".($inputAttributes{'checked'} eq "checked" ? $dictionary{'LABEL_COCHE'} : "").".__cdl_brk500__"}
+		elsif ($inputAttributes{'type'} eq "radio") {" ".$dictionary{'LABEL_BOUTON_RADIO'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".(($inputAttributes{'checked'} eq "" or $inputAttributes{'checked'} eq "checked") ? $dictionary{'LABEL_COCHE'} : "").".__cdl_brk500__"}
 		# Transformation des champs d'upload de fichiers par le texte "Champ fichier : {intitulé récupéré dans le label}"
 		elsif ($inputAttributes{'type'} eq "file") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_FICHIER'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
 		# Transformation des champs cryptés (masqués avec des *) par le texte "Champ crypté : {intitulé récupéré dans le label}"

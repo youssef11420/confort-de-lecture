@@ -33,6 +33,7 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 :root .cdlInput_checkbox{font-size:calc(###INPUT_SIZE###px * 0.72);border-radius:###INPUT_BORDER###px;-moz-border-radius:###INPUT_BORDER###px;-webkit-border-radius:###INPUT_BORDER###px;-khtml-border-radius:###INPUT_BORDER###px}
 :root .cdlInput_checkbox:after{border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;-khtml-border-radius:3px}
 :root input[type="radio"]:checked + .cdlInput_radio:after{background-color:####FONT_COLOR###}
+:root .cdlInversedColor input[type="radio"]:checked + .cdlInput_radio:after{background-color:####BACKGROUND_COLOR###}
 :root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px}
 .cdlSelectInput select{right:-###SELECT_DOUBLE_ARROW_SIZE###px;margin-left:-###SELECT_DOUBLE_ARROW_SIZE###px}
 .cdlSelectInput span{background-color:####BACKGROUND_COLOR###}
