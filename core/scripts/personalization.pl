@@ -311,7 +311,7 @@ if ($action =~ m/^affichage$/si) {
 
 	my $sizeChoices = "";
 	foreach my $sizeItem (sort keys(%fontSizes)) {
-		$sizeChoices .= "<li id=\"cdlSizeConfig".$sizeItem."\"".($sizeItem eq $size ? " class=\"choiceSelected\"" : "")."><a href=\"".$embeddedMode."/personnalisation?moretextsizes=1&amp;cdlfs=".$sizeItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlSizeConfig".$sizeItem."\"><span class=\"cdlTransPix\" style=\"font-size:".$fontSizes{$sizeItem}."%\"></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_TAILLE### <span>".$sizeItem."</span>, ###_DICO_TEXTE_SOIT###".$fontSizes{$sizeItem}."% (".($fontSizes{$sizeItem} * 16 / 100)." pixels)</span></a>";
+		$sizeChoices .= "<li id=\"cdlSizeConfig".$sizeItem."\"".($sizeItem eq $size ? " class=\"choiceSelected\"" : "")."><a href=\"".$embeddedMode."/personnalisation?moretextsizes=1&amp;cdlfs=".$sizeItem."&amp;cdlid=###SITE_ID###&amp;cdlurl=###URL_TO_PARSE####cdlSizeConfig".$sizeItem."\"><span class=\"cdlTransPix\" style=\"font-size:".$fontSizes{$sizeItem}."%\"></span><span class=\"cdlSpanHidden\">###_DICO_LABEL_TAILLE### <span>".$sizeItem."</span>, ###_DICO_TEXTE_SOIT###".$fontSizes{$sizeItem}."% (".int($fontSizes{$sizeItem} * 16 / 100)." pixels)</span></a>";
 	}
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SIZE_LIST', $sizeChoices);
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SIZE_CHOSEN', $size);

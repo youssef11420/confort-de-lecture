@@ -77,9 +77,9 @@ sub htmlToTts #($pageContent, $deleteOptionTitle)
 		elsif ($inputAttributes{'type'} eq "submit") {" ".$dictionary{'LABEL_BOUTON'}." ".$dictionary{'LABEL_VALIDATION'}." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'value'}) ? $inputAttributes{'title'} : $inputAttributes{'value'}).".__cdl_brk500__"}
 		elsif ($inputAttributes{'type'} eq "image") {" ".$dictionary{'LABEL_BOUTON'}." ".$dictionary{'LABEL_VALIDATION'}." : ".(length($inputAttributes{'title'}) > length($inputAttributes{'alt'}) ? $inputAttributes{'title'} : $inputAttributes{'alt'}).".__cdl_brk500__"}
 		# Transformation des cases é cocher par le texte "Case à cocher : {intitulé récupéré dans le label}, {en indiquant si la case est précochée}"
-		elsif ($inputAttributes{'type'} eq "checkbox") {" ".$dictionary{'LABEL_CASE_A_COCHER'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".(($inputAttributes{'checked'} eq "" or $inputAttributes{'checked'} eq "checked") ? $dictionary{'LABEL_COCHEE'} : "").".__cdl_brk500__"}
+		elsif ($inputAttributes{'type'} eq "checkbox") {" ".$dictionary{'LABEL_CASE_A_COCHER'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".((defined $inputAttributes{'checked'}) ? $dictionary{'LABEL_COCHEE'} : "").".__cdl_brk500__"}
 		# Transformation des boutons radio par le texte "Bouton radio : {intitulé récupéré dans le label}, {en indiquant si le bouton radio est précoché}"
-		elsif ($inputAttributes{'type'} eq "radio") {" ".$dictionary{'LABEL_BOUTON_RADIO'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".(($inputAttributes{'checked'} eq "" or $inputAttributes{'checked'} eq "checked") ? $dictionary{'LABEL_COCHE'} : "").".__cdl_brk500__"}
+		elsif ($inputAttributes{'type'} eq "radio") {" ".$dictionary{'LABEL_BOUTON_RADIO'}." : ".$labelsTexts{$inputAttributes{'id'}}.", ".((defined $inputAttributes{'checked'}) ? $dictionary{'LABEL_COCHE'} : "").".__cdl_brk500__"}
 		# Transformation des champs d'upload de fichiers par le texte "Champ fichier : {intitulé récupéré dans le label}"
 		elsif ($inputAttributes{'type'} eq "file") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_FICHIER'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk500__"}
 		# Transformation des champs cryptés (masqués avec des *) par le texte "Champ crypté : {intitulé récupéré dans le label}"
@@ -110,7 +110,7 @@ sub htmlToTts #($pageContent, $deleteOptionTitle)
 	# Transformation des options de liste déroulante par le texte "Option de liste {en indiquant si l'option est préselectionnée} : {intitulé de l'option (son contenu), en précisant si l'option est vide}"
 	$pageContent =~ s/<option( [^>]*)?>(.*?)<\/option>/
 		my %optionAttributes = getTagAttributes($1);
-		$optionAttributes{'selected'} eq "selected" ? ($deleteOptionTitle ne 1 ? " ".$dictionary{'LABEL_OPTION_DE_LISTE'}." ".$dictionary{'LABEL_SELECTIONNEE'}." : " : "").($2 ? (length($optionAttributes{'title'}) > length($2) ? $optionAttributes{'title'} : $2) : $dictionary{'LABEL_VIDE'}) : ""
+		(defined $optionAttributes{'selected'}) ? ($deleteOptionTitle ne 1 ? " ".$dictionary{'LABEL_OPTION_DE_LISTE'}." ".$dictionary{'LABEL_SELECTIONNEE'}." : " : "").($2 ? (length($optionAttributes{'title'}) > length($2) ? $optionAttributes{'title'} : $2) : $dictionary{'LABEL_VIDE'}) : ""
 		/segi;
 
 	# Transformation des zones de saisie multiligne par le texte "Zone de saisie multiligne {intitulé récupéré dans le label}, {en indiquant la valeur de la zone si elle est préremplie}"
