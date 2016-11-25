@@ -518,7 +518,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my $domaineNamesListString = @domaineNameArray ? "<ul>" : "";
 
 	foreach my $domainName (@domaineNameArray) {
-		$domaineNamesListString .= "<li>".$domainName."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/siteDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine : ".$domainName."\"></a></li>";
+		$domaineNamesListString .= "<li>".$domainName."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/siteDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine : ".$domainName."\"></a>";
 	}
 	$domaineNamesListString .= @domaineNameArray ? "</ul>" : "";
 
@@ -532,7 +532,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	# Génération de la liste à puce des URIs de la page d'accueil
 	my $homePageUrisListString = @homePageUrisArray ? "<ul>" : "";
 	foreach my $homePageUri (@homePageUrisArray) {
-		$homePageUrisListString .= "<li>".$homePageUri."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/homePageUris?paramValue=".urlEncode($homePageUri)."\" title=\"Supprimer l'URI '".$homePageUri."' de la page d'accueil\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer l'URI ".$homePageUri." de la page d'accueil\"/></a></li>";
+		$homePageUrisListString .= "<li>".$homePageUri."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/homePageUris?paramValue=".urlEncode($homePageUri)."\" title=\"Supprimer l'URI '".$homePageUri."' de la page d'accueil\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer l'URI ".$homePageUri." de la page d'accueil\"/></a>";
 	}
 	$homePageUrisListString .= @homePageUrisArray ? "</ul>" : "";
 
@@ -547,7 +547,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	$domaineNamesListString = @domaineNameArray ? "<ul>" : "";
 
 	foreach my $domainName (@domaineNameArray) {
-		$domaineNamesListString .= "<li>".$domainName."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/trustedDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine de confiance : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine de confiance : ".$domainName."\"></a></li>";
+		$domaineNamesListString .= "<li>".$domainName."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/trustedDomainNames?paramValue=".urlEncode($domainName)."\" title=\"Supprimer le nom de domaine de confiance : ".$domainName."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer le nom de domaine de confiance : ".$domainName."\"></a>";
 	}
 	$domaineNamesListString .= @domaineNameArray ? "</ul>" : "";
 
@@ -710,7 +710,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	my $pagesNoCacheListString = @pageNoCacheArray ? "<ul>" : "";
 
 	foreach my $pageNoCache (@pageNoCacheArray) {
-		$pagesNoCacheListString .= "<li>".$pageNoCache."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/pagesNoCache?paramValue=".urlEncode($pageNoCache)."\" title=\"Supprimer la page : ".$pageNoCache."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer la page : ".$pageNoCache."\"></a></li>";
+		$pagesNoCacheListString .= "<li>".$pageNoCache."&nbsp;<a href=\"".$embeddedMode."/admin/sites/delete-param/".$siteId."/pagesNoCache?paramValue=".urlEncode($pageNoCache)."\" title=\"Supprimer la page : ".$pageNoCache."\"><img src='".$embeddedMode."/design/images/delete.png' alt=\"Supprimer la page : ".$pageNoCache."\"></a>";
 	}
 	$pagesNoCacheListString .= @pageNoCacheArray ? "</ul>" : "";
 

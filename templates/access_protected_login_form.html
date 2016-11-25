@@ -45,8 +45,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <div class="protectedPageLoginContent">
 <div class="cdlCadreContainer">
 <div class="cdlCadre">
-<p>###_DICO_PHRASE_ACCES_PAGE_PROTEGEE###
-<br>
+<p>###_DICO_PHRASE_ACCES_PAGE_PROTEGEE###</p>
 <div>###ERROR_LOGIN_MESSAGE###</div>
 <form class="cdlLoginForm" method="post" action="">
 <div>
@@ -54,11 +53,11 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <input type="hidden" name="cdlact" value="c">
 <div class="cdlLineDiv">
 <div class="cdlLabelDiv"><label for="cdllogin">###_DICO_LABEL_NOM_UTILISATEUR###</label></div>
-<div class="cdlFieldDiv"><input class="cdlInputText" type="text" id="cdllogin" name="cdllogin" placeholder="Nom d'utilisateur"></div>
+<div class="cdlFieldDiv"><span class="cdlInputText"><input type="text" id="cdllogin" name="cdllogin" placeholder="###_DICO_LABEL_NOM_UTILISATEUR2###"></span></div>
 </div>
 <div class="cdlLineDiv">
 <div class="cdlLabelDiv"><label for="cdlpasswd">###_DICO_LABEL_MOT_DE_PASSE###</label></div>
-<div class="cdlFieldDiv"><input class="cdlInputText" type="password" id="cdlpasswd" name="cdlpasswd"></div>
+<div class="cdlFieldDiv"><span class="cdlInputText"><input type="password" id="cdlpasswd" name="cdlpasswd"></span></div>
 </div>
 <br>
 <span class="cdlButtons"><input type="submit" name="cdlvalider" value="Valider"></span>
