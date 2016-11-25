@@ -804,7 +804,7 @@ function highlightedElements(theElement) {
                         currentFocusableIndiceForInit = i;
                         isFirstElementInCadre = false;
                     }
-                    if (jQuery(this).children("input[type!=\"hidden\"],button").size() === 1 || jQuery(this).is("span.cdlSelectInput,textarea")) {
+                    if (jQuery(this).children("input[type!=\"hidden\"],button").size() === 1 || jQuery(this).is("span.cdlSelectInput,textarea,select")) {
                         jQuery(this).wrap("<span class=\"cdlFormFieldsHighlighted\"></span>");
                         pageParts.push(jQuery(this).parent());
                         jQuery(this).parent().addClass("cdlToRead" + i);
