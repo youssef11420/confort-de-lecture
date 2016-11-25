@@ -238,7 +238,7 @@ sub cleanHtml #($htmlCode)
 	$htmlCode =~ s/(<(input|param|button|option) )(([^>]*? )?(value)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
 	$htmlCode =~ s/(<(object|embed|iframe) )(([^>]*? )?(height)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
 	$htmlCode =~ s/(<(object|embed|iframe) )(([^>]*? )?(width)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
-	$htmlCode =~ s/(<(select) )(([^>]*? )?(size)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
+	$htmlCode =~ s/(<(select|input) )(([^>]*? )?(size)=(.*?( |>)))/$1$4_cdl_$5=$6/sgi;
 
 	# Suppression des attributs dépréciés
 	$htmlCode =~ s/(<([\w\d]+))( [^>]*?)>/$1.cleanAttributesValues($3).">"/segi;
