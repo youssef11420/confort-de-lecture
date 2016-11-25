@@ -95,7 +95,7 @@ sub htmlToTts #($pageContent, $deleteOptionTitle)
 		elsif ($inputAttributes{'type'} eq "search") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_DE_RECHERCHE'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
 		elsif ($inputAttributes{'type'} eq "tel") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_TELEPHONE'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
 		elsif ($inputAttributes{'type'} eq "time") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_HEURE'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
-		elsif ($inputAttributes{'type'} eq "url") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_LIEN'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
+		elsif ($inputAttributes{'type'} eq "url") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_URL'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
 		elsif ($inputAttributes{'type'} eq "week") {" ".$dictionary{'LABEL_CHAMP'}." ".$dictionary{'LABEL_SEMAINE'}." : ".$labelsTexts{$inputAttributes{'id'}}.".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
 		# Transformation des champs texte par le texte "Champ texte : {intitulé récupéré dans le label}, {en indiquant la valeur du champ s'il est prérempli}"
 		elsif (!$inputAttributes{'type'} or $inputAttributes{'type'} ne "hidden") {" ".$dictionary{'LABEL_CHAMP_EDITION'}." : ".$labelsTexts{$inputAttributes{'id'}}.($inputAttributes{'value'} ? " : ".$inputAttributes{'value'} : "").".__cdl_brk3000__ ".$dictionary{'PHRASE_SORTIR_DU_CHAMP'}}
