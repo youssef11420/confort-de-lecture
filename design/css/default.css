@@ -18,7 +18,7 @@ input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-ms-cle
 input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"],textarea{padding:1px 3px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px}
 select{border-width:.1em;margin-bottom:5px}
 select::-ms-expand{display:none}
-input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"]{border-width:.1em;margin:2px 0 3px;vertical-align:middle;box-sizing:border-box;width:calc(100% - .2em)}
+input.cdlInputText,.cdlInputText input,input[type="text"],input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="month"],input[type="number"],input[type="range"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"],input[type="week"],input[type="password"]{border-width:.1em;margin:2px 0 3px;vertical-align:middle;box-sizing:border-box;min-width:calc(100% - .2em);max-width:calc(100% - .2em)}
 textarea{overflow:auto;width:100% !important;margin:3px 0;border-width:.1em;box-sizing:border-box}
 option{padding-bottom:1px}
 optgroup option{padding-left:1em}
@@ -122,6 +122,7 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;height:0;width:0;background:transparent}
 .cdlContraste{margin:.3em 0;padding:7px 10px;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
 .cdlInversedColor{display:inline-block}
+.cdlInversedColor .cdlOtherInput{display:inline-block}
 @media all and (max-width: 480px) {
 .cdlCadre{margin-right:0}
 }
