@@ -44,7 +44,7 @@ hr{display:none}
 table{border-width:.1em 0 0 .1em;width:100% !important}
 th,td{border-width:0 .1em .1em 0;padding:5px}
 p{padding-bottom:.3em}
-i,cite,em,var,address,dfn{font-style:italic}
+i,cite,em,var,address,dfn{font-style:normal}
 .cdlLoginForm .cdlButtons{text-align:center}
 .cdlLoginForm .cdlLabelDiv{box-sizing:border-box;padding-right:.3em}
 .cdlAudioContent{padding:0 9px 0 0;float:right}
