@@ -186,7 +186,7 @@ sub setConfig #($configString, $configKey, $configValue)
 {
 	my ($configString, $configKey, $configValue) = @_;
 
-	if ($configString !~ /$configKey/si) {
+	if ($configString !~ m/$configKey/si) {
 		my $prevConfig = "";
 		$defaultConfigString =~ s/(([^\n]+?)( *= *[^\n]*?)?\n$configKey)/$prevConfig = $2; $1/segi;
 		$configString =~ s/($prevConfig( *= *.*?)?\n)/$1.$configKey." = ".$configValue."\n"/segi;

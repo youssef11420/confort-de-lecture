@@ -230,7 +230,19 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $requestM
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_WIDTH', 250+3.4*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
-		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', $ENV{'SERVER_NAME'}.$embeddedMode);
+
+		# Mettre le nom de domaine pour complèter les URLs absolues
+		my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+		my $ttsServerName = getConfig($siteConfiguration, 'ttsServerName');
+		my $ttsUri = getConfig($siteConfiguration, 'ttsUri');
+		my $ttsTextParamName = getConfig($siteConfiguration, 'ttsTextParamName');
+
+		my $audioServerName = $ENV{'SERVER_NAME'}.$embeddedMode;
+		if ($ttsUri =~ m/^\/audio\-text/si && $ttsTextParamName eq "cdltext") {
+			$audioServerName = $ttsServerName;
+		}
+		$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'AUDIO_SERVER_NAME', $audioServerName);
+
 		my $voice = loadFromSession($session, 'voice');
 		if (!$voice) {
 			$voice = "";
@@ -483,8 +495,18 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		$pageContent = setValueInTemplateString($pageContent, 'MP3_PLAYER_WIDTH', 250+3.4*(($fontSize - 1)*20));
 		$pageContent = setValueInTemplateString($pageContent, 'MP3_PLAYER_HEIGHT', 50+0.7*(($fontSize - 1)*20));
 		$pageContent = setValueInTemplateString($pageContent, 'DIV_MP3_PLAYER_HEIGHT', 40+0.7*(($fontSize - 1)*20));
+
 		# Mettre le nom de domaine pour complèter les URLs absolues
-		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', $ENV{'SERVER_NAME'}.$embeddedMode);
+		my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+		my $ttsServerName = getConfig($siteConfiguration, 'ttsServerName');
+		my $ttsUri = getConfig($siteConfiguration, 'ttsUri');
+		my $ttsTextParamName = getConfig($siteConfiguration, 'ttsTextParamName');
+
+		my $audioServerName = $ENV{'SERVER_NAME'}.$embeddedMode;
+		if ($ttsUri =~ m/^\/audio\-text/si && $ttsTextParamName eq "cdltext") {
+			$audioServerName = $ttsServerName;
+		}
+		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_SERVER_NAME', $audioServerName);
 
 		my $defaultConfiguration = loadConfig($cdlSitesConfigPath."default.ini");
 		my $voice = loadFromSession($session, 'voice');

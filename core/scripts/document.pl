@@ -173,7 +173,7 @@ if ($action) {
 		$previousPage =~ s/&/&amp;/sgi;
 		my $cryptedUrl = sha1_hex($pageUriForHtml);
 		$pageUriForHtml = quotemeta $pageUriForHtml;
-		if ($previousPage =~ /$pageUriForHtml$/) {
+		if ($previousPage =~ m/$pageUriForHtml$/si) {
 			$previousPage = loadFromSession($session, 'cdl_referer_for_document_'.$siteId.'_'.$cryptedUrl);
 			if (!$previousPage) {
 				$previousPage = "http".$secure."://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$siteId);
