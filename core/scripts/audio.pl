@@ -182,6 +182,8 @@ my $deleteOptionTitle = 0;
 
 if (param('cdltext') ne "") {
 	$pageContent = param('cdltext');
+	#print "Content-type:text/plain; charset=utf-8\n\n";
+	#print $audioTextTemplateString;exit;
 	$fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$pageContent);
 
 	if ($thisCdlUrl !~ m/^(\/cdl)?\/audio-text-letter/si) {

@@ -108,12 +108,12 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 	}
 
 	# Gestion des protocoles (http et https, puis les autres protocoles impossible à gérer)
-	if ($url =~ m/^http(s)?:\/\/([^\/]+)\/*(.*)$/si) {
+	if ($url =~ m/^http(s)?:\/\/([^\/]+)(\/+.*)?$/si) {
 		my $secure = $1;
 		my $domainName = $2;
 		my $uri = $3;
 		if ($siteRootUrl =~ m/^http(s)?:\/\/$domainName/si) {
-			$url = ($embeddedMode ne "" ? "" : $domainName).$uri;
+			$url = ($embeddedMode ne "" ? "" : $domainName)."/".$uri;
 			$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$siteId)."/")).$url;
 		} elsif (!$trustedDomainNames or $url !~ m/^https?:\/\/($trustedDomainNames)/si) {
 			$url =~ s/^http(s)?:\/\///sgi;
