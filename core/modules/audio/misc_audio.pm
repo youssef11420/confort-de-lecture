@@ -235,10 +235,6 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 {
 	my ($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language) = @_;
 
-	#print "Content-type:text/plain; charset=utf-8\n\n";
-	#print $audioTextTemplateString;exit;
-	print "Content-type:audio/mpeg\n\n";
-
 	my $audioContent = "";
 	my ($ttsMode, $ttsServerName, $ttsPort, $ttsUri, $ttsDefaultQueryString, $ttsVoiceParamName, $ttsTextParamName, $ttsRateParamName, $enableGlossary, $utf8DecodeContent) = ("", "", "", "", "", "", "", "", "", "");
 	if ($siteId ne "") {
