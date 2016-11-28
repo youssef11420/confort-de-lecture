@@ -375,6 +375,7 @@ sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $p
 
 	$siteRootUrl =~ s/^https?:\/\///sgi;
 	if ($redirectUrl !~ m/^\/(cdl\/fs?|\/le\-filtre(\-https)?\/$siteId)/si and $redirectUrl !~ m/^https?:\/\//si) {
+		$redirectUrl =~ s/^\///sgi;
 		$redirectUrl = ($embeddedMode ne "" ? $embeddedMode."/f".$secure : "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId."/".$siteRootUrl)."/".$redirectUrl;
 	}
 
