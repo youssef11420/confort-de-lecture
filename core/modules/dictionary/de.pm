@@ -62,8 +62,10 @@ $dictionary{'LABEL_LIEN_BLEU'} = "couleur de liens bleue";
 $dictionary{'LABEL_LIEN_ROUGE'} = "couleur de liens rouge";
 $dictionary{'TITLE_BOUTON_PLUS_DE_COULEURS_LIEN'} = "choisir d'autres couleurs pour les liens";
 
-$dictionary{'BOUTON_PLUS_DE_COULEURS'} = "de contraste";
+$dictionary{'BOUTON_PLUS_DE_COULEURS_FOND'} = "de fond";
 $dictionary{'BOUTON_PLUS_DE_TAILLES'} = "de tailles";
+$dictionary{'BOUTON_PLUS_DE_COULEURS_TEXTE'} = "de contraste";
+$dictionary{'BOUTON_PLUS_DE_COULEURS_LIENS'} = "de liens";
 
 $dictionary{'TITRE_PREVISUALISATION'} = "zone de prévisualisation";
 $dictionary{'TEXTE_PREVISUALISATION'} = "<a href=\"http://www.confortdelecture.org\" target=\"_blank\">Confort de lecture</a> <span class=\"cdlPartOfText\">vous permet de choisir la couleur de fond, la taille et la couleur des caractères, et la couleur des liens, adaptés à votre vision et à vos pages imprimées.</span>";
