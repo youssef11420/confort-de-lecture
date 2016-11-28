@@ -208,7 +208,6 @@ sub getAllConfigs #($session, $siteId)
 	$pagesNoCache =~ s/(^\t|\t$)//sgi;
 	$pagesNoCache =~ s/\t/|/sgi;
 	my $cacheExpiry = getConfig($siteConfiguration, 'cacheExpiry');
-	my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
 
 	# Si un paramètre n'est pas renseigné, on met celui par défaut
 	$positionLocation = $positionLocation eq "" ? getConfig($defaultConfiguration, 'positionLocation') : $positionLocation;
@@ -223,7 +222,6 @@ sub getAllConfigs #($session, $siteId)
 	$siteDefaultLanguage = $siteDefaultLanguage eq "" ? getConfig($defaultConfiguration, 'defaultLanguage') : $siteDefaultLanguage;
 	$cacheExpiry = $cacheExpiry eq "" ? getConfig($defaultConfiguration, 'cacheExpiry') : $cacheExpiry;
 	$cacheExpiry = $cacheExpiry eq "" ? "3600*2" : $cacheExpiry;
-	$ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
 
 	# Récupération de la session de la variable indiquant si l'audio est activé
 	my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
@@ -239,7 +237,7 @@ sub getAllConfigs #($session, $siteId)
 	my $homePageUri = getConfig($siteConfiguration, 'homePageUris');
 	$homePageUri =~ s/([^\s]*)\s+.*/$1/sgi;
 
-	return ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry, $ttsMode);
+	return ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry);
 }
 
 # Function: buildUrlToParse

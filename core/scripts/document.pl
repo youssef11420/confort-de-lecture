@@ -93,8 +93,6 @@ my $siteConfiguration = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini
 my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
 $enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
 my $activateAudio = $enableAudio ? loadFromSession($session, 'activateAudio') : 0;
-my $ttsMode = getConfig($siteConfiguration, 'ttsMode');
-$ttsMode = $ttsMode eq "" ? getConfig($defaultConfiguration, 'ttsMode') : $ttsMode;
 
 # Génération de la table des hachage des paramètres
 my @paramKeys = param;

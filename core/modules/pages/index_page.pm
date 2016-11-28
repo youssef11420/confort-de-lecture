@@ -69,7 +69,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 	my ($cgi, $session, $requestMethod, $siteId, $pageUri, $secure, %requestParameters) = @_;
 
 	# Chargement de la configuration
-	my ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry, $ttsMode) = getAllConfigs($session, $siteId);
+	my ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry) = getAllConfigs($session, $siteId);
 
 	# Récupération de l'URI à parser pour en construire une URL
 	my ($urlToParse, $siteRootUrl, $pagePath) = buildUrlToParse($cgi, $session, $pageUri, $secure, $siteDomainNames, $homePageUri);
@@ -98,7 +98,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			$pageContent =~ s/(<meta( [^>]*)? http-equiv=(\"|\')Content-Type\3[^>]* content=(\"|\')([^>]*?)\4[^>]*>)/$contentType = $5; $1/segi;
 		}
 		$pageContent = $pageContent."\n<div class=\"cdlPageCached\"></div>";
-		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
+		renderCachedPage($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters);
 		exit;
 	}
 
@@ -117,7 +117,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			if ($contentType =~ m/text\/html/si) {
 				my $htmlCode = getCleanedPageContent($response, $contentType);
 
-				renderIndexPage($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $ttsMode, $trustedDomainNames, %requestParameters);
+				renderIndexPage($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters);
 			} else {
 				redirectToDocumentPage($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 			}
@@ -324,12 +324,11 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $requestM
 #	$activateFrames - booléen indiquant si les frames sont activées
 #	$enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
-#	$ttsMode - mode de vocalisation (VaaS, SDK, etc.)
 #	$trustedDomainNames - noms de domaine configuré de confiance
 #	%requestParameters - paramètres passés à la page
-sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $ttsMode, $trustedDomainNames, %requestParameters)
+sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters)
 {
-	my ($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $ttsMode, $trustedDomainNames, %requestParameters) = @_;
+	my ($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters) = @_;
 
 	# Chargement de la template principale de la page
 	my $entirePageTemplateString = loadConfig($cdlTemplatesPath."entire_page.html");
@@ -414,7 +413,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	}
 	my $pageContentFile = savePageContentInCache($requestMethod, $urlToParse, $entirePageTemplateString, loadFromSession($session, 'positionLocation')."_".loadFromSession($session, 'activateJavascript')."_".loadFromSession($session, 'activateFrames')."_".loadFromSession($session, 'displayImages')."_".loadFromSession($session, 'displayObjects')."_".loadFromSession($session, 'displayApplets')."_".loadFromSession($session, 'parseTablesToList'));
 
-	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters);
+	renderCachedPage($entirePageTemplateString, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters);
 }
 
 # Function: printPage
@@ -447,12 +446,11 @@ sub printPage #($pageContent, $pageContentFile, $session)
 #	$contentType - type de contenu et encodage de la page
 #	$enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
-#	$ttsMode - mode de vocalisation (VaaS, SDK, etc.)
 #	$requestMethod - méthode d'envoi de la requête (GET, POST ou HEAD)
 #	%requestParameters - paramètres passés à la page
-sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters)
+sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters)
 {
-	my ($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $ttsMode, $requestMethod, %requestParameters) = @_;
+	my ($pageContent, $pageContentFile, $session, $siteId, $pageUri, $secure, $contentType, $enableAudio, $activateAudio, $requestMethod, %requestParameters) = @_;
 
 	# Mettre les liens qui permettent d'aller modifier la personnalisation
 	my $language = loadFromSession($session, 'language');
