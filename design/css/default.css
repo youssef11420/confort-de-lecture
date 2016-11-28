@@ -78,7 +78,7 @@ i,cite,em,var,address,dfn{font-style:italic}
 .cdlUtilLinks img{padding-bottom:0}
 .cdlUtilLinks a,.cdlUtilLinks input,.cdlUtilLinks div{display:block;float:left;margin-right:5px;position:relative}
 .cdlUtilLinks input{cursor:pointer}
-.cdlUtilLinksContainer{position:fixed;overflow:hidden;width:calc(100% - 49px) !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 47px 0 0;border-width:0 3px 3px;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
+.cdlUtilLinksContainer{position:fixed;overflow:hidden;width:calc(100% - 49px) !important;top:0;left:7px;z-index:11420;padding:5px 0 2px;margin:-5px 47px 0 0;border-width:0 3px 3px;border-radius:0 0 7px 7px;-moz-border-radius:0 0 7px 7px;-webkit-border-radius:0 0 7px 7px}
 .cdlUtilLinksContainer *{position:relative;z-index:86000}
 .cdlAllPage{padding:0 7px 1px}
 .protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
