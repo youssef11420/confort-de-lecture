@@ -108,7 +108,7 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 	}
 
 	# Gestion des protocoles (http et https, puis les autres protocoles impossible à gérer)
-	if ($url =~ m/^http(s)?:\/\/([^\/]+)(\/+.*)?$/si) {
+	if ($url =~ m/^http(s)?:\/\/([^\/]+)\/*(.*)$/si) {
 		my $secure = $1;
 		my $domainName = $2;
 		my $uri = $3;
