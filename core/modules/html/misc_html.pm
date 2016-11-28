@@ -113,7 +113,7 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 		my $domainName = $2;
 		my $uri = $3;
 		if ($siteRootUrl =~ m/^http(s)?:\/\/$domainName/si) {
-			$url = ($embeddedMode ne "" ? "" : $domainName)."/".$uri;
+			$url = ($embeddedMode ne "" ? "" : $domainName."/").$uri;
 			$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$siteId)."/")).$url;
 		} elsif (!$trustedDomainNames or $url !~ m/^https?:\/\/($trustedDomainNames)/si) {
 			$url =~ s/^http(s)?:\/\///sgi;
