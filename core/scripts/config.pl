@@ -726,7 +726,7 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/modify\/(.*?)(\?|$)/si) {
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'TTS_TEXT_PARAM_NAME', escapeDoubleQuoteForHtml(getConfig($siteConfig, 'ttsTextParamName')));
 	$formTemplateString = setValueInTemplateString($formTemplateString, 'CACHE_EXPIRY', escapeDoubleQuoteForHtml(getConfig($siteConfig, 'cacheExpiry')));
 
-	my $utf8DecodeContent = getConfig($siteConfig, 'voiceChoice');
+	my $utf8DecodeContent = getConfig($siteConfig, 'utf8DecodeContent');
 	if ($utf8DecodeContent eq "0") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_NO', " checked");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'UTF8_DECODE_CONTENT_YES', "");
