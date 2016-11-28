@@ -285,6 +285,7 @@ if (param('cdlpagetype') =~ m/document|exit|protected|error/si) {
 			$textContent = "";
 		}
 		$textContent =~ s/>|</,/sgi;
+		$textContent =~ s/^\s*,+\s*|\s*,+\s*$//sgi;
 
 		if ($enableGlossary ne "0") {
 			$textContent = glossaryMain($textContent, $siteId);
@@ -317,10 +318,6 @@ $audioTextTemplateString =~ s/([\?!:\.,;])\s*\./$1/sgi;
 # Appel du service audio, qui retourne le texte transformé en mp3
 
 # Le type mime de sortie de ce script est audio/mpeg
-#print "Content-type:text/plain; charset=utf-8\n\n";
-#print $audioTextTemplateString;exit;
-print "Content-type:audio/mpeg\n\n";
-
 print vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language ? $language : 'fr');
 
 exit;

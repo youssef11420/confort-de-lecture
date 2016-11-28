@@ -235,6 +235,10 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 {
 	my ($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language) = @_;
 
+	#print "Content-type:text/plain; charset=utf-8\n\n";
+	#print $audioTextTemplateString;exit;
+	print "Content-type:audio/mpeg\n\n";
+
 	my $audioContent = "";
 	my ($ttsMode, $ttsServerName, $ttsPort, $ttsUri, $ttsDefaultQueryString, $ttsVoiceParamName, $ttsTextParamName, $ttsRateParamName, $enableGlossary, $utf8DecodeContent) = ("", "", "", "", "", "", "", "", "", "");
 	if ($siteId ne "") {
@@ -278,7 +282,6 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 
 	$ttsDefaultQueryString = setValueInTemplateString($ttsDefaultQueryString, 'LANG', uc($language));
 	$ttsDefaultQueryString = setValueInTemplateString($ttsDefaultQueryString, 'lang', $language);
-
 
 	# Création du fichier texte, contenant toutes les informations nécessaires à la synthèse vocale :
 	# - serveur de synthèse vocale, où seront traités les textes et où le son audio sera généré
