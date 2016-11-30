@@ -40,7 +40,7 @@ $cdlRootPath = cwd();
 # Création de l'objet CGI
 my $cgi = CGI->new();
 
-if (not -e $cdlRootPath."/install_ok") {
+if (not -e $cdlRootPath."/configuration/install_ok") {
 	if (param('valider')) {
 		if (!param('loginAdmin') or !param('passwdAdmin')) {
 			print $cgi->redirect($embeddedMode."/install?m=1");
@@ -66,7 +66,7 @@ if (not -e $cdlRootPath."/install_ok") {
 		print WRITER $encryptedIdentLine."\n";
 		close(WRITER);
 
-		open(WRITER, '>', $cdlRootPath."/install_ok");
+		open(WRITER, '>', $cdlRootPath."/configuration/install_ok");
 		print WRITER "OK\n";
 		close(WRITER);
 
