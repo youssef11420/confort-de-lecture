@@ -1,4 +1,4 @@
-install_ok
+configuration/install_ok
 core/scripts/CGI
 core/scripts/JSON
 core/scripts/Digest
