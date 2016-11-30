@@ -454,12 +454,12 @@ function detectKeyDown(e) {
             if (shiftKeyPressed) {
                 currentIndice -= 1;
                 timer = window.setTimeout(function () {
-                    lectureMorceau(currentIndice, "down", playMode);
+                    lectureMorceau(currentIndice, "down", "auto");
                 }, 0);
             } else {
                 currentIndice += 1;
                 timer = window.setTimeout(function () {
-                    lectureMorceau(currentIndice, "down", playMode);
+                    lectureMorceau(currentIndice, "down", "auto");
                 }, 0);
             }
             return;
