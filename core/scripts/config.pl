@@ -189,9 +189,15 @@ if ($thisCdlUrl =~ m/^\/admin\/sites\/create(\?.*?)?$/si) {
 	# Pour chacun des paramètres de configuration suivants, on teste si on revient du formulaire à cause d'une erreur, on met la bonne valeur de configuration
 	if (!$requestParameters{'positionLocation'}[0] or $requestParameters{'positionLocation'}[0] eq "1") {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP_AND_BOTTOM', "");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', "");
+	} elsif ($requestParameters{'positionLocation'}[0] eq "3") {
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP_AND_BOTTOM', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', "");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', "");
 	} else {
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_BOTTOM', " checked");
+		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP_AND_BOTTOM', "");
 		$formTemplateString = setValueInTemplateString($formTemplateString, 'POSITION_LOCATION_TOP', "");
 	}
 
