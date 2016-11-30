@@ -65,7 +65,7 @@ $configPageTemplateString = setValueInTemplateString($configPageTemplateString, 
 
 # Gestion de l'identification
 if (!$cdlAdmin and $thisCdlUrl !~ m/^\/admin\/login(\/action)?(\?.*?)?$/si) {
-	print $cgi->redirect($embeddedMode."/admin/login?m=8&p=".urlEncode($thisCdlUrl));
+	print $cgi->redirect($embeddedMode."/admin/login?m=8&p=".urlEncode($embeddedMode.$thisCdlUrl));
 	exit;
 }
 if ($thisCdlUrl =~ m/^\/admin\/login(\?.*?)?$/si) {
