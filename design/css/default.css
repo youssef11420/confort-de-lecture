@@ -107,7 +107,8 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .cdlAudioControls{overflow:hidden;padding:0}
 .cdlAudioControls li{list-style:none;float:left;padding:6px 16px 5px 0;position:relative}
 .cdlAudioControls li:after{content:"";display:block;width:6px;height:6px;position:absolute;right:5px;top:50%;margin-top:-3px;z-index:11420;border-radius:100px;-moz-border-radius:100px;-webkit-border-radius:100px}
-.cdlAudioControls li:last-child{padding-right:0}
+.cdlFormPersonalization .cdlAudioControls li:after{display:none}
+.cdlAudioControls li:last-child{padding-right:0 !important}
 .cdlAudioControls li a{display:block;position:relative;box-sizing:border-box}
 .cdlAudioControls li a.cdlDisabled{opacity:.5}
 .cdlAudioControls li a span{display:none}

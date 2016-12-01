@@ -30,6 +30,7 @@ var cdlAudioPlayPause = jQuery(".cdlAudioPlayPause");
 var cdlAudioStop = jQuery(".cdlAudioStop");
 var cdlAudioNext = jQuery(".cdlAudioNextBloc,.cdlAudioNextLine");
 var pausePosition = 0;
+var isStopping = false;
 
 jQuery.fn.outer = function () {
     "use strict";
@@ -142,6 +143,7 @@ function cdlPauseIt() {
 
 function cdlStopIt(initPausePos) {
     "use strict";
+    isStopping = true;
     lecteurAudioHTML5.pause();
     lecteurAudioHTML5.currentTime = 0;
 
@@ -413,12 +415,12 @@ function detectKeyDown(e) {
             return;
         // s
         case 83:
+            stopLecture();
             if (lecteurAudioHTML5 && lecteurAudioHTML5.pause) {
                 cdlStopItDefinitely();
             } else if (thisMovie("lecteurCDL") && thisMovie("lecteurCDL").stopItDefinitely) {
                 thisMovie("lecteurCDL").stopItDefinitely();
             }
-            stopLecture();
             return;
         }
     }
@@ -1050,12 +1052,18 @@ jQuery("object#lecteurCDL").on("mouseout", function () {
 
 lecteurAudioHTML5.addEventListener("play", function () {
     "use strict";
-    updateLecteur("play");
+    if (!isStopping) {
+        updateLecteur("play");
+    }
+    isStopping = false;
 });
 
 lecteurAudioHTML5.addEventListener("pause", function () {
     "use strict";
-    updateLecteur("pause");
+    if (!isStopping) {
+        updateLecteur("pause");
+    }
+    isStopping = false;
 });
 
 lecteurAudioHTML5.addEventListener("ended", function () {
