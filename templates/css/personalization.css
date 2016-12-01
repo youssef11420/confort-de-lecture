@@ -66,10 +66,11 @@
 .cdlInfo{font-size:80%;float:right;font-style:italic}
 .cdlInversedColor{background-color:#FFFFFF !important;color:#000000 !important}
 .cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
-.cdlColors{float:left;width:calc(50% - 30px);margin:15px;min-width:230px}
-.cdlColors:nth-child(2n+1){text-align:right}
+.cdlColorsForm{text-align:center}
+.cdlColorsContainer{max-width:1000px;margin:auto}
+.cdlColors{display:inline-block;margin:15px;min-width:230px}
 .cdlColors ul{padding:15px;overflow:hidden;background-color:#333333;box-sizing:border-box;max-width:430px;margin:auto;display:inline-block;border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px}
-.cdlColors li{list-style:none;display:block;float:left;text-align:center;box-sizing:border-box;width:100px !important;padding:2px;background-color:transparent}
+.cdlColors li{list-style:none;display:inline-block;text-align:center;box-sizing:border-box;width:100px !important;padding:2px;background-color:transparent}
 .cdlColors li a{display:block;overflow:hidden;color:#000000;padding:3px;background-color:transparent;border:2px solid transparent;position:relative}
 .cdlColors li a>span:first-child{display:block;text-decoration:none;font-size:35px;position:absolute;text-align:center;top:0;left:0;width:100%;height:100%;background-color:transparent;letter-spacing:normal;word-spacing:normal;line-height:normal;padding:5px 0;box-sizing:border-box}
 .cdlColors li a>span:first-child span{display:block;text-decoration:none;background-color:transparent;letter-spacing:normal;word-spacing:normal;line-height:normal;height:50%}
