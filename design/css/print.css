@@ -3,4 +3,4 @@
 .cdlAllPageContainer, .protectedPageLoginContent, .documentContent, .exitContent, .errorContent{padding-top:0 !important}
 .cdlButtons{page-break-inside:avoid}
 .cdlCadre{margin-right:0}
-img{page-break-inside:auto}
+img{page-break-inside:auto;display:inline-block}
