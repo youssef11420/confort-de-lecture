@@ -1,4 +1,5 @@
 .cdlCadre,.cdlAudioObjectContent,.cdlCadre hr,.cdlTable ul li .cdlTableRowSep{overflow:visible}
-.cdlUtilLinksContainer{display:none}
+.cdlUtilLinksContainer,.nicescroll-rails{display:none}
 .cdlAllPageContainer, .protectedPageLoginContent, .documentContent, .exitContent, .errorContent{padding-top:0 !important}
-.cdlButtons,img{page-break-inside:avoid}
+.cdlButtons{page-break-inside:avoid}
+.cdlCadre{margin-right:0}
