@@ -1,6 +1,7 @@
 .cdlPersonalizationHeader{margin:0 40px 0 0;padding-bottom:6px;overflow:hidden}
 .cdlPersonalizationHeader a{display:block}
 .cdlSiteLogo{float:left}
+.cdlSiteLogo img{width:100%}
 .cdlLogoCdl{float:right}
 .cdlLittleArrow,.cdlConfigChoice{margin-bottom:10px}
 .cdlLittleArrow{margin-bottom:0;padding-bottom:0;line-height:1.2em;font-size:30px}
