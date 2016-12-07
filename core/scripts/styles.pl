@@ -96,6 +96,8 @@ if ($styleToLoad eq "all") {
 	$defautAndCustomStyle =~ s/",/"_cdl_virgule_/sgi;
 	$defautAndCustomStyle =~ s/(^|\n|,)/$1#cdlmode /sgi;
 	$defautAndCustomStyle =~ s/_cdl_virgule_/,/sgi;
+	$defautAndCustomStyle =~ s/#cdlmode \}/\}/sgi;
+	$defautAndCustomStyle =~ s/#cdlmode \@media/\@media/sgi;
 	$styleString = setValueInTemplateString($styleString, 'DEFAULT_CUSTOM_CSS', $defautAndCustomStyle);
 } else {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
