@@ -89,8 +89,12 @@ my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSp
 if ($styleToLoad eq "all") {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (loadFromSession($session, "backgroundColor"), loadFromSession($session, "fontColor"), loadFromSession($session, "linkColor"), loadFromSession($session, "fontSize"), loadFromSession($session, "letterSpacing"), loadFromSession($session, "wordSpacing"), loadFromSession($session, "lineHeight"));
 
-	$styleString = setValueInTemplateString($styleString, 'DEFAULT_CSS', loadConfig($cdlRootPath."/design/css/default.css"));
-	$styleString = setValueInTemplateString($styleString, 'CUSTOM_CSS', loadConfig($cdlTemplatesPath."css/custom.css"));
+	my $defautStyle = loadConfig($cdlRootPath."/design/css/default.css");
+	$defautStyle =~ s/(^|\n|,)/$1#cdlmode /sgi;
+	$styleString = setValueInTemplateString($styleString, 'DEFAULT_CSS', $defautStyle);
+	my $customStyle = loadConfig($cdlTemplatesPath."css/custom.css");
+	$customStyle =~ s/(^|\n|,)/$1#cdlmode /sgi;
+	$styleString = setValueInTemplateString($styleString, 'CUSTOM_CSS', $customStyle);
 } else {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
 }
