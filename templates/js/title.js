@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
 
                 thisClassName = thisClassName.replace(/^([^\s]*)\s(.*)/, "$1");
 
-                if (!elementCourantTitre || elementCourantTitre.size() === 0) {
+                if (!elementCourantTitre || elementCourantTitre.length === 0) {
                     aAppliquer = true;
                 } else {
                     elementCourantTitreClassName = elementCourantTitre.attr("class").replace(/^([^\s]*)\s(.*)/, "$1");
@@ -77,7 +77,7 @@ jQuery(document).ready(function () {
                 } else {
                     cdlToolTipDiv.css({"top": e.pageY, "left": e.pageX + cursorSize});
                 }
-                if (!elementCourantTitre || elementCourantTitre.size() === 0) {
+                if (!elementCourantTitre || elementCourantTitre.length === 0) {
                     elementCourant2.mouseenter();
                 }
             });

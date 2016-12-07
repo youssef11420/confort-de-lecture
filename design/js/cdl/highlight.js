@@ -488,7 +488,7 @@ function detectKeyUp(e) {
             break;
         // entrée
         case 13:
-            if (focusedSelect && focusedSelect.size() > 0) {
+            if (focusedSelect && focusedSelect.length > 0) {
                 if (!isStopped) {
                     focusedSelect.blur();
                     initLecture();
@@ -501,7 +501,7 @@ function detectKeyUp(e) {
             break;
         default:
             if (kc !== 9) {
-                if (focusedSelect && focusedSelect.size() > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop("selectedIndex"))) {
+                if (focusedSelect && focusedSelect.length > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop("selectedIndex"))) {
                     if (!isStopped) {
                         focusedSelectedIndex = focusedSelect.prop("selectedIndex");
                         initLecture();
@@ -797,16 +797,16 @@ var isFirstField = true;
 function highlightedElements(theElement) {
     "use strict";
     theElement.children(":not(script,noscript)").each(function () {
-        if (jQuery("div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,address,blockquote,ins,del,form,fieldset,legend,span.cdlInputText,span.cdlOtherInput,span.cdlButtons,span.cdlButtonExit,table,caption,thead,tbody,th,td,span.cdlPartOfText,a,strong.cdlSelectInput,textarea,br,hr,img,label,noscript", jQuery(this)).size() === 0 || jQuery(this).is("a") || jQuery(this).is("span.cdlButtons,span.cdlButtonExit")) {
+        if (jQuery("div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,address,blockquote,ins,del,form,fieldset,legend,span.cdlInputText,span.cdlOtherInput,span.cdlButtons,span.cdlButtonExit,table,caption,thead,tbody,th,td,span.cdlPartOfText,a,strong.cdlSelectInput,textarea,br,hr,img,label,noscript", jQuery(this)).length === 0 || jQuery(this).is("a") || jQuery(this).is("span.cdlButtons,span.cdlButtonExit")) {
             var elementContent = trim(jQuery(this).text());
-            if ((elementContent && elementContent.match(new RegExp("[^-\\!\"'\\(\\),\\.\/:;<>\\?\\[\\\\\\]\\^_`\\{\\|\\}~‘’¡¤¦§¨ª«¬¯´¶·¸¹»¿• " + String.fromCharCode(160) + "\t\n]", "i"))) || jQuery(this).is("span.cdlInputText,span.cdlOtherInput,span.cdlButtons,span.cdlButtonExit,strong.cdlSelectInput,textarea") || (jQuery(this).is("img") && (jQuery(this).attr("alt") || jQuery(this).attr("title"))) || (jQuery(this).is("a") && jQuery("img", jQuery(this)).size() > 0)) {
+            if ((elementContent && elementContent.match(new RegExp("[^-\\!\"'\\(\\),\\.\/:;<>\\?\\[\\\\\\]\\^_`\\{\\|\\}~‘’¡¤¦§¨ª«¬¯´¶·¸¹»¿• " + String.fromCharCode(160) + "\t\n]", "i"))) || jQuery(this).is("span.cdlInputText,span.cdlOtherInput,span.cdlButtons,span.cdlButtonExit,strong.cdlSelectInput,textarea") || (jQuery(this).is("img") && (jQuery(this).attr("alt") || jQuery(this).attr("title"))) || (jQuery(this).is("a") && jQuery("img", jQuery(this)).length > 0)) {
                 if (!jQuery(this).is("label")) {
                     if (isFirstElementInCadre) {
                         firstCadreElementsIndexes.push(i);
                         currentFocusableIndiceForInit = i;
                         isFirstElementInCadre = false;
                     }
-                    if (jQuery(this).children("input[type!=\"hidden\"],button").size() === 1 || jQuery(this).is("strong.cdlSelectInput,textarea")) {
+                    if (jQuery(this).children("input[type!=\"hidden\"],button").length === 1 || jQuery(this).is("strong.cdlSelectInput,textarea")) {
                         jQuery(this).wrap("<span class=\"cdlFormFieldsHighlighted\"></span>");
                         pageParts.push(jQuery(this).parent());
                         jQuery(this).parent().addClass("cdlToRead" + i);
@@ -853,7 +853,7 @@ function highlighterMain(index) {
             myScrollTop = ds_gettop(pageParts[index].get(0));
             jQuery("input, select, textarea", pageParts[index]).each(function () {
                 var cdlFieldLabel = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]");
-                if (jQuery(this).attr("type") && jQuery(this).attr("type").match(new RegExp("text|password|radio|checkbox|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week", "i")) && cdlFieldLabel.size() > 0) {
+                if (jQuery(this).attr("type") && jQuery(this).attr("type").match(new RegExp("text|password|radio|checkbox|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week", "i")) && cdlFieldLabel.length > 0) {
                     myScrollTop = Math.min(myScrollTop, ds_gettop(cdlFieldLabel.get(0)));
                 }
             });
@@ -884,63 +884,63 @@ function highlighterMain(index) {
     }
 }
 
-if (jQuery("div.cdlTopPage").size()) {
+if (jQuery("div.cdlTopPage").length) {
     jQuery("div.cdlTopPage div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.cdlPageContent").size()) {
+if (jQuery("div.cdlPageContent").length) {
     jQuery("div.cdlPageContent div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.cdlPageNavigation").size()) {
+if (jQuery("div.cdlPageNavigation").length) {
     jQuery("div.cdlPageNavigation div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.cdlBottomPage").size()) {
+if (jQuery("div.cdlBottomPage").length) {
     jQuery("div.cdlBottomPage div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.cdlBackHome").size()) {
+if (jQuery("div.cdlBackHome").length) {
     jQuery("div.cdlBackHome div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.documentContent").size()) {
+if (jQuery("div.documentContent").length) {
     jQuery("div.documentContent div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.protectedPageLoginContent").size()) {
+if (jQuery("div.protectedPageLoginContent").length) {
     jQuery("div.protectedPageLoginContent div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.exitContent").size()) {
+if (jQuery("div.exitContent").length) {
     jQuery("div.exitContent div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
         highlightedElements(jQuery(this));
     });
 }
-if (jQuery("div.errorContent").size()) {
+if (jQuery("div.errorContent").length) {
     jQuery("div.errorContent div.cdlCadre").each(function () {
         "use strict";
         isFirstElementInCadre = true;
@@ -948,7 +948,7 @@ if (jQuery("div.errorContent").size()) {
     });
 }
 var pCdlCopyright = jQuery("p.cdlCopyright");
-if (pCdlCopyright.size()) {
+if (pCdlCopyright.length) {
     pageParts.push(pCdlCopyright);
     pCdlCopyright.addClass("cdlToRead" + i);
     pageFirstPartsRelated.push(i);
@@ -1013,9 +1013,9 @@ jQuery(".cdlCadre a, button, input[type=\"submit\"], input[type=\"button\"], inp
     }
 });
 
-if (textFields.size() > 0) {
+if (textFields.length > 0) {
     var cdlLecteursAudioCDL = jQuery(".lecteursAudioCDL");
-    if (cdlLecteursAudioCDL.size() > 0 && cdlLecteursAudioCDL.data("loadplayers")) {
+    if (cdlLecteursAudioCDL.length > 0 && cdlLecteursAudioCDL.data("loadplayers")) {
         jQuery.get(cdlLecteursAudioCDL.data("loadplayers"), function (data) {
             "use strict";
             cdlLecteursAudioCDL.html(data);
@@ -1032,7 +1032,7 @@ jQuery("select").on("click", function () {
     "use strict";
     if (!isStopped) {
         if (jQuery(this).is(".cdlInversedColor select")) {
-            if (focusedSelect && focusedSelect.size() > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop("selectedIndex"))) {
+            if (focusedSelect && focusedSelect.length > 0 && (focusedSelectedIndex === null || focusedSelectedIndex !== focusedSelect.prop("selectedIndex"))) {
                 focusedSelectedIndex = focusedSelect.prop("selectedIndex");
                 initLecture();
                 timer = window.setTimeout(function () {
@@ -1121,15 +1121,15 @@ function initAnchorLinks() {
                         cdlToReadClassName = jQuery(this).attr("class");
                     } else {
                         anchorRelated = jQuery("[class*=\"cdlToRead\"]:first", jQuery(this));
-                        if (anchorRelated.size() > 0) {
+                        if (anchorRelated.length > 0) {
                             cdlToReadClassName = anchorRelated.attr("class");
                         } else {
                             anchorRelated = jQuery(this).nextAll("[class*=\"cdlToRead\"]:first");
-                            if (anchorRelated.size() > 0) {
+                            if (anchorRelated.length > 0) {
                                 cdlToReadClassName = anchorRelated.attr("class");
                             } else {
                                 anchorRelated = jQuery("[class*=\"cdlToRead\"]:first", jQuery(this).nextAll());
-                                if (anchorRelated.size() > 0) {
+                                if (anchorRelated.length > 0) {
                                     cdlToReadClassName = anchorRelated.attr("class");
                                 } else {
                                     cdlToReadClassName = "cdlToRead0";
