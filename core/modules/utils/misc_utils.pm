@@ -400,7 +400,7 @@ sub redirectToDocumentPage #($cgi, $session, $siteId, $siteDefaultLanguage, $req
 
 	# On récupère plutôt le type mime à partir de son contenu (les premiers octets du fichier)
 	# pour éviter les informations incomplètes du Content-type du site distant.
-	my $contentType = getDocumentContentType($response->content, $session, $siteId);
+	my $contentType = getDocumentContentType($response, $session, $siteId);
 
 	$contentType =~ s/(.*?)(;|$)(.*)/$1/sgi;
 
@@ -696,7 +696,7 @@ sub initRequest #($method, $url, $typeAccept, $referer, %requestParameters)
 	$url =~ s/(\%)/urlEncode($1)/segi;
 
 	# Test et initialisation la méthode d'envoi
-	if (!($method =~ m/^(get|post|head)$/si)) {
+	if ($method !~ m/^(get|post|head)$/si) {
 		# Erreur si c'est ni POST ni GET ni HEAD
 		die "méthode '".$method."' invalide d'envoi de la requête HTTP...\n";
 	} else {
@@ -890,11 +890,10 @@ sub redirectDownload #($action, $requestMethod, $url, $session, $siteId, %reques
 
 	my $contentDisposition = $response->header('Content-Disposition');
 	# Récupération du type d'encodage des caractères reçus dans les entêtes de la réponse HTTP
-	my $documentContent = $response->content;
 
 	# On récupère plutôt le type mime à partir de son contenu (les premiers octets du fichier)
 	# pour éviter les informations incomplètes du Content-type du site distant
-	my $contentType = getDocumentContentType($documentContent, $session, $siteId);
+	my $contentType = getDocumentContentType($response, $session, $siteId);
 
 	# Si on ne dispose pas du nom de fichier dans Content-Disposition (c'est à dire que c'est un lien direct vers le fichier),
 	# on récupère son nom à partir de l'URL
@@ -924,7 +923,7 @@ sub redirectDownload #($action, $requestMethod, $url, $session, $siteId, %reques
 	print $session->header('Content-type' => $contentType, 'Content-Disposition' => $contentDisposition);
 
 	# Ecriture du contenu du document dans le flux
-	print $documentContent;
+	print $response->content;
 	exit;
 }
 
@@ -1074,55 +1073,59 @@ sub sendCookie #($request, $session, $siteId)
 #	Détecter le type d'un document à partir de son contenu et en exécutant dessus la commande système file
 #
 # Paramètres:
-#	$documentContent - URL du document pour lequel on veut connaître le type
+#	$response - objet réponse contenant les informations du fichiers
 #	$session - objet session utile pour la gestion des cookies
-sub getDocumentContentType #($documentContent, $session)
+sub getDocumentContentType #($response, $session)
 {
-	my ($documentContent, $session) = @_;
+	my ($response, $session) = @_;
 
-	my $contentType;
+	my $contentType = $response->header('Content-Type');
 
-	open(WRITER, " > ".$cdlDocumentsCachePath."doc_temp_".$session->id) or die "Erreur d'ouverture du fichier : doc_temp_".$session->id.".\n";
-	print WRITER $documentContent;
+	if (!$contentType || $contentType eq "application/octet-stream") {
+		my $documentContent = $response->content;
 
-	close(WRITER);
+		open(WRITER, " > ".$cdlDocumentsCachePath."doc_temp_".$session->id) or die "Erreur d'ouverture du fichier : doc_temp_".$session->id.".\n";
+		print WRITER $documentContent;
 
-	# Récupération du résultat de la commande file dans un handler
-	open(FH, "file -biz ".$cdlDocumentsCachePath."doc_temp_".$session->id." | ");
+		close(WRITER);
 
-	# Récupération du type mime dans une variable locale
-	while (<FH>) {
-		$contentType .= $_;
-	}
+		# Récupération du résultat de la commande file dans un handler
+		open(FH, "file -biz ".$cdlDocumentsCachePath."doc_temp_".$session->id." | ");
 
-	# Suppression du retour à la ligne à la fin du résultat de la commande
-	$contentType =~ s/\n$//sgi;
-	# Suppression des codes superflus
-	$contentType =~ s/^\\\d*\- //sgi;
-	# Nettoyage du type mime
-	$contentType =~ s/(.*)\((.*?)\)/$2/sgi;
-	$contentType =~ s/application\/msword application\/msword/application\/msword/sgi;
-
-	# Fermeture du handler
-	close(FH);
-
-	# Suppression du fichier temporaire
-	unlink($cdlDocumentsCachePath."doc_temp_".$session->id);
-
-	# Gestion des documents Office qu'on ne peut pas différencier avec la commande file (aucune différence entre les différents types de documents Office)
-	if ($contentType =~ m/application\/msword/si) {
-		if ($documentContent =~ m/Microsoft Excel.*?\@/si) {
-			$contentType = "application/vnd.ms-excel";
-		} elsif ($documentContent =~ m/PowerPoint.*?\@/si) {
-			$contentType = "application/vnd.ms-powerpoint";
+		# Récupération du type mime dans une variable locale
+		while (<FH>) {
+			$contentType .= $_;
 		}
-	}
 
-	if (!$contentType) {
-		if ($documentContent =~ m/^<\?xml[^>]*>\s*<rss/si) {
-			$contentType = "application/rss+xml";
-		} else {
-			$contentType = "application/octet-stream";
+		# Fermeture du handler
+		close(FH);
+
+		# Suppression du fichier temporaire
+		unlink($cdlDocumentsCachePath."doc_temp_".$session->id);
+
+		# Suppression du retour à la ligne à la fin du résultat de la commande
+		$contentType =~ s/\n$//sgi;
+		# Suppression des codes superflus
+		$contentType =~ s/^\\\d*\- //sgi;
+		# Nettoyage du type mime
+		$contentType =~ s/(.*)\((.*?)\)/$2/sgi;
+		$contentType =~ s/application\/msword application\/msword/application\/msword/sgi;
+
+		# Gestion des documents Office qu'on ne peut pas différencier avec la commande file (aucune différence entre les différents types de documents Office)
+		if ($contentType =~ m/application\/msword/si) {
+			if ($documentContent =~ m/Microsoft Excel.*?\@/si) {
+				$contentType = "application/vnd.ms-excel";
+			} elsif ($documentContent =~ m/PowerPoint.*?\@/si) {
+				$contentType = "application/vnd.ms-powerpoint";
+			}
+		}
+
+		if (!$contentType) {
+			if ($documentContent =~ m/^<\?xml[^>]*>\s*<rss/si) {
+				$contentType = "application/rss+xml";
+			} else {
+				$contentType = "application/octet-stream";
+			}
 		}
 	}
 
