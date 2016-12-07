@@ -89,12 +89,14 @@ my ($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSp
 if ($styleToLoad eq "all") {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (loadFromSession($session, "backgroundColor"), loadFromSession($session, "fontColor"), loadFromSession($session, "linkColor"), loadFromSession($session, "fontSize"), loadFromSession($session, "letterSpacing"), loadFromSession($session, "wordSpacing"), loadFromSession($session, "lineHeight"));
 
-	my $defautStyle = loadConfig($cdlRootPath."/design/css/default.css");
-	$defautStyle =~ s/(^|\n|,)/$1#cdlmode /sgi;
-	$styleString = setValueInTemplateString($styleString, 'DEFAULT_CSS', $defautStyle);
-	my $customStyle = loadConfig($cdlTemplatesPath."css/custom.css");
-	$customStyle =~ s/(^|\n|,)/$1#cdlmode /sgi;
-	$styleString = setValueInTemplateString($styleString, 'CUSTOM_CSS', $customStyle);
+	my $defautAndCustomStyle = loadConfig($cdlRootPath."/design/css/default.css");
+	$defautAndCustomStyle .= loadConfig($cdlTemplatesPath."css/custom.css");
+
+	$defautAndCustomStyle =~ s/,(default|pointer)/_cdl_virgule_$1/sgi;
+	$defautAndCustomStyle =~ s/",/"_cdl_virgule_/sgi;
+	$defautAndCustomStyle =~ s/(^|\n|,)/$1#cdlmode /sgi;
+	$defautAndCustomStyle =~ s/_cdl_virgule_/,/sgi;
+	$styleString = setValueInTemplateString($styleString, 'DEFAULT_CUSTOM_CSS', $defautAndCustomStyle);
 } else {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
 }

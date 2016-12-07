@@ -1,4 +1,4 @@
-*{background-color:####BACKGROUND_COLOR###;color:####FONT_COLOR###;border-color:####FONT_COLOR###;letter-spacing:###LETTER_SPACING###;word-spacing:###WORD_SPACING###;line-height:###LINE_HEIGHT###;cursor:url(###EMBEDDED_URL###/design/cursors/arrow_cursor_###CURSOR_SIZE###.cur), default}
+*{background-color:####BACKGROUND_COLOR###;color:####FONT_COLOR###;border-color:####FONT_COLOR###;letter-spacing:###LETTER_SPACING###;word-spacing:###WORD_SPACING###;line-height:###LINE_HEIGHT###;cursor:url(###EMBEDDED_URL###/design/cursors/arrow_cursor_###CURSOR_SIZE###.cur),default}
 body{font-size:###FONT_SIZE###%}
 abbr,acronym{border-bottom-color:####FONT_COLOR###}
 fieldset,button,.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{border-color:####FONT_COLOR###}
@@ -16,11 +16,11 @@ textarea{border-color:####FONT_COLOR###}
 table{border-color:####FONT_COLOR###}
 th,td{border-color:####FONT_COLOR###}
 .cdlCadre a,.cdlCadre a *{color:####LINK_COLOR###;border-color:####LINK_COLOR###}
-a{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
-a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
-.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
-button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
-.cdlUtilLinks input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
+a{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
+a *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
+.cdlButtons input,input[type="submit"],input[type="reset"],input[type="button"]{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
+button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
+.cdlUtilLinks input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
 .cdlAudioObject{border-color:####FONT_COLOR###}
 .cdlCadre{border-color:####FONT_COLOR###}
 .cdlCadre hr{background-color:####FONT_COLOR###}
@@ -51,7 +51,7 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 .cdlAudioStop,.cdlAudioPause:before,.cdlAudioPause:after{background-color:####FONT_COLOR###}
 .cdlAudioNextBloc:before,.cdlAudioNextBloc:after{border-width:###INPUT_HALF_SIZE###px 0 ###INPUT_HALF_SIZE###px ###INPUT_HALF_SIZE###px;border-left-color:####FONT_COLOR###}
 .cdlAudioNextLine{border-right-width:###INPUT_BORDER###px}
-.cdlFormExitFromCdl input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur), pointer}
+.cdlFormExitFromCdl input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
 .cdlSizes li a,.cdlSizes li a *{color:####FONT_COLOR###}
 .cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-color:####FONT_COLOR###}
 .cdlContraste,.cdlContraste *{background-color:####FONT_COLOR###;color:####BACKGROUND_COLOR###;border-color:####BACKGROUND_COLOR###}
