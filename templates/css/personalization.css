@@ -3,8 +3,8 @@
 .cdlSiteLogo{float:left}
 .cdlLogoCdl{float:right}
 .cdlSiteLogo img,.cdlLogoCdl img{width:100%;min-width:0}
-.cdlSiteLogo img[src$=".svg"]{width:4em}
-.cdlLogoCdl img[src$=".svg"]{width:10.4em}
+.cdlSiteLogo img[src$=".svg"]{width:4em;min-width:300px}
+.cdlLogoCdl img[src$=".svg"]{width:10.4em;min-width:300px}
 .cdlLittleArrow,.cdlConfigChoice{margin-bottom:10px}
 .cdlLittleArrow{margin-bottom:0;padding-bottom:0;line-height:1.2em;font-size:30px}
 .cdlPreview{padding:5px;border-width:.1em;margin:10px;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
