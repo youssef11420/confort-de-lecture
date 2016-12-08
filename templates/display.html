@@ -166,16 +166,22 @@ jQuery('.cdlConfigChoice li a').bind('click',function () {
 	iconSize = 40+0.7*((fontSize - 1)*20);
 	jQuery('.cdlUtilLinks svg').width(iconSize).height(iconSize).attr('fill', "#" + fontColor);
 
-	jQuery('#cdlCustomCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css" rel="stylesheet" id="cdlCustomCssLink2"/>');
-	window.setTimeout(function () {
-		jQuery('#cdlCustomCssLink').remove();
-		jQuery('#cdlCustomCssLink2').attr('id', 'cdlCustomCssLink');
-	}, 300);
-	jQuery('#cdlPersonalizationCssLink').after('<link href="###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + fontSize + '.css" rel="stylesheet" id="cdlPersonalizationCssLink2"/>');
-	window.setTimeout(function () {
-		jQuery('#cdlPersonalizationCssLink').remove();
-		jQuery('#cdlPersonalizationCssLink2').attr('id', 'cdlPersonalizationCssLink');
-	}, 300);
+    var cdlLinkCssTag = document.createElement('link');
+    cdlLinkCssTag.setAttribute('rel', "stylesheet");
+    cdlLinkCssTag.setAttribute('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + backgroundColor + '_' + fontColor + '_' + linkColor + '_' + fontSize + '_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+    cdlLinkCssTag.onload = function () {
+        jQuery('#cdlCustomCssLink').remove();
+        this.id = 'cdlCustomCssLink';
+    };
+	jQuery('#cdlCustomCssLink').after(cdlLinkCssTag);
+    cdlLinkCssTag = document.createElement('link');
+    cdlLinkCssTag.setAttribute('rel', "stylesheet");
+    cdlLinkCssTag.setAttribute('href', '###EMBEDDED_URL###/styles/###SITE_ID###/personalization_' + fontSize + '.css');
+    cdlLinkCssTag.onload = function () {
+        jQuery('#cdlPersonalizationCssLink').remove();
+        this.id = 'cdlPersonalizationCssLink';
+    };
+	jQuery('#cdlPersonalizationCssLink').after(cdlLinkCssTag);
 
 	window.setTimeout(function () {
 		htmlElt.niceScroll().remove();
