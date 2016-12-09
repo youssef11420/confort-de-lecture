@@ -63,7 +63,8 @@ i,cite,em,var,address,dfn{font-style:normal}
 .cdlLabelDiv,.cdlFieldDiv{float:left;width:50% !important}
 .cdlLabelDiv{text-align:right}
 .cdlBoldLink{font-weight:bold}
-.cdlExitFromCdlLinks{display:block;padding-top:5px}
+.cdlExitFromCdlLinks{display:block;padding-top:5px;font-size:120%}
+.cdlExitFromCdlLinks a{padding:.1em 5px}
 .cdlTable{margin:1em 0}
 .cdlTable>ul{list-style:none;padding:0;margin:0}
 .cdlTable ul.cdlTableRowContent>li{list-style:disc;margin-left:1em}

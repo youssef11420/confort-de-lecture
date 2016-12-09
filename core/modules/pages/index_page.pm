@@ -68,6 +68,78 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 {
 	my ($cgi, $session, $requestMethod, $siteId, $pageUri, $secure, %requestParameters) = @_;
 
+	# Récupération des personnalisations d'affichage et audio dans le cas où l'internaute arrive d'un autre site en version CDL
+	{
+		my $backgroundColor = param('cdlbc');
+		if (defined $backgroundColor and $backgroundColor ne "") {
+			editInSession($session, 'backgroundColor', $backgroundColor);
+		}
+		my $fontColor = param('cdlfc');
+		if (defined $fontColor and $fontColor ne "") {
+			editInSession($session, 'fontColor', $fontColor);
+		}
+		my $linkColor = param('cdllc');
+		if (defined $linkColor and $linkColor ne "") {
+			editInSession($session, 'linkColor', $linkColor);
+		}
+		my $fontSize = param('cdlfs');
+		if (defined $fontSize and $fontSize ne "") {
+			editInSession($session, 'fontSize', $fontSize);
+		}
+		my $letterSpacing = param('cdlls');
+		if (defined $letterSpacing and $letterSpacing ne "") {
+			editInSession($session, 'letterSpacing', $letterSpacing);
+		}
+		my $wordSpacing = param('cdlws');
+		if (defined $wordSpacing and $wordSpacing ne "") {
+			editInSession($session, 'wordSpacing', $wordSpacing);
+		}
+		my $lineHeight = param('cdllh');
+		if (defined $lineHeight and $lineHeight ne "") {
+			editInSession($session, 'lineHeight', $lineHeight);
+		}
+		my $positionLocation = param('cdlpl');
+		if (defined $positionLocation and $positionLocation ne "") {
+			editInSession($session, 'positionLocation', $positionLocation);
+		}
+		my $activateJavascript = param('cdlaj');
+		if (defined $activateJavascript and $activateJavascript ne "") {
+			editInSession($session, 'activateJavascript', $activateJavascript);
+		}
+		my $activateFrames = param('cdlaf');
+		if (defined $activateFrames and $activateFrames ne "") {
+			editInSession($session, 'activateFrames', $activateFrames);
+		}
+		my $displayImages = param('cdldi');
+		if (defined $displayImages and $displayImages ne "") {
+			editInSession($session, 'displayImages', $displayImages);
+		}
+		my $displayObjects = param('cdldo');
+		if (defined $displayObjects and $displayObjects ne "") {
+			editInSession($session, 'displayObjects', $displayObjects);
+		}
+		my $displayApplets = param('cdlda');
+		if (defined $displayApplets and $displayApplets ne "") {
+			editInSession($session, 'displayApplets', $displayApplets);
+		}
+		my $parseTablesToList = param('cdlpt');
+		if (defined $parseTablesToList and $parseTablesToList ne "") {
+			editInSession($session, 'parseTablesToList', $parseTablesToList);
+		}
+		my $activateAudio = param('cdlaa');
+		if (defined $activateAudio and $activateAudio ne "") {
+			editInSession($session, 'activateAudio', $activateAudio);
+		}
+		my $language = param('cdll');
+		if (defined $language and $language ne "") {
+			editInSession($session, 'language', $language);
+		}
+		my $contrast = param('cdlc');
+		if (defined $contrast and $contrast ne "") {
+			editInSession($session, 'contrast', $contrast);
+		}
+	}
+
 	# Chargement de la configuration
 	my ($siteLabel, $siteDefaultLanguage, $positionLocation, $activateJavascript, $parseJavascript, $activateFrames, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, $homePageUri, $pagesNoCache, $cacheExpiry) = getAllConfigs($session, $siteId);
 

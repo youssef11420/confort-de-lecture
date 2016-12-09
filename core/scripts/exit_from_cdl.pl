@@ -95,6 +95,14 @@ if (-e $cdlSitesConfigPath.$siteId."/override/main.pm") {
 	require($cdlSitesConfigPath.$siteId."/override/main.pm");
 }
 
+# Génération de la table des hachage des paramètres
+my @paramKeys = param;
+my %requestParameters;
+foreach my $paramKey (@paramKeys) {
+	my @paramValuesArray = param($paramKey);
+	$requestParameters{$paramKey} = \@paramValuesArray;
+}
+
 my $externalDomainName = "";
 $urlToParse =~ s/^([^\/]+)/$externalDomainName = $1; ""/segi;
 my $externalSiteId = "";
@@ -106,12 +114,35 @@ if ($externalSiteId ne "") {
 	my $externalEmbeddedMode = getConfig($externalSiteConfiguration, 'embeddedMode');
 	my $externalCdlUrl = getConfig($externalSiteConfiguration, 'cdlUrl');
 	$externalCdlUrl =~ s/^https?:\/\///sgi;
+	$externalCdlUrl =~ s/\/$//sgi;
+
+	# Passage des personnalisations d'affichage et audio pour les préserver sur le site externe gérant CDL
+	my %cdlParameters;
+	$cdlParameters{'cdlbc'} = [loadFromSession($session, 'backgroundColor')];
+	$cdlParameters{'cdlfc'} = [loadFromSession($session, 'fontColor')];
+	$cdlParameters{'cdllc'} = [loadFromSession($session, 'linkColor')];
+	$cdlParameters{'cdlfs'} = [loadFromSession($session, 'fontSize')];
+	$cdlParameters{'cdlls'} = [loadFromSession($session, 'letterSpacing')];
+	$cdlParameters{'cdlws'} = [loadFromSession($session, 'wordSpacing')];
+	$cdlParameters{'cdllh'} = [loadFromSession($session, 'lineHeight')];
+	$cdlParameters{'cdlpl'} = [loadFromSession($session, 'positionLocation')];
+	$cdlParameters{'cdlaj'} = [loadFromSession($session, 'activateJavascript')];
+	$cdlParameters{'cdlaf'} = [loadFromSession($session, 'activateFrames')];
+	$cdlParameters{'cdldi'} = [loadFromSession($session, 'displayImages')];
+	$cdlParameters{'cdldo'} = [loadFromSession($session, 'displayObjects')];
+	$cdlParameters{'cdlda'} = [loadFromSession($session, 'displayApplets')];
+	$cdlParameters{'cdlpt'} = [loadFromSession($session, 'parseTablesToList')];
+	$cdlParameters{'cdlaa'} = [loadFromSession($session, 'activateAudio')];
+	$cdlParameters{'cdll'} = [loadFromSession($session, 'language')];
+	$cdlParameters{'cdlc'} = [loadFromSession($session, 'contrast')];
 
 	$urlToParse =~ s/^([^\/])/\/$1/sgi;
+	$urlToParse = $requestMethod !~ m/post/si ? putParametersInUrl($urlToParse, %requestParameters) : $urlToParse;
 	if ($externalEmbeddedMode eq "1") {
-		print $cgi->redirect("http".$secure."://".$externalDomainName."/cdl/f".urlDecode($requestMethod !~ m/post/si ? putParametersInUrl($urlToParse, %requestParameters) : $urlToParse));
+		print $cgi->redirect("http".$secure."://".$externalDomainName."/cdl/f".urlDecode(putParametersInUrl($urlToParse, %cdlParameters)));
 	} else {
-		print $cgi->redirect("http".$secure."://".($externalCdlUrl ne "" ? $externalCdlUrl : ($embeddedMode ne "" ? "solution.confortdelecture.org" : $ENV{'SERVER_NAME'}))."/le-filtre/".$externalSiteId."/".$externalDomainName.urlDecode($requestMethod !~ m/post/si ? putParametersInUrl($urlToParse, %requestParameters) : $urlToParse));
+		$externalCdlUrl = $externalCdlUrl ne "" ? $externalCdlUrl : ($embeddedMode ne "" ? "solution.confortdelecture.org" : $ENV{'SERVER_NAME'});
+		print $cgi->redirect("http".$secure."://".$externalCdlUrl."/le-filtre/".$externalSiteId."/".$externalDomainName.urlDecode($externalCdlUrl ne $ENV{'SERVER_NAME'} ? putParametersInUrl($urlToParse, %cdlParameters) : $urlToParse));
 	}
 } else {
 	print $session->header('Content-type' => "text/html; charset=UTF-8");
@@ -164,14 +195,6 @@ if ($externalSiteId ne "") {
 	# La langue du site
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'LANGUAGE', $language);
 
-	# Génération de la table des hachage des paramètres
-	my @paramKeys = param;
-	my %requestParameters;
-	foreach my $paramKey (@paramKeys) {
-		my @paramValuesArray = param($paramKey);
-		$requestParameters{$paramKey} = \@paramValuesArray;
-	}
-
 	my $hiddenPostParameters = '';
 	if ($requestMethod =~ m/post/si) {
 		my $postRequestParametersString = loadFromSession($session, 'cdl_post_parameters_to_exit');
@@ -183,22 +206,22 @@ if ($externalSiteId ne "") {
 			}
 		}
 		deleteFromSession($session, 'cdl_post_parameters_to_exit');
+	}
 
-		foreach my $postRequestParameterName (keys(%requestParameters)) {
-			my $refPostRequestParameterValues = $requestParameters{$postRequestParameterName};
-			my @postRequestParameterValues = @$refPostRequestParameterValues;
-			foreach my $postRequestParameterValue (@postRequestParameterValues) {
-				$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
-				$postRequestParameterValue =~ s/\"/&quot;/sgi;
-				$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.$postRequestParameterValue.'">';
-			}
+	foreach my $postRequestParameterName (keys(%requestParameters)) {
+		my $refPostRequestParameterValues = $requestParameters{$postRequestParameterName};
+		my @postRequestParameterValues = @$refPostRequestParameterValues;
+		foreach my $postRequestParameterValue (@postRequestParameterValues) {
+			$postRequestParameterValue =~ s/\r?\n/\\n/sgi;
+			$postRequestParameterValue =~ s/\"/&quot;/sgi;
+			$hiddenPostParameters .= '<input type="hidden" name="'.$postRequestParameterName.'" value="'.$postRequestParameterValue.'">';
 		}
 	}
 
 	# L'URL externe vers laquelle on sort
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'REQUEST_METHOD', lc($requestMethod));
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'HIDDEN_POST_PARAMS', $hiddenPostParameters);
-	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EXTERNAL_URL', "http".$secure."://".urlDecode($requestMethod !~ m/post/si ? putParametersInUrl($urlToParse, %requestParameters) : $urlToParse));
+	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'EXTERNAL_URL', "http".$secure."://".urlDecode($urlToParse));
 
 	# L'URL de la page précédente pour annuler et retourner
 	$exitPageTemplateString = setValueInTemplateString($exitPageTemplateString, 'PREVIOUS_PAGE', $ENV{'HTTP_REFERER'});
