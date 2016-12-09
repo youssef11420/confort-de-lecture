@@ -25,9 +25,8 @@ option{padding-bottom:1px}
 optgroup option{padding-left:1em}
 label{vertical-align:middle;padding:calc(3px + .1em) 0;display:inline-block;max-width:100%}
 ol,ul{padding:5px 0 5px 1.2em}
-ol{counter-reset:item;padding-left:0}
-ol>li{display:table}
-ol>li:before{content:counter(item) ". ";counter-increment:item;text-align:right;width:1.5em;padding-right:.3em;margin-left:-2em;height:100%;line-height:1;position:relative;display:table-cell}
+ol{list-style-type:decimal;padding-left:0;margin-left:1.7em}
+ol>li{display:list-item}
 ul>li{display:list-item;list-style-type:disc}
 ul ul>li{list-style-type:circle}
 ul ul ul>li{list-style-type:square}
