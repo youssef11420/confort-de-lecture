@@ -173,5 +173,5 @@ if ($enableAudio eq "1") {
 $styleString = setValueInTemplateString($styleString, 'MEDIA_QUERY_SIZE', $mediaQuerySize);
 $styleString = setValueInTemplateString($styleString, 'MEDIA_QUERY_SIZE_PERSONALIZATION', $mediaQuerySizePersonalization);
 
-print $session->header('Content-type' => "text/css; charset=UTF-8");
+print $session->header('Content-type' => "text/css; charset=UTF-8", 'Last-Modified' => "Thu, 08 Dec 2016 23:18:30 GMT");
 print $styleString;
