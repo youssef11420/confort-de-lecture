@@ -960,7 +960,7 @@ textFields.on("paste", function () {
     "use strict";
     var element = this;
     window.setTimeout(function () {
-        var value = "Contenu du champ après coller : " + jQuery(element).val();
+        var value = window.cdlIntroPaste + " " + jQuery(element).val();
         var lecteurAudioCDLPaste = document.getElementById("lecteurAudioCDL_paste");
         if (!lecteurAudioCDLPaste) {
             jQuery(".lecteursAudioCDL").append("<audio autoplay src=\"" + (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value) + (

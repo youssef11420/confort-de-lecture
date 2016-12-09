@@ -197,6 +197,8 @@ $dictionary{'LABEL_CITATION'} = "citation";
 $dictionary{'LABEL_CELLULE'} = "cellule";
 $dictionary{'LABEL_ENTETE_DE_CELLULE'} = "entête de cellule";
 
+$dictionary{'TEXTE_CONTENU_CHAMP_APRES_COLLER'} = "Contenu du champ après coller :";
+
 # Hash: %lettersToSpell
 # La liste des lettres correspondant aux touches du clavier
 %lettersToSpell = (
