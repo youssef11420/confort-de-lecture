@@ -22,9 +22,14 @@ var focusedSelect = null;
 var focusedSelectedIndex = null;
 var firstFieldIndex = null;
 var lecteurAudioHTML5 = document.getElementById("lecteurAudioCDL");
-var lecteurAudioParentHTML5 = (window.opener && window.opener.document)
-    ? window.opener.document.getElementById("lecteurAudioCDL")
-    : null;
+var lecteurAudioParentHTML5 = null;
+try {
+    lecteurAudioParentHTML5 = (window.opener && window.opener.document)
+        ? window.opener.document.getElementById("lecteurAudioCDL")
+        : null;
+} catch (err) {
+    lecteurAudioParentHTML5 = null;
+}
 var cdlAudioPrev = jQuery(".cdlAudioPrevBloc,.cdlAudioPrevLine");
 var cdlAudioPlayPause = jQuery(".cdlAudioPlayPause");
 var cdlAudioStop = jQuery(".cdlAudioStop");
