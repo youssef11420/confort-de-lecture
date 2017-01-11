@@ -555,10 +555,6 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	$iconContent = do { local $/; <ICON_FILE> };
 	$pageContent = setValueInTemplateString($pageContent, 'DISPLAY_ICON', $iconContent);
 
-	open ICON_FILE, "< ".$cdlRootPath."/design/images/arrow_top.svg";
-	$iconContent = do { local $/; <ICON_FILE> };
-	$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON', $iconContent);
-
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$pageContent = setValueInTemplateString($pageContent, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
@@ -617,9 +613,17 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		}
 
 		$pageContent = setValueInTemplateString($pageContent, 'LETTERS_PLAYERS_FILE', $embeddedMode."/cache/audio/".$lettersHtmlCacheFile);
+
+		$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON_CONTAINER', "");
 	} else {
 		$pageContent = setValueInTemplateString($pageContent, 'JS_AUDIO_FILE_INCLUDE', "");
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO', "");
+
+		$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON_CONTAINER', getPartOfTemplateString($pageContent, 'ARROW_TOP_ICON_CONTAINER'));
+
+		open ICON_FILE, "< ".$cdlRootPath."/design/images/arrow_top.svg";
+		$iconContent = do { local $/; <ICON_FILE> };
+		$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON', $iconContent);
 	}
 	if ($enableAudio eq "1") {
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ACTIONS', getPartOfTemplateString($pageContent, 'AUDIO_ACTIONS'));

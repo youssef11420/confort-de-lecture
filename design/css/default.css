@@ -125,6 +125,9 @@ div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;height:0;width:0;background:transparent}
 .cdlContraste{margin:.3em 0;padding:7px 10px;border-radius:7px;-moz-border-radius:7px;-webkit-border-radius:7px}
 .cdlInversedColor .cdlOtherInput{display:inline-block}
+.cdlUtilLinksContainer .cdlBackToTop{float:right;margin:6px 0 6px 7px;padding:0 7px}
+.cdlUtilLinksContainer .cdlBackToTop a{display:block;float:left;margin-right:5px;position:relative}
+.cdlUtilLinksContainer .cdlBackToTop svg{display:block;float:left}
 @media all and (max-width: 480px) {
 .cdlCadre{margin-right:0}
 }
