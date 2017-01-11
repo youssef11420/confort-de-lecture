@@ -28,6 +28,7 @@ $defaultLanguage = "fr-FR";
 $dictionary{'TITLE_PERSONNALISER_AFFICHAGE'} = "personnalisez vos paramètres d'affichage";
 $dictionary{'TITLE_PERSONNALISER_AUDIO'} = "personnalisez vos paramètres audio";
 $dictionary{'TITLE_AIDE_AUDIO'} = "aide audio";
+$dictionary{'TITLE_HAUT_PAGE'} = "retour en haut de page";
 
 $dictionary{'EXPLICATION_CONFIG'} = "sélectionnez une couleur de fond, la taille et le contraste des caractères, et la couleur des liens";
 $dictionary{'LABEL_FOND_NOIR'} = "couleur de fond noire";

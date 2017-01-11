@@ -555,6 +555,10 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 	$iconContent = do { local $/; <ICON_FILE> };
 	$pageContent = setValueInTemplateString($pageContent, 'DISPLAY_ICON', $iconContent);
 
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/arrow_top.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON', $iconContent);
+
 	# Mettre le nom de ce fichier temporaire en parametre du lien vers le script de génération en audio
 	$pageContent = setValueInTemplateString($pageContent, 'CONTENT_TO_READ_WITH_ACAPELA', $pageContentFile);
 
