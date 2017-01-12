@@ -644,6 +644,18 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		$pageContent = setValueInTemplateString($pageContent, 'AUDIO_ACTIONS', "");
 	}
 
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/close_icon.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'GALLERY_CLOSE_ICON', $iconContent);
+
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/arrow_left.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'GALLERY_PREV_ICON', $iconContent);
+
+	open ICON_FILE, "< ".$cdlRootPath."/design/images/arrow_right.svg";
+	$iconContent = do { local $/; <ICON_FILE> };
+	$pageContent = setValueInTemplateString($pageContent, 'GALLERY_NEXT_ICON', $iconContent);
+
 	$pageContent = setValueInTemplateString($pageContent, 'EMBEDDED_URL', $embeddedMode);
 
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');

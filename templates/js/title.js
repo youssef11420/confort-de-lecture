@@ -1,5 +1,6 @@
 var elementsTitres = [];
 var elementCourantTitre = null;
+var nbImagesGallery = 0;
 
 jQuery(document).ready(function () {
     "use strict";
@@ -100,5 +101,52 @@ jQuery(document).ready(function () {
         if (jQuery(this).width() < 600) {
             jQuery(this).width(600);
         }
+    });
+
+    jQuery(document).on("click", ".cdlGalleryClose a", function (event) {
+        jQuery(".cdlImageGallery").hide();
+        event.preventDefault();
+    });
+
+    jQuery(document).on("click", ".cdlGalleryPrev a", function (event) {
+        var activeImage = jQuery(".cdlZoomImageActive");
+        var prevImageIndex = activeImage.data("cdlimageindex") - 1;
+        var prevImage;
+
+        if (prevImageIndex < 0) {
+            prevImageIndex = nbImagesGallery - 1;
+        }
+        prevImage = jQuery(".cdlZoomImage" + prevImageIndex);
+        activeImage.removeClass("cdlZoomImageActive");
+        prevImage.addClass("cdlZoomImageActive");
+        jQuery(".cdlImageGallery").css("background-image", "url(" + prevImage.attr("href") + ")");
+        event.preventDefault();
+    });
+
+    jQuery(document).on("click", ".cdlGalleryNext a", function (event) {
+        var activeImage = jQuery(".cdlZoomImageActive");
+        var nextImageIndex = 1 + activeImage.data("cdlimageindex");
+        var nextImage;
+
+        if (nextImageIndex >= nbImagesGallery) {
+            nextImageIndex = 0;
+        }
+        nextImage = jQuery(".cdlZoomImage" + nextImageIndex);
+        activeImage.removeClass("cdlZoomImageActive");
+        nextImage.addClass("cdlZoomImageActive");
+        jQuery(".cdlImageGallery").css("background-image", "url(" + nextImage.attr("href") + ")");
+        event.preventDefault();
+    });
+
+    jQuery(document).on("click", ".cdlZoomImage", function (event) {
+        var imagesGallery = jQuery(".cdlZoomImage");
+
+        nbImagesGallery = imagesGallery.length;
+        imagesGallery.each(function (index) {
+            jQuery(this).addClass("cdlZoomImage" + index).data("cdlimageindex", index);
+        });
+        jQuery(this).addClass("cdlZoomImageActive");
+        jQuery(".cdlImageGallery").show().css("background-image", "url(" + jQuery(this).attr("href") + ")");
+        event.preventDefault();
     });
 });
