@@ -137,6 +137,7 @@ input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;heigh
 .cdlImageGallery ul{background-color:transparent;padding:0}
 .cdlImageGallery li{list-style:none;position:absolute;left:0;top:45%}
 .cdlImageGallery li a{display:block;padding:5px}
+.cdlImageGallery svg{display:block;float:left}
 .cdlImageGallery li.cdlGalleryClose{top:0;left:auto;right:0}
 .cdlImageGallery li.cdlGalleryNext{left:auto;right:0}
 @media all and (max-width: 480px) {
