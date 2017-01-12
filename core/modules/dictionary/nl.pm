@@ -200,6 +200,10 @@ $dictionary{'LABEL_ENTETE_DE_CELLULE'} = "entête de cellule";
 
 $dictionary{'TEXTE_CONTENU_CHAMP_APRES_COLLER'} = "Contenu du champ après coller :";
 
+$dictionary{'TITLE_GALERIE_FERMER'} = "fermer le diaporama d'images";
+$dictionary{'TITLE_GALERIE_PRECEDENT'} = "image précédente";
+$dictionary{'TITLE_GALERIE_SUIVANT'} = "image suivante";
+
 # Hash: %lettersToSpell
 # La liste des lettres correspondant aux touches du clavier
 %lettersToSpell = (

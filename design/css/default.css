@@ -90,8 +90,8 @@ i,cite,em,var,address,dfn{font-style:normal}
 .protectedPageLoginContent,.documentContent,.exitContent,.errorContent{padding:7px 7px 1px}
 .cdlFormExitFromCdl{display:inline;margin:0;padding:0;border:0;max-width:100%}
 .cdlFormExitFromCdl input[type="submit"]{font-weight:bold;text-decoration:underline;border:0;vertical-align:0;display:inline-block;max-width:100%}
-div#cdlToolTipDiv{position:absolute;z-index:95200;border:2px solid #000000;display:none;padding:3px 5px;background-color:#FFFFCC;color:#000000}
-div#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
+#cdlToolTipDiv{position:absolute;z-index:9520000;border:2px solid #000000;display:none;padding:3px 5px;background-color:#FFFFCC;color:#000000}
+#cdlToolTipDiv *{background-color:#FFFFCC;color:#000000}
 .gm-style,.gm-style-iw{font-size:100% !important}
 .gm-style,.gm-style *{background-color:transparent;color:initial;border-top-width:0 !important}
 .gm-style img{max-width:none}
