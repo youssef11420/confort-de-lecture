@@ -621,6 +621,11 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 
 		$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON_CONTAINER', getPartOfTemplateString($pageContent, 'ARROW_TOP_ICON_CONTAINER'));
 
+		if ($embeddedMode eq "") {
+			$pageUriForHtml =~ s/^[^\/]+\///sgi;
+		}
+		$pageContent = setValueInTemplateString($pageContent, 'CURRENT_PAGE_URI', $pageUriForHtml);
+
 		open ICON_FILE, "< ".$cdlRootPath."/design/images/arrow_top.svg";
 		$iconContent = do { local $/; <ICON_FILE> };
 		$pageContent = setValueInTemplateString($pageContent, 'ARROW_TOP_ICON', $iconContent);
