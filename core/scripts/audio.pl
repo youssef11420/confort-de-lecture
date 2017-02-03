@@ -195,14 +195,14 @@ if (param('cdltext') ne "") {
 		my $root = HTML::TreeBuilder->new_from_content($pageContent);
 		$pageContent = $root->as_HTML('<>&');
 
-		if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"cdlDemoVoice\-([^\"]*)\"[^>]*>/si) {
-			$voice = $3;
+		if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"([^\"]* )?cdlDemoVoice\-([^\"]*)( [^\"]*)?\"[^>]*>/si) {
+			$voice = $4;
 		}
-		if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"cdlDemoSpeed\-([^\"]*)\"[^>]*>/si) {
-			$speed = $3;
+		if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"([^\"]* )?cdlDemoSpeed\-([^\"]*)( [^\"]*)?\"[^>]*>/si) {
+			$speed = $4;
 		}
 
-		if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"cdlDemo(Voice|Speed)\-([^\"]*)\"[^>]*>/si) {
+		if ($pageContent =~ m/<select( [^>]*)? id=\"cdlGhostSelect\"><option( [^>]*)? class=\"([^\"]* )?cdlDemo(Voice|Speed)\-([^\"]*)( [^\"]*)?\"[^>]*>/si) {
 			$deleteOptionTitle = 1;
 		}
 		$pageContent =~ s/^<html><head><\/head><body><select( [^>]*)? id=\"cdlGhostSelect\"[^>]*><option([^>]*)>(.*?)<\/option><\/select><\/body><\/html>$/

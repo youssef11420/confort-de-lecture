@@ -298,6 +298,10 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
                             if (jQuery(this).val()) {
                                 content = content.replace(/<input/, "<input value=\"" + jQuery(this).val() + "\"");
                             }
+                            content = content.replace(/checked(="checked")?/, "");
+                            if (jQuery(this).prop("checked")) {
+                                content = content.replace(/<input/, "<input checked");
+                            }
                         }
                         content = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").outer() + content;
                         if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(radio|checkbox)$", "i"))) {

@@ -66,8 +66,6 @@
 .cdlFieldDiv label{margin-right:.5em;white-space:normal;max-width:calc(100% - ###INPUT_SIZE###px)}
 .cdlAdvancedForm .cdlLabelDiv,.cdlAdvancedForm .cdlFieldDiv{padding-bottom:20px}
 .cdlInfo{font-size:80%;float:right;font-style:italic}
-.cdlInversedColor{background-color:#FFFFFF !important;color:#000000 !important}
-.cdlInversedColor *{background-color:#FFFFFF !important;color:#000000 !important;border-color:#000000 !important}
 .cdlColorsForm{text-align:center}
 .cdlColorsContainer{max-width:1000px;margin:auto}
 .cdlColors{display:inline-block;margin:15px;min-width:230px}
