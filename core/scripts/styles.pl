@@ -78,9 +78,6 @@ if ($styleToLoad eq "") {
 }
 my $styleString = loadConfig($cdlTemplatesPath."css/".$styleToLoad.".css");
 
-$styleString = setValueInTemplateString($styleString, 'EMBEDDED_URL', $embeddedMode);
-$styleString = setValueInTemplateString($styleString, 'SITE_ID', $siteId);
-
 my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
 $enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
 
@@ -102,6 +99,9 @@ if ($styleToLoad eq "all") {
 } else {
 	($backgroundColor, $fontColor, $linkColor, $fontSize, $letterSpacing, $wordSpacing, $lineHeight) = (param("cdlbc"), param("cdlfc"), param("cdllc"), param("cdlfs"), param("cdlls"), param("cdlws"), param("cdllh"));
 }
+
+$styleString = setValueInTemplateString($styleString, 'EMBEDDED_URL', $embeddedMode);
+$styleString = setValueInTemplateString($styleString, 'SITE_ID', $siteId);
 
 $fontSize = $fontSize ? $fontSize : '4';
 
