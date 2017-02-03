@@ -63,11 +63,11 @@ sub getTableCellHeaders #($tdAttributes, $tdNumber, %theadersHash)
 		my $tdHeaderContent = $theadersHash{$headerKey};
 
 		if ($tdHeaderContent) {
-			$tdHeadersContent .= $tdHeaderContent." | ";
+			$tdHeadersContent .= $tdHeaderContent." ";
 		}
 	}
 
-	$tdHeadersContent =~ s/ \| $//sgi;
+	$tdHeadersContent =~ s/ +$//sgi;
 	$tdHeadersContent =~ s/&nbsp;//sgi;
 
 	# Récupérer le colspan du td
