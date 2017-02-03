@@ -113,6 +113,11 @@ jQuery(document).ready(function () {
         var prevImageIndex = activeImage.data("cdlimageindex") - 1;
         var prevImage;
 
+        jQuery(".cdlGalleryNext").show();
+        if (prevImageIndex === 0) {
+            jQuery(".cdlGalleryPrev").hide();
+        }
+
         if (prevImageIndex < 0) {
             prevImageIndex = nbImagesGallery - 1;
         }
@@ -128,6 +133,10 @@ jQuery(document).ready(function () {
         var nextImageIndex = 1 + activeImage.data("cdlimageindex");
         var nextImage;
 
+        jQuery(".cdlGalleryPrev").show();
+        if (nextImageIndex === nbImagesGallery - 1) {
+            jQuery(".cdlGalleryNext").hide();
+        }
         if (nextImageIndex >= nbImagesGallery) {
             nextImageIndex = 0;
         }
@@ -142,6 +151,10 @@ jQuery(document).ready(function () {
         var imagesGallery = jQuery(".cdlZoomImage");
 
         nbImagesGallery = imagesGallery.length;
+        jQuery(".cdlGalleryPrev").hide();
+        if (nbImagesGallery === 1) {
+            jQuery(".cdlGalleryNext").hide();
+        }
         imagesGallery.each(function (index) {
             jQuery(this).addClass("cdlZoomImage" + index).data("cdlimageindex", index);
         });
