@@ -231,6 +231,7 @@ $dictionary{'TITLE_GALERIE_SUIVANT'} = "image suivante";
 	"c_cedille", "ç",
 	"chevron_fermant", "chevron_fermant",
 	"chevron_ouvrant", "chevron_ouvrant",
+	"coche", "coché",
 	"crochet_fermant", "crochet_fermant",
 	"crochet_ouvrant", "crochet_ouvrant",
 	"c", "c",

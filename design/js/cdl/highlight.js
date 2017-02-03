@@ -770,24 +770,29 @@ function detectKeyDownForFocusable(e) {
                         break;
                     }
                 }
-                if (char) {
-                    lecteurChar = document.getElementById("lecteurAudioCDL_" + char.toLowerCase());
-                    if (lecteurChar) {
-                        lecteurChar.pause();
-                        lecteurChar.currentTime = 0;
-                        lecteurCharMaj = document.getElementById("lecteurAudioCDL_majuscule");
-                        if (lecteurCharMaj) {
-                            lecteurCharMaj.pause();
-                            lecteurCharMaj.currentTime = 0;
-                        }
-                        if (majuscule) {
-                            jQuery(lecteurCharMaj).bind("ended", function () {
-                                lecteurChar.play();
-                            });
-                            lecteurCharMaj.play();
-                        } else {
+            }
+            if (jQuery(this).is("input[type=\"checkbox\"], input[type=\"radio\"]")) {
+                if (kc === 32) {
+                    char = "coche";
+                }
+            }
+            if (char) {
+                lecteurChar = document.getElementById("lecteurAudioCDL_" + char.toLowerCase());
+                if (lecteurChar) {
+                    lecteurChar.pause();
+                    lecteurChar.currentTime = 0;
+                    lecteurCharMaj = document.getElementById("lecteurAudioCDL_majuscule");
+                    if (lecteurCharMaj) {
+                        lecteurCharMaj.pause();
+                        lecteurCharMaj.currentTime = 0;
+                    }
+                    if (majuscule) {
+                        jQuery(lecteurCharMaj).bind("ended", function () {
                             lecteurChar.play();
-                        }
+                        });
+                        lecteurCharMaj.play();
+                    } else {
+                        lecteurChar.play();
                     }
                 }
             }
