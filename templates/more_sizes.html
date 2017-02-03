@@ -58,10 +58,10 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <span class="cdlButtons cdlValidate"><input type="submit" id="cdlchangedisplay2" name="cdlchangedisplay" value="###_DICO_BOUTON_VALIDER###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
 </div>
+</div>
 <div class="cdlPreview">
 <p><strong>###_DICO_TITRE_PREVISUALISATION###</strong></p>
 <p>###_DICO_TEXTE_PREVISUALISATION###</p>
-</div>
 </div>
 </div>
 </div>
@@ -84,7 +84,7 @@ cdlSiteId = '###SITE_ID###';
 cdlIntroPaste = "###_DICO_TEXTE_CONTENU_CHAMP_APRES_COLLER###";
 cdlAllPageContainer = jQuery('.cdlAllPageContainer');
 cdlAllPageContainer.css('padding-top', cdlAllPageContainer.css('padding-top') + " !important");
-jQuery('.cdlSizes li a').bind('click',function () {
+jQuery('.cdlSizes li a').bind('click', function () {
 	var iconSize, size = jQuery('.cdlSpanHidden span', jQuery(this)).html(), htmlElt = jQuery('html');
 
 	jQuery('.cdlSizes .choiceSelected').removeClass('choiceSelected');

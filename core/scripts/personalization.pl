@@ -26,6 +26,11 @@ use CGI::Session;
 
 use Cwd;
 
+if (-e "./JSON") {
+	use lib 'JSON';
+}
+use JSON;
+
 use lib '../modules/utils';
 use constants;
 use misc_utils;
@@ -210,6 +215,10 @@ if ($action =~ m/^affichage$/si) {
 	if ($parseTablesToList eq "") {
 		$parseTablesToList = getConfig($defaultConfiguration, 'parseTablesToList');
 	}
+
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'LETTER_SPACINGS', encode_json(\%letterSpacings));
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'WORD_SPACINGS', encode_json(\%wordSpacings));
+	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'LINE_HEIGHTS', encode_json(\%lineHeights));
 
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING2_1', $letterSpacing eq "1" ? " checked" : "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_SPACING2_2', $letterSpacing eq "2" ? " checked" : "");

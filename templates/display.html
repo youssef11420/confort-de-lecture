@@ -95,10 +95,10 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <span class="cdlButtons cdlAdvancedParameters"><input type="submit" name="cdladvancedparameters" value="###_DICO_PARAMETRES_AVANCES###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER###"></span>
 </div>
+</div>
 <div class="cdlPreview">
 <p><strong>###_DICO_TITRE_PREVISUALISATION###</strong></p>
 <p>###_DICO_TEXTE_PREVISUALISATION###</p>
-</div>
 </div>
 </div>
 </div>
@@ -126,7 +126,7 @@ var backgroundColor = "###B_COLOR###";
 var fontColor = "###F_COLOR###";
 var linkColor = "###L_COLOR###";
 var fontSize = "###F_SIZE_INDEX###";
-jQuery('.cdlConfigChoice li a').bind('click',function () {
+jQuery('.cdlConfigChoice li a').bind('click', function () {
 	var iconSize, htmlElt = jQuery('html');
 	jQuery('.choiceSelected', jQuery(this).parent().parent()).removeClass('choiceSelected');
 	jQuery('.linkChoiceSelected', jQuery(this).parent().parent()).removeClass('linkChoiceSelected');

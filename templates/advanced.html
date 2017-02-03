@@ -86,6 +86,10 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidateadvanced" value="###_DICO_BOUTON_VALIDER###"></span>
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
 </div>
+<div class="cdlPreview">
+<p><strong>###_DICO_TITRE_PREVISUALISATION###</strong></p>
+<p>###_DICO_TEXTE_PREVISUALISATION###</p>
+</div>
 </div>
 </div>
 </div>
@@ -106,6 +110,16 @@ cdlLinkColor = '####L_COLOR###';
 cdlEmbeddedURL = '//###AUDIO_SERVER_NAME###';
 cdlSiteId = '###SITE_ID###';
 cdlIntroPaste = "###_DICO_TEXTE_CONTENU_CHAMP_APRES_COLLER###";
+var letterSpacings = JSON.parse('###LETTER_SPACINGS###');
+var wordSpacings = JSON.parse('###WORD_SPACINGS###');
+var lineHeights = JSON.parse('###LINE_HEIGHTS###');
+jQuery('input[name="cdlls"],input[name="cdlws"],input[name="cdllh"]').bind('change', function () {
+    jQuery('.cdlPreview *').css({
+        'letter-spacing': letterSpacings[jQuery('input[name="cdlls"]:checked').val()],
+        'word-spacing': wordSpacings[jQuery('input[name="cdlws"]:checked').val()],
+        'line-height': lineHeights[jQuery('input[name="cdllh"]:checked').val()]
+    });
+});
 </script>
 <script src="###EMBEDDED_URL###/design/js/jquery/jquery.nicescroll.min.js"></script><!--###JS_AUDIO_FILE_INCLUDE###-->
 <script src="###EMBEDDED_URL###/design/js/cdl/highlight.js"></script><!--/###JS_AUDIO_FILE_INCLUDE###-->

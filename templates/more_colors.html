@@ -61,6 +61,10 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <span class="cdlButtons cdlValidate"><input type="submit" name="cdlvalidate" value="###_DICO_BOUTON_VALIDER_ET_ACCEDER###"></span>
 </div>
 </div>
+<div class="cdlPreview">
+<p><strong>###_DICO_TITRE_PREVISUALISATION###</strong></p>
+<p>###_DICO_TEXTE_PREVISUALISATION###</p>
+</div>
 </div>
 </div>
 <hr><br class="cdlHidden">
@@ -81,21 +85,21 @@ cdlEmbeddedURL = '//###AUDIO_SERVER_NAME###';
 cdlSiteId = '###SITE_ID###';
 cdlIntroPaste = "###_DICO_TEXTE_CONTENU_CHAMP_APRES_COLLER###";
 cdlParamToSet = '###PARAM_TO_SET###';
-jQuery('.cdlColors li a').bind('click',function () {
-	var color = jQuery('.cdlSpanHidden span', jQuery(this)).html(), htmlElt = jQuery('html');
+jQuery('.cdlColors li a').bind('click', function () {
+	var color = jQuery('.cdlSpanHidden span', jQuery(this)).html(), htmlElt = jQuery('html'), cdlCustomCssLink = jQuery('#cdlCustomCssLink');
 
 	jQuery('.cdlColors .choiceSelected').removeClass('choiceSelected');
 	jQuery(this).parent().addClass('choiceSelected');
 	jQuery('input[name="cdl###PARAM_TO_SET###c"]').attr('value', color);
 	switch (cdlParamToSet) {
 	case "f":
-		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_' + color + '_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+        cdlCustomCssLink.attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_' + color + '_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
 		break;
 	case "l":
-		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_' + color + '_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+        cdlCustomCssLink.attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_###B_COLOR###_###F_COLOR###_' + color + '_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
 		break;
 	case "b":
-		jQuery('#cdlCustomCssLink').attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + color + '_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
+        cdlCustomCssLink.attr('href', '###EMBEDDED_URL###/styles/###SITE_ID###/custom_' + color + '_###F_COLOR###_###L_COLOR###_###F_SIZE_INDEX###_###L_SPACING###_###W_SPACING###_###L_HEIGHT###.css');
 		break;
 	}
 	jQuery('.cdlUtilLinks svg').attr('fill', (cdlParamToSet === "f" ? "#" + color : cdlFontColor));
