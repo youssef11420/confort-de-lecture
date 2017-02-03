@@ -82,6 +82,7 @@
 .cdlColorsForm,.cdlSizesForm{padding-bottom:10px}
 .cdlSizes{padding:15px;margin:0;overflow:hidden;font-size:16px}
 .cdlSizes li{list-style:none;display:inline-block;padding:2px;background-color:transparent;vertical-align:baseline}
+.cdlSizes li,.cdlSizes li *{letter-spacing:0;word-spacing:0;line-height:normal}
 .cdlSizes li a{position:relative;display:table-cell;vertical-align:bottom;width:120px;height:120px;padding:3px;box-sizing:border-box;background-color:transparent;border:2px solid transparent;font-weight:bold;text-decoration:none}
 .cdlSizes li a,.cdlSizes li a *,#cdlConfigChoiceTextSize a,#cdlConfigChoiceTextSize a *{text-decoration:none;cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_5.cur), pointer}
 .cdlSizes li a .cdlTransPix{width:100%;text-align:center;display:block;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px}
