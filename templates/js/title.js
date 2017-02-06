@@ -162,4 +162,10 @@ jQuery(document).ready(function () {
         jQuery(".cdlImageGallery").show().css("background-image", "url(" + jQuery(this).attr("href") + ")");
         event.preventDefault();
     });
+
+    jQuery(".cdlBackToTop a").click(function (e) {
+        jQuery("html, body").animate({scrollTop: 0});
+        e.preventDefault();
+        return false;
+    });
 });
