@@ -30,7 +30,7 @@ $dictionary{'TITLE_PERSONNALISER_AUDIO'} = "personnalisez vos paramètres audio"
 $dictionary{'TITLE_AIDE_AUDIO'} = "aide audio";
 $dictionary{'TITLE_HAUT_PAGE'} = "retour en haut de page";
 
-$dictionary{'EXPLICATION_CONFIG'} = "sélectionnez une couleur de fond, la taille et le contraste des caractères, et la couleur des liens";
+$dictionary{'EXPLICATION_CONFIG'} = "sélectionnez vos paramètres d’affichage, pré-visualisez le profil configuré, naviguez !";
 $dictionary{'LABEL_FOND_NOIR'} = "couleur de fond noire";
 $dictionary{'LABEL_FOND_BLANC'} = "couleur de fond blanche";
 $dictionary{'LABEL_FOND_VERT'} = "couleur de fond verte";
