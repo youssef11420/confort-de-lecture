@@ -278,76 +278,72 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
 
         // Récupère le contenu du nouveau morceau
         if (!isNaN(index) && (index >= pageParts.length || index < 0)) {
-            // Passe une chaîne vide au lecteur
-            content = "";
-
-            stopLecture();
+            index = 0;
 
             // Scroll vers le haut de la page
             jQuery("body").animate({scrollTop: 0}, 500);
+        }
+        if (isNaN(index)) {
+            content = index;
+            playModeTmp = "manual";
         } else {
-            if (isNaN(index)) {
-                content = index;
-                playModeTmp = "manual";
-            } else {
-                content = pageParts[index].outer();
-                jQuery("input", pageParts[index]).each(function () {
-                    if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(submit|button|reset|hidden|image)$", "i"))) {
-                        if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)$", "i"))) {
-                            content = content.replace(/value="([^"]*)"/, "");
-                            if (jQuery(this).val()) {
-                                content = content.replace(/<input/, "<input value=\"" + jQuery(this).val() + "\"");
-                            }
-                            content = content.replace(/checked(="checked")?/, "");
-                            if (jQuery(this).prop("checked")) {
-                                content = content.replace(/<input/, "<input checked");
-                            }
-                        }
-                        content = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").outer() + content;
-                        if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(radio|checkbox)$", "i"))) {
-                            if (playMode !== "manual") {
-                                isInProtectedField = true;
-                            }
-                            playModeTmp = "manual";
-                        }
-                    }
-                });
-                jQuery("select, textarea", pageParts[index]).each(function () {
-                    if (jQuery(this).is("textarea")) {
-                        if (jQuery(this).val() !== "") {
-                            content = content.replace(/<textarea\s([^>]*)>(.*?)<\/textarea>/, "<" + "textarea $1>" + jQuery(this).val() + "</textarea>");
-                        }
-                    }
-                    if (jQuery(this).is("select")) {
-                        content = content.replace(/\sselected/, "");
+            content = pageParts[index].outer();
+            jQuery("input", pageParts[index]).each(function () {
+                if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(submit|button|reset|hidden|image)$", "i"))) {
+                    if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)$", "i"))) {
+                        content = content.replace(/value="([^"]*)"/, "");
                         if (jQuery(this).val()) {
-                            content = content.replace(" value=\"" + jQuery(this).val() + "\"", " value=\"" + jQuery(this).val() + "\" selected");
+                            content = content.replace(/<input/, "<input value=\"" + jQuery(this).val() + "\"");
+                        }
+                        content = content.replace(/checked(="checked")?/, "");
+                        if (jQuery(this).prop("checked")) {
+                            content = content.replace(/<input/, "<input checked");
                         }
                     }
                     content = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").outer() + content;
-                    if (playMode !== "manual") {
-                        isInProtectedField = true;
+                    if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(radio|checkbox)$", "i"))) {
+                        if (playMode !== "manual") {
+                            isInProtectedField = true;
+                        }
+                        playModeTmp = "manual";
                     }
-                    playModeTmp = "manual";
-                });
-
-                // Synchronise les indices actions scripts et js
-                currentIndice = index;
-                foundIndice = jQuery.inArray(currentIndice, focusablesIndexes);
-                if (foundIndice > -1) {
-                    currentFocusableIndice = foundIndice;
                 }
-
-                foundIndice = jQuery.inArray(pageFirstPartsRelated[currentIndice], firstCadreElementsIndexes);
-                if (foundIndice > -1) {
-                    currentFirstCadreElementIndice = foundIndice;
+            });
+            jQuery("select, textarea", pageParts[index]).each(function () {
+                if (jQuery(this).is("textarea")) {
+                    if (jQuery(this).val() !== "") {
+                        content = content.replace(/<textarea\s([^>]*)>(.*?)<\/textarea>/, "<" + "textarea $1>" + jQuery(this).val() + "</textarea>");
+                    }
                 }
+                if (jQuery(this).is("select")) {
+                    content = content.replace(/\sselected/, "");
+                    if (jQuery(this).val()) {
+                        content = content.replace(" value=\"" + jQuery(this).val() + "\"", " value=\"" + jQuery(this).val() + "\" selected");
+                    }
+                }
+                content = jQuery("label[for=\"" + jQuery(this).attr("id") + "\"]").outer() + content;
+                if (playMode !== "manual") {
+                    isInProtectedField = true;
+                }
+                playModeTmp = "manual";
+            });
 
-                // Ne fait un highlight que si on est en cours de lecture
-                window.setTimeout(function () {
-                    window.highlighterMain(index);
-                }, duree);
+            // Synchronise les indices actions scripts et js
+            currentIndice = index;
+            foundIndice = jQuery.inArray(currentIndice, focusablesIndexes);
+            if (foundIndice > -1) {
+                currentFocusableIndice = foundIndice;
             }
+
+            foundIndice = jQuery.inArray(pageFirstPartsRelated[currentIndice], firstCadreElementsIndexes);
+            if (foundIndice > -1) {
+                currentFirstCadreElementIndice = foundIndice;
+            }
+
+            // Ne fait un highlight que si on est en cours de lecture
+            window.setTimeout(function () {
+                window.highlighterMain(index);
+            }, duree);
         }
 
         // On lance la lecture de ce nouveau morceau
