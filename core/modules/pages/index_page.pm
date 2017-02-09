@@ -187,7 +187,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			# Si le contenu est de type texte/HTML, on le parse et on l'affiche,
 			# sinon on redirige vers la page de gestion des documents
 			if ($contentType =~ m/text\/html/si) {
-				my $htmlCode = getCleanedPageContent($response, $contentType);
+				my $htmlCode = getCleanedPageContent($response, $contentType, $activateAudio);
 
 				renderIndexPage($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters);
 			} else {

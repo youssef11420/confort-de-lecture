@@ -141,9 +141,10 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 # Paramètres:
 #	$response - objet réponse HTTP d'où extraire le contenu de la page
 #	$contentType - type et encodage du contenu
-sub getCleanedPageContent #($response, $contentType)
+#	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
+sub getCleanedPageContent #($response, $contentType, $activateAudio)
 {
-	my ($response, $contentType) = @_;
+	my ($response, $contentType, $activateAudio) = @_;
 
 	# Récupération du contenu de la réponse
 	my $htmlCode;
@@ -169,7 +170,7 @@ sub getCleanedPageContent #($response, $contentType)
 	# Gestion des balises CDL change/replace
 	$htmlCode = parseChanges($htmlCode);
 	# Gestion des balises CDL replace seules (raccourcis pour éviter les balises CDL change vides)
-	$htmlCode = parseAloneReplaces($htmlCode);
+	$htmlCode = parseAloneReplaces($htmlCode, $activateAudio);
 
 	# Encoder les caractères en UTF-8 dans une page qui est encodée comme tel
 	if ($contentType =~ m/charset=utf\-?\d+/si) {

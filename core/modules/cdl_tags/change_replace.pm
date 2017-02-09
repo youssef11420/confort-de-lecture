@@ -22,14 +22,21 @@
 #
 # Paramètres:
 #	$htmlCode - contenu où transformer les replace
-sub parseAloneReplaces #($htmlCode)
+#	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
+sub parseAloneReplaces #($htmlCode, $activateAudio)
 {
 	# Extraction des arguments dans une variable locale :
 	# - contenu où transformer les replace
-	my ($htmlCode) = @_;
+	my ($htmlCode, $activateAudio) = @_;
 
 	# Supprimer les commentaires à l'intérieur de la balise cdlReplace pour afficher son contenu dans la verion filtrée
-	$htmlCode =~ s/<!--cdlReplace(\s[^>]*)?-->\s*(<\/~comment>)?\s*<!--(.*?)-->\s*(<\/~comment>)?\s*<!--\/cdlReplace-->(<\/~comment>)?/$3/sg;
+	$htmlCode =~ s/<!--cdlReplace(\s[^>]*)?-->\s*(<\/~comment>)?\s*<!--(.*?)-->\s*(<\/~comment>)?\s*<!--\/cdlReplace-->(<\/~comment>)?/
+		if ($activateAudio or $1 !~ m\/audioonly\/si) {
+			$3
+		} else {
+
+		}
+		/seg;
 
 	# Retourne le contenu HTML avec les balises CDL replace seules traitées
 	return $htmlCode;
