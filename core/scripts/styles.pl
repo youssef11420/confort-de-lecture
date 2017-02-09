@@ -26,6 +26,8 @@ use CGI::Session;
 
 use Cwd;
 
+use POSIX qw(strftime);
+
 use lib '../modules/utils';
 use constants;
 use misc_utils;
@@ -77,6 +79,8 @@ if ($styleToLoad eq "") {
 	$styleToLoad = "default";
 }
 my $styleString = loadConfig($cdlTemplatesPath."css/".$styleToLoad.".css");
+my $lastModified = (stat $cdlTemplatesPath."css/".$styleToLoad.".css")[9];
+$lastModified = strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime($lastModified));
 
 my $enableAudio = getConfig($siteConfiguration, 'enableAudio');
 $enableAudio = $enableAudio eq "" ? getConfig($defaultConfiguration, 'enableAudio') : $enableAudio;
@@ -173,5 +177,5 @@ if ($enableAudio eq "1") {
 $styleString = setValueInTemplateString($styleString, 'MEDIA_QUERY_SIZE', $mediaQuerySize);
 $styleString = setValueInTemplateString($styleString, 'MEDIA_QUERY_SIZE_PERSONALIZATION', $mediaQuerySizePersonalization);
 
-print $session->header('Content-type' => "text/css; charset=UTF-8", 'Last-Modified' => "Thu, 09 Feb 2017 15:23:00 GMT");
+print $session->header('Content-type' => "text/css; charset=UTF-8", 'Last-Modified' => $styleToLoad eq "all" ? strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime) : $lastModified);
 print $styleString;
