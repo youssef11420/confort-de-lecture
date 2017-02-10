@@ -37,6 +37,9 @@ use misc_utils;
 use session;
 use config_manager;
 
+use lib '../modules/audio';
+use misc_audio;
+
 
 # Création de l'objet CGI
 my $cgi  = CGI->new();
@@ -138,6 +141,34 @@ my $lineHeight = loadFromSession($session, 'lineHeight');
 $letterSpacing = $letterSpacing ? $letterSpacing : '1';
 $wordSpacing = $wordSpacing ? $wordSpacing : '1';
 $lineHeight = $lineHeight ? $lineHeight : '1';
+
+use Digest::SHA::PurePerl qw(sha1_hex);
+use MIME::Base64;
+
+my $voice = loadFromSession($session, 'voice');
+if (!$voice) {
+	$voice = "";
+}
+if ($voice and !exists($unordoredVoices{$voice})) {
+	$voice = $defaultVoice;
+	editInSession($session, 'voice', $voice);
+}
+
+my $speed = loadFromSession($session, 'speed');
+if (!$speed) {
+	$speed = "";
+}
+
+my $lettersPlayers = "";
+my $lettersHtmlCacheFile = "letters_bis_".($voice ? $voice : $defaultVoice)."_".($speed ne "" ? $speed : $defaultSpeed).".html";
+if (!-e $cdlAudioCachePath.$lettersHtmlCacheFile) {
+	foreach my $letterKey (keys(%checkedToSpell)) {
+		$lettersPlayers .= "<audio preload=\"auto\" src=\"".$embeddedMode."/audio-text/".$siteId."/?cdltext=".urlEncode($checkedToSpell{$letterKey})."&amp;cdlvoice=".($voice ? $voice : $defaultVoice)."&amp;cdlspeed=".($speed ne "" ? $speed : $defaultSpeed)."\" class=\"cdlHidden\" id=\"lecteurAudioCDL_".$letterKey."\"></audio>\n";
+	}
+	open(WRITER, ">", $cdlAudioCachePath.$lettersHtmlCacheFile) or die "Erreur d'ouverture du fichier : ".$cdlAudioCachePath.$lettersHtmlCacheFile.".\n";
+	print WRITER ($lettersPlayers);
+	close(WRITER);
+}
 
 my $personalizationTemplateString = "";
 if ($action =~ m/^affichage$/si) {
@@ -513,6 +544,8 @@ if ($contrast eq "nb") {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'CONTRAST_CSS', "");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'FLASH_FONT_COLOR', "FFFFFF");
 }
+
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'LETTERS_PLAYERS_FILE', $embeddedMode."/cache/audio/".$lettersHtmlCacheFile);
 
 my @now = localtime(time);
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'CURRENT_YEAR', 1900 + $now[5]);

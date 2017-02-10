@@ -235,6 +235,7 @@ $dictionary{'TITLE_GALERIE_SUIVANT'} = "image suivante";
 	"crochet_fermant", "crochet_fermant",
 	"crochet_ouvrant", "crochet_ouvrant",
 	"c", "c",
+	"decoche", "décoché",
 	"degre", "degré",
 	"deux_points", "deux_points",
 	"diese", "dièse",
@@ -297,6 +298,13 @@ $dictionary{'TITLE_GALERIE_SUIVANT'} = "image suivante";
 	"x", "x",
 	"y", "y",
 	"z", "z"
+);
+
+# Hash: %checkedToSpell
+# les termes "coché" et "décoché"
+%checkedToSpell = (
+	"coche", "coché",
+	"decoche", "décoché"
 );
 
 # Hash: %unordoredVoices

@@ -796,6 +796,7 @@ function detectKeyDownForFocusable(e) {
         }
     }
 }
+
 function trim(myString) {
     "use strict";
     return myString.replace(/^\s+/g, "").replace(/\s+$/g, "");
@@ -965,7 +966,7 @@ if (pCdlCopyright.length) {
     i += 1;
 }
 
-var textFields = jQuery("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select");
+var textFields = jQuery("input[type=\"radio\"], input[type=\"checkbox\"], input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select");
 textFields.on("paste", function () {
     "use strict";
     var element = this;
@@ -1032,6 +1033,22 @@ if (textFields.length > 0) {
         });
     }
 }
+
+jQuery(document).on("change", ".cdlInversedColor input[type=\"checkbox\"],.cdlInversedColor input[type=\"radio\"]", function () {
+    "use strict";
+    var char = "decoche";
+    var lecteurChar;
+
+    if (jQuery(this).prop("checked")) {
+        char = "coche";
+    }
+    lecteurChar = document.getElementById("lecteurAudioCDL_" + char.toLowerCase());
+    if (lecteurChar) {
+        lecteurChar.pause();
+        lecteurChar.currentTime = 0;
+        lecteurChar.play();
+    }
+});
 
 
 jQuery("html").on("keydown", detectKeyDown).on("keyup", detectKeyUp);

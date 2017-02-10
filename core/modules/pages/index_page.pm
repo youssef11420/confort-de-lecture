@@ -601,7 +601,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		use MIME::Base64;
 
 		my $lettersPlayers = "";
-		my $lettersHtmlCacheFile = "letters_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".html";
+		my $lettersHtmlCacheFile = "letters_".($voice ? $voice : $defaultVoice)."_".($speed ne "" ? $speed : $defaultSpeed).".html";
 		if (!-e $cdlAudioCachePath.$lettersHtmlCacheFile) {
 			foreach my $letterKey (keys(%lettersToSpell)) {
 				my $fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$lettersToSpell{$letterKey});
