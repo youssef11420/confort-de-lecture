@@ -972,7 +972,7 @@ sub connectProtectedSite #($cgi, $requestMethod, $url, $userLogin, $passwd, $rea
 		$redirectUrl =~ s/(\?|&)$//sgi;
 
 		my $cookie = CGI::Cookie->new(-name=>$session->name, -value=>$session->id);
-		print $cgi->redirect(-status=>"302 Moved", -location=>$redirectUrl."?cdlloginerror=1", -cookie=>$cookie);
+		print $cgi->redirect(-status=>"302 Moved", -location=>$redirectUrl.($redirectUrl =~ m/cdlloginerror=1/si ? "" : "?cdlloginerror=1"), -cookie=>$cookie);
 		exit;
 	}
 	# Sauvegarde des paramètres de connexion au site protégé en session.

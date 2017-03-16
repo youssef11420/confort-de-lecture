@@ -64,14 +64,17 @@ sub getPageTitle #($htmlCode)
 #
 # Paramètres:
 #	$htmlCode - code HTML du head où récupérer l'URL de base de la page (attribut href de la balise base)
-sub getBaseHref #($htmlCode)
+#	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
+sub getBaseHref #($htmlCode, $secure)
 {
-	my ($htmlCode) = @_;
+	my ($htmlCode, $secure) = @_;
 
 	my $baseHref = "";
 
 	# Récupération de l'URL absolue dans le href de la balise base
 	$htmlCode =~ s/<base( [^>]*)? href=(\"|\')(.*?)\/?\2[^>]*>/$baseHref = $3;/segi;
+
+	$baseHref =~ s/^\/\//"http".$secure.":\/\/"/segi;
 
 	# Si l'URL dans le href de la balise base n'est pas absolue, on retourne la chaîne vide
 	if ($baseHref !~ m/^[\w\d]+:\/\//si) {

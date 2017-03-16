@@ -1144,8 +1144,10 @@ function initAnchorLinks() {
     "use strict";
     if (jQuery.address) {
         jQuery.address.change(function (event) {
+            var cdlAnchorValue;
             if (event.value !== "/") {
-                jQuery("[name=\"" + event.value + "\"]:first, #" + event.value).each(function () {
+                cdlAnchorValue = event.value.replace(/^\/|\/$/gm, "");
+                jQuery("[name=\"" + cdlAnchorValue + "\"]:first, #" + cdlAnchorValue).each(function () {
                     var cdlToReadClassName;
                     var anchorRelated;
                     if (jQuery(this).is("[class*=\"cdlToRead\"]")) {

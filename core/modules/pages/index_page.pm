@@ -433,7 +433,7 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 	}
 
 	# Récupération de l'URL de base d'où extraire le chemin des liens relatifs de la page
-	my $baseHref = getBaseHref($htmlCode);
+	my $baseHref = getBaseHref($htmlCode, $secure);
 	if ($baseHref) {
 		$baseHref =~ s/^($siteRootUrl(\/(.*))?)$/$pagePath = $2; $1/segi;
 	}

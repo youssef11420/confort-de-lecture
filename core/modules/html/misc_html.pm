@@ -43,7 +43,7 @@ sub makeUrlAbsolute #($url, $siteRootUrl, $pagePath)
 		return $url;
 	}
 
-	# Si l'URL commence par un / , cad qu'il faur chercher la ressource à partir de la ressource
+	# Si l'URL commence par un / , cad qu'il faur chercher la ressource à partir de la racine
 	# Sinon, la ressource est à chercher dans le même chemin que la page
 	if ($url !~ m/^\//si) {
 		$url = $pagePath."/".$url;
