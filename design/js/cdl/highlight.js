@@ -1171,6 +1171,7 @@ function initAnchorLinks() {
                         }
                     }
                     cdlToReadClassName = cdlToReadClassName.replace(/.*?cdlToRead(\d+).*?/, "$1");
+                    initLecture();
                     currentIndice = cdlToReadClassName;
                     timer = window.setTimeout(function () {
                         lectureMorceau(currentIndice, "down", playMode);
