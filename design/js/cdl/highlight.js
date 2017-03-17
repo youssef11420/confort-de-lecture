@@ -463,12 +463,16 @@ function detectKeyDown(e) {
             // Passe au morceau suivant
             initLecture();
             if (shiftKeyPressed) {
-                currentIndice -= 1;
+                if (playMode === "auto") {
+                    currentIndice -= 1;
+                }
                 timer = window.setTimeout(function () {
                     lectureMorceau(currentIndice, "down", "auto");
                 }, 0);
             } else {
-                currentIndice += 1;
+                if (playMode === "auto") {
+                    currentIndice += 1;
+                }
                 timer = window.setTimeout(function () {
                     lectureMorceau(currentIndice, "down", "auto");
                 }, 0);
