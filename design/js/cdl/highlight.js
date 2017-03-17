@@ -463,14 +463,14 @@ function detectKeyDown(e) {
             // Passe au morceau suivant
             initLecture();
             if (shiftKeyPressed) {
-                if (playMode === "auto") {
+                if (playMode === "auto" || isInProtectedField) {
                     currentIndice -= 1;
                 }
                 timer = window.setTimeout(function () {
                     lectureMorceau(currentIndice, "down", "auto");
                 }, 0);
             } else {
-                if (playMode === "auto") {
+                if (playMode === "auto" || isInProtectedField) {
                     currentIndice += 1;
                 }
                 timer = window.setTimeout(function () {
