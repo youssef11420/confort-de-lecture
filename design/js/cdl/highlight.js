@@ -1004,7 +1004,9 @@ textFields.on("paste", function () {
     }, 100);
 }).on("focus", function () {
     "use strict";
-    focusOnAField = true;
+    if (!jQuery(this).is("input[type=\"radio\"], input[type=\"checkbox\"]")) {
+        focusOnAField = true;
+    }
     if (jQuery(this).is("select")) {
         focusedSelect = jQuery(this);
         focusedSelectedIndex = focusedSelect.prop("selectedIndex");
