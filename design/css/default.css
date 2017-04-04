@@ -112,7 +112,7 @@ i,cite,em,var,address,dfn{font-style:normal}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:0}
-.cdlAudioControls li{list-style:none;float:left;padding:6px 16px 5px 0;position:relative}
+.cdlAudioControls li{list-style:none;float:left;padding:6px 41px 5px 0;position:relative}
 .cdlAudioControls li:last-child{padding-right:0 !important}
 .cdlAudioControls li a{display:block;position:relative;box-sizing:border-box}
 .cdlAudioControls li a.cdlDisabled{opacity:.5}
