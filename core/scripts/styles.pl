@@ -156,6 +156,7 @@ $styleString = setValueInTemplateString($styleString, 'INPUT_SIZE_WITHOUT_BORDER
 $styleString = setValueInTemplateString($styleString, 'INPUT_HALF_SIZE', $inputSize / 2);
 $styleString = setValueInTemplateString($styleString, 'INPUT_BORDER', $inputBorder);
 $styleString = setValueInTemplateString($styleString, 'SELECT_ARROW_SIZE', $selectArrowSize);
+$styleString = setValueInTemplateString($styleString, 'SELECT_TRIPLE_ARROW_SIZE', $selectArrowSize * 3);
 $styleString = setValueInTemplateString($styleString, 'SELECT_DOUBLE_ARROW_SIZE', $selectArrowSize * 4);
 $styleString = setValueInTemplateString($styleString, 'SELECT_HALF_ARROW_SIZE', $selectArrowSize / 2);
 

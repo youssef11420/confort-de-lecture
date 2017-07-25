@@ -35,7 +35,7 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 :root input[type="radio"]:checked + .cdlInput_radio:after{background-color:####FONT_COLOR###}
 :root .cdlInversedColor input[type="radio"]:checked + .cdlInput_radio:after{background-color:####BACKGROUND_COLOR###}
 :root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px}
-.cdlSelectInput select{right:-###SELECT_DOUBLE_ARROW_SIZE###px;margin-left:-###SELECT_DOUBLE_ARROW_SIZE###px}
+.cdlSelectInput select{padding-right:###SELECT_TRIPLE_ARROW_SIZE###px}
 .cdlSelectInput span{background-color:####BACKGROUND_COLOR###}
 .cdlSelectInput span:after{border-top-color:####FONT_COLOR###;border-width:###SELECT_ARROW_SIZE###px ###SELECT_ARROW_SIZE###px 0;margin:-###SELECT_HALF_ARROW_SIZE###px ###SELECT_HALF_ARROW_SIZE###px 0 0}
 .cdlInversedColor.cdlSelectInput span:after,.cdlInversedColor .cdlSelectInput span:after{border-top-color:####BACKGROUND_COLOR###}

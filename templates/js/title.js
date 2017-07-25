@@ -97,12 +97,6 @@ jQuery(document).ready(function () {
         zindex: 114200
     });
 
-    jQuery(".cdlCadre img").each(function () {
-        if (jQuery(this).width() < 600) {
-            jQuery(this).width(600);
-        }
-    });
-
     jQuery(document).on("click", ".cdlGalleryClose a", function (event) {
         jQuery(".cdlImageGallery").hide();
         event.preventDefault();
@@ -167,5 +161,15 @@ jQuery(document).ready(function () {
         jQuery("html, body").animate({scrollTop: 0});
         e.preventDefault();
         return false;
+    });
+});
+
+jQuery(window).load(function () {
+    "use strict";
+
+    jQuery(".cdlCadre img").each(function () {
+        if (jQuery(this).width() < 600) {
+            jQuery(this).width(Math.max(jQuery(this).width() * 2, 600));
+        }
     });
 });

@@ -108,7 +108,7 @@ i,cite,em,var,address,dfn{font-style:normal}
 :root .cdlInput_checkbox:after{width:100% !important;height:100%;margin:0}
 :root input[type="checkbox"]:checked + .cdlInput_checkbox:after{content:"✔"}
 .cdlSelectInput{max-width:99%;position:relative;display:inline-block;margin-bottom:5px;overflow:hidden;vertical-align:middle;line-height:normal !important;box-sizing:border-box;border-width:.1em;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}
-.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.3em .1em .3em;width:100%;border-width:0;box-sizing:content-box;-webkit-appearance:none;-moz-appearance:none}
+.cdlSelectInput select{margin-bottom:0;background-color:transparent !important;position:relative;z-index:10;padding:.1em 2.3em .1em .3em;width:100%;border-width:0;box-sizing:border-box;white-space:pre-wrap;-webkit-appearance:none;-moz-appearance:none}
 .cdlSelectInput span{display:inline-block;width:90% !important;position:absolute;right:0;top:0;bottom:0;height:100%;box-sizing:border-box}
 .cdlSelectInput span:after{content:"";position:absolute;right:0;top:50%;width:0 !important;border-left:solid transparent;border-right:solid transparent;border-top:solid}
 .cdlAudioControls{overflow:hidden;padding:0}
