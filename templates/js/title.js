@@ -1,3 +1,12 @@
+jQuery(window).on("load", function () {
+    "use strict";
+    jQuery(".cdlCadre img").each(function () {
+        if (jQuery(this).width() < 600) {
+            jQuery(this).width(Math.min(jQuery(this).width() * 2, 600));
+        }
+    });
+});
+
 var elementsTitres = [];
 var elementCourantTitre = null;
 var nbImagesGallery = 0;
@@ -95,12 +104,6 @@ jQuery(document).ready(function () {
         cursorcolor: window.cdlFontColor || "",
         autohidemode: false,
         zindex: 114200
-    });
-
-    jQuery(".cdlCadre img").each(function () {
-        if (jQuery(this).width() < 600) {
-            jQuery(this).width(Math.min(jQuery(this).width() * 2, 600));
-        }
     });
 
     jQuery(document).on("click", ".cdlGalleryClose a", function (event) {

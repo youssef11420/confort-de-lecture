@@ -68,6 +68,19 @@ $thisCdlUrl =~ s/^\/personnalisation\-([^\/]*)(\-https)?\/([a-z]{2})\/(bn|nb)\/(
 	editInSession($session, 'contrast', $contrast);
 	/segi;
 
+$thisCdlUrl =~ s/^(\/cdl)\/personnalisation-courante(\-http(s))?.svg$/
+	$embeddedMode = $1;
+	($action, $secure, $secureEmbeddedMode, $language, $contrast, $siteId, $urlToParse) = ("picto", $2, $3, "fr", "bn", "", "");
+		editInSession($session, 'language', $language);
+		editInSession($session, 'contrast', $contrast);
+	/segi;
+
+$thisCdlUrl =~ s/^\/personnalisation-courante([^\.]+)(\-https)?.svg$/
+	($action, $secure, $language, $contrast, $siteId, $urlToParse) = ("picto", $2, "fr", "bn", "", "");
+	editInSession($session, 'language', $language);
+	editInSession($session, 'contrast', $contrast);
+	/segi;
+
 # Gestion des langues
 if (-e "../modules/dictionary/".$language.".pm") {
 	require("../modules/dictionary/".$language.".pm");
@@ -555,7 +568,7 @@ $personalizationTemplateString =~ s/\#\#\#_DICO_([^\#]*)\#\#\#/$dictionary{$1}/s
 
 my $typeMime = "text/html; charset=UTF-8";
 if ($action =~ m/^picto$/si) {
-	$typeMime = "image/svg+xml";
+	$typeMime = "image/svg+xml; charset=utf-8";
 }
 
 print $session->header('Content-type' => $typeMime);
