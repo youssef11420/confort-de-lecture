@@ -85,7 +85,7 @@ $agentNameToSend = 'Confort de lecture [Lnet - aYaline]';
 
 # Hash: %letterSpacings
 # La liste des espacements de lettres
-%letterSpacings = ('1' => '0', '2' => '.2em', '3' => '.5em');
+%letterSpacings = ('1' => '.04em', '2' => '.2em', '3' => '.5em');
 
 # Hash: %wordSpacings
 # La liste des espacements de mots
