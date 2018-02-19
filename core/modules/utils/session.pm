@@ -30,7 +30,7 @@ sub createOrGetSession #($cgi)
 
 	my $session = CGI::Session->new("driver:File", $sid, {Directory=>$cdlSessionCachePath});
 
-	$session->expires("+20y");
+	$session->expires("+10y");
 
 	return $session;
 }
