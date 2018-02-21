@@ -92,7 +92,7 @@ sub makeUrlAbsoluteWithoutProtocol #($url, $siteRootUrl, $pagePath)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$method - Méthode d'appel de l'URL (dans le cas des formulaires)
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDomainNames)
 {
 	my ($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDomainNames) = @_;
@@ -279,7 +279,7 @@ sub cleanHtml #($htmlCode)
 #	$activateJavascript - option indiquant si on garde le javascript du site parsé en version CDL
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
 #	$siteId - identifiant du site parsé
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath, $contentType, $activateJavascript, $parseJavascript, $siteId, $trustedDomainNames)
 {
 	my ($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath, $contentType, $activateJavascript, $parseJavascript, $siteId, $trustedDomainNames) = @_;
@@ -333,7 +333,7 @@ sub parseAllHead #($htmlCode, $entirePageTemplateString, $siteRootUrl, $pagePath
 #	$activateFrames - option indiquant si on garde les frames/iframes du site parsé en version CDL
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseAllHtml #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames)
 {
 	my ($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames) = @_;
@@ -425,7 +425,7 @@ sub getDocumentLanguage #($htmlCode, $siteDefaultLanguage)
 #	$siteId - identifiant su site parsé
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
 sub getBodyAttributesInHash #($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript)
 {
@@ -454,7 +454,7 @@ sub getBodyAttributesInHash #($tagAttributes, $siteId, $pagePath, $siteRootUrl, 
 #	$siteId - identifiant su site parsé
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé
 sub getBodyAttributes #($htmlCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $parseJavascript)
 {

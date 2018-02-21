@@ -95,7 +95,7 @@ sub parseImages #($htmlCode, $siteRootUrl, $pagePath, $displayImages)
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseMapAreaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames)
 {
 	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
@@ -116,7 +116,7 @@ sub parseMapAreaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl, $
 #	$displayImages - booléen indiquant si l'affichage des images est activé
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseMapAreas #($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl, $trustedDomainNames)
 {
 	my ($htmlCode, $pagePath, $displayImages, $siteId, $siteRootUrl, $trustedDomainNames) = @_;

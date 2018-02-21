@@ -25,7 +25,7 @@
 #	$siteId - identifiant du site en cours de traitement
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseEventListenersAttributes  #($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames)
 {
 	my ($tagAttributes, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames) = @_;
@@ -48,7 +48,7 @@ sub parseEventListenersAttributes  #($tagAttributes, $siteId, $pagePath, $siteRo
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site en cours de traitement
 #	$parseJavascript - option permettant de dire si on doit parser le javascript du site parsé (en passant par <javascript.pl> ou le garder tel quel
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseScripts #($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript, $trustedDomainNames)
 {
 	my ($htmlCode, $siteRootUrl, $pagePath, $siteId, $parseJavascript, $trustedDomainNames) = @_;
@@ -180,7 +180,7 @@ sub generateJavascriptForCompletingPageVariable #($startUrl, $jsVariable, $curre
 #	$siteId - identifiant su site parsé
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 #	$isInAttribute - booléen indiquant si le code se trouve dans un attribut listener
 sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute)
 {
@@ -224,7 +224,7 @@ sub parseJavascriptCodeLine #($jsCode, $siteId, $pagePath, $siteRootUrl, $truste
 #	$siteId - identifiant su site parsé
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 #	$isInAttribute - booléen indiquant si le code se trouve dans un attribut listener
 sub parseJavascriptCode #($jsCode, $siteId, $pagePath, $siteRootUrl, $trustedDomainNames, $isInAttribute)
 {

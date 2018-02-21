@@ -65,7 +65,7 @@ sub addBorderForTextInputWithoutTypeAttribute #($tagHtmlCode)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames)
 {
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames) = @_;

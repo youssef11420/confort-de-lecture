@@ -27,7 +27,7 @@
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
 #	$method - Méthode d'appel de l'URL (dans le cas des formulaires)
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseLinkHrefAttribute #($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method, $trustedDomainNames)
 {
 	my ($url, $pagePath, $siteId, $siteRootUrl, $pageUri, $method, $trustedDomainNames) = @_;
@@ -78,7 +78,7 @@ sub encodeSpaces #($url)
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$pageUri - URI de la page en cours
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseLinkHref #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames)
 {
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trustedDomainNames) = @_;

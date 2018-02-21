@@ -33,7 +33,7 @@
 #	$activateFrames - option indiquant si on garde les frames/iframes du site parsé en version CDL
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 #	$entirePageTemplateString - chaîne de la template générale de page où remplir la zone des blocs
 #	$cadreTemplateString - chaîne template où remplir un bloc d'information
 sub parseAllBlocs #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $siteId, $pageUri, $trustedDomainNames, $entirePageTemplateString, $cadreTemplateString)

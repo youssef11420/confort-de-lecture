@@ -189,7 +189,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 			if ($contentType =~ m/text\/html/si) {
 				my $htmlCode = getCleanedPageContent($response, $contentType, $activateAudio);
 
-				renderIndexPage($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters);
+				renderIndexPage($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, %requestParameters);
 			} else {
 				redirectToDocumentPage($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $response, $urlToParse, $secure, %requestParameters);
 			}
@@ -275,7 +275,7 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $requestM
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'PAGE_ON_ERROR_URL', $urlToParse);
 
 	my $cdlPageUrl = $ENV{'REQUEST_URI'};
-	my $previousPageUrl = "http".$secure."://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$siteId);
+	my $previousPageUrl = "http".$secure."://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f".".$secure." : "/le-filtre".($secure eq "s" ? "-https" : "")."/".$siteId);
 	$cdlPageUrl =~ s/&/&amp;/sgi;
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'CDL_PAGE_URL', $cdlPageUrl);
 
@@ -410,11 +410,12 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $requestM
 #	$activateFrames - booléen indiquant si les frames sont activées
 #	$enableAudio - booléen indiquant si l'option audio activé pour ce site
 #	$activateAudio - booléen indiquant si l'utilisateur a choisi de vocaliser les pages
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
+#	$siteDomainNames - noms de domaine configurés
 #	%requestParameters - paramètres passés à la page
-sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters)
+sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, %requestParameters)
 {
-	my ($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $trustedDomainNames, %requestParameters) = @_;
+	my ($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLanguage, $homePageUri, $requestMethod, $secure, $urlToParse, $pageUri, $siteRootUrl, $pagePath, $contentType, $positionLocation, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $enableAudio, $activateAudio, $siteDomainNames, $trustedDomainNames, %requestParameters) = @_;
 
 	# Chargement de la template principale de la page
 	my $entirePageTemplateString = loadConfig($cdlTemplatesPath."entire_page.html");
@@ -461,7 +462,8 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 		my $backHomeTemplateString = loadConfig($cdlTemplatesPath."back_home_link.html");
 
 		# Affichage du lien Retour à l'accueil
-		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', setValueInTemplateString($backHomeTemplateString, 'HOME_URL', parseLinkHrefAttribute($homePageUri, $pagePath, $siteId, $siteRootUrl, $pageUri, 'get', $trustedDomainNames))));
+		$siteDomainNames =~ s/^([^\|]+)(\|.*)?$/$1/sgi;
+		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', setValueInTemplateString($backHomeTemplateString, 'HOME_URL', parseLinkHrefAttribute($homePageUri, $pagePath, $siteId, "http".$secure."://".$siteDomainNames, $pageUri, 'get', $trustedDomainNames))));
 	} else {
 		# Chargement de la template de titre du site
 		my $siteTitleTemplateString = loadConfig($cdlTemplatesPath."site_title.html");

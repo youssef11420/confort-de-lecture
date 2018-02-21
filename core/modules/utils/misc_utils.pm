@@ -297,7 +297,7 @@ sub buildUrlToParse #($cgi, $session, $pageUri, $secure, $siteDomainNames, $home
 #	$requestMethod - méthode HTTP pour sortir
 #	$urlToParse - URL du nouveau site
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 #	%requestParameters - paramètres à coller à l'URL
 sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestMethod, $urlToParse, $secure, $trustedDomainNames, %requestParameters)
 {
@@ -360,7 +360,7 @@ sub accessAnotherSite #($cgi, $session, $siteId, $siteDefaultLanguage, $requestM
 #	$pageUri - URI de la page en cours
 #	$pagePath - chemin vers la page en cours de traitement
 #	$secure - booléen indiquant si la page est sécurisée (en HTTPS)
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure, $trustedDomainNames)
 {
 	my ($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure, $trustedDomainNames) = @_;

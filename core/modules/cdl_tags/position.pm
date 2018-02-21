@@ -56,7 +56,7 @@ sub positionTagExists #($htmlCode)
 #	$cadreTemplateString - chaîne template où remplir le fil d'Ariane en haut de page
 #	$siteId - identifiant du site parsé
 #	$pageUri - URI de la page en cours
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parsePosition #($htmlCode, $siteRootUrl, $pagePath, $activateJavascript, $parseJavascript, $displayImages, $displayObjects, $displayApplets, $parseTablesToList, $activateFrames, $entirePageTemplateString, $cadreTemplateString, $siteId, $pageUri, $trustedDomainNames)
 {
 	# Extraction des arguments dans une variable locale :

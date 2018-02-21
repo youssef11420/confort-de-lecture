@@ -167,7 +167,7 @@ sub parseLinks #($htmlCode, $siteRootUrl, $pagePath)
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub cleanRedirectUrl #($url, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames)
 {
 	my ($url, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
@@ -189,7 +189,7 @@ sub cleanRedirectUrl #($url, $pagePath, $siteId, $siteRootUrl, $trustedDomainNam
 #	$pagePath - chemin vers la page en cours de traitement
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseMetaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames)
 {
 	my ($tagAttributes, $pagePath, $siteId, $siteRootUrl, $trustedDomainNames) = @_;
@@ -211,7 +211,7 @@ sub parseMetaAttributes #($tagAttributes, $pagePath, $siteId, $siteRootUrl, $tru
 #	$siteId - identifiant du site parsé
 #	$siteRootUrl - URL racine du site
 #	$contentType - encodage transmis dans l'entête de la réponse HTTP
-#	$trustedDomainNames - noms de domaine configuré de confiance
+#	$trustedDomainNames - noms de domaine configurés de confiance
 sub parseMetas #($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType, $trustedDomainNames)
 {
 	my ($htmlCode, $pagePath, $siteId, $siteRootUrl, $contentType, $trustedDomainNames) = @_;
