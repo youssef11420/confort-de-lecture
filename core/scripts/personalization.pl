@@ -188,8 +188,6 @@ my $personalizationTemplateString = "";
 if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."display.html");
 
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
-
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'B_COLOR_'.$backgroundColor, " class=\"choiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'F_COLOR_'.$fontColor, " class=\"choiceSelected\"");
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'L_COLOR_'.$linkColor, " class=\"choiceSelected\"");
@@ -496,6 +494,8 @@ if ($action =~ m/^affichage$/si) {
 		exit;
 	}
 }
+
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 $personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SECURE', $secure);
 
