@@ -660,6 +660,8 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 
 	$pageContent = setValueInTemplateString($pageContent, 'EMBEDDED_URL', $embeddedMode);
 
+	$pageContent = setValueInTemplateString($pageContent, 'SECURE', $secure eq "s" ? "-https" : "");
+
 	my $backgroundColor = loadFromSession($session, 'backgroundColor');
 	my $fontColor = loadFromSession($session, 'fontColor');
 	my $linkColor = loadFromSession($session, 'linkColor');
