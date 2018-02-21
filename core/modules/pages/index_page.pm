@@ -463,7 +463,11 @@ sub renderIndexPage #($htmlCode, $session, $siteId, $siteLabel, $siteDefaultLang
 
 		# Affichage du lien Retour à l'accueil
 		$siteDomainNames =~ s/^([^\|]+)(\|.*)?$/$1/sgi;
-		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', setValueInTemplateString($backHomeTemplateString, 'HOME_URL', parseLinkHrefAttribute($homePageUri, $pagePath, $siteId, "http".$secure."://".$siteDomainNames, $pageUri, 'get', $trustedDomainNames))));
+		my $backHomeUrl = parseLinkHrefAttribute($homePageUri, $pagePath, $siteId, "http".$secure."://".$siteDomainNames, $pageUri, 'get', $trustedDomainNames);
+		if ($backHomeUrl eq "" and $embeddedMode ne "" and $siteDomainNames ne $ENV{'SERVER_NAME'}) {
+			$backHomeUrl = "http".$secure."://".$siteDomainNames.$embeddedMode."/f".$secure;
+		}
+		$entirePageTemplateString = setValueInTemplateString($entirePageTemplateString, 'BACK_HOME_LINK', setValueInTemplateString($cadreTemplateString, 'CADRE_CONTENT', setValueInTemplateString($backHomeTemplateString, 'HOME_URL', $backHomeUrl)));
 	} else {
 		# Chargement de la template de titre du site
 		my $siteTitleTemplateString = loadConfig($cdlTemplatesPath."site_title.html");

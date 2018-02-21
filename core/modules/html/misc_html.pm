@@ -131,10 +131,6 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 		}
 	}
 
-	if ($url eq "" and $embeddedMode ne "") {
-		$url = $siteRootUrl.$embeddedMode."/f".($siteRootUrl =~ m/^http:\/\//si ? "s" : "");
-	}
-
 	# Retourner l'URI à partir de la racine
 	return $url;
 }
