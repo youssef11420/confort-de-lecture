@@ -493,6 +493,11 @@ sub redirectToProtectedAccessLogin #($cgi, $session, $siteId, $siteDefaultLangua
 #	
 sub initHTTPAgent
 {
+	IO::Socket::SSL::set_ctx_defaults(
+		SSL_verifycn_scheme => 'www',
+		SSL_verify_mode => 0,
+	);
+
 	# Retourner l'agent HTTP créé
 	return LWP::UserAgent->new(
 		agent => $agentNameToSend,
@@ -501,7 +506,7 @@ sub initHTTPAgent
 		timeout => 300,
 		ssl_opts => {
 			verify_hostname => 0,
-			SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE
+			SSL_verify_mode => 0x00
 		},
 	);
 }
