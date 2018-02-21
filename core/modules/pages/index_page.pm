@@ -39,6 +39,16 @@ sub processIndexPage
 	# Récupération du paramètre id et de l'uri à parser
 	my ($siteId, $pageUri, $secure) = getIndexUrlParameters;
 
+	if ($embeddedMode ne "") {
+		if ($ENV{'HTTPS'} and not $secure) {
+			my $cookie = CGI::Cookie->new(-name => $session->name, -value => $session->id);
+			print $cgi->header(-status => "302 Found", -location => "https://".$ENV{'SERVER_NAME'}.$embeddedMode."/fs/".$pageUri, -cookie => $cookie);
+		} elsif (not $ENV{'HTTPS'} and $secure) {
+			my $cookie = CGI::Cookie->new(-name => $session->name, -value => $session->id);
+			print $cgi->header(-status => "302 Found", -location => "http://".$ENV{'SERVER_NAME'}.$embeddedMode."/f/".$pageUri, -cookie => $cookie);
+		}
+	}
+
 	# Détection d'erreurs au niveau de l'identifiant du site
 	$siteId = verifySiteId($siteId);
 
