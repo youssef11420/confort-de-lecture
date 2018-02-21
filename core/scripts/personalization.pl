@@ -61,7 +61,8 @@ $thisCdlUrl =~ s/^(\/cdl)\/personnalisation\-([^\/]*)(\-http(s))?\/([a-z]{2})\/(
 	editInSession($session, 'language', $language);
 	editInSession($session, 'contrast', $contrast);
 	/segi;
-$thisCdlUrl =~ s/^(\/cdl)\/personnalisation(\/|\?|$)/$embeddedMode = $1;/segi;
+$thisCdlUrl =~ s/^(\/cdl)\/personnalisation(\-http(s))?(\/|\?|$)/$embeddedMode = $1; $secureEmbeddedMode = $3;/segi;
+$thisCdlUrl =~ s/^\/personnalisation(\-http(s))?(\/|\?|$)/$secure = $1; $secureEmbeddedMode = $2;/segi;
 $thisCdlUrl =~ s/^\/personnalisation\-([^\/]*)(\-https)?\/([a-z]{2})\/(bn|nb)\/([^\/]*)(\/(.*))?$/
 	($action, $secure, $language, $contrast, $siteId, $urlToParse) = ($1, $2, $3, $4, $5, $7);
 	editInSession($session, 'language', $language);

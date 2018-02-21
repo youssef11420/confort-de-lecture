@@ -257,6 +257,8 @@ sub renderErrorPage #($session, $siteId, $enableAudio, $activateAudio, $requestM
 
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'LANGUAGE', $language);
 
+	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'SECURE', $secure eq "s" ? "-https" : "");
+
 	$errorPageTemplateString = setValueInTemplateString($errorPageTemplateString, 'PERSONALIZATION_URL', $language."/".$contrast.($embeddedMode ne "" ? "" : "/".$siteId)."/".($requestMethod =~ m/post/si ? putParametersInUrlForHtml($pageUriForHtml, %requestParameters) : $pageUriForHtml));
 
 	my $iconContent;

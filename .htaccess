@@ -38,6 +38,6 @@ AddHandler cgi-script .pl
 
 	RewriteRule ^admin(/.*)?$ core/scripts/config.pl [L]
 
-	RewriteRule ^personnalisation-(affichage|avancee|audio|aide-audio|palette-couleurs-(b|f|l)|tailles-texte|audio-acces-direct|acces-direct|picto)/.*$ core/scripts/personalization.pl [L]
-	RewriteRule ^personnalisation$ core/scripts/personalization.pl [L]
+	RewriteRule ^personnalisation-(affichage|avancee|audio|aide-audio|palette-couleurs-(b|f|l)|tailles-texte|audio-acces-direct|acces-direct|picto)(-https)?/.*$ core/scripts/personalization.pl [L]
+	RewriteRule ^personnalisation(-https)?$ core/scripts/personalization.pl [L]
 </IfModule>
