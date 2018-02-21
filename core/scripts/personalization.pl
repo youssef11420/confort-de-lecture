@@ -497,6 +497,8 @@ if ($action =~ m/^affichage$/si) {
 	}
 }
 
+$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'SECURE', $secure);
+
 my $iconContent;
 open ICON_FILE, "< ".$cdlRootPath."/design/images/display.svg";
 $iconContent = do { local $/; <ICON_FILE> };
