@@ -505,7 +505,7 @@ sub initHTTPAgent
 		keep_alive => 1,
 		timeout => 300,
 		ssl_opts => {
-			verify_hostname => 0,
+			verify_hostnames => 0,
 			SSL_verify_mode => 0x00
 		},
 	);
