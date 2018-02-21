@@ -35,6 +35,8 @@ use session;
 use config_manager;
 
 
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
+
 # Création de l'objet CGI
 my $cgi = CGI->new();
 

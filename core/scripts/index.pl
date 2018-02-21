@@ -108,4 +108,6 @@ use index_page;
 
 $embeddedMode = "";
 
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
+
 processIndexPage;
