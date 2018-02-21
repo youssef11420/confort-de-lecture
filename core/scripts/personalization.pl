@@ -216,8 +216,6 @@ if ($action =~ m/^affichage$/si) {
 } elsif ($action =~ m/^avancee$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."advanced.html");
 
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
-
 	# Chargement des paramètres utilisateur
 	my $positionLocation = loadFromSession($session, 'positionLocation');
 	my $activateJavascript = loadFromSession($session, 'activateJavascript');
@@ -286,8 +284,6 @@ if ($action =~ m/^affichage$/si) {
 } elsif ($action =~ m/^audio$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."audio.html");
 
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
-
 	my $activateAudio = loadFromSession($session, 'activateAudio');
 	my $voice = loadFromSession($session, 'voice');
 	my $speed = loadFromSession($session, 'speed');
@@ -321,13 +317,9 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'AUDIO_SPEED_CHOICES', $speedChoices);
 } elsif ($action =~ m/^aide\-audio$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."audio_help.html");
-
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 } elsif ($action =~ m/^palette\-couleurs\-(b|f|l)$/si) {
 	my $paramToSet = $1;
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."more_colors.html");
-
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	my $color;
 	if ($paramToSet eq "b") {
@@ -356,8 +348,6 @@ if ($action =~ m/^affichage$/si) {
 	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'COLOR_CHOSEN', $color);
 } elsif ($action =~ m/^tailles-texte$/si) {
 	$personalizationTemplateString = loadConfig($cdlTemplatesPath."more_sizes.html");
-
-	$personalizationTemplateString = setValueInTemplateString($personalizationTemplateString, 'EMBEDDED_URL', $embeddedMode);
 
 	my $size = loadFromSession($session, 'fontSize');
 
