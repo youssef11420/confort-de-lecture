@@ -55,7 +55,7 @@ $embeddedMode = "";
 
 # Récupération des paramètres
 my ($action, $secure, $secureEmbeddedMode, $language, $contrast, $siteId, $urlToParse);
-$thisCdlUrl =~ s/^(\/cdl)\/personnalisation\-([^\/]*)(\-http(s))?\/([a-z]{2})\/(bn|nb)(\/(.*))?$/
+$thisCdlUrl =~ s/^(\/cdl)\/personnalisation\-([^\/]*?)(\-http(s))?\/([a-z]{2})\/(bn|nb)(\/(.*))?$/
 	$embeddedMode = $1;
 	($action, $secure, $secureEmbeddedMode, $language, $contrast, $siteId, $urlToParse) = ($2, $3, $4, $5, $6, "", $8);
 	editInSession($session, 'language', $language);
@@ -63,7 +63,7 @@ $thisCdlUrl =~ s/^(\/cdl)\/personnalisation\-([^\/]*)(\-http(s))?\/([a-z]{2})\/(
 	/segi;
 $thisCdlUrl =~ s/^(\/cdl)\/personnalisation(\-http(s))?(\/|\?|$)/$embeddedMode = $1; $secure = $2; $secureEmbeddedMode = $3;/segi;
 $thisCdlUrl =~ s/^\/personnalisation(\-http(s))?(\/|\?|$)/$secure = $1; $secureEmbeddedMode = $2;/segi;
-$thisCdlUrl =~ s/^\/personnalisation\-([^\/]*)(\-https)?\/([a-z]{2})\/(bn|nb)\/([^\/]*)(\/(.*))?$/
+$thisCdlUrl =~ s/^\/personnalisation\-([^\/]*?)(\-https)?\/([a-z]{2})\/(bn|nb)\/([^\/]*)(\/(.*))?$/
 	($action, $secure, $language, $contrast, $siteId, $urlToParse) = ($1, $2, $3, $4, $5, $7);
 	editInSession($session, 'language', $language);
 	editInSession($session, 'contrast', $contrast);
@@ -76,7 +76,7 @@ $thisCdlUrl =~ s/^(\/cdl)\/personnalisation-courante(\-http(s))?.svg$/
 		editInSession($session, 'contrast', $contrast);
 	/segi;
 
-$thisCdlUrl =~ s/^\/personnalisation-courante([^\.]+)(\-https)?.svg$/
+$thisCdlUrl =~ s/^\/personnalisation-courante([^\.]+?)(\-https)?.svg$/
 	($action, $secure, $language, $contrast, $siteId, $urlToParse) = ("picto", $2, "fr", "bn", "", "");
 	editInSession($session, 'language', $language);
 	editInSession($session, 'contrast', $contrast);
