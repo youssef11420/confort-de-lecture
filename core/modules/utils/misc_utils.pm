@@ -494,7 +494,16 @@ sub redirectToProtectedAccessLogin #($cgi, $session, $siteId, $siteDefaultLangua
 sub initHTTPAgent
 {
 	# Retourner l'agent HTTP créé
-	return LWP::UserAgent->new(agent => $agentNameToSend);
+	return LWP::UserAgent->new(
+		agent => $agentNameToSend,
+		env_proxy => 1,
+		keep_alive => 1,
+		timeout => 300,
+		ssl_opts => {
+			verify_hostname => 0,
+			SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE
+		},
+	);
 }
 
 # Function: putParametersInUrl
