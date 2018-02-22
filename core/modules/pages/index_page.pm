@@ -186,6 +186,11 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 		# On effectue la requête HTTP en récupérant la réponse
 		my $response = sendRequest($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, %requestParameters);
 
+		if ($response->code eq "500") {
+			print "Content-type: text/plain\n\n";
+			print $response->as_string;exit;
+		}
+
 		# Récupération du type d'encodage des caractères reçus dans la réponse HTTP
 		my $contentType = getContentTypeFromHttpResponseHeader($response);
 
