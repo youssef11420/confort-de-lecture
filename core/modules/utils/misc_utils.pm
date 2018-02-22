@@ -493,6 +493,7 @@ sub redirectToProtectedAccessLogin #($cgi, $session, $siteId, $siteDefaultLangua
 #	
 sub initHTTPAgent
 {
+	use IO::Socket::SSL 'debug0';
 	IO::Socket::SSL::set_ctx_defaults(
 		SSL_verifycn_scheme => 'www',
 		SSL_verify_mode => 0,
