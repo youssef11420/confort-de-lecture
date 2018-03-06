@@ -29,7 +29,7 @@ sub parseContraste #
 	my ($htmlCode) = @_;
 
 	# Ajout du div class="cdlContraste" à la place des balises cdlContraste
-	$htmlCode =~ s/<!--cdlContraste(\s[^>]*)?-->(.*?)<!--\/cdlContraste-->/<span class=\"cdlContraste\">$2<\/span>/sg;
+	$htmlCode =~ s/<!--cdlContraste(\s[^>]*)?-->(.*?)<!--\/cdlContraste-->/<div class=\"cdlContraste\">$2<\/div>/sg;
 
 	# Retourner le code HTML nettoyé
 	return $htmlCode;
