@@ -139,7 +139,7 @@ if ($externalSiteId ne "") {
 	$urlToParse =~ s/^([^\/])/\/$1/sgi;
 	$urlToParse = $requestMethod !~ m/post/si ? putParametersInUrl($urlToParse, %requestParameters) : $urlToParse;
 	if ($externalEmbeddedMode eq "1") {
-		print $cgi->redirect("http".$secure."://".$externalDomainName."/cdl/f".urlDecode(putParametersInUrl($urlToParse, %cdlParameters)));
+		print $cgi->redirect("http".$secure."://".$externalDomainName."/cdl/f".$secure.urlDecode(putParametersInUrl($urlToParse, %cdlParameters)));
 	} else {
 		$externalCdlUrl = $externalCdlUrl ne "" ? $externalCdlUrl : ($embeddedMode ne "" ? "solution.confortdelecture.org" : $ENV{'SERVER_NAME'});
 		print $cgi->redirect("http".$secure."://".$externalCdlUrl."/le-filtre/".$externalSiteId."/".$externalDomainName.urlDecode($externalCdlUrl ne $ENV{'SERVER_NAME'} ? putParametersInUrl($urlToParse, %cdlParameters) : $urlToParse));
