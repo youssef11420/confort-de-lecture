@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="cdl_recette">
+  <component name="PublishConfigData" autoUpload="Always" serverName="cdl_hdcz_com">
     <serverData>
       <paths name="DW NFS">
         <serverdata>
@@ -37,6 +37,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="cdl_hdcz_org_prod">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="cdl_hdcz_org_recette">
         <serverdata>
           <mappings>
@@ -62,6 +69,13 @@
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="fftri">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
