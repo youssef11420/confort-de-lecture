@@ -116,8 +116,19 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 			$url = ($embeddedMode ne "" ? "" : $domainName."/").$uri;
 			$url = ($secure ? ($siteRootUrl =~ m/^http:\/\//si ? "https://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/fs" : "/le-filtre-https/".$siteId)."/" : "") : ($siteRootUrl =~ m/^http:\/\//si ? "" : "http://".$ENV{'SERVER_NAME'}.($embeddedMode ne "" ? $embeddedMode."/f" : "/le-filtre/".$siteId)."/")).$url;
 		} elsif (!$trustedDomainNames or $url !~ m/^https?:\/\/($trustedDomainNames)/si) {
-			$url =~ s/^http(s)?:\/\///sgi;
-			$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
+			my $externalSiteId = getSiteFromDomain($domainName);
+			my $externalEmbeddedMode = "";
+			if ($externalSiteId) {
+				my $externalConfig = loadConfig($cdlSitesConfigPath.$siteId."/".$siteId.".ini");
+				$externalEmbeddedMode = getConfig($externalConfig, 'embeddedMode');
+			}
+
+			if ($externalEmbeddedMode eq "1") {
+				$url = "http".$secure."://".$domainName."/cdl/f".$secure."/".$uri;
+			} else {
+				$url =~ s/^http(s)?:\/\///sgi;
+				$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
+			}
 		}
 	}
 
