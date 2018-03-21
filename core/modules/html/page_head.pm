@@ -113,6 +113,9 @@ sub cleanStyles #($htmlCode)
 	# Suppression des balises link permettant d'inclure un feuille de style : rel="stylesheet"
 	$htmlCode =~ s/<link( [^>]*)? rel=(\"|\')stylesheet\2[^>]*>//sgi;
 
+	# Suppression des balises style
+	$htmlCode =~ s/<style( [^>]*)?>(.*?)<\/style>//sgi;
+
 	# Suppression des attributs HTML style
 	$htmlCode =~ s/(<([\w\d]+))( [^>]*?)>/$1.cleanStyleAttributes($3).">"/segi;
 

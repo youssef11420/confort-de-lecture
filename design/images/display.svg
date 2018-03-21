@@ -1,9 +1,8 @@
-<svg version="1.1" id="cdlDisplayIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="cdlDisplayIcon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 	 viewBox="0 0 116.2 146.3" enable-background="new 0 0 116.2 146.3" xml:space="preserve" width="###ICON_SIZE###px" height="###ICON_SIZE###px" fill="####F_COLOR###" style="text-decoration:none;width:###ICON_SIZE###px !important;height:###ICON_SIZE###px !important">
 	<style>
 		.st1{font-size:143.1113px;text-decoration:none !important;font-weight:bold}
 	</style>
-	<image src="###EMBEDDED_URL###/design/images/util_links_pictos/display_picto_###F_SIZE###.png" alt="Personnaliser vos paramètres d'affichage" xlink:href=""></image>
 	<text transform="matrix(0.9454 0 0 1 -1 123.5796)" class="st0 st1">A</text>
 	<g>
 		<path d="M88.7,36.4c0,6.7,6.1,12.2,13.7,12.2c7.6,0,13.7-5.5,13.7-12.2c0-8.7-10.7-14.1-11.5-23.8v-0.3c0-1.1-1-1.9-2.1-1.9

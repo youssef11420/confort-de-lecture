@@ -14,9 +14,9 @@
 <form action="###EMBEDDED_URL###/personnalisation###SECURE###" method="post" class="cdlFormPersonalization"><input type="hidden" name="cdlid" value="###SITE_ID###" class="cdlHidden"><input type="hidden" name="cdlurl" value="###URL_TO_PARSE###" class="cdlHidden">
 <div class="cdlUtilLinksContainer">
 <div class="cdlUtilLinks">
-<div class="cdlChangeDisplayButton" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###DISPLAY_ICON###<input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="1" accesskey="a"></div><!--###AUDIO_ACTIONS###-->
-<div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###">###AUDIO_ICON###<input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="1" alt="###_DICO_TITLE_PERSONNALISER_AUDIO###" accesskey="a"></div>
-<div class="cdlChangeAudioHelpButton" title="###_DICO_TITLE_AIDE_AUDIO###">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" alt="###_DICO_TITLE_AIDE_AUDIO###" accesskey="h"></div><!--/###AUDIO_ACTIONS###-->
+<div class="cdlChangeDisplayButton" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###">###DISPLAY_ICON###<input type="submit" id="cdlchangedisplay" name="cdlchangedisplay" value="1" accesskey="a" title="###_DICO_TITLE_PERSONNALISER_AFFICHAGE###"></div><!--###AUDIO_ACTIONS###-->
+<div class="cdlChangeAudioButton" title="###_DICO_TITLE_PERSONNALISER_AUDIO###">###AUDIO_ICON###<input type="submit" id="cdlchangeaudio" name="cdlchangeaudio" value="1" accesskey="d" title="###_DICO_TITLE_PERSONNALISER_AUDIO###"></div>
+<div class="cdlChangeAudioHelpButton" title="###_DICO_TITLE_AIDE_AUDIO###">###AUDIO_HELP_ICON###<input type="submit" id="cdlchangeaudiohelp" name="cdlchangeaudiohelp" value="1" accesskey="h" title="###_DICO_TITLE_AIDE_AUDIO###"></div><!--/###AUDIO_ACTIONS###-->
 </div><!--###AUDIO###-->
 <div class="cdlAudioContent">
 <div class="cdlAudioObject">
@@ -46,7 +46,7 @@ if (lecteurAudioCDL && lecteurAudioCDL.play) {
 <div class="cdlGlobalPage">
 <div class="cdlPageContent">
 <div class="cdlPersonalizationHeader">
-<h1 class="cdlSiteLogo"><a href="###SITE_URL###" title="###SITE_TITLE###" target="_blank"><img src="###SITE_LOGO###" alt="###SITE_TITLE###"></a></h1>
+<h1 class="cdlSiteLogo"><img src="###SITE_LOGO###" alt=""></h1>
 <div class="cdlLogoCdl"><img src="###EMBEDDED_URL###/design/images/logo_confortdelecture.svg" alt=""></div>
 </div>
 <div class="cdlCadreContainer">

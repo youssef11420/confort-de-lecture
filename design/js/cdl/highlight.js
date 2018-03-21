@@ -57,7 +57,7 @@ function estPret() {
 // A appeler à l'arrêt de la lecture
 function stopLecture() {
     "use strict";
-    jQuery(".cdlInversedColor input[type=\"text\"], .cdlInversedColor input[type=\"color\"], .cdlInversedColor input[type=\"date\"], .cdlInversedColor input[type=\"datetime\"], .cdlInversedColor input[type=\"datetime-local\"], .cdlInversedColor input[type=\"email\"], .cdlInversedColor input[type=\"month\"], .cdlInversedColor input[type=\"number\"], .cdlInversedColor input[type=\"range\"], .cdlInversedColor input[type=\"search\"], .cdlInversedColor input[type=\"tel\"], .cdlInversedColor input[type=\"time\"], .cdlInversedColor input[type=\"url\"], .cdlInversedColor input[type=\"week\"], .cdlInversedColor input[type=\"password\"], .cdlInversedColor textarea, .cdlInversedColor select").blur();
+    jQuery(".cdlInversedColor input[type=text], .cdlInversedColor input[type=color], .cdlInversedColor input[type=date], .cdlInversedColor input[type=datetime], .cdlInversedColor input[type=datetime-local], .cdlInversedColor input[type=email], .cdlInversedColor input[type=month], .cdlInversedColor input[type=number], .cdlInversedColor input[type=range], .cdlInversedColor input[type=search], .cdlInversedColor input[type=tel], .cdlInversedColor input[type=time], .cdlInversedColor input[type=url], .cdlInversedColor input[type=week], .cdlInversedColor input[type=password], .cdlInversedColor textarea, .cdlInversedColor select").blur();
     jQuery(".cdlInversedColor").removeClass("cdlInversedColor");
 
     jQuery("body").animate({scrollTop: 0}, 500);
@@ -293,7 +293,7 @@ function lectureMorceau(index, paramPlayDirection, paramPlayMode) {
                 content = pageParts[index].outer();
                 jQuery("input", pageParts[index]).each(function () {
                     if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(submit|button|reset|hidden|image)$", "i"))) {
-                        if (!jQuery(this).attr("type") || !jQuery(this).attr("type").match(new RegExp("^(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)$", "i"))) {
+                        if (!jQuery(this).attr("type") || jQuery(this).attr("type").match(new RegExp("^(text|password|file|color|date|datetime|datetime-local|email|month|number|range|search|tel|time|url|week)$", "i"))) {
                             content = content.replace(/value="([^"]*)"/, "");
                             if (jQuery(this).val()) {
                                 content = content.replace(/<input/, "<input value=\"" + jQuery(this).val() + "\"");
@@ -519,7 +519,7 @@ function detectKeyUp(e) {
                         focusedSelectedIndex = focusedSelect.prop("selectedIndex");
                         initLecture();
                         timer = window.setTimeout(function () {
-                            lectureMorceau("<select id=\"cdlGhostSelect\">" + jQuery("option", focusedSelect).eq(focusedSelectedIndex).outer() + "</select>", playDirection, playMode);
+                            lectureMorceau("<select id=cdlGhostSelect>" + jQuery("option", focusedSelect).eq(focusedSelectedIndex).outer() + "</select>", playDirection, playMode);
                         }, 0);
                     }
                 }
@@ -588,7 +588,7 @@ function detectKeyDownForFocusable(e) {
             return;
         // autres
         default:
-            if (jQuery(this).is("input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea")) {
+            if (jQuery(this).is("input[type=text], input[type=color], input[type=date], input[type=datetime], input[type=datetime-local], input[type=email], input[type=month], input[type=number], input[type=range], input[type=search], input[type=tel], input[type=time], input[type=url], input[type=week], input[type=password], textarea")) {
                 if (kc >= 65 && kc <= 90) {
                     if (e.altKey && e.ctrlKey && !e.shiftKey && kc === 69) {
                         char = "euro";
@@ -775,7 +775,7 @@ function detectKeyDownForFocusable(e) {
                     }
                 }
             }
-            if (jQuery(this).is("input[type=\"checkbox\"], input[type=\"radio\"]")) {
+            if (jQuery(this).is("input[type=checkbox], input[type=radio]")) {
                 if (kc === 32) {
                     char = "coche";
                 }
@@ -825,8 +825,8 @@ function highlightedElements(theElement) {
                         currentFocusableIndiceForInit = i;
                         isFirstElementInCadre = false;
                     }
-                    if (jQuery(this).children("input[type!=\"hidden\"],button").length === 1 || jQuery(this).is("strong.cdlSelectInput,textarea")) {
-                        jQuery(this).wrap("<span class=\"cdlFormFieldsHighlighted\"></span>");
+                    if (jQuery(this).children("input[type!=hidden],button").length === 1 || jQuery(this).is("strong.cdlSelectInput,textarea")) {
+                        jQuery(this).wrap("<span class=cdlFormFieldsHighlighted></span>");
                         pageParts.push(jQuery(this).parent());
                         jQuery(this).parent().addClass("cdlToRead" + i);
                         pageFirstPartsRelated.push(currentFocusableIndiceForInit);
@@ -866,7 +866,7 @@ function ds_gettop(el) {
 function highlighterMain(index) {
     "use strict";
     if (!isStopped) {
-        jQuery(".cdlInversedColor input[type=\"text\"], .cdlInversedColor input[type=\"color\"], .cdlInversedColor input[type=\"date\"], .cdlInversedColor input[type=\"datetime\"], .cdlInversedColor input[type=\"datetime-local\"], .cdlInversedColor input[type=\"email\"], .cdlInversedColor input[type=\"month\"], .cdlInversedColor input[type=\"number\"], .cdlInversedColor input[type=\"range\"], .cdlInversedColor input[type=\"search\"], .cdlInversedColor input[type=\"tel\"], .cdlInversedColor input[type=\"time\"], .cdlInversedColor input[type=\"url\"], .cdlInversedColor input[type=\"week\"], .cdlInversedColor input[type=\"password\"], .cdlInversedColor textarea, .cdlInversedColor select").blur();
+        jQuery(".cdlInversedColor input[type=text], .cdlInversedColor input[type=color], .cdlInversedColor input[type=date], .cdlInversedColor input[type=datetime], .cdlInversedColor input[type=datetime-local], .cdlInversedColor input[type=email], .cdlInversedColor input[type=month], .cdlInversedColor input[type=number], .cdlInversedColor input[type=range], .cdlInversedColor input[type=search], .cdlInversedColor input[type=tel], .cdlInversedColor input[type=time], .cdlInversedColor input[type=url], .cdlInversedColor input[type=week], .cdlInversedColor input[type=password], .cdlInversedColor textarea, .cdlInversedColor select").blur();
         jQuery(".cdlInversedColor").removeClass("cdlInversedColor");
         if (pageParts[index]) {
             myScrollTop = ds_gettop(pageParts[index].get(0));
@@ -974,7 +974,7 @@ if (pCdlCopyright.length) {
     i += 1;
 }
 
-var textFields = jQuery("input[type=\"radio\"], input[type=\"checkbox\"], input[type=\"text\"], input[type=\"color\"], input[type=\"date\"], input[type=\"datetime\"], input[type=\"datetime-local\"], input[type=\"email\"], input[type=\"month\"], input[type=\"number\"], input[type=\"range\"], input[type=\"search\"], input[type=\"tel\"], input[type=\"time\"], input[type=\"url\"], input[type=\"week\"], input[type=\"password\"], textarea, select");
+var textFields = jQuery("input[type=radio], input[type=checkbox], input[type=text], input[type=color], input[type=date], input[type=datetime], input[type=datetime-local], input[type=email], input[type=month], input[type=number], input[type=range], input[type=search], input[type=tel], input[type=time], input[type=url], input[type=week], input[type=password], textarea, select");
 textFields.on("paste", function () {
     "use strict";
     var element = this;
@@ -990,7 +990,7 @@ textFields.on("paste", function () {
                 window.cdlSpeed
                     ? "&cdlspeed=" + encodeURIComponent(window.cdlSpeed)
                     : ""
-            ) + "\" class=\"cdlHidden\" id=\"lecteurAudioCDL_paste\"></audio>");
+            ) + "\" class=cdlHidden id=lecteurAudioCDL_paste></audio>");
         } else {
             jQuery(lecteurAudioCDLPaste).attr("src", (window.cdlEmbeddedURL || "") + "/audio-text-letter/" + window.cdlSiteId + "/?cdltext=" + encodeURIComponent(value) + (
                 window.cdlVoice
@@ -1008,7 +1008,7 @@ textFields.on("paste", function () {
     }, 100);
 }).on("focus", function () {
     "use strict";
-    if (!jQuery(this).is("input[type=\"radio\"], input[type=\"checkbox\"]")) {
+    if (!jQuery(this).is("input[type=radio], input[type=checkbox]")) {
         focusOnAField = true;
     }
     if (jQuery(this).is("select")) {
@@ -1023,7 +1023,7 @@ textFields.on("paste", function () {
 });
 
 
-jQuery(".cdlCadre a, button, input[type=\"submit\"], input[type=\"button\"], input[type=\"reset\"]").on("click", function () {
+jQuery(".cdlCadre a, button, input[type=submit], input[type=button], input[type=reset]").on("click", function () {
     "use strict";
     if (isReading) {
         if (lecteurAudioHTML5 && lecteurAudioHTML5.pause) {
@@ -1044,7 +1044,7 @@ if (textFields.length > 0) {
     }
 }
 
-jQuery(document).on("change", ".cdlInversedColor input[type=\"checkbox\"],.cdlInversedColor input[type=\"radio\"]", function () {
+jQuery(document).on("change", ".cdlInversedColor input[type=checkbox],.cdlInversedColor input[type=radio]", function () {
     "use strict";
     var char = "decoche";
     var lecteurChar;
@@ -1073,7 +1073,7 @@ jQuery("select").on("click", function () {
                 focusedSelectedIndex = focusedSelect.prop("selectedIndex");
                 initLecture();
                 timer = window.setTimeout(function () {
-                    lectureMorceau("<select id=\"cdlGhostSelect\">" + jQuery("option", focusedSelect).eq(focusedSelectedIndex).outer() + "</select>", playDirection, playMode);
+                    lectureMorceau("<select id=cdlGhostSelect>" + jQuery("option", focusedSelect).eq(focusedSelectedIndex).outer() + "</select>", playDirection, playMode);
                 }, duree);
             }
         }
@@ -1156,18 +1156,18 @@ function initAnchorLinks() {
                 jQuery("[name=\"" + cdlAnchorValue + "\"]:first, #" + cdlAnchorValue).each(function () {
                     var cdlToReadClassName;
                     var anchorRelated;
-                    if (jQuery(this).is("[class*=\"cdlToRead\"]")) {
+                    if (jQuery(this).is("[class*=cdlToRead]")) {
                         cdlToReadClassName = jQuery(this).attr("class");
                     } else {
-                        anchorRelated = jQuery("[class*=\"cdlToRead\"]:first", jQuery(this));
+                        anchorRelated = jQuery("[class*=cdlToRead]:first", jQuery(this));
                         if (anchorRelated.length > 0) {
                             cdlToReadClassName = anchorRelated.attr("class");
                         } else {
-                            anchorRelated = jQuery(this).nextAll("[class*=\"cdlToRead\"]:first");
+                            anchorRelated = jQuery(this).nextAll("[class*=cdlToRead]:first");
                             if (anchorRelated.length > 0) {
                                 cdlToReadClassName = anchorRelated.attr("class");
                             } else {
-                                anchorRelated = jQuery("[class*=\"cdlToRead\"]:first", jQuery(this).nextAll());
+                                anchorRelated = jQuery("[class*=cdlToRead]:first", jQuery(this).nextAll());
                                 if (anchorRelated.length > 0) {
                                     cdlToReadClassName = anchorRelated.attr("class");
                                 } else {

@@ -34,7 +34,7 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 :root .cdlInput_checkbox:after{border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;-khtml-border-radius:3px}
 :root input[type="radio"]:checked + .cdlInput_radio:after{background-color:####FONT_COLOR###}
 :root .cdlInversedColor input[type="radio"]:checked + .cdlInput_radio:after{background-color:####BACKGROUND_COLOR###}
-:root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px}
+:root input[type="radio"],:root input[type="checkbox"]{width:###INPUT_SIZE###px !important;height:###INPUT_SIZE###px;cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
 .cdlSelectInput select{padding-right:###SELECT_TRIPLE_ARROW_SIZE###px}
 .cdlSelectInput span{background-color:####BACKGROUND_COLOR###}
 .cdlSelectInput span:after{border-top-color:####FONT_COLOR###;border-width:###SELECT_ARROW_SIZE###px ###SELECT_ARROW_SIZE###px 0;margin:-###SELECT_HALF_ARROW_SIZE###px ###SELECT_HALF_ARROW_SIZE###px 0 0}
@@ -54,9 +54,9 @@ button,button *{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###C
 .cdlFormExitFromCdl input{cursor:url(###EMBEDDED_URL###/design/cursors/pointer_cursor_###CURSOR_SIZE###.cur),pointer}
 .cdlSizes li a,.cdlSizes li a *{color:####FONT_COLOR###}
 .cdlSizes .choiceSelected a,.cdlSizes li a:hover,.cdlSizes li a:focus{border-color:####FONT_COLOR###}
-.cdlContraste,.cdlContraste *{background-color:####FONT_COLOR###;color:####BACKGROUND_COLOR###;border-color:####BACKGROUND_COLOR### !important}
-.cdlContraste .cdlInversedColor{background-color:####BACKGROUND_COLOR### !important;color:####FONT_COLOR### !important}
-.cdlContraste .cdlInversedColor *{background-color:####BACKGROUND_COLOR### !important;color:####FONT_COLOR### !important;border-color:####FONT_COLOR### !important}
+.cdlGlobalPage .cdlContraste,.cdlGlobalPage .cdlContraste *{background-color:####FONT_COLOR###;color:####BACKGROUND_COLOR###;border-color:####BACKGROUND_COLOR### !important}
+.cdlGlobalPage .cdlContraste .cdlInversedColor{background-color:####BACKGROUND_COLOR### !important;color:####FONT_COLOR### !important}
+.cdlGlobalPage .cdlContraste .cdlInversedColor *{background-color:####BACKGROUND_COLOR### !important;color:####FONT_COLOR### !important;border-color:####FONT_COLOR### !important}
 .cdlBackHome .cdlCadre,.cdlBackHome .cdlCadre *{background-color:####FONT_COLOR###;color:####BACKGROUND_COLOR###}
 .cdlFormExitFromCdl input[type="submit"]{color:####LINK_COLOR###}
 @media all and (max-width: ###MEDIA_QUERY_SIZE###px) {

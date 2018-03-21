@@ -785,7 +785,7 @@ sub sendRequest #($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, 
 	my $response;
 	do {$response = getResponse($userAgent, $request);} while ($response->is_info);
 	# Récupérer la première réponse correcte de la chaîne de redirection pour refaire étape par étape l'enchaînement en restant dans CDL
-	while ($response->previous ne undef and not $response->previous->is_error and not $response->previous->is_redirect) {
+	while ($response->previous ne undef and not $response->previous->is_error and not($response->previous->is_redirect and $response->previous->code eq $response->code)) {
 		$response = $response->previous;
 	}
 

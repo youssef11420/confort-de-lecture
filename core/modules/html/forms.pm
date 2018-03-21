@@ -85,13 +85,6 @@ sub parseForms #($htmlCode, $pagePath, $siteId, $siteRootUrl, $pageUri, $trusted
 	$htmlCode =~ s/(<input( [^>]*)? type=(\"|\')(radio|checkbox)\3[^>]*>)/<span class=cdlOtherInput>$1<strong class=cdlInput_$4><\/strong><\/span>/sgi;
 	# Gestion des balises input sans attribut type (donc par défaut de type texte)
 	$htmlCode =~ s/(<input( [^>]*)?>)/addBorderForTextInputWithoutTypeAttribute($1)/segi;
-	
-	# Gestion des attributs cols et rows d'une zone de saisie multiligne (textarea)
-	$htmlCode =~ s/(<textarea( [^>]*)?) cols=(\"|\').*?\3([^>]*>)/$1$4/sgi;
-	$htmlCode =~ s/(<textarea( [^>]*)?) rows=(\"|\').*?\3([^>]*>)/$1$4/sgi;
-
-	# Ajouter les attributs cols et rows pour la balise textarea
-	$htmlCode =~ s/(<textarea( [^>]*)?)>/$1 cols=\"100\" rows=\"10\">/sgi;
 
 	$htmlCode =~ s/(<select( [^>]*)?>.*?<\/select>)/<strong class=cdlSelectInput>$1<span><\/span><\/strong>/sgi;
 

@@ -40,7 +40,7 @@ sub processIndexPage
 	my ($siteId, $pageUri, $secure) = getIndexUrlParameters;
 
 	if ($embeddedMode ne "") {
-		if ($ENV{'HTTPS'} and $secure ne "s") {
+		if (($ENV{'HTTP_X_FORWARDED_PROTO'} eq "https" or $ENV{'HTTPS'}) and $secure ne "s") {
 			my $cookie = CGI::Cookie->new(-name => $session->name, -value => $session->id);
 			print $cgi->header(-status => "302 Found", -location => "https://".$ENV{'SERVER_NAME'}.$embeddedMode."/fs/".$pageUri, -cookie => $cookie);
 		}
@@ -188,7 +188,7 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 
 		if ($response->code eq "500") {
 			print "Content-type: text/plain\n\n";
-			print $response->as_string;exit;
+			print $response->is_redirect;
 		}
 
 		# Récupération du type d'encodage des caractères reçus dans la réponse HTTP

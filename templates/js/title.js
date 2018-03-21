@@ -1,7 +1,7 @@
 jQuery(window).on("load", function () {
     "use strict";
     jQuery(".cdlCadre img").each(function () {
-        if (jQuery(this).width() < 600) {
+        if (!jQuery(this).hasClass("cdlNoResize") && jQuery(this).width() < 600) {
             jQuery(this).width(Math.min(jQuery(this).width() * 2, 600));
         }
     });

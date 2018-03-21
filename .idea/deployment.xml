@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="cdl_hdcz_com">
+  <component name="PublishConfigData" autoUpload="Always" serverName="cdl_hdcz_org_prod" autoUploadExternalChanges="true">
     <serverData>
       <paths name="DW NFS">
         <serverdata>
@@ -23,20 +23,6 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="cdl">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/dev.cdl.lnet.fr/recette" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="cdl_hdcz_com">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
       <paths name="cdl_hdcz_org_prod">
         <serverdata>
           <mappings>
@@ -51,17 +37,10 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="cdl_pre_hdcz_com">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
       <paths name="cdl_prod">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

@@ -123,12 +123,8 @@ sub getUriFromUrl #($url, $pagePath, $siteId, $siteRootUrl, $method, $trustedDom
 				$externalEmbeddedMode = getConfig($externalConfig, 'embeddedMode');
 			}
 
-			if ($externalEmbeddedMode eq "1") {
-				$url = "http".$secure."://".$domainName."/cdl/f".$secure."/".$uri;
-			} else {
-				$url =~ s/^http(s)?:\/\///sgi;
-				$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
-			}
+			$url =~ s/^http(s)?:\/\///sgi;
+			$url = $embeddedMode."/sortie".($secure eq "s" ? "-https" : "")."/".$siteId."/".$defaultLanguage."/".$method."/".$url;
 		}
 	}
 
@@ -163,6 +159,7 @@ sub getCleanedPageContent #($response, $contentType, $activateAudio)
 		$htmlCode = $response->decoded_content;
 	} else {
 		$htmlCode = $response->content;
+		utf8::decode($htmlCode);
 	}
 
 	my $tree = HTML::TreeBuilder->new;
@@ -264,7 +261,7 @@ sub cleanHtml #($htmlCode)
 	$htmlCode =~ s/<(\/?)acronym( [^>]*?)?>/<$1abbr$2>/sgi;
 
 	# Ajout des points séparateurs dans les acronymes
-	$htmlCode =~ s/(<abbr( [^>]*?)?>)([A-Z]+)(<\/abbr>)/$1.addDotToAcronym($3).$4/seg;
+	#$htmlCode =~ s/(<abbr( [^>]*?)?>)([A-Z]+)(<\/abbr>)/$1.addDotToAcronym($3).$4/seg;
 
 	# Nettoyage des problèmes de guillemets en trop dans les attributs d'une balise et suppression des espaces au début et à la fin des liens
 	$htmlCode =~ s/(<a[^>]*>)(\s*)(.*?)(\s*)(<\/a>)/$2$1$3$5$4/sgi;

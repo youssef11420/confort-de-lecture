@@ -1,6 +1,6 @@
 *{font-family:"Montserrat","Verdana","Lucida Sans","Lucida Sans Unicode",sans-serif;margin:0;padding:0;border:0 solid;word-wrap:break-word;font-size:100%;text-shadow:0 0 .02em}
-abbr,acronym{border-bottom:1px dotted;display:inline-block}
-abbr abbr,abbr acronym,acronym abbr,acronym acronym{border-bottom:0}
+abbr,acronym{display:inline-block;text-decoration:none;border-bottom:.1em dotted;line-height:1.04em;margin-bottom:-.1em}
+abbr abbr,abbr acronym,acronym abbr,acronym acronym{border-bottom:0;line-height:normal;margin-bottom:0;background-color:transparent}
 a{text-decoration:underline;cursor:pointer;display:inline-block;max-width:100%}
 li a{vertical-align:top}
 a *{text-decoration:underline;cursor:pointer}
@@ -98,7 +98,7 @@ i,cite,em,var,address,dfn{font-style:normal}
 .gm-style img{max-width:none}
 :root .cdlUtilLinks,:root .cdlUtilLinks *{background-color:transparent}
 :root .cdlUtilLinks img{display:none}
-:root .cdlUtilLinks input[type="submit"]{position:absolute;opacity:0;top:0;left:0;width:100%;height:100%}
+:root .cdlUtilLinks input[type="submit"]{position:absolute;opacity:0;top:0;left:0;width:100%;height:100%;border:0;margin:0;padding:0}
 :root .cdlUtilLinks svg{display:block;float:left}
 :root input[type="radio"],:root input[type="checkbox"]{opacity:0;margin:0}
 .cdlInput_radio,.cdlInput_checkbox{margin:5px .3em 5px 0;line-height:normal !important}

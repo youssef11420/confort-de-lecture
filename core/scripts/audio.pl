@@ -207,7 +207,7 @@ if (param('cdltext') ne "") {
 		}
 		$pageContent =~ s/^<html><head><\/head><body><select( [^>]*)? id=\"cdlGhostSelect\"[^>]*><option([^>]*)>(.*?)<\/option><\/select><\/body><\/html>$/
 			my %optionAttributes = getTagAttributes($2);
-			($deleteOptionTitle ne 1 ? " ".$dictionary{'LABEL_OPTION_DE_LISTE'}.($optionAttributes{'selected'} eq "selected" ? " ".$dictionary{'LABEL_SELECTIONNEE'} : "")." : " : "").($3 ? (length($optionAttributes{'title'}) > length($3) ? $optionAttributes{'title'} : $3) : $dictionary{'LABEL_VIDE'})."\n"
+			($deleteOptionTitle ne 1 ? ($optionAttributes{'selected'} eq "selected" ? " ".$dictionary{'LABEL_SELECTIONNEE'}." : " : "") : "").($3 ? (length($optionAttributes{'title'}) > length($3) ? $optionAttributes{'title'} : $3) : $dictionary{'LABEL_VIDE'})."\n"
 			/segi;
 	}
 } else {
