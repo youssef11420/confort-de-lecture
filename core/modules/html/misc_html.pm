@@ -546,9 +546,9 @@ sub prepareForHighlighting #($htmlCode)
 	$tree->eof();
 	$htmlCode = $tree->as_HTML;
 
-	$htmlCode =~ s/^<html><head>//sgi;
-	$htmlCode =~ s/<\/head><body>//sgi;
-	$htmlCode =~ s/<\/body><\/html>\n$//sgi;
+	$htmlCode =~ s/^<html>\s*<head>//sgi;
+	$htmlCode =~ s/<\/head>\s*<body>//sgi;
+	$htmlCode =~ s/<\/body>\s*<\/html>$//sgi;
 
 	$htmlCode =~ s/<span class=\"cdlPartOfText\">\s*<\/span>//sgi;
 	$htmlCode =~ s/<span class=\"cdlPartOfText\">(<script( [^>]*?)?>(.*?)<\/script>)<\/span>/$1/sgi;
