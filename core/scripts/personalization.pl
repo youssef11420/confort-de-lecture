@@ -366,26 +366,34 @@ if ($action =~ m/^affichage$/si) {
 	$contrast = $contrast ? $contrast : "bn";
 
 	# Mettre les paramètres en session
-	if (param('cdlbc') ne "") {
-		editInSession($session, 'backgroundColor', param('cdlbc'));
+	my $var;
+	$var = param('cdlbc');
+	if ($var ne "") {
+		editInSession($session, 'backgroundColor', $var);
 	}
-	if (param('cdlfc') ne "") {
-		editInSession($session, 'fontColor', param('cdlfc'));
+	$var = param('cdlfc');
+	if ($var ne "") {
+		editInSession($session, 'fontColor', $var);
 	}
-	if (param('cdllc') ne "") {
-		editInSession($session, 'linkColor', param('cdllc'));
+	$var = param('cdllc');
+	if ($var ne "") {
+		editInSession($session, 'linkColor', $var);
 	}
-	if (param('cdlfs') ne "") {
-		editInSession($session, 'fontSize', param('cdlfs'));
+	$var = param('cdlfs');
+	if ($var ne "") {
+		editInSession($session, 'fontSize', $var);
 	}
-	if (param('cdlls') ne "") {
-		editInSession($session, 'letterSpacing', param('cdlls'));
+	$var = param('cdlls');
+	if ($var ne "") {
+		editInSession($session, 'letterSpacing', $var);
 	}
-	if (param('cdlws') ne "") {
-		editInSession($session, 'wordSpacing', param('cdlws'));
+	$var = param('cdlws');
+	if ($var ne "") {
+		editInSession($session, 'wordSpacing', $var);
 	}
-	if (param('cdllh') ne "") {
-		editInSession($session, 'lineHeight', param('cdllh'));
+	$var = param('cdllh');
+	if ($var ne "") {
+		editInSession($session, 'lineHeight', $var);
 	}
 	my @positionLocation = param('cdlariane[]');
 	my $positionLocationLength = scalar @positionLocation;
