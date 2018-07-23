@@ -365,6 +365,9 @@ sub redirectToAnotherPage #($cgi, $session, $siteId, $response, $siteRootUrl, $p
 {
 	my ($cgi, $session, $siteId, $response, $siteRootUrl, $pageUri, $pagePath, $secure, $trustedDomainNames) = @_;
 
+	# Récupération du cookie dans la réponse HTTP et sauvegarde dans la session
+	putCookieInSession($response, $session, $siteId);
+
 	# On récupère l'url vers laquelle on redirige dans l'entête Location
 	my $redirectUrl = $response->header("Location");
 
@@ -783,9 +786,11 @@ sub sendRequest #($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, 
 
 	# Envoi de la requête HTTP et réception de la réponse dans l'objet $response. On refait tant que la réponse n'est que informative
 	my $response;
-	do {$response = getResponse($userAgent, $request);} while ($response->is_info);
+	do {
+		$response = getResponse($userAgent, $request);
+	} while ($response->is_info);
 	# Récupérer la première réponse correcte de la chaîne de redirection pour refaire étape par étape l'enchaînement en restant dans CDL
-	while ($response->previous ne undef and not $response->previous->is_error and not($response->previous->is_redirect and $response->previous->code eq $response->code)) {
+	while ($response->previous ne undef and not $response->previous->is_error and not($response->previous->is_redirect and $response->previous->code eq $response->code and $response->previous->header('Location') eq $response->header('Location'))) {
 		$response = $response->previous;
 	}
 

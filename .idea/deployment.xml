@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="cdl_hdcz_org_prod" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="Always" serverName="cdl_hdcz_com_preprod" autoUploadExternalChanges="true">
     <serverData>
       <paths name="DW NFS">
         <serverdata>
@@ -20,6 +20,13 @@
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="cdl_hdcz_com_preprod">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
@@ -108,6 +115,13 @@
         </serverdata>
       </paths>
       <paths name="ots">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="perche">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
