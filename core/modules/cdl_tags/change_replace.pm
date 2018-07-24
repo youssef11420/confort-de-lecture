@@ -34,7 +34,7 @@ sub parseAloneReplaces #($htmlCode, $activateAudio)
 		if ($activateAudio or $1 !~ m\/audioonly\/si) {
 			$3
 		} else {
-
+			""
 		}
 		/seg;
 
