@@ -226,14 +226,15 @@ sub prepareAudioTemplates #($pageContent, $siteId, $enableGlossary, $audioTempla
 # Paramètres:
 #	$fileName - nom du fichier contenant le texte à vocaliser
 #	$siteId - identifiant su site parsé
-#	$defaultConfiguration - booléen indiquant si le glossaire est activé sur ce site
+#	$defaultConfiguration - configuration par défaut
 #	$voice - la voix sélectionnée par l'internaute
 #	$speed - la vitesse de lecture sélectionnée par l'internaute
 #	$audioTextTemplateString - template contenant le texte à vocaliser
 #	$language - langue de lecture
-sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language)
+#	$rawFormat - booléen indiquant si le format de l'audio doit être raw, sinon mp3
+sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language, $rawFormat)
 {
-	my ($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language) = @_;
+	my ($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audioTextTemplateString, $language, $rawFormat) = @_;
 
 	my $audioContent = "";
 	my ($ttsMode, $ttsServerName, $ttsPort, $ttsUri, $ttsDefaultQueryString, $ttsVoiceParamName, $ttsTextParamName, $ttsRateParamName, $enableGlossary, $utf8DecodeContent) = ("", "", "", "", "", "", "", "", "", "");
@@ -283,7 +284,7 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 	# - serveur de synthèse vocale, où seront traités les textes et où le son audio sera généré
 	# - la voix avec laquelle lire le contenu (soit choisi par l'utilisateur soit la voix définir par défaut dans : <constants.pm>
 	# - Contenu SSML à lire
-	my $fileAudio = $cdlAudioCachePath."sound_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".mp3";
+	my $fileAudio = $cdlAudioCachePath."sound_".$fileName."_".($voice ? $voice : $defaultVoice)."_".(($speed ne "" ? $speed : $defaultSpeed)*2).".".($rawFormat ? "raw" : "mp3");
 	my $fileSize = -s $fileAudio;
 	if (-e $fileAudio and $fileSize > 626) {
 		$audioContent = readpipe("cat ".$fileAudio);
@@ -323,7 +324,7 @@ sub vocalize #($fileName, $siteId, $defaultConfiguration, $voice, $speed, $audio
 			use IO::Handle;
 			STDOUT->autoflush(1);
 
-			my $command = "export LD_LIBRARY_PATH=".$ttsPath." ; ".$ttsUri." ".$ttsDefaultQueryString.($ttsVoiceParamName ? " -".$ttsVoiceParamName." ".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? " -".$ttsRateParamName." ".(($speed ne "" ? $speed : $defaultSpeed)*2) : "")." -".$ttsTextParamName." ".$cdlAudioCachePath."infos_".$fileName.".txt -o stdout | lame --quiet -r -h -b 64 -m m -s 22 - - | tee ".$fileAudio;
+			my $command = "export LD_LIBRARY_PATH=".$ttsPath." ; ".$ttsUri." ".$ttsDefaultQueryString.($ttsVoiceParamName ? " -".$ttsVoiceParamName." ".($voice ? $voice : $defaultVoice) : "").($ttsRateParamName ? " -".$ttsRateParamName." ".(($speed ne "" ? $speed : $defaultSpeed)*2) : "")." -".$ttsTextParamName." ".$cdlAudioCachePath."infos_".$fileName.".txt -o stdout".($rawFormat ? "" : " | lame --quiet -r -h -b 64 -m m -s 22 - -")." | tee ".$fileAudio;
 
 			$audioContent = readpipe($command);
 		}

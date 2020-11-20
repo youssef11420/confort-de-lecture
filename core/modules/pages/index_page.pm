@@ -186,11 +186,6 @@ sub processIndexPageFinal #($cgi, $session, $requestMethod, $siteId, $pageUri, $
 		# On effectue la requête HTTP en récupérant la réponse
 		my $response = sendRequest($requestMethod, $urlToParse, $siteId, $siteRootUrl, $session, %requestParameters);
 
-		if ($response->code eq "500") {
-			print "Content-type: text/plain\n\n";
-			print $response->is_redirect;
-		}
-
 		# Récupération du type d'encodage des caractères reçus dans la réponse HTTP
 		my $contentType = getContentTypeFromHttpResponseHeader($response);
 
@@ -625,7 +620,7 @@ sub renderCachedPage #($pageContent, $pageContentFile, $session, $siteId, $pageU
 		if (!-e $cdlAudioCachePath.$lettersHtmlCacheFile) {
 			foreach my $letterKey (keys(%lettersToSpell)) {
 				my $fileName = sha1_hex(($siteId ne "" ? $siteId."\n" : "").$lettersToSpell{$letterKey});
-				$lettersPlayers .= "<audio preload=\"auto\" src=\"data:audio/mpeg;base64,".encode_base64(vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $lettersToSpell{$letterKey}))."\" class=\"cdlHidden\" id=\"lecteurAudioCDL_".$letterKey."\"></audio>\n";
+				$lettersPlayers .= "<audio preload=\"auto\" src=\"data:audio/mpeg;base64,".encode_base64(vocalize($fileName, $siteId, $defaultConfiguration, $voice, $speed, $lettersToSpell{$letterKey}, $language, 0))."\" class=\"cdlHidden\" id=\"lecteurAudioCDL_".$letterKey."\"></audio>\n";
 			}
 			open(WRITER, ">", $cdlAudioCachePath.$lettersHtmlCacheFile) or die "Erreur d'ouverture du fichier : ".$cdlAudioCachePath.$lettersHtmlCacheFile.".\n";
 			print WRITER ($lettersPlayers);
